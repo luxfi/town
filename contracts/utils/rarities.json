@@ -1,0 +1,7 @@
+[
+  { "probability": 5500, "name": "Common", "yield": 100, "boost": 1000 },
+  { "probability": 3100, "name": "Uncommon", "yield": 200, "boost": 5000 },
+  { "probability": 1250, "name": "Rare", "yield": 500, "boost": 10000 },
+  { "probability": 100, "name": "Super Rare", "yield": 1000, "boost": 50000 },
+  { "probability": 50, "name": "Epic", "yield": 1500, "boost": 100000 }
+]

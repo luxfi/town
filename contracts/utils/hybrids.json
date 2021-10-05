@@ -1,0 +1,2306 @@
+[
+  {
+    "rarity": "Common",
+    "name": "Puggy",
+    "parentA": "Pug",
+    "parentB": "Pug",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/puggy.jpg",
+    "metadataURI": "https://db.zoolabs.io/puggy.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Puggerfly",
+    "parentA": "Pug",
+    "parentB": "Butterfly",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/puggerfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/puggerfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pugitten",
+    "parentA": "Pug",
+    "parentB": "Kitten",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/pugitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pugurtle",
+    "parentA": "Pug",
+    "parentB": "Turtle",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/pugurtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugurtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Butterpug",
+    "parentA": "Butterfly",
+    "parentB": "Pug",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/butterpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Caterpillar",
+    "parentA": "Butterfly",
+    "parentB": "Butterfly",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/caterpillar.jpg",
+    "metadataURI": "https://db.zoolabs.io/caterpillar.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Butterflitten",
+    "parentA": "Butterfly",
+    "parentB": "Kitten",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/butterflitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterflitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Butturtle",
+    "parentA": "Butterfly",
+    "parentB": "Turtle",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/butturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/butturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Kitty Pug",
+    "parentA": "Kitten",
+    "parentB": "Pug",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/kittypug.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittypug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Kitterfly",
+    "parentA": "Kitten",
+    "parentB": "Butterfly",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/kitterfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/kitterfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Kitten",
+    "parentA": "Kitten",
+    "parentB": "Kitten",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/kitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/kitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Kitturtle",
+    "parentA": "Kitten",
+    "parentB": "Turtle",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/kitturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/kitturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Turtpug",
+    "parentA": "Turtle",
+    "parentB": "Pug",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/turtpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Turtterfly",
+    "parentA": "Turtle",
+    "parentB": "Butterfly",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/turtterfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtterfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Turkitten",
+    "parentA": "Turtle",
+    "parentB": "Kitten",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/turkitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/turkitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Tiny Turtle",
+    "parentA": "Turtle",
+    "parentB": "Turtle",
+    "yield": 120,
+    "tokenURI": "https://db.zoolabs.io/tinyturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/tinyturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pengpug",
+    "parentA": "Penguin",
+    "parentB": "Pug",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/pengpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/pengpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Penggerfly",
+    "parentA": "Penguin",
+    "parentB": "Butterfly",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/penggerfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/penggerfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pengkitty",
+    "parentA": "Penguin",
+    "parentB": "Kitten",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/pengkitty.jpg",
+    "metadataURI": "https://db.zoolabs.io/pengkitty.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pengurtle",
+    "parentA": "Penguin",
+    "parentB": "Turtle",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/pengurtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/pengurtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "DuckPug",
+    "parentA": "Duckling",
+    "parentB": "Pug",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/duckpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Duckerfly",
+    "parentA": "Duckling",
+    "parentB": "Butterfly",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/duckerfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckerfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Duckitten",
+    "parentA": "Duckling",
+    "parentB": "Kitten",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/duckitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Durtle",
+    "parentA": "Duckling",
+    "parentB": "Turtle",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/durtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/durtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Orcapug",
+    "parentA": "Orca",
+    "parentB": "Pug",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/orcapug.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcapug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Orcafly",
+    "parentA": "Orca",
+    "parentB": "Butterfly",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/orcafly.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcafly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Orkitten",
+    "parentA": "Orca",
+    "parentB": "Kitten",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/orkitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/orkitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Orcaturtle",
+    "parentA": "Orca",
+    "parentB": "Turtle",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/orcaturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcaturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elkpug",
+    "parentA": "Elk",
+    "parentB": "Pug",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/elkpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elkerfly",
+    "parentA": "Elk",
+    "parentB": "Butterfly",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/elkerfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkerfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elkitten",
+    "parentA": "Elk",
+    "parentB": "Kitten",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/elkitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elkurtle",
+    "parentA": "Elk",
+    "parentB": "Turtle",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/elkurtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkurtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pandapug",
+    "parentA": "Panda",
+    "parentB": "Pug",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/pandapug.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandapug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pandafly",
+    "parentA": "Panda",
+    "parentB": "Butterfly",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/pandafly.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandafly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pandacat",
+    "parentA": "Panda",
+    "parentB": "Kitten",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/pandacat.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandacat.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Pandaturtle",
+    "parentA": "Panda",
+    "parentB": "Turtle",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/pandaturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandaturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Gug",
+    "parentA": "Gorilla",
+    "parentB": "Pug",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/gug.jpg",
+    "metadataURI": "https://db.zoolabs.io/gug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Gorillafly",
+    "parentA": "Gorilla",
+    "parentB": "Butterfly",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/gorillafly.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillafly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Gorkitten",
+    "parentA": "Gorilla",
+    "parentB": "Kitten",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/gorkitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorkitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Gorturtle",
+    "parentA": "Gorilla",
+    "parentB": "Turtle",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/gorturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elepug",
+    "parentA": "Elephant",
+    "parentB": "Pug",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/elepug.jpg",
+    "metadataURI": "https://db.zoolabs.io/elepug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elephantterfly",
+    "parentA": "Elephant",
+    "parentB": "Butterfly",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/elephantterfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephantterfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elephitten",
+    "parentA": "Elephant",
+    "parentB": "Kitten",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/elephitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Elephanturtle",
+    "parentA": "Elephant",
+    "parentB": "Turtle",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/elephanturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephanturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Lionpug",
+    "parentA": "Lion",
+    "parentB": "Pug",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/lionpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Lionfly",
+    "parentA": "Lion",
+    "parentB": "Butterfly",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/lionfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Litten",
+    "parentA": "Lion",
+    "parentB": "Kitten",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/litten.jpg",
+    "metadataURI": "https://db.zoolabs.io/litten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Lionturtle",
+    "parentA": "Lion",
+    "parentB": "Turtle",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/lionturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionturtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Bearpug",
+    "parentA": "Bear",
+    "parentB": "Pug",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/bearpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Beartterfly",
+    "parentA": "Bear",
+    "parentB": "Butterfly",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/beartterfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/beartterfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Beartten",
+    "parentA": "Bear",
+    "parentB": "Kitten",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/beartten.jpg",
+    "metadataURI": "https://db.zoolabs.io/beartten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Beartle",
+    "parentA": "Bear",
+    "parentB": "Turtle",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/beartle.jpg",
+    "metadataURI": "https://db.zoolabs.io/beartle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Shug",
+    "parentA": "Shark",
+    "parentB": "Pug",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/shug.jpg",
+    "metadataURI": "https://db.zoolabs.io/shug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Sharkerfly",
+    "parentA": "Shark",
+    "parentB": "Butterfly",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/sharkerfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkerfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Sharkitten",
+    "parentA": "Shark",
+    "parentB": "Kitten",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/sharkitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Shurtle",
+    "parentA": "Shark",
+    "parentB": "Turtle",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/shurtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/shurtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Blobpug",
+    "parentA": "Blobfish",
+    "parentB": "Pug",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/blobpug.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobpug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Blobberfly",
+    "parentA": "Blobfish",
+    "parentB": "Butterfly",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/blobberfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobberfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Blob kitten",
+    "parentA": "Blobfish",
+    "parentB": "Kitten",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/blobkitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobkitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Bloburtle",
+    "parentA": "Blobfish",
+    "parentB": "Turtle",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/bloburtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/bloburtle.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Naked Mole Pug",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Pug",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/nakedmolepug.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmolepug.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Naked Butterfly",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Butterfly",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/nakedbutterfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedbutterfly.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Naked Mole Kitten",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Kitten",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/nakedmolekitten.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmolekitten.json"
+  },
+  {
+    "rarity": "Common",
+    "name": "Naked Turtle",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Turtle",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/nakedturtle.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedturtle.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pugguin",
+    "parentA": "Pug",
+    "parentB": "Penguin",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/pugguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pugling",
+    "parentA": "Pug",
+    "parentB": "Duckling",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/pugling.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pugorca",
+    "parentA": "Pug",
+    "parentB": "Orca",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/pugorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pelk",
+    "parentA": "Pug",
+    "parentB": "Elk",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/pelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/pelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Butterflenguin",
+    "parentA": "Butterfly",
+    "parentB": "Penguin",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/butterflenguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterflenguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Butterfling",
+    "parentA": "Butterfly",
+    "parentB": "Duckling",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/butterfling.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterfling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Buttorca",
+    "parentA": "Butterfly",
+    "parentB": "Orca",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/buttorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/buttorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Butterflelk",
+    "parentA": "Butterfly",
+    "parentB": "Elk",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/butterflelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterflelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Kittypenguin",
+    "parentA": "Kitten",
+    "parentB": "Penguin",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/kittypenguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittypenguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Kittyling",
+    "parentA": "Kitten",
+    "parentB": "Duckling",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/kittyling.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittyling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Kittorca",
+    "parentA": "Kitten",
+    "parentB": "Orca",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/kittorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Kittelk",
+    "parentA": "Kitten",
+    "parentB": "Elk",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/kittelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Turtlepeng",
+    "parentA": "Turtle",
+    "parentB": "Penguin",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/turtlepeng.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtlepeng.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Turtling",
+    "parentA": "Turtle",
+    "parentB": "Duckling",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/turtling.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Turtorca",
+    "parentA": "Turtle",
+    "parentB": "Orca",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/turtorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Turtelk",
+    "parentA": "Turtle",
+    "parentB": "Elk",
+    "yield": 320,
+    "tokenURI": "https://db.zoolabs.io/turtelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Penguin Chick",
+    "parentA": "Penguin",
+    "parentB": "Penguin",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/penguinchick.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguinchick.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pengling",
+    "parentA": "Penguin",
+    "parentB": "Duckling",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/pengling.jpg",
+    "metadataURI": "https://db.zoolabs.io/pengling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Penguorca",
+    "parentA": "Penguin",
+    "parentB": "Orca",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/penguorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Penguelk",
+    "parentA": "Penguin",
+    "parentB": "Elk",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/penguelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Ducklinguin",
+    "parentA": "Duckling",
+    "parentB": "Penguin",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/ducklinguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/ducklinguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Duckling Chick",
+    "parentA": "Duckling",
+    "parentB": "Duckling",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/ducklingchick.jpg",
+    "metadataURI": "https://db.zoolabs.io/ducklingchick.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Dorca",
+    "parentA": "Duckling",
+    "parentB": "Orca",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/dorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/dorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Duckelk",
+    "parentA": "Duckling",
+    "parentB": "Elk",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/duckelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Orcapeng",
+    "parentA": "Orca",
+    "parentB": "Penguin",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/orcapeng.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcapeng.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Orcling",
+    "parentA": "Orca",
+    "parentB": "Duckling",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/orcling.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Baby Orca",
+    "parentA": "Orca",
+    "parentB": "Orca",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/babyorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/babyorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Orcelk",
+    "parentA": "Orca",
+    "parentB": "Elk",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/orcelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Elkenguin",
+    "parentA": "Elk",
+    "parentB": "Penguin",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/elkenguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkenguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Elkling",
+    "parentA": "Elk",
+    "parentB": "Duckling",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/elkling.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Elka",
+    "parentA": "Elk",
+    "parentB": "Orca",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/elka.jpg",
+    "metadataURI": "https://db.zoolabs.io/elka.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Baby Elk",
+    "parentA": "Elk",
+    "parentB": "Elk",
+    "yield": 400,
+    "tokenURI": "https://db.zoolabs.io/babyelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/babyelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Panduin",
+    "parentA": "Panda",
+    "parentB": "Penguin",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/panduin.jpg",
+    "metadataURI": "https://db.zoolabs.io/panduin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pandaling",
+    "parentA": "Panda",
+    "parentB": "Duckling",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/pandaling.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandaling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pandorca",
+    "parentA": "Panda",
+    "parentB": "Orca",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/pandorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Pandelk",
+    "parentA": "Panda",
+    "parentB": "Elk",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/pandelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Gorillaguin",
+    "parentA": "Gorilla",
+    "parentB": "Penguin",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/gorillaguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillaguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Gorilling",
+    "parentA": "Gorilla",
+    "parentB": "Duckling",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/gorilling.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorilling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Gorca",
+    "parentA": "Gorilla",
+    "parentB": "Orca",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/gorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Gorillelk",
+    "parentA": "Gorilla",
+    "parentB": "Elk",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/gorillelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Elepenguin",
+    "parentA": "Elephant",
+    "parentB": "Penguin",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elepenguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/elepenguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Elephling",
+    "parentA": "Elephant",
+    "parentB": "Duckling",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elephling.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Elephorca",
+    "parentA": "Elephant",
+    "parentB": "Orca",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elephorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Elkephant",
+    "parentA": "Elephant",
+    "parentB": "Elk",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elkephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkephant.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Lionguin",
+    "parentA": "Lion",
+    "parentB": "Penguin",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/lionguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Lionling",
+    "parentA": "Lion",
+    "parentB": "Duckling",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/lionling.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Lionorca",
+    "parentA": "Lion",
+    "parentB": "Orca",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/lionorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Lionelk",
+    "parentA": "Lion",
+    "parentB": "Elk",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/lionelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Benguin",
+    "parentA": "Bear",
+    "parentB": "Penguin",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/benguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/benguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Bearling",
+    "parentA": "Bear",
+    "parentB": "Duckling",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/bearling.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Bearca",
+    "parentA": "Bear",
+    "parentB": "Orca",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/bearca.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Belk",
+    "parentA": "Bear",
+    "parentB": "Elk",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/belk.jpg",
+    "metadataURI": "https://db.zoolabs.io/belk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Shanguin",
+    "parentA": "Shark",
+    "parentB": "Penguin",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/shanguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/shanguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Sharkling",
+    "parentA": "Shark",
+    "parentB": "Duckling",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/sharkling.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Shorca",
+    "parentA": "Shark",
+    "parentB": "Orca",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/shorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/shorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Shelk",
+    "parentA": "Shark",
+    "parentB": "Elk",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/shelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/shelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Blob Penguin",
+    "parentA": "Blobfish",
+    "parentB": "Penguin",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/blobpenguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobpenguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Blobling",
+    "parentA": "Blobfish",
+    "parentB": "Duckling",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/blobling.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Bloborca",
+    "parentA": "Blobfish",
+    "parentB": "Orca",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/bloborca.jpg",
+    "metadataURI": "https://db.zoolabs.io/bloborca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Blobelk",
+    "parentA": "Blobfish",
+    "parentB": "Elk",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/blobelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobelk.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Naked Penguin",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Penguin",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/nakedpenguin.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedpenguin.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Naked Duckling",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Duckling",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/nakedduckling.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedduckling.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Naked Mole Orca",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Orca",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/nakedmoleorca.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmoleorca.json"
+  },
+  {
+    "rarity": "Uncommon",
+    "name": "Naked Mole Elk",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Elk",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/nakedmoleelk.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmoleelk.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Pugda",
+    "parentA": "Pug",
+    "parentB": "Panda",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/pugda.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Pugorilla",
+    "parentA": "Pug",
+    "parentB": "Gorilla",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/pugorilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugorilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Puggerphant",
+    "parentA": "Pug",
+    "parentB": "Elephant",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/puggerphant.jpg",
+    "metadataURI": "https://db.zoolabs.io/puggerphant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Puglion",
+    "parentA": "Pug",
+    "parentB": "Lion",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/puglion.jpg",
+    "metadataURI": "https://db.zoolabs.io/puglion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Butterflanda",
+    "parentA": "Butterfly",
+    "parentB": "Panda",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/butterflanda.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterflanda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Butterla",
+    "parentA": "Butterfly",
+    "parentB": "Gorilla",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/butterla.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Butterphant",
+    "parentA": "Butterfly",
+    "parentB": "Elephant",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/butterphant.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterphant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Butterflion",
+    "parentA": "Butterfly",
+    "parentB": "Lion",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/butterflion.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterflion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Kittypan",
+    "parentA": "Kitten",
+    "parentB": "Panda",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/kittypan.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittypan.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Kittorilla",
+    "parentA": "Kitten",
+    "parentB": "Gorilla",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/kittorilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittorilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Kittyphant",
+    "parentA": "Kitten",
+    "parentB": "Elephant",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/kittyphant.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittyphant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Lion Kitty",
+    "parentA": "Kitten",
+    "parentB": "Lion",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/lionkitty.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionkitty.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Turtanda",
+    "parentA": "Turtle",
+    "parentB": "Panda",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/turtanda.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtanda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Turtilla",
+    "parentA": "Turtle",
+    "parentB": "Gorilla",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/turtilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Turtelephant",
+    "parentA": "Turtle",
+    "parentB": "Elephant",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/turtelephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtelephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Turtlion",
+    "parentA": "Turtle",
+    "parentB": "Lion",
+    "yield": 1050,
+    "tokenURI": "https://db.zoolabs.io/turtlion.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtlion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Penda",
+    "parentA": "Penguin",
+    "parentB": "Panda",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/penda.jpg",
+    "metadataURI": "https://db.zoolabs.io/penda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Penguilla",
+    "parentA": "Penguin",
+    "parentB": "Gorilla",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/penguilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Pelephant",
+    "parentA": "Penguin",
+    "parentB": "Elephant",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/pelephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/pelephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Penguilion",
+    "parentA": "Penguin",
+    "parentB": "Lion",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/penguilion.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguilion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Duckda",
+    "parentA": "Duckling",
+    "parentB": "Panda",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/duckda.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Duckorilla",
+    "parentA": "Duckling",
+    "parentB": "Gorilla",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/duckorilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckorilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Ducklephant",
+    "parentA": "Duckling",
+    "parentB": "Elephant",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/ducklephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/ducklephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Ducklion",
+    "parentA": "Duckling",
+    "parentB": "Lion",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/ducklion.jpg",
+    "metadataURI": "https://db.zoolabs.io/ducklion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Orcanda",
+    "parentA": "Orca",
+    "parentB": "Panda",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/orcanda.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcanda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Orcilla",
+    "parentA": "Orca",
+    "parentB": "Gorilla",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/orcilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Orcaphant",
+    "parentA": "Orca",
+    "parentB": "Elephant",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/orcaphant.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcaphant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Orclion",
+    "parentA": "Orca",
+    "parentB": "Lion",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/orclion.jpg",
+    "metadataURI": "https://db.zoolabs.io/orclion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Elkanda",
+    "parentA": "Elk",
+    "parentB": "Panda",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elkanda.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkanda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Elkorilla",
+    "parentA": "Elk",
+    "parentB": "Gorilla",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elkorilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkorilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Elkephant",
+    "parentA": "Elk",
+    "parentB": "Elephant",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elkephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Elkion",
+    "parentA": "Elk",
+    "parentB": "Lion",
+    "yield": 1250,
+    "tokenURI": "https://db.zoolabs.io/elkion.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Panda Cub",
+    "parentA": "Panda",
+    "parentB": "Panda",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/pandacub.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandacub.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Pandalla",
+    "parentA": "Panda",
+    "parentB": "Gorilla",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/pandalla.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandalla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Pandaphant",
+    "parentA": "Panda",
+    "parentB": "Elephant",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/pandaphant.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandaphant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Pandalion",
+    "parentA": "Panda",
+    "parentB": "Lion",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/pandalion.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandalion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Goranda",
+    "parentA": "Gorilla",
+    "parentB": "Panda",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/goranda.jpg",
+    "metadataURI": "https://db.zoolabs.io/goranda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Baby Gorilla",
+    "parentA": "Gorilla",
+    "parentB": "Gorilla",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/babygorilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/babygorilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Gorillaphant",
+    "parentA": "Gorilla",
+    "parentB": "Elephant",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/gorillaphant.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillaphant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Gorillion",
+    "parentA": "Gorilla",
+    "parentB": "Lion",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/gorillion.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Elepanda",
+    "parentA": "Elephant",
+    "parentB": "Panda",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/elepanda.jpg",
+    "metadataURI": "https://db.zoolabs.io/elepanda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Elephantilla",
+    "parentA": "Elephant",
+    "parentB": "Gorilla",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/elephantilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephantilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Baby Elephant",
+    "parentA": "Elephant",
+    "parentB": "Elephant",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/babyelephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/babyelephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Elephlion",
+    "parentA": "Elephant",
+    "parentB": "Lion",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/elephlion.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephlion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Lionda",
+    "parentA": "Lion",
+    "parentB": "Panda",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/lionda.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Lionilla",
+    "parentA": "Lion",
+    "parentB": "Gorilla",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/lionilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Lelephant",
+    "parentA": "Lion",
+    "parentB": "Elephant",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/lelephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/lelephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Lion Cub",
+    "parentA": "Lion",
+    "parentB": "Lion",
+    "yield": 1500,
+    "tokenURI": "https://db.zoolabs.io/lioncub.jpg",
+    "metadataURI": "https://db.zoolabs.io/lioncub.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Banda",
+    "parentA": "Bear",
+    "parentB": "Panda",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/banda.jpg",
+    "metadataURI": "https://db.zoolabs.io/banda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Bearilla",
+    "parentA": "Bear",
+    "parentB": "Gorilla",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/bearilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Belephant",
+    "parentA": "Bear",
+    "parentB": "Elephant",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/belephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/belephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Bearlion",
+    "parentA": "Bear",
+    "parentB": "Lion",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/bearlion.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearlion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Sharnda",
+    "parentA": "Shark",
+    "parentB": "Panda",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/sharnda.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharnda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Sharkorilla",
+    "parentA": "Shark",
+    "parentB": "Gorilla",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/sharkorilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkorilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Sharkephant",
+    "parentA": "Shark",
+    "parentB": "Elephant",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/sharkephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Shlion",
+    "parentA": "Shark",
+    "parentB": "Lion",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/shlion.jpg",
+    "metadataURI": "https://db.zoolabs.io/shlion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Blobda",
+    "parentA": "Blobfish",
+    "parentB": "Panda",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/blobda.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Blobilla",
+    "parentA": "Blobfish",
+    "parentB": "Gorilla",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/blobilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Blobaphant",
+    "parentA": "Blobfish",
+    "parentB": "Elephant",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/blobaphant.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobaphant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Bloblion",
+    "parentA": "Blobfish",
+    "parentB": "Lion",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/bloblion.jpg",
+    "metadataURI": "https://db.zoolabs.io/bloblion.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Naked Panda",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Panda",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/nakedpanda.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedpanda.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Naked Mole Gorilla",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Gorilla",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/nakedmolegorilla.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmolegorilla.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Naked Elephant",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Elephant",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/nakedelephant.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedelephant.json"
+  },
+  {
+    "rarity": "Rare",
+    "name": "Naked Lion",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Lion",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/nakedlion.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedlion.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Pugbear",
+    "parentA": "Pug",
+    "parentB": "Bear",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/pugbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Pugshark",
+    "parentA": "Pug",
+    "parentB": "Shark",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/pugshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Butterbear",
+    "parentA": "Butterfly",
+    "parentB": "Bear",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/butterbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Buttershark",
+    "parentA": "Butterfly",
+    "parentB": "Shark",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/buttershark.jpg",
+    "metadataURI": "https://db.zoolabs.io/buttershark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Kittybear",
+    "parentA": "Kitten",
+    "parentB": "Bear",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/kittybear.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittybear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Shark Kitty",
+    "parentA": "Kitten",
+    "parentB": "Shark",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/sharkkitty.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkkitty.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Turtle Bear",
+    "parentA": "Turtle",
+    "parentB": "Bear",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/turtlebear.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtlebear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Turtleshark",
+    "parentA": "Turtle",
+    "parentB": "Shark",
+    "yield": 6100,
+    "tokenURI": "https://db.zoolabs.io/turtleshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtleshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Pengbear",
+    "parentA": "Penguin",
+    "parentB": "Bear",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/pengbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/pengbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Penguin Shark",
+    "parentA": "Penguin",
+    "parentB": "Shark",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/penguinshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguinshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Duckbear",
+    "parentA": "Duckling",
+    "parentB": "Bear",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/duckbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Duckshark",
+    "parentA": "Duckling",
+    "parentB": "Shark",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/duckshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Orca Bear",
+    "parentA": "Orca",
+    "parentB": "Bear",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/orcabear.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcabear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Orcashark",
+    "parentA": "Orca",
+    "parentB": "Shark",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/orcashark.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcashark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Elkbear",
+    "parentA": "Elk",
+    "parentB": "Bear",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/elkbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Elkshark",
+    "parentA": "Elk",
+    "parentB": "Shark",
+    "yield": 6500,
+    "tokenURI": "https://db.zoolabs.io/elkshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Pearda",
+    "parentA": "Panda",
+    "parentB": "Bear",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/pearda.jpg",
+    "metadataURI": "https://db.zoolabs.io/pearda.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Pandashark",
+    "parentA": "Panda",
+    "parentB": "Shark",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/pandashark.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandashark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Gorillabear",
+    "parentA": "Gorilla",
+    "parentB": "Bear",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/gorillabear.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillabear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Gorillark",
+    "parentA": "Gorilla",
+    "parentB": "Shark",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/gorillark.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Elebear",
+    "parentA": "Elephant",
+    "parentB": "Bear",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/elebear.jpg",
+    "metadataURI": "https://db.zoolabs.io/elebear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Eleshark",
+    "parentA": "Elephant",
+    "parentB": "Shark",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/eleshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/eleshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Lionbear",
+    "parentA": "Lion",
+    "parentB": "Bear",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/lionbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Lionshark",
+    "parentA": "Lion",
+    "parentB": "Shark",
+    "yield": 7000,
+    "tokenURI": "https://db.zoolabs.io/lionshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Bear Cub",
+    "parentA": "Bear",
+    "parentB": "Bear",
+    "yield": 11000,
+    "tokenURI": "https://db.zoolabs.io/bearcub.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearcub.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Bearshark",
+    "parentA": "Bear",
+    "parentB": "Shark",
+    "yield": 11000,
+    "tokenURI": "https://db.zoolabs.io/bearshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Sharkbear",
+    "parentA": "Shark",
+    "parentB": "Bear",
+    "yield": 11000,
+    "tokenURI": "https://db.zoolabs.io/sharkbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Baby Shark",
+    "parentA": "Shark",
+    "parentB": "Shark",
+    "yield": 11000,
+    "tokenURI": "https://db.zoolabs.io/babyshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/babyshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Blob Bear",
+    "parentA": "Blobfish",
+    "parentB": "Bear",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/blobbear.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobbear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Blobshark",
+    "parentA": "Blobfish",
+    "parentB": "Shark",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/blobshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobshark.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Naked Mole Bear",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Bear",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/nakedmolebear.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmolebear.json"
+  },
+  {
+    "rarity": "Super Rare",
+    "name": "Naked Mole Shark",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Shark",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/nakedmoleshark.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmoleshark.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Plobfish",
+    "parentA": "Pug",
+    "parentB": "Blobfish",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/plobfish.jpg",
+    "metadataURI": "https://db.zoolabs.io/plobfish.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Pugrat",
+    "parentA": "Pug",
+    "parentB": "Naked Mole Rat",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/pugrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/pugrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Butterblob",
+    "parentA": "Butterfly",
+    "parentB": "Blobfish",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/butterblob.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterblob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Butterrat",
+    "parentA": "Butterfly",
+    "parentB": "Naked Mole Rat",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/butterrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Kitty Blob",
+    "parentA": "Kitten",
+    "parentB": "Blobfish",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/kittyblob.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittyblob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Kitty Rat",
+    "parentA": "Kitten",
+    "parentB": "Naked Mole Rat",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/kittyrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/kittyrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Turtleblob",
+    "parentA": "Turtle",
+    "parentB": "Blobfish",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/turtleblob.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtleblob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Turtlerat",
+    "parentA": "Turtle",
+    "parentB": "Naked Mole Rat",
+    "yield": 16650,
+    "tokenURI": "https://db.zoolabs.io/turtlerat.jpg",
+    "metadataURI": "https://db.zoolabs.io/turtlerat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Penguinfish",
+    "parentA": "Penguin",
+    "parentB": "Blobfish",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/penguinfish.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguinfish.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Penguinrat",
+    "parentA": "Penguin",
+    "parentB": "Naked Mole Rat",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/penguinrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/penguinrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Duckblob",
+    "parentA": "Duckling",
+    "parentB": "Blobfish",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/duckblob.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckblob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Duckrat",
+    "parentA": "Duckling",
+    "parentB": "Naked Mole Rat",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/duckrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/duckrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Orcablob",
+    "parentA": "Orca",
+    "parentB": "Blobfish",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/orcablob.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcablob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Orcarat",
+    "parentA": "Orca",
+    "parentB": "Naked Mole Rat",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/orcarat.jpg",
+    "metadataURI": "https://db.zoolabs.io/orcarat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Elkfish",
+    "parentA": "Elk",
+    "parentB": "Blobfish",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/elkfish.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkfish.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Elk Rat",
+    "parentA": "Elk",
+    "parentB": "Naked Mole Rat",
+    "yield": 17250,
+    "tokenURI": "https://db.zoolabs.io/elkrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/elkrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Pandablob",
+    "parentA": "Panda",
+    "parentB": "Blobfish",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/pandablob.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandablob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Pandarat",
+    "parentA": "Panda",
+    "parentB": "Naked Mole Rat",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/pandarat.jpg",
+    "metadataURI": "https://db.zoolabs.io/pandarat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Gorillablob",
+    "parentA": "Gorilla",
+    "parentB": "Blobfish",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/gorillablob.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillablob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Gorilla Rat",
+    "parentA": "Gorilla",
+    "parentB": "Naked Mole Rat",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/gorillarat.jpg",
+    "metadataURI": "https://db.zoolabs.io/gorillarat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Eleblob",
+    "parentA": "Elephant",
+    "parentB": "Blobfish",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/eleblob.jpg",
+    "metadataURI": "https://db.zoolabs.io/eleblob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Elephrat",
+    "parentA": "Elephant",
+    "parentB": "Naked Mole Rat",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/elephrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/elephrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Lionfish",
+    "parentA": "Lion",
+    "parentB": "Blobfish",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/lionfish.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionfish.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Lion Rat",
+    "parentA": "Lion",
+    "parentB": "Naked Mole Rat",
+    "yield": 18000,
+    "tokenURI": "https://db.zoolabs.io/lionrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/lionrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Bearblob",
+    "parentA": "Bear",
+    "parentB": "Blobfish",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/bearblob.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearblob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Bearrat",
+    "parentA": "Bear",
+    "parentB": "Naked Mole Rat",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/bearrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/bearrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Shlobfish",
+    "parentA": "Shark",
+    "parentB": "Blobfish",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/shlobfish.jpg",
+    "metadataURI": "https://db.zoolabs.io/shlobfish.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Shark Rat",
+    "parentA": "Shark",
+    "parentB": "Naked Mole Rat",
+    "yield": 24000,
+    "tokenURI": "https://db.zoolabs.io/sharkrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/sharkrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Baby Blob",
+    "parentA": "Blobfish",
+    "parentB": "Blobfish",
+    "yield": 31500,
+    "tokenURI": "https://db.zoolabs.io/babyblob.jpg",
+    "metadataURI": "https://db.zoolabs.io/babyblob.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Blobrat",
+    "parentA": "Blobfish",
+    "parentB": "Naked Mole Rat",
+    "yield": 31500,
+    "tokenURI": "https://db.zoolabs.io/blobrat.jpg",
+    "metadataURI": "https://db.zoolabs.io/blobrat.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Naked Blobfish",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Blobfish",
+    "yield": 31500,
+    "tokenURI": "https://db.zoolabs.io/nakedblobfish.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedblobfish.json"
+  },
+  {
+    "rarity": "Epic",
+    "name": "Naked Rat Baby",
+    "parentA": "Naked Mole Rat",
+    "parentB": "Naked Mole Rat",
+    "yield": 31500,
+    "tokenURI": "https://db.zoolabs.io/nakedratbaby.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedratbaby.json"
+  }
+]
