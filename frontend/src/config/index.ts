@@ -1,4 +1,4 @@
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../../config/networks'
 
 const config = {
   [ChainId.MAINNET]: {},

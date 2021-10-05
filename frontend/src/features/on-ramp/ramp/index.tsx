@@ -1,4 +1,4 @@
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../../../config/networks'
 import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk'
 import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../../hooks'
@@ -13,6 +13,7 @@ const DEFAULT_NETWORK = {
 
 const DEFAULT_CRYPTO_CURRENCY = {
   [ChainId.MAINNET]: 'ETH',
+  [ChainId.HARDHAT]: 'ETH',
   [ChainId.BSC]: 'BNB',
   [ChainId.MATIC]: 'MATIC',
 }

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { SUSHI, XSUSHI } from '../../config/tokens'
 
 import Button from '../../components/Button'
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../../config/networks'
 import Container from '../../components/Container'
 import Dots from '../../components/Dots'
 import Head from 'next/head'

@@ -2,11 +2,11 @@ import { NETWORK_ICON, NETWORK_LABEL } from '../../config/networks'
 import React, { FC, Fragment } from 'react'
 import { Trans, useLingui } from '@lingui/react'
 
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../../config/networks'
 import HeadlessUIModal from '../../components/Modal/HeadlessUIModal'
 import Image from 'next/image'
 import NavLink from '../../components/NavLink'
-import { SUPPORTED_NETWORKS } from '../../modals/NetworkModal'
+import { SUPPORTED_NETWORKS } from '../../config/networks'
 import Typography from '../../components/Typography'
 import cookie from 'cookie-cutter'
 import { t } from '@lingui/macro'
@@ -29,8 +29,8 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
   return (
     <>
       <HeadlessUIModal isOpen={!!account && !networks.includes(chainId)} onDismiss={() => null}>
-        <div className="flex flex-col gap-7 justify-center">
-          <Typography variant="h1" className="max-w-2xl text-white text-center" weight={700}>
+        <div className="flex flex-col justify-center gap-7">
+          <Typography variant="h1" className="max-w-2xl text-center text-white" weight={700}>
             {i18n._(t`Roll it back - this feature is not yet supported on ${NETWORK_LABEL[chainId]}.`)}
           </Typography>
           <Typography className="text-center">
@@ -51,7 +51,7 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
           >
             {networks.map((key: ChainId, idx: number) => (
               <button
-                className="text-primary hover:text-white flex items-center flex-col gap-2 justify-start"
+                className="flex flex-col items-center justify-start gap-2 text-primary hover:text-white"
                 key={idx}
                 onClick={() => {
                   const params = SUPPORTED_NETWORKS[key]

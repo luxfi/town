@@ -1,5 +1,5 @@
 import { AppDispatch } from '../state'
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../config/networks'
 import { TokenList } from '@uniswap/token-lists'
 import { fetchTokenList } from '../state/lists/actions'
 import { getNetworkLibrary } from '../functions/getNetworkLibrary'

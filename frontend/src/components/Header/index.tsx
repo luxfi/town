@@ -37,26 +37,27 @@ function AppBar(): JSX.Element {
             <div className="px-4 py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <Image src="/logo.png" alt="Sushi" width="32px" height="32px" />
+                  <div className="logo">Lux Town</div>
+                  {/* <Image src="/logo.png" alt="Sushi" width="32px" height="32px" /> */}
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/swap">
+                      {/* <NavLink href="/swap">
                         <a
                           id={`swap-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Swap`)}
                         </a>
-                      </NavLink>
-                      <NavLink href="/pool">
+                      </NavLink> */}
+                      {/* <NavLink href="/pool">
                         <a
                           id={`pool-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Pool`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       {chainId && featureEnabled(Feature.MIGRATE, chainId) && (
                         <NavLink href={'/migrate'}>
                           <a
@@ -113,7 +114,7 @@ function AppBar(): JSX.Element {
 
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
-                    {chainId && [ChainId.MAINNET].includes(chainId) && library && library.provider.isMetaMask && (
+                    {/* {chainId && [ChainId.MAINNET].includes(chainId) && library && library.provider.isMetaMask && (
                       <>
                         <QuestionHelper text={i18n._(t`Add xSUSHI to your MetaMask wallet`)}>
                           <div
@@ -203,7 +204,7 @@ function AppBar(): JSX.Element {
                           </div>
                         </QuestionHelper>
                       </>
-                    )}
+                    )} */}
 
                     {library && library.provider.isMetaMask && (
                       <div className="hidden sm:inline-block">

@@ -13603,6 +13603,11 @@ react-modal@^3.12.1:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
+react-morphing-modal@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-morphing-modal/-/react-morphing-modal-0.2.2.tgz#54a17f7c364adb679904a61c9b995879c6daeeaf"
+  integrity sha512-LW6UMXYIFakbfcbjOAspsZh2xhNaJ5X5Y+29Z1KSUBnj9NpSQuQd+HFWGBTl3bH+3d8/e1DYZZmQgXAgpzLcFQ==
+
 react-popper@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-2.2.5.tgz#1214ef3cec86330a171671a4fbcbeeb65ee58e96"

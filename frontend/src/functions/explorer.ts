@@ -1,4 +1,4 @@
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../config/networks'
 
 const explorers = {
   etherscan: (link: string, data: string, type: 'transaction' | 'token' | 'address' | 'block') => {
@@ -150,6 +150,10 @@ const chains: ChainObject = {
   [ChainId.MOONRIVER]: {
     link: 'https://blockscout.moonriver.moonbeam.network',
     builder: explorers.blockscout,
+  },
+  [ChainId.HARDHAT]: {
+    link: 'https://rinkeby.etherscan.io',
+    builder: explorers.etherscan,
   },
 }
 

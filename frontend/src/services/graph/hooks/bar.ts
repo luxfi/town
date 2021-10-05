@@ -1,4 +1,4 @@
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../../../config/networks'
 import useSWR, { SWRConfiguration } from 'swr'
 import { useActiveWeb3React } from '../../../hooks'
 import { getBar, getBarHistory } from '../fetchers/bar'
