@@ -46,3 +46,5 @@ declare module '@ethersproject/bignumber' {
     toFraction(decimals: BigNumberish, base: BigNumberish): Fraction
   }
 }
+
+declare module 'tailwindcss'

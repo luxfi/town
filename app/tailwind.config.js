@@ -148,7 +148,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-border-gradient-radius'),
+    // require('tailwindcss-border-gradient-radius'),
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.header-border-b': {
