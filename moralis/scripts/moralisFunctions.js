@@ -33,7 +33,7 @@ const DEPLOYMENT = {
 
 const cached = __dirname + '/../../../node_modules/moralis-cached.js'
 const funcJS = fs.readFileSync(__dirname + '/../src/functions.js')
-const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${DEPLOYMENT}/ZooKeeper.json`)
+const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${DEPLOYMENT}/LuxKeeper.json`)
 const cloudFunctions = String(funcJS).replace('0x38', chainID).replace('ZK={}', 'ZK=' + zkJSON)
 
 fs.writeFileSync(cached, cloudFunctions)

@@ -17,10 +17,10 @@ const CHAIN_IDS = {
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
   hardhat:  'Hardhat',
-  testnet:  'Zoo Testnet',
-  mainnet:  'Zoo Mainnet',
-  ethereum: 'Zoo ETH Mainnet',
-  ropsten:  'Zoo ETH (Ropsten)',
+  testnet:  'Lux Testnet',
+  mainnet:  'Lux Mainnet',
+  ethereum: 'Lux ETH Mainnet',
+  ropsten:  'Lux ETH (Ropsten)',
 }[NETWORK]
 
 /**

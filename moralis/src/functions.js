@@ -13,13 +13,13 @@ const actions = {
 }
 
 // Get this enviroment's ZK contract
-async function getZooToken() {
+async function getLuxToken() {
   const web3 = Moralis.web3ByChain(CHAIN)
   return new web3.eth.Contract(ZK.abi, ZK.address)
 }
 
 // Get this enviroment's ZK contract
-async function getZooKeeper() {
+async function getLuxKeeper() {
   const web3 = Moralis.web3ByChain(CHAIN)
   return new web3.eth.Contract(ZK.abi, ZK.address)
 }
@@ -42,8 +42,8 @@ async function getEgg(eggID) {
 
 // Get latest token information from ZK
 async function getToken(tokenID) {
-  const zooKeeper = await getZooKeeper()
-  return await zooKeeper.methods.tokens(tokenID).call()
+  const luxKeeper = await getLuxKeeper()
+  return await luxKeeper.methods.tokens(tokenID).call()
 }
 
 // Is current request confirmed
@@ -417,27 +417,27 @@ Moralis.Cloud.define('transactions', async (request) => {
 })
 
 // Helper to return latest price from CMC
-Moralis.Cloud.define('zooPrice', async (request) => {
-  let zooPrice
-  const CMC_ZOO_TOKEN_ID = 11556
+Moralis.Cloud.define('luxPrice', async (request) => {
+  let luxPrice
+  const CMC_LUX_TOKEN_ID = 11556
   const amount = parseInt(request.params.amount || 0);
-  const ZooPrice = Moralis.Object.extend('ZooPrice')
-  const query = new Moralis.Query(ZooPrice)
-  zooPrice = await query.first()
+  const LuxPrice = Moralis.Object.extend('LuxPrice')
+  const query = new Moralis.Query(LuxPrice)
+  luxPrice = await query.first()
   // Only check every 30 seconds
-  if (zooPrice && zooPrice.get('timestamp') + (1000 * 30) < Date.now()) {
-    const usdPrice = zooPrice.get('quote')?.USD?.price || 0
+  if (luxPrice && luxPrice.get('timestamp') + (1000 * 30) < Date.now()) {
+    const usdPrice = luxPrice.get('quote')?.USD?.price || 0
     return {
-      ...zooPrice,
-      ...zooPrice.attributes,
+      ...luxPrice,
+      ...luxPrice.attributes,
       usdAmount: (amount * parseFloat(usdPrice)).toFixed(2),
     }
   }
 
-  // Fetch latest zoo price
+  // Fetch latest lux price
   const res = await Moralis.Cloud.httpRequest({
     url: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
-    params: 'slug=zoo&convert=USD',
+    params: 'slug=lux&convert=USD',
     headers: {
       'X-CMC_PRO_API_KEY': '0ebe5b28-b584-4a39-b292-e0b3e639fd58',
       'Accept': 'application/json',
@@ -445,14 +445,14 @@ Moralis.Cloud.define('zooPrice', async (request) => {
   })
 
   const { data } = JSON.parse(res.text)
-  zooPrice = data[CMC_ZOO_TOKEN_ID]
-  const usdPrice = zooPrice?.quote?.USD?.price || 0
-  zooPrice = new ZooPrice({...zooPrice, usdPrice })
-  zooPrice.set('timestamp', Date.now())
-  await zooPrice.save()
+  luxPrice = data[CMC_LUX_TOKEN_ID]
+  const usdPrice = luxPrice?.quote?.USD?.price || 0
+  luxPrice = new LuxPrice({...luxPrice, usdPrice })
+  luxPrice.set('timestamp', Date.now())
+  await luxPrice.save()
   return {
-    ...zooPrice,
-    ...zooPrice.attributes,
+    ...luxPrice,
+    ...luxPrice.attributes,
     usdAmount: (amount * parseFloat(usdPrice)).toFixed(2),
   }
 })

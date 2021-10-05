@@ -19,10 +19,10 @@ const CHAIN_IDS = {
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
   hardhat: 'Local Dev Chain',
-  testnet: 'Zoo Testnet',
-  mainnet: 'Zoo Mainnet',
-  ethereum: 'Zoo ETH Mainnet',
-  ropsten: 'Zoo ETH (Ropsten)',
+  testnet: 'Lux Testnet',
+  mainnet: 'Lux Mainnet',
+  ethereum: 'Lux ETH Mainnet',
+  ropsten: 'Lux ETH (Ropsten)',
 }[NETWORK]
 
 const DEPLOYMENT = {
@@ -72,10 +72,10 @@ const getContractPlugins = (contract, contractName) => {
 
   const plugins = [];
 
-  // Loop through events in ZooKeeper ABI
+  // Loop through events in LuxKeeper ABI
   for (let i = 0; i < abiEvents.length; i++) {
     const event = abiEvents[i]
-    const tableName = contractName === 'ZooKeeper' ? event.name : `${contractName}${event.name}`
+    const tableName = contractName === 'LuxKeeper' ? event.name : `${contractName}${event.name}`
     const description = tableName
     const topic = getTopic(event)
 
@@ -190,5 +190,5 @@ const addPlugins = async (contractNames = []) => {
  * Configures the events to subscribe to on a smart contract based on the abi file
  */
 ;(async () => {
-  await addPlugins(['ZooKeeper', 'Market']);
+  await addPlugins(['LuxKeeper', 'Market']);
 })()
