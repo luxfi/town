@@ -1,0 +1,19 @@
+{
+  "name": "@zoolabs/moralis",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "drop": "node ./scripts/moralisDropTables.js",
+    "format": "prettier --write src/* scripts/*",
+    "functions": "node ./scripts/moralisFunctions.js",
+    "logs": "node ./scripts/moralisLogs.js",
+    "plugins": "node ./scripts/moralisPlugins.js",
+    "proxy": "frpc -c frpc.ini",
+    "refresh": "node ./scripts/moralisRefresh.js",
+    "watch": "node ./scripts/moralisWatch.js"
+  },
+  "dependencies": {
+    "moralis-admin-cli": "^2.1.11",
+    "prettier": "^2.3.2"
+  }
+}

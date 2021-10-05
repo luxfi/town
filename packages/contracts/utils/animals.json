@@ -1,0 +1,32 @@
+[
+  { "name": "Pug", "rarity": "Common", "yield": 100, "boost": 1000, "tokenURI": "https://db.zoolabs.io/pug.jpg", "metadataURI": "https://db.zoolabs.io/pug.json" },
+  {
+    "name": "Butterfly",
+    "rarity": "Common",
+    "yield": 100,
+    "boost": 1000,
+    "tokenURI": "https://db.zoolabs.io/butterfly.jpg",
+    "metadataURI": "https://db.zoolabs.io/butterfly.json"
+  },
+  { "name": "Kitten", "rarity": "Common", "yield": 100, "boost": 1000, "tokenURI": "https://db.zoolabs.io/kitten.jpg", "metadataURI": "https://db.zoolabs.io/kitten.json" },
+  { "name": "Turtle", "rarity": "Common", "yield": 100, "boost": 1000, "tokenURI": "https://db.zoolabs.io/turtle.jpg", "metadataURI": "https://db.zoolabs.io/turtle.json" },
+  { "name": "Penguin", "rarity": "Uncommon", "yield": 200, "boost": 5000, "tokenURI": "https://db.zoolabs.io/penguin.jpg", "metadataURI": "https://db.zoolabs.io/penguin.json" },
+  { "name": "Duckling", "rarity": "Uncommon", "yield": 200, "boost": 5000, "tokenURI": "https://db.zoolabs.io/duckling.jpg", "metadataURI": "https://db.zoolabs.io/duckling.json" },
+  { "name": "Orca", "rarity": "Uncommon", "yield": 200, "boost": 5000, "tokenURI": "https://db.zoolabs.io/orca.jpg", "metadataURI": "https://db.zoolabs.io/orca.json" },
+  { "name": "Elk", "rarity": "Uncommon", "yield": 200, "boost": 5000, "tokenURI": "https://db.zoolabs.io/elk.jpg", "metadataURI": "https://db.zoolabs.io/elk.json" },
+  { "name": "Panda", "rarity": "Rare", "yield": 500, "boost": 10000, "tokenURI": "https://db.zoolabs.io/panda.jpg", "metadataURI": "https://db.zoolabs.io/panda.json" },
+  { "name": "Gorilla", "rarity": "Rare", "yield": 500, "boost": 10000, "tokenURI": "https://db.zoolabs.io/gorilla.jpg", "metadataURI": "https://db.zoolabs.io/gorilla.json" },
+  { "name": "Elephant", "rarity": "Rare", "yield": 500, "boost": 10000, "tokenURI": "https://db.zoolabs.io/elephant.jpg", "metadataURI": "https://db.zoolabs.io/elephant.json" },
+  { "name": "Lion", "rarity": "Rare", "yield": 500, "boost": 10000, "tokenURI": "https://db.zoolabs.io/lion.jpg", "metadataURI": "https://db.zoolabs.io/lion.json" },
+  { "name": "Bear", "rarity": "Super Rare", "yield": 1000, "boost": 50000, "tokenURI": "https://db.zoolabs.io/bear.jpg", "metadataURI": "https://db.zoolabs.io/bear.json" },
+  { "name": "Shark", "rarity": "Super Rare", "yield": 1000, "boost": 50000, "tokenURI": "https://db.zoolabs.io/shark.jpg", "metadataURI": "https://db.zoolabs.io/shark.json" },
+  { "name": "Blobfish", "rarity": "Epic", "yield": 1500, "boost": 100000, "tokenURI": "https://db.zoolabs.io/blobfish.jpg", "metadataURI": "https://db.zoolabs.io/blobfish.json" },
+  {
+    "name": "Naked Mole Rat",
+    "rarity": "Epic",
+    "yield": 1500,
+    "boost": 100000,
+    "tokenURI": "https://db.zoolabs.io/nakedmolerat.jpg",
+    "metadataURI": "https://db.zoolabs.io/nakedmolerat.json"
+  }
+]
