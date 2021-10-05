@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true yarn build && serve .next -n",
-    "dev": "next dev",
+    "start": "next dev",
     "inspect": "NODE_OPTIONS='--inspect' next dev",
     "build": "yarn lingui && next build",
-    "start": "next start",
+    "start:prod": "next start",
     "lingui": "lingui extract --clean --overwrite && lingui compile",
     "lokalise": "lokalise2 --config lokalise.yaml file download --format po --unzip-to . --original-filenames=false",
     "circular": "madge --circular src --extensions ts,tsx,js,jsx",
