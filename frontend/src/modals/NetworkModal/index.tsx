@@ -1,177 +1,20 @@
-import { NETWORK_ICON, NETWORK_LABEL } from '../../config/networks'
+import {
+  AVAILABLE_NETWORKS,
+  DEFAULT_METAMASK_CHAIN_ID,
+  NETWORK_ICON,
+  NETWORK_LABEL,
+  SUPPORTED_NETWORKS,
+} from '../../config/networks'
 import { useModalOpen, useNetworkModalToggle } from '../../state/application/hooks'
 
 import { ApplicationModal } from '../../state/application/actions'
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../../config/networks'
 import Image from 'next/image'
 import Modal from '../../components/Modal'
 import ModalHeader from '../../components/ModalHeader'
 import React from 'react'
 import cookie from 'cookie-cutter'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
-
-export const SUPPORTED_NETWORKS: {
-  [chainId in ChainId]?: {
-    chainId: string
-    chainName: string
-    nativeCurrency: {
-      name: string
-      symbol: string
-      decimals: number
-    }
-    rpcUrls: string[]
-    blockExplorerUrls: string[]
-  }
-} = {
-  [ChainId.MAINNET]: {
-    chainId: '0x1',
-    chainName: 'Ethereum',
-    nativeCurrency: {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      decimals: 18,
-    },
-    rpcUrls: ['https://mainnet.infura.io/v3'],
-    blockExplorerUrls: ['https://etherscan.com'],
-  },
-  [ChainId.FANTOM]: {
-    chainId: '0xfa',
-    chainName: 'Fantom',
-    nativeCurrency: {
-      name: 'Fantom',
-      symbol: 'FTM',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpcapi.fantom.network'],
-    blockExplorerUrls: ['https://ftmscan.com'],
-  },
-  [ChainId.BSC]: {
-    chainId: '0x38',
-    chainName: 'Binance Smart Chain',
-    nativeCurrency: {
-      name: 'Binance Coin',
-      symbol: 'BNB',
-      decimals: 18,
-    },
-    rpcUrls: ['https://bsc-dataseed.binance.org'],
-    blockExplorerUrls: ['https://bscscan.com'],
-  },
-  [ChainId.MATIC]: {
-    chainId: '0x89',
-    chainName: 'Matic',
-    nativeCurrency: {
-      name: 'Matic',
-      symbol: 'MATIC',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc-mainnet.maticvigil.com'], // ['https://matic-mainnet.chainstacklabs.com/'],
-    blockExplorerUrls: ['https://explorer-mainnet.maticvigil.com'],
-  },
-  [ChainId.HECO]: {
-    chainId: '0x80',
-    chainName: 'Heco',
-    nativeCurrency: {
-      name: 'Heco Token',
-      symbol: 'HT',
-      decimals: 18,
-    },
-    rpcUrls: ['https://http-mainnet.hecochain.com'],
-    blockExplorerUrls: ['https://hecoinfo.com'],
-  },
-  [ChainId.XDAI]: {
-    chainId: '0x64',
-    chainName: 'xDai',
-    nativeCurrency: {
-      name: 'xDai Token',
-      symbol: 'xDai',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc.xdaichain.com'],
-    blockExplorerUrls: ['https://blockscout.com/poa/xdai'],
-  },
-  [ChainId.HARMONY]: {
-    chainId: '0x63564C40',
-    chainName: 'Harmony',
-    nativeCurrency: {
-      name: 'One Token',
-      symbol: 'ONE',
-      decimals: 18,
-    },
-    rpcUrls: [
-      'https://api.harmony.one',
-      'https://s1.api.harmony.one',
-      'https://s2.api.harmony.one',
-      'https://s3.api.harmony.one',
-    ],
-    blockExplorerUrls: ['https://explorer.harmony.one/'],
-  },
-  [ChainId.AVALANCHE]: {
-    chainId: '0xA86A',
-    chainName: 'Avalanche',
-    nativeCurrency: {
-      name: 'Avalanche Token',
-      symbol: 'AVAX',
-      decimals: 18,
-    },
-    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-    blockExplorerUrls: ['https://cchain.explorer.avax.network'],
-  },
-  [ChainId.OKEX]: {
-    chainId: '0x42',
-    chainName: 'OKEx',
-    nativeCurrency: {
-      name: 'OKEx Token',
-      symbol: 'OKT',
-      decimals: 18,
-    },
-    rpcUrls: ['https://exchainrpc.okex.org'],
-    blockExplorerUrls: ['https://www.oklink.com/okexchain'],
-  },
-  [ChainId.ARBITRUM]: {
-    chainId: '0xA4B1',
-    chainName: 'Arbitrum',
-    nativeCurrency: {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      decimals: 18,
-    },
-    rpcUrls: ['https://arb1.arbitrum.io/rpc'],
-    blockExplorerUrls: ['https://mainnet-arb-explorer.netlify.app'],
-  },
-  [ChainId.CELO]: {
-    chainId: '0xA4EC',
-    chainName: 'Celo',
-    nativeCurrency: {
-      name: 'Celo',
-      symbol: 'CELO',
-      decimals: 18,
-    },
-    rpcUrls: ['https://forno.celo.org'],
-    blockExplorerUrls: ['https://explorer.celo.org'],
-  },
-  [ChainId.PALM]: {
-    chainId: '0x2A15C308D',
-    chainName: 'Palm',
-    nativeCurrency: {
-      name: 'Palm',
-      symbol: 'PALM',
-      decimals: 18,
-    },
-    rpcUrls: ['https://palm-mainnet.infura.io/v3/da5fbfafcca14b109e2665290681e267'],
-    blockExplorerUrls: ['https://explorer.palm.io'],
-  },
-  [ChainId.MOONRIVER]: {
-    chainId: '0x505',
-    chainName: 'Moonriver',
-    nativeCurrency: {
-      name: 'Moonriver',
-      symbol: 'MOVR',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc.moonriver.moonbeam.network'],
-    blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network'],
-  },
-}
 
 export default function NetworkModal(): JSX.Element | null {
   const { chainId, library, account } = useActiveWeb3React()
@@ -189,21 +32,7 @@ export default function NetworkModal(): JSX.Element | null {
       </div>
 
       <div className="grid grid-flow-row-dense grid-cols-1 gap-5 overflow-y-auto md:grid-cols-2">
-        {[
-          ChainId.MAINNET,
-          ChainId.MATIC,
-          ChainId.FANTOM,
-          ChainId.ARBITRUM,
-          ChainId.OKEX,
-          ChainId.HECO,
-          ChainId.BSC,
-          ChainId.XDAI,
-          ChainId.HARMONY,
-          ChainId.AVALANCHE,
-          ChainId.CELO,
-          ChainId.PALM,
-          ChainId.MOONRIVER,
-        ].map((key: ChainId, i: number) => {
+        {AVAILABLE_NETWORKS.map((key: number, i: number) => {
           if (chainId === key) {
             return (
               <button key={i} className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-pink">
@@ -227,8 +56,9 @@ export default function NetworkModal(): JSX.Element | null {
                 toggleNetworkModal()
                 const params = SUPPORTED_NETWORKS[key]
                 cookie.set('chainId', key)
-                if (key === ChainId.MAINNET) {
-                  library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
+                console.log('NetworkModal.onClick', { chainId: params.chainId })
+                if (DEFAULT_METAMASK_CHAIN_ID.includes(key)) {
+                  library?.send('wallet_switchEthereumChain', [{ chainId: params.chainId }, account])
                 } else {
                   library?.send('wallet_addEthereumChain', [params, account])
                 }

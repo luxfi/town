@@ -1,5 +1,5 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '../config/networks'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { NetworkConnector } from '../entities/NetworkConnector'
 import RPC from './rpc'
@@ -78,6 +78,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
           42220, // celo
           11297108109, // palm
           1285, // moonriver
+          1337,
         ],
         // pollingInterval: 15000,
       })
