@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true yarn build && serve .next -n",
-    "start": "next dev",
+    "dev": "next dev",
+    "start": "next start",
     "inspect": "NODE_OPTIONS='--inspect' next dev",
     "build": "yarn lingui && next build",
     "start:prod": "next start",
@@ -12,7 +13,6 @@
     "lokalise": "lokalise2 --config lokalise.yaml file download --format po --unzip-to . --original-filenames=false",
     "circular": "madge --circular src --extensions ts,tsx,js,jsx",
     "unused": "next-unused",
-    "prepare": "husky install",
     "pre-commit": "lint-staged",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
     "lint": "next lint",
