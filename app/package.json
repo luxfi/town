@@ -169,5 +169,8 @@
     "not ie 11",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "dependencies": {
+    "react-morphing-modal": "^0.2.2"
+  }
 }
