@@ -79,3 +79,9 @@ input:focus {
   border-radius: 9999px;
   background-color: #BFBFBF;
 } */
+
+.logo {
+  font-family: 'Open Sans', sans-serif, Arial, Helvetica;
+  font-weight: 900;
+  font-size: 20px;
+}

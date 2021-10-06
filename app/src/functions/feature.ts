@@ -12,6 +12,17 @@ export enum Feature {
   STAKING = 'Staking',
 }
 
+const globalFeatures = [
+  // Feature.AMM,
+  // Feature.LIQUIDITY_MINING,
+  // Feature.BENTOBOX,
+  // Feature.KASHI,
+  // Feature.MIGRATE,
+  // Feature.ANALYTICS,
+  // Feature.STAKING,
+  // Feature.MISO,
+]
+
 const features = {
   [ChainId.MAINNET]: [
     Feature.AMM,
@@ -52,7 +63,7 @@ const features = {
 }
 
 export function featureEnabled(feature: Feature, chainId: ChainId): boolean {
-  return features?.[chainId]?.includes(feature)
+  return features?.[chainId]?.includes(feature) && globalFeatures.includes(feature)
 }
 
 export function chainsWithFeature(feature: Feature): ChainId[] {
