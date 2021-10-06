@@ -65,6 +65,12 @@
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/@openzeppelin/contracts-upgradeable/**",
+      "**/@openzeppelin/contracts",
+      "**/@luxdefi/framework",
+      "**/@luxdefi/solidity"
     ]
   }
 }
