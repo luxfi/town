@@ -15,6 +15,7 @@
     "build": "yarn workspace @luxdefi/app build --max-old-space-size=12288",
     "build:lab": "yarn workspace @luxdefi/lab build --max-old-space-size=12288",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
+    "dev": "yarn workspace @luxdefi/app dev",
     "start": "yarn workspace @luxdefi/app start",
     "start:lab": "yarn workspace @luxdefi/lab start",
     "account": "yarn workspace @luxdefi/contracts account",
