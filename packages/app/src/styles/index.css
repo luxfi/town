@@ -10,6 +10,8 @@
 
 @tailwind utilities;
 
+@import './react-morphing-modal.css';
+
 *,
 *:before,
 *:after {
