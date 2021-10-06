@@ -1,6 +1,6 @@
 // 13_zookeeper.ts
 
-import { Deploy } from 'luxdefi/contracts/utils/deploy'
+import { Deploy } from '@luxdefi/contracts/utils/deploy'
 
 export default Deploy('ZooKeeper', {
     dependencies: ['Bridge', 'Media', 'ZOO', 'BNB', 'Market', 'UniswapV2Factory', 'UniswapV2Pair'],

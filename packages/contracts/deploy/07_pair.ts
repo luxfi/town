@@ -1,6 +1,6 @@
 //// 07_pair.ts
 
-import { Deploy } from 'luxdefi/contracts/utils/deploy'
+import { Deploy } from '@luxdefi/contracts/utils/deploy'
 
 export default Deploy('UniswapV2Pair', {dependencies: ['BNB', 'ZOO', 'UniswapV2Factory', 'UniswapV2Router02']}, async({ ethers, hre, deploy, deployments, deps, signers }) => {
   // Import so we have the JSON
