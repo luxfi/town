@@ -129,7 +129,7 @@ contract AppV2 is UUPSUpgradeable, OwnableUpgradeable {
     emit Remint(owner, token.id, chainID);
   }
 
-  // Accept ZOO and return Egg NFT
+  // Accept LUX and return Egg NFT
   function buyEggs(uint256 dropID, uint256 quantity) public {
     console.log('buyEggs', dropID, quantity);
     for (uint8 i = 0; i < quantity; i++) {
@@ -137,7 +137,7 @@ contract AppV2 is UUPSUpgradeable, OwnableUpgradeable {
     }
   }
 
-  // Accept ZOO and return Egg NFT
+  // Accept LUX and return Egg NFT
   function buyEgg(uint256 dropID) public returns (ILux.Token memory) {
     require(unlocked, 'Game is not unlocked yet');
     require(media.balanceOf(msg.sender) < 3, 'Only 3 eggs allowed');
@@ -146,7 +146,7 @@ contract AppV2 is UUPSUpgradeable, OwnableUpgradeable {
 
     // Check egg price
     IDrop drop = IDrop(drops[dropID]);
-    require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), 'ZK: Not Enough ZOO to purchase Egg');
+    require(zoo.balanceOf(msg.sender) >= drop.eggPrice(), 'ZK: Not Enough LUX to purchase Egg');
 
     // Transfer funds
     console.log('zoo.transferFrom', msg.sender, address(this), drop.eggPrice());
@@ -208,7 +208,7 @@ contract AppV2 is UUPSUpgradeable, OwnableUpgradeable {
     return egg;
   }
 
-  // Freeing an animal burns the animal NFT and returns the ZOO to the owner
+  // Freeing an animal burns the animal NFT and returns the LUX to the owner
   function freeAnimal(uint256 tokenID) public returns (uint256 yield) {
     console.log('freeAnimal', tokenID);
 
@@ -240,7 +240,7 @@ contract AppV2 is UUPSUpgradeable, OwnableUpgradeable {
 
   // Buy a custom name for your NFT
   function buyName(uint256 tokenID, string memory customName) public {
-    require(zoo.balanceOf(msg.sender) < namePrice, 'ZK: Not enough ZOO to purchase Name');
+    require(zoo.balanceOf(msg.sender) < namePrice, 'ZK: Not enough LUX to purchase Name');
 
     zoo.transferFrom(msg.sender, address(this), namePrice);
 
@@ -319,12 +319,12 @@ contract AppV2 is UUPSUpgradeable, OwnableUpgradeable {
     return false;
   }
 
-  // Return total amount of ZOO in contract
+  // Return total amount of LUX in contract
   function zooSupply() public view returns (uint256) {
     return zoo.balanceOf(address(this));
   }
 
-  // // Enable owner to withdraw ZOO if necessary
+  // // Enable owner to withdraw LUX if necessary
   // function zooWithdraw(address receiver, uint256 amount) public onlyOwner returns (bool) {
   //   return zoo.transfer(receiver, amount);
   // }

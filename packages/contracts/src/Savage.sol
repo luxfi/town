@@ -142,7 +142,7 @@ contract Savage {
         return pair;
     }
 
-    // Enable owner to withdraw ZOO if necessary
+    // Enable owner to withdraw LUX if necessary
     function withdrawAll(address receiver) public onlyOwner {
         require(receiver != address(0));
 
@@ -180,7 +180,7 @@ contract Savage {
         return B.balanceOf(address(this));
     }
 
-    function balanceZOO() public view returns (uint256) {
+    function balanceLUX() public view returns (uint256) {
         return C.balanceOf(address(this));
     }
 

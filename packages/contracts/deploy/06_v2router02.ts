@@ -8,6 +8,6 @@ export default Deploy('UniswapV2Router02', {dependencies: ['WETH', 'UniswapV2Fac
 
   await deploy(
     [UniswapV2Factory.address, WETH.address],
-    // ['SafeMath', 'UniswapV2Library', 'TransferHelper']
+    ['SafeMath', 'UniswapV2Library', 'TransferHelper']
   )
 })

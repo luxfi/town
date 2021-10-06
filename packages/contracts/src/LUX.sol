@@ -11,14 +11,14 @@ import { Pausable } from "@openzeppelin/contracts/security/Pausable.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 
-contract ZOO is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
+contract LUX is ERC20, ERC20Burnable, Pausable, Ownable, AccessControl {
     using SafeERC20 for IERC20;
 
     bytes32 public constant BLACKLIST = keccak256("BLACKLIST");
     address public bridge;
     uint256 airdropEnd;
 
-    constructor () ERC20("ZOO", "ZOO") {
+    constructor () ERC20("LUX", "LUX") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         // _pause(); // mainnet launch in paused state
     }
