@@ -1,6 +1,6 @@
 // 14_drop.ts
 
-import { Deploy } from '@zoolabs/contracts/utils/deploy'
+import { Deploy } from 'luxdefi/contracts/utils/deploy'
 
 import configureGame from '../utils/configureGame'
 

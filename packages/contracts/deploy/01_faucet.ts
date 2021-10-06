@@ -1,6 +1,6 @@
 // 01_faucet.ts
 
-import { Deploy } from '@zoolabs/contracts/utils/deploy'
+import { Deploy } from 'luxdefi/contracts/utils/deploy'
 
 export default Deploy('Faucet', { dependencies: ['ZOO'] }, async({ ethers, deploy, deployments, deps, hre }) => {
   const token = await ethers.getContract('ZOO')
