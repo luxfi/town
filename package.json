@@ -63,16 +63,7 @@
   },
   "workspaces": {
     "packages": [
-      "app",
-      "contracts",
-      "moralis"
-    ],
-    "nohoist": [
-      "**/@openzeppelin/contracts-upgradeable/**",
-      "**/@openzeppelin/contracts",
-      "**/@luxdefi/framework",
-      "@luxdefi/solidity",
-      "**/tailwindcss-border-gradient-radius"
+      "packages/*"
     ]
   }
 }
