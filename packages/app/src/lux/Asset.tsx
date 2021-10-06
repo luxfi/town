@@ -1,15 +1,15 @@
 import React from 'react'
 import { useModal } from 'react-morphing-modal'
-import { classNames } from '../functions/styling'
 import AssetCard from './AssetCard'
 import AssetModal from './AssetModal'
 
 type AssetProps = {
   tokenId: number
   type: string
+  otc: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
-function Asset({ tokenId, type }: AssetProps) {
+function Asset({ tokenId, type, otc = false }: AssetProps) {
   const { modalProps, getTriggerProps } = useModal({
     background: 'black',
   })
@@ -17,7 +17,7 @@ function Asset({ tokenId, type }: AssetProps) {
   return (
     <>
       <AssetCard tokenId={tokenId} type={type} getTriggerProps={getTriggerProps} />
-      <AssetModal tokenId={tokenId} type={type} modalProps={modalProps} />
+      <AssetModal tokenId={tokenId} type={type} modalProps={modalProps} otc={otc} />
     </>
   )
 }

@@ -26,10 +26,10 @@ export default function Dashboard() {
         <br />
         <br />
       </div>
-      <div className="grid grid-cols-1 gap-30 md:grid-cols-3 xl:grid-cols-3">
-        {owned.map((asset) => {
-          return <Asset key={asset.tokenId} {...asset} />
-        })}
+      <div className="grid grid-cols-1 gap-20 md:grid-cols-3 xl:grid-cols-3">
+        {owned.map((asset) => (
+          <Asset key={asset.tokenId} {...asset} />
+        ))}
       </div>
     </Container>
   )

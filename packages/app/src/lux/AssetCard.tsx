@@ -24,12 +24,12 @@ function AssetCard(props: AssetCardProps) {
             src="https://www.geeky-gadgets.com/wp-content/uploads/2011/04/Collector-USB-Flash-Drive-Concept-b.jpg"
             className="object-cover w-full max-h-100"
           />
-          <div className="w-full p-4 dark:bg-gray-800">
+          <div className="w-full p-4 bg-gray-900">
             <p className="font-medium text-indigo-500 text-md"></p>
-            <p className="mb-2 text-xl font-medium dark:text-white">
+            <p className="mb-2 text-xl font-medium text-center text-white">
               {props.type} #{props.tokenId}
             </p>
-            <p className="font-light text-gray-400 dark:text-gray-300 text-md">Some description...</p>
+            {/* <p className="font-light text-gray-300 text-gray-400 text-md">Some description...</p> */}
           </div>
         </a>
       </div>

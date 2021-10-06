@@ -1,6 +1,4 @@
 // Bootstrap...
-import 'react-morphing-modal/dist/ReactMorphingModal.css'
-
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
 import Fraction from './entities/Fraction'
