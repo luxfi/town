@@ -6,7 +6,7 @@ pragma experimental ABIEncoderV2;
 
 import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { IMarket } from './IMarket.sol';
-import { IZoo } from './IZoo.sol';
+import { ILux } from './ILux.sol';
 
 /**
  * @title Interface for Zoo Protocol's Media
@@ -107,7 +107,7 @@ interface IMedia is IERC721 {
   ) external;
 
   // Added for Zoo
-  function mintToken(address owner, IZoo.Token memory tokenID) external returns (IZoo.Token memory);
+  function mintToken(address owner, ILux.Token memory tokenID) external returns (ILux.Token memory);
 
   function burnToken(address owner, uint256 tokenID) external;
 

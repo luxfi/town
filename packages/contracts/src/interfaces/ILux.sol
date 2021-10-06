@@ -5,7 +5,7 @@ pragma solidity >=0.8.4;
 import { IMedia } from "./IMedia.sol";
 import { IMarket } from "./IMarket.sol";
 
-interface IZoo {
+interface ILux {
     enum Type {
         BASE_EGG,
         BASE_ANIMAL,

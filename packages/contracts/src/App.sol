@@ -27,7 +27,9 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
   Counters.Counter private dropIDs;
 
   // Declare an Event
+  event AddDrop(address indexed dropAddress, string title, uint256 indexed totalSupply);
   event Burn(address indexed from, uint256 indexed tokenID);
+  event BuyNFT(address indexed owner, uint256 indexed tokenID);
   event Mint(address indexed from, uint256 indexed tokenID);
   event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainID);
 

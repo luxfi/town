@@ -463,14 +463,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
       );
   }
 
-  function _hashToken(address owner, IZoo.Token memory token) private view returns (IZoo.Token memory) {
+  function _hashToken(address owner, ILux.Token memory token) private view returns (ILux.Token memory) {
     console.log('_hashToken', token.data.tokenURI, token.data.metadataURI);
     token.data.contentHash = keccak256(abi.encodePacked(token.data.tokenURI, block.number, owner));
     token.data.metadataHash = keccak256(abi.encodePacked(token.data.metadataURI, block.number, owner));
     return token;
   }
 
-  function mintToken(address owner, IZoo.Token memory token) external override nonReentrant returns (IZoo.Token memory) {
+  function mintToken(address owner, ILux.Token memory token) external override nonReentrant returns (ILux.Token memory) {
     console.log('mintToken', owner, token.name);
     token = _hashToken(owner, token);
     _mintForCreator(owner, token.data, token.bidShares);

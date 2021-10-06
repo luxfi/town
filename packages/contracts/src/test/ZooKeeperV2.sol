@@ -13,11 +13,11 @@ import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils
 
 import { IDrop } from '../interfaces/IDrop.sol';
 import { IMedia } from '../interfaces/IMedia.sol';
-import { IZoo } from '../interfaces/IZoo.sol';
+import { ILux } from '../interfaces/ILux.sol';
 
 import '../console.sol';
 
-contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
+contract AppV2 is UUPSUpgradeable, OwnableUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
@@ -41,7 +41,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   mapping(address => uint256) public dropAddresses;
 
   // Mapping of ID to NFT
-  mapping(uint256 => IZoo.Token) public tokens;
+  mapping(uint256 => ILux.Token) public tokens;
 
   // Price to set name of Token
   uint256 public namePrice;
@@ -90,7 +90,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Issue a new token to owner
-  function mint(address owner, IZoo.Token memory token) private returns (IZoo.Token memory) {
+  function mint(address owner, ILux.Token memory token) private returns (ILux.Token memory) {
     console.log('mint', owner, token.name);
     token = media.mintToken(owner, token);
     tokens[token.id] = token;
@@ -121,7 +121,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   // Swap from new chain requested
   function remint(
     address owner,
-    IZoo.Token memory token,
+    ILux.Token memory token,
     uint256 chainID
   ) external onlyBridge {
     console.log('remint', owner, token.id, chainID);
@@ -138,7 +138,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Accept ZOO and return Egg NFT
-  function buyEgg(uint256 dropID) public returns (IZoo.Token memory) {
+  function buyEgg(uint256 dropID) public returns (ILux.Token memory) {
     require(unlocked, 'Game is not unlocked yet');
     require(media.balanceOf(msg.sender) < 3, 'Only 3 eggs allowed');
 
@@ -153,7 +153,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
     zoo.transferFrom(msg.sender, address(this), drop.eggPrice());
 
     // Get Egg from this drop
-    IZoo.Token memory egg = drop.newEgg();
+    ILux.Token memory egg = drop.newNFT();
 
     // Mint Egg Token
     egg = mint(msg.sender, egg);
@@ -165,7 +165,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Burn egg and randomly return an animal NFT
-  function hatchEgg(uint256 dropID, uint256 eggID) public returns (IZoo.Token memory) {
+  function hatchEgg(uint256 dropID, uint256 eggID) public returns (ILux.Token memory) {
     require(unlocked, 'Game is not unlocked yet');
 
     console.log('hatchEgg', dropID, eggID);
@@ -173,7 +173,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
     require(media.tokenExists(eggID), 'Egg is burned or does not exist');
 
     // Get animal for given Egg
-    IZoo.Token memory animal = getAnimal(dropID, eggID);
+    ILux.Token memory animal = getAnimal(dropID, eggID);
     animal.meta.eggID = eggID;
     animal.meta.dropID = dropID;
     console.log('animal', animal.name);
@@ -195,10 +195,10 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
     uint256 dropID,
     uint256 tokenA,
     uint256 tokenB
-  ) public canBreed(tokenA, tokenB) returns (IZoo.Token memory) {
+  ) public canBreed(tokenA, tokenB) returns (ILux.Token memory) {
     console.log('breedAnimals', dropID, tokenA, tokenB);
 
-    IZoo.Token memory egg = IDrop(drops[dropID]).newHybridEgg(IZoo.Parents({ animalA: tokens[tokenA].name, animalB: tokens[tokenB].name, tokenA: tokenA, tokenB: tokenB }));
+    ILux.Token memory egg = IDrop(drops[dropID]).newHybridEgg(ILux.Parents({ animalA: tokens[tokenA].name, animalB: tokens[tokenB].name, tokenA: tokenA, tokenB: tokenB }));
 
     // Update breeding delay for each parent
     updateBreedDelays(tokenA, tokenB);
@@ -212,7 +212,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   function freeAnimal(uint256 tokenID) public returns (uint256 yield) {
     console.log('freeAnimal', tokenID);
 
-    IZoo.Token memory token = tokens[tokenID];
+    ILux.Token memory token = tokens[tokenID];
 
     // Burn the token
     burn(msg.sender, tokenID);
@@ -244,7 +244,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
 
     zoo.transferFrom(msg.sender, address(this), namePrice);
 
-    IZoo.Token memory token = tokens[tokenID];
+    ILux.Token memory token = tokens[tokenID];
     token.customName = customName;
     tokens[tokenID] = token;
   }
@@ -257,7 +257,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
 
   // Ensure base animal
   function isBaseAnimal(uint256 tokenID) private view returns (bool) {
-    return tokens[tokenID].kind == IZoo.Type.BASE_ANIMAL;
+    return tokens[tokenID].kind == ILux.Type.BASE_ANIMAL;
   }
 
   // Ensure animals can breed
@@ -272,14 +272,14 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Get a random base or hybrid animal based on a given egg
-  function getAnimal(uint256 dropID, uint256 eggID) private view returns (IZoo.Token memory) {
+  function getAnimal(uint256 dropID, uint256 eggID) private view returns (ILux.Token memory) {
     console.log('getAnimal', dropID, eggID);
 
     // Get Egg
-    IZoo.Token memory egg = tokens[eggID];
+    ILux.Token memory egg = tokens[eggID];
 
     // Get random animal or hybrid from Drop
-    if (egg.kind == IZoo.Type.BASE_EGG) {
+    if (egg.kind == ILux.Type.BASE_EGG) {
       console.log('getRandomAnimal', dropID, eggID);
       return IDrop(drops[dropID]).getRandomAnimal(unsafeRandom());
     } else {
@@ -300,7 +300,7 @@ contract ZooKeeperV2 is UUPSUpgradeable, OwnableUpgradeable {
 
   // Get next timestamp token can be bred
   function breedNext(uint256 tokenID) public view returns (uint256) {
-    IZoo.Token memory token = tokens[tokenID];
+    ILux.Token memory token = tokens[tokenID];
     return token.breed.timestamp + (token.breed.count * 1 days);
   }
 
