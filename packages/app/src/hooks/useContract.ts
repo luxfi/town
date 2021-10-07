@@ -156,7 +156,8 @@ export function useBoringHelperContract(): Contract | null {
 
 export function useMulticall2Contract() {
   const { chainId } = useActiveWeb3React()
-  return useContract(chainId ? MULTICALL2_ADDRESS[chainId] : 'Multicall2', MULTICALL2_ABI, false)
+  const contractAddressOrName = MULTICALL2_ADDRESS[chainId] || 'Multicall2'
+  return useContract(contractAddressOrName, MULTICALL2_ABI, false)
 }
 
 export function useSushiContract(withSignerIfPossible = true): Contract | null {
