@@ -3,9 +3,17 @@ import { HiOutlineChevronLeft } from 'react-icons/hi'
 
 import AssetCard from './AssetCard'
 import { useState } from 'react'
+import { useActiveWeb3React } from '../hooks'
+import { useETHBalances } from '../state/wallet/hooks'
+import Dots from '../components/Dots'
+import { t } from '@lingui/macro'
+import { i18n } from '@lingui/core'
+import { shortenAddress } from '../functions'
 
 const AssetModal = ({ tokenId, type, modalProps, close, otc }) => {
   const [showHow, setShowHow] = useState(false)
+  const { chainId, account } = useActiveWeb3React()
+  const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   return (
     <Modal {...modalProps} padding={0} closeButton={false} close={close}>
@@ -38,7 +46,20 @@ const AssetModal = ({ tokenId, type, modalProps, close, otc }) => {
               </div>
             ) : (
               <div>
-                <div className="pb-4 text-2xl text-center">Balance: 10000 ETH</div>
+                <div className="py-3 text-right">
+                  <div className="text-gray-500 ">{account && shortenAddress(account)}</div>
+                  <div className="text-xl ">
+                    {account && chainId && (
+                      <>
+                        {userEthBalance ? (
+                          <div>Balance {userEthBalance?.toSignificant(4)} ETH</div>
+                        ) : (
+                          <Dots>{i18n._(t`Loading`)}</Dots>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </div>
                 <button
                   type="button"
                   className="w-full px-4 py-3 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2 "

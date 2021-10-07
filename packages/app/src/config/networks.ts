@@ -1,7 +1,7 @@
 import { ChainId as SushiChainId } from '@sushiswap/sdk'
 import { isEnvironment } from '../functions/environment'
 
-enum ExtraChainId {
+export enum ExtraChainId {
   HARDHAT = 1337,
 }
 

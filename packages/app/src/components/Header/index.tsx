@@ -1,4 +1,4 @@
-import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from '@sushiswap/sdk'
+import { Currency, NATIVE, SUSHI_ADDRESS } from '@sushiswap/sdk'
 import { Feature, featureEnabled } from '../../functions/feature'
 import React, { useEffect, useState } from 'react'
 
@@ -18,6 +18,7 @@ import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { useLingui } from '@lingui/react'
+import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
@@ -25,6 +26,7 @@ import { useLingui } from '@lingui/react'
 function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
+  const [hardhatEthBalance, setHardhatEthBalance] = useState(false)
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
@@ -235,7 +237,7 @@ function AppBar(): JSX.Element {
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
-                            {userEthBalance?.toSignificant(4)} {NATIVE[chainId].symbol}
+                            {userEthBalance?.toSignificant(4)} {NATIVE[chainId]?.symbol || 'ETH'}
                           </div>
                         </>
                       )}
