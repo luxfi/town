@@ -10,22 +10,30 @@ import { t } from '@lingui/macro'
 import { i18n } from '@lingui/core'
 import { shortenAddress } from '../functions'
 
-const AssetModal = ({ tokenId, type, modalProps, close, otc }) => {
+const AssetModal = ({ tokenId, type, modalProps, height, otc }) => {
   const [showHow, setShowHow] = useState(false)
   const { chainId, account } = useActiveWeb3React()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   return (
-    <Modal {...modalProps} padding={0} closeButton={false} close={close}>
-      <div className="grid grid-cols-2 gap-30">
+    <Modal {...modalProps} padding={0} closeButton={false}>
+      <div className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
         <div className="flex items-stretch h-screen">
           <div
-            onClick={close}
-            className="flex items-center justify-center mt-5 ml-5 rounded-full shadow-2xl cursor-pointer h-14 w-14 bg-dark-900"
+            onClick={modalProps.close}
+            className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer h-14 w-14"
           >
             <HiOutlineChevronLeft />
           </div>
-          <AssetCard className="self-center" tokenId={tokenId} type={type} width={80} />
+          <AssetCard
+            className="self-center"
+            tokenId={tokenId}
+            type={type}
+            width={96}
+            height={height}
+            showPrice
+            autoPlay
+          />
         </div>
         <div className="flex items-stretch h-screen bg-gray-900">
           <div className="self-center m-auto w-96">
@@ -47,8 +55,8 @@ const AssetModal = ({ tokenId, type, modalProps, close, otc }) => {
             ) : (
               <div>
                 <div className="py-3 text-right">
-                  <div className="text-gray-500 ">{account && shortenAddress(account)}</div>
-                  <div className="text-xl ">
+                  <div className="text-gray-500">{account && shortenAddress(account)}</div>
+                  <div className="text-xl">
                     {account && chainId && (
                       <>
                         {userEthBalance ? (
@@ -62,13 +70,13 @@ const AssetModal = ({ tokenId, type, modalProps, close, otc }) => {
                 </div>
                 <button
                   type="button"
-                  className="w-full px-4 py-3 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2 "
+                  className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
                 >
                   Reserve {type} #{tokenId}
                 </button>
                 <div className="pt-3">
                   <p className="text-center">You cannot withdraw a reservation once submitted.</p>
-                  <p className="text-center text-indigo-500 cursor-pointer" onClick={() => setShowHow(true)}>
+                  <p className="text-center text-indigo-400 cursor-pointer" onClick={() => setShowHow(true)}>
                     How do reservations work?
                   </p>
                 </div>

@@ -1,9 +1,11 @@
-const ASSET_VALIDATOR = 'Validator'
-const ASSET_ATM = 'ATM'
-const ASSET_WALLET = 'Genesis Wallet'
-const ASSET_CASH = 'Cash'
+import _ from 'lodash'
 
-export const newAsset = (tokenId, type, props = {}) => {
+const NFT_VALIDATOR = 'Validator'
+const NFT_ATM = 'ATM'
+const NFT_WALLET = 'Genesis Wallet'
+const NFT_CASH = 'Cash'
+
+export const newNft = (tokenId, type, props = {}) => {
   return {
     tokenId,
     type,
@@ -11,13 +13,22 @@ export const newAsset = (tokenId, type, props = {}) => {
   }
 }
 
-export const getOwnedAssets = () => {
-  return [
-    newAsset(1, ASSET_VALIDATOR),
-    newAsset(2, ASSET_ATM),
-    newAsset(3, ASSET_WALLET),
-    newAsset(4, ASSET_WALLET),
-    newAsset(5, ASSET_WALLET),
-    newAsset(6, ASSET_CASH),
-  ]
+export const getOwnedNfts = () => {
+  return [newNft(1, NFT_VALIDATOR), newNft(2, NFT_ATM), newNft(3, NFT_WALLET), newNft(4, NFT_CASH)]
+}
+
+export const getValidatorNfts = () => {
+  return _.times(4, (n) => newNft(n + 1, NFT_VALIDATOR))
+}
+
+export const getAtmNfts = () => {
+  return _.times(4, (n) => newNft(n + 1, NFT_ATM))
+}
+
+export const getWalletNfts = () => {
+  return _.times(4, (n) => newNft(n + 1, NFT_WALLET))
+}
+
+export const getCashNfts = () => {
+  return _.times(4, (n) => newNft(n + 1, NFT_CASH))
 }

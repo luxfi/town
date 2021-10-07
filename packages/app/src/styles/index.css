@@ -82,8 +82,10 @@ input:focus {
   background-color: #BFBFBF;
 } */
 
-.logo {
+.logo,
+.lux-font {
   font-family: 'Open Sans', sans-serif, Arial, Helvetica;
   font-weight: 900;
   font-size: 20px;
+  text-transform: uppercase;
 }
