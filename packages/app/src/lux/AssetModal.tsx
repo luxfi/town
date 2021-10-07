@@ -1,26 +1,58 @@
 import { Modal } from 'react-morphing-modal'
+import { HiOutlineChevronLeft } from 'react-icons/hi'
 
 import AssetCard from './AssetCard'
+import { useState } from 'react'
 
-const AssetModal = ({ tokenId, type, modalProps, otc }) => {
+const AssetModal = ({ tokenId, type, modalProps, close, otc }) => {
+  const [showHow, setShowHow] = useState(false)
+
   return (
-    <Modal {...modalProps} padding={0}>
+    <Modal {...modalProps} padding={0} closeButton={false} close={close}>
       <div className="grid grid-cols-2 gap-30">
         <div className="flex items-stretch h-screen">
+          <div
+            onClick={close}
+            className="flex items-center justify-center mt-5 ml-5 rounded-full shadow-2xl cursor-pointer h-14 w-14 bg-dark-900"
+          >
+            <HiOutlineChevronLeft />
+          </div>
           <AssetCard className="self-center" tokenId={tokenId} type={type} width={80} />
         </div>
         <div className="flex items-stretch h-screen bg-gray-900">
-          <div className="self-center m-auto w-80">
-            <h2 className="pb-4">Reserve Price: 1000 ETH</h2>
-            {/* <div className="pb-4">Reserve Price: 1000 ETH</div> */}
-            <button
-              type="button"
-              className="w-full px-4 py-3 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2 "
-            >
-              Reserve {type}
-            </button>
-            <p className="p-4 text-center">You cannot withdraw your reservation once submitted.</p>
-            <p className="p-4 text-center">How do reservations work?</p>
+          <div className="self-center m-auto w-96">
+            {showHow ? (
+              <div>
+                <h2 className="pb-4 text-2xl">How do reservations work?</h2>
+                <p className="mb-5">
+                  Reserve your NFT to ensure you are part of the LUX network at launch. If your bid is not accepted,
+                  your reservation will be refunded.
+                </p>
+                <button
+                  type="button"
+                  className="w-full px-4 py-3 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2 "
+                  onClick={() => setShowHow(false)}
+                >
+                  Ok
+                </button>
+              </div>
+            ) : (
+              <div>
+                <div className="pb-4 text-2xl text-center">Balance: 10000 ETH</div>
+                <button
+                  type="button"
+                  className="w-full px-4 py-3 text-base font-semibold text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2 "
+                >
+                  Reserve {type} #{tokenId}
+                </button>
+                <div className="pt-3">
+                  <p className="text-center">You cannot withdraw a reservation once submitted.</p>
+                  <p className="text-center text-indigo-500 cursor-pointer" onClick={() => setShowHow(true)}>
+                    How do reservations work?
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

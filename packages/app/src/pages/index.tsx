@@ -22,8 +22,7 @@ export default function Dashboard() {
       </Head>
 
       <div>
-        <h1>My Assets</h1>
-        <br />
+        <h1 className="text-2xl">Owned</h1>
         <br />
       </div>
       <div className="grid grid-cols-1 gap-20 md:grid-cols-3 xl:grid-cols-3">

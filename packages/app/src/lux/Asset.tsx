@@ -10,14 +10,14 @@ type AssetProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 function Asset({ tokenId, type, otc = false }: AssetProps) {
-  const { modalProps, getTriggerProps } = useModal({
+  const { modalProps, getTriggerProps, close } = useModal({
     background: 'black',
   })
 
   return (
     <>
       <AssetCard tokenId={tokenId} type={type} getTriggerProps={getTriggerProps} />
-      <AssetModal tokenId={tokenId} type={type} modalProps={modalProps} otc={otc} />
+      <AssetModal tokenId={tokenId} type={type} modalProps={modalProps} otc={otc} close={close} />
     </>
   )
 }
