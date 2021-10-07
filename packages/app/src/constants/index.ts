@@ -1,5 +1,7 @@
 import { ChainId, JSBI, Percent } from '@sushiswap/sdk'
 
+export * from './contracts'
+
 export const POOL_DENY = ['14', '29', '45', '30']
 
 // Block time here is slightly higher (~1s) than average in order to avoid ongoing proposals past the displayed time
