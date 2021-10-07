@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, JSBI, NATIVE, Token } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Ether, JSBI, NATIVE, Token } from '@sushiswap/sdk'
 import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
 
 import ERC20_ABI from '../../constants/abis/erc20.json'
@@ -6,9 +6,10 @@ import { Interface } from '@ethersproject/abi'
 import { isAddress } from '../../functions/validate'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useAllTokens } from '../../hooks/Tokens'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useMulticall2Contract } from '../../hooks/useContract'
 import { TokenBalancesMap } from './types'
+import { ChainId } from '../../config/networks'
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.
@@ -16,8 +17,9 @@ import { TokenBalancesMap } from './types'
 export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
   [address: string]: CurrencyAmount<Currency> | undefined
 } {
-  const { chainId } = useActiveWeb3React()
-  const multicallContract = useMulticall2Contract()
+  const { chainId, library } = useActiveWeb3React()
+
+  const [hardhatBalance, setHardhatBalance] = useState(null)
 
   const addresses: string[] = useMemo(
     () =>
@@ -30,21 +32,33 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
     [uncheckedAddresses]
   )
 
+  const multicallContract = useMulticall2Contract()
+
   const results = useSingleContractMultipleData(
     multicallContract,
     'getEthBalance',
     addresses.map((address) => [address])
   )
 
+  useEffect(() => {
+    library.provider.request({ method: 'eth_getBalance', params: addresses }).then(setHardhatBalance)
+  }, [addresses, chainId])
+
   return useMemo(
     () =>
       addresses.reduce<{ [address: string]: CurrencyAmount<Currency> }>((memo, address, i) => {
+        const currency = NATIVE[chainId] || Ether.onChain(ChainId.HARDHAT)
+
+        if (hardhatBalance) {
+          memo[address] = CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(hardhatBalance))
+          return memo
+        }
+
         const value = results?.[i]?.result?.[0]
-        if (value && chainId)
-          memo[address] = CurrencyAmount.fromRawAmount(NATIVE[chainId], JSBI.BigInt(value.toString()))
+        if (value && chainId) memo[address] = CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(value.toString()))
         return memo
       }, {}),
-    [addresses, chainId, results]
+    [addresses, chainId, results, hardhatBalance]
   )
 }
 

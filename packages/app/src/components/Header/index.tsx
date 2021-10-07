@@ -1,4 +1,4 @@
-import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from '@sushiswap/sdk'
+import { Currency, NATIVE, SUSHI_ADDRESS } from '@sushiswap/sdk'
 import { Feature, featureEnabled } from '../../functions/feature'
 import React, { useEffect, useState } from 'react'
 
@@ -18,6 +18,7 @@ import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { useLingui } from '@lingui/react'
+import { ChainId } from '../../config/networks'
 
 // import { ExternalLink, NavLink } from "./Link";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
@@ -25,6 +26,7 @@ import { useLingui } from '@lingui/react'
 function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
+  const [hardhatEthBalance, setHardhatEthBalance] = useState(false)
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
@@ -38,26 +40,29 @@ function AppBar(): JSX.Element {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   {/* <Image src="/logo.png" alt="Sushi" width="32px" height="32px" /> */}
-                  <div className="logo">LUX TOWN</div>
+
+                  <NavLink href="/">
+                    <div className="logo">LUX TOWN</div>
+                  </NavLink>
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/">
+                      {/* <NavLink href="/">
                         <a
                           id={`swap-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Dashboard`)}
                         </a>
-                      </NavLink>
-                      <NavLink href="/market">
+                      </NavLink> */}
+                      {/* <NavLink href="/market">
                         <a
                           id={`swap-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Market`)}
                         </a>
-                      </NavLink>
+                      </NavLink> */}
                       {/* <NavLink href="/swap">
                         <a
                           id={`swap-nav-link`}
@@ -232,7 +237,7 @@ function AppBar(): JSX.Element {
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
-                            {userEthBalance?.toSignificant(4)} {NATIVE[chainId].symbol}
+                            {userEthBalance?.toSignificant(4)} {NATIVE[chainId]?.symbol || 'ETH'}
                           </div>
                         </>
                       )}

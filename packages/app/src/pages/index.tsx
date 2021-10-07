@@ -5,13 +5,21 @@ import { i18n } from '@lingui/core'
 import { t } from '@lingui/macro'
 import Asset from '../lux/Asset'
 import { useEffect, useState } from 'react'
-import { getOwnedAssets } from '../functions/assets'
+import { getOwnedNfts, getValidatorNfts, getAtmNfts, getWalletNfts, getCashNfts } from '../functions/assets'
 
 export default function Dashboard() {
-  const [owned, setOwned] = useState([])
+  const [ownedNfts, setOwnedNfts] = useState([])
+  const [validatorNfts, setValidatorNfts] = useState([])
+  const [atmNfts, setAtmNfts] = useState([])
+  const [walletNfts, setWalletNfts] = useState([])
+  const [cashNfts, setCashNfts] = useState([])
 
   useEffect(() => {
-    setOwned(getOwnedAssets())
+    setOwnedNfts(getOwnedNfts())
+    setValidatorNfts(getValidatorNfts())
+    setAtmNfts(getAtmNfts())
+    setWalletNfts(getWalletNfts())
+    setCashNfts(getCashNfts())
   }, [])
 
   return (
@@ -21,15 +29,55 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      <div>
-        <h1>My Assets</h1>
-        <br />
-        <br />
+      <div className="mb-10">
+        <div>
+          <h2 className="mb-10 text-xl text-center text-gray-600">Owned NFTs</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
+          {ownedNfts.map((asset) => (
+            <Asset key={asset.tokenId} {...asset} showPrice={false} />
+          ))}
+        </div>
       </div>
-      <div className="grid grid-cols-1 gap-20 md:grid-cols-3 xl:grid-cols-3">
-        {owned.map((asset) => (
-          <Asset key={asset.tokenId} {...asset} />
-        ))}
+      <div className="mb-10">
+        <div>
+          <h2 className="mb-10 text-xl text-center text-gray-600">Validators</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
+          {validatorNfts.map((asset) => (
+            <Asset key={asset.tokenId} {...asset} showPrice={false} />
+          ))}
+        </div>
+      </div>
+      <div className="mb-10">
+        <div>
+          <h2 className="mb-10 text-xl text-center text-gray-600">ATMs</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
+          {atmNfts.map((asset) => (
+            <Asset key={asset.tokenId} {...asset} showPrice={false} />
+          ))}
+        </div>
+      </div>
+      <div className="mb-10">
+        <div>
+          <h2 className="mb-10 text-xl text-center text-gray-600">Genesis Wallets</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
+          {walletNfts.map((asset) => (
+            <Asset key={asset.tokenId} {...asset} showPrice={false} />
+          ))}
+        </div>
+      </div>
+      <div className="mb-10">
+        <div>
+          <h2 className="mb-10 text-xl text-center text-gray-600">Cash</h2>
+        </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
+          {cashNfts.map((asset) => (
+            <Asset key={asset.tokenId} {...asset} showPrice={false} />
+          ))}
+        </div>
       </div>
     </Container>
   )

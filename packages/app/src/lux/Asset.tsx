@@ -6,18 +6,19 @@ import AssetModal from './AssetModal'
 type AssetProps = {
   tokenId: number
   type: string
-  otc: boolean
+  otc?: boolean
+  showPrice?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
-function Asset({ tokenId, type, otc = false }: AssetProps) {
+function Asset({ tokenId, type, showPrice = true, otc = false }: AssetProps) {
   const { modalProps, getTriggerProps } = useModal({
     background: 'black',
   })
 
   return (
     <>
-      <AssetCard tokenId={tokenId} type={type} getTriggerProps={getTriggerProps} />
-      <AssetModal tokenId={tokenId} type={type} modalProps={modalProps} otc={otc} />
+      <AssetCard tokenId={tokenId} type={type} getTriggerProps={getTriggerProps} showPrice={showPrice} height={40} />
+      <AssetModal tokenId={tokenId} type={type} modalProps={modalProps} otc={otc} height={96} />
     </>
   )
 }
