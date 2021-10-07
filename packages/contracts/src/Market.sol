@@ -170,12 +170,11 @@ contract Market is IMarket, Ownable {
     _tokenBidders[tokenId][bid.bidder] = Bid(afterBalance.sub(beforeBalance), bid.currency, bid.bidder, bid.recipient, bid.sellOnShare);
     emit BidCreated(tokenId, bid);
 
-    // If a bid meets the criteria for an ask, automatically accept the bid.
-    // If no ask is set or the bid does not meet the requirements, ignore.
-    if (_tokenAsks[tokenId].currency != address(0) && bid.currency == _tokenAsks[tokenId].currency && bid.amount >= _tokenAsks[tokenId].amount) {
-      // Finalize exchange
-      _finalizeNFTTransfer(tokenId, bid.bidder);
-    }
+    // DO NOT automatically accept bids
+    // if (_tokenAsks[tokenId].currency != address(0) && bid.currency == _tokenAsks[tokenId].currency && bid.amount >= _tokenAsks[tokenId].amount) {
+    //   // Finalize exchange
+    //   _finalizeNFTTransfer(tokenId, bid.bidder);
+    // }
   }
 
   /**
@@ -214,6 +213,23 @@ contract Market is IMarket, Ownable {
     );
     require(isValidBid(tokenId, bid.amount), 'Market: Bid invalid for share splitting');
 
+    _finalizeNFTTransfer(tokenId, bid.bidder);
+  }
+
+  /**
+   * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
+   * See {_finalizeNFTTransfer}
+   * Provided bid must match a bid in storage. This is to prevent a race condition
+   * where a bid may change while the acceptBid call is in transit.
+   * A bid cannot be accepted if it cannot be split equally into its shareholders.
+   * This should only revert in rare instances (example, a low bid with a zero-decimal token),
+   * but is necessary to ensure fairness to all shareholders.
+   */
+  function offlineBid(uint256 tokenId, Bid calldata bid) public onlyOwner {
+    require(bid.amount > 0, 'Market: cannot accept bid of 0');
+    require(isValidBid(tokenId, bid.amount), 'Market: Bid invalid for share splitting');
+    emit BidCreated(tokenId, bid);
+    _tokenBidders[tokenId][bid.bidder] = bid;
     _finalizeNFTTransfer(tokenId, bid.bidder);
   }
 
