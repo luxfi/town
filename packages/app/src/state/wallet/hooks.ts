@@ -17,9 +17,7 @@ import { ChainId } from '../../config/networks'
 export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
   [address: string]: CurrencyAmount<Currency> | undefined
 } {
-  const { chainId, library } = useActiveWeb3React()
-
-  const [hardhatBalance, setHardhatBalance] = useState(null)
+  const { chainId } = useActiveWeb3React()
 
   const addresses: string[] = useMemo(
     () =>
@@ -40,25 +38,15 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
     addresses.map((address) => [address])
   )
 
-  useEffect(() => {
-    library.provider.request({ method: 'eth_getBalance', params: addresses }).then(setHardhatBalance)
-  }, [addresses, chainId])
-
   return useMemo(
     () =>
       addresses.reduce<{ [address: string]: CurrencyAmount<Currency> }>((memo, address, i) => {
         const currency = NATIVE[chainId] || Ether.onChain(ChainId.HARDHAT)
-
-        if (hardhatBalance) {
-          memo[address] = CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(hardhatBalance))
-          return memo
-        }
-
         const value = results?.[i]?.result?.[0]
         if (value && chainId) memo[address] = CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(value.toString()))
         return memo
       }, {}),
-    [addresses, chainId, results, hardhatBalance]
+    [addresses, chainId, results]
   )
 }
 
