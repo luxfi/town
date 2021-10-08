@@ -2,6 +2,6 @@
 
 import { Deploy } from '@luxdefi/contracts/utils/deploy'
 
-export default Deploy('Media', {dependencies: ['Market']}, async({ deploy }) => {
-  await deploy(['Validator', 'VAL'])
+export default Deploy('Media', { dependencies: ['Market'] }, async ({ deploy }) => {
+  await deploy(['LUXNFT', 'LUXNFT'])
 })
