@@ -3,6 +3,13 @@ import rarities from './rarities.json'
 import animals from './animals.json'
 import hybrids from './hybrids.json'
 
+enum LuxType {
+  VALIDATOR = 0,
+  ATM = 1,
+  WALLET = 2,
+  CASH = 3,
+}
+
 // Configure game for our Gen 0 drop
 export default async function configureGame(app: any, drop: any) {
   // Add Drop to ZooKeeper
@@ -14,7 +21,7 @@ export default async function configureGame(app: any, drop: any) {
   // Add tokenType
   const tokenType = [
     {
-      kind: 0,
+      kind: LuxType.VALIDATOR,
       name: 'Validator',
       price: 360000,
       supply: 18000,
@@ -22,7 +29,7 @@ export default async function configureGame(app: any, drop: any) {
       metadataURI: 'https://db.zoolabs.org/egg.json',
     },
     {
-      kind: 1,
+      kind: LuxType.ATM,
       name: 'ATM',
       price: 360000,
       supply: 18000,
