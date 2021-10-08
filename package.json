@@ -12,8 +12,8 @@
   ],
   "private": true,
   "scripts": {
-    "build": "yarn workspace @luxdefi/app build --max-old-space-size=12288",
-    "build:lab": "yarn workspace @luxdefi/lab build --max-old-space-size=12288",
+    "build": "yarn workspace @luxdefi/app build",
+    "build:lab": "yarn workspace @luxdefi/lab build",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
     "dev": "yarn workspace @luxdefi/app dev",
     "start": "yarn workspace @luxdefi/app start",
