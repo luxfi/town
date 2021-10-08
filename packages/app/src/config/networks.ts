@@ -1,14 +1,14 @@
-import { ChainId as SushiChainId } from '@sushiswap/sdk'
+import { ChainId } from '@sushiswap/sdk'
 import { isEnvironment } from '../functions/environment'
 
 export enum ExtraChainId {
   HARDHAT = 1337,
 }
 
-export const ChainId = {
-  ...SushiChainId,
-  ...ExtraChainId,
-}
+// export const ChainId = {
+//   ...SushiChainId,
+//   // ...ExtraChainId,
+// }
 
 const Arbitrum = 'https://raw.githubusercontent.com/sushiswap/icons/master/network/arbitrum.jpg'
 const Avalanche = '/images/networks/avalanche-network.jpg'
@@ -58,7 +58,7 @@ export const NETWORK_ICON = {
   [ChainId.CELO]: Celo,
   [ChainId.PALM]: Palm,
   [ChainId.MOONRIVER]: Moonriver,
-  [ChainId.HARDHAT]: Hardhat,
+  // [ChainId.HARDHAT]: Hardhat,
 }
 
 export const NETWORK_LABEL: { [chainId: number]: string } = {
@@ -88,10 +88,14 @@ export const NETWORK_LABEL: { [chainId: number]: string } = {
   [ChainId.CELO]: 'Celo',
   [ChainId.PALM]: 'Palm',
   [ChainId.MOONRIVER]: 'Moonriver',
-  [ChainId.HARDHAT]: 'Hardhat',
+  // [ChainId.HARDHAT]: 'Hardhat',
 }
 
-export const DEFAULT_METAMASK_CHAIN_ID = [ChainId.MAINNET, ChainId.RINKEBY, ChainId.HARDHAT]
+export const DEFAULT_METAMASK_CHAIN_ID = [
+  ChainId.MAINNET,
+  ChainId.RINKEBY,
+  // ChainId.HARDHAT
+]
 
 export const AVAILABLE_NETWORKS: number[] = [
   ChainId.MAINNET,
@@ -111,7 +115,7 @@ export const AVAILABLE_NETWORKS: number[] = [
 
 if (!isEnvironment('prod')) {
   AVAILABLE_NETWORKS.push(ChainId.RINKEBY)
-  AVAILABLE_NETWORKS.push(ChainId.HARDHAT)
+  // AVAILABLE_NETWORKS.push(ChainId.HARDHAT)
 }
 
 export const SUPPORTED_NETWORKS: {
@@ -286,15 +290,15 @@ export const SUPPORTED_NETWORKS: {
     rpcUrls: ['https://rpc.moonriver.moonbeam.network'],
     blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network'],
   },
-  [ChainId.HARDHAT]: {
-    chainId: '0x539',
-    chainName: 'Hardhat',
-    nativeCurrency: {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      decimals: 18,
-    },
-    rpcUrls: ['http://127.0.0.1:8545'],
-    blockExplorerUrls: ['https://rinkeby.etherscan.com'],
-  },
+  // [ChainId.HARDHAT]: {
+  //   chainId: '0x539',
+  //   chainName: 'Hardhat',
+  //   nativeCurrency: {
+  //     name: 'Ethereum',
+  //     symbol: 'ETH',
+  //     decimals: 18,
+  //   },
+  //   rpcUrls: ['http://127.0.0.1:8545'],
+  //   blockExplorerUrls: ['https://rinkeby.etherscan.com'],
+  // },
 }

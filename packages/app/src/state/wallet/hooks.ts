@@ -9,7 +9,7 @@ import { useAllTokens } from '../../hooks/Tokens'
 import { useEffect, useMemo, useState } from 'react'
 import { useMulticall2Contract } from '../../hooks/useContract'
 import { TokenBalancesMap } from './types'
-import { ChainId } from '../../config/networks'
+import { ChainId } from '@sushiswap/sdk'
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.
@@ -41,7 +41,7 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
   return useMemo(
     () =>
       addresses.reduce<{ [address: string]: CurrencyAmount<Currency> }>((memo, address, i) => {
-        const currency = NATIVE[chainId] || Ether.onChain(ChainId.HARDHAT)
+        const currency = NATIVE[chainId]
         const value = results?.[i]?.result?.[0]
         if (value && chainId) memo[address] = CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(value.toString()))
         return memo

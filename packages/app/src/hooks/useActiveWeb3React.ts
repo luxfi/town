@@ -6,7 +6,7 @@ import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { ExtraChainId } from '../config/networks'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> & {
-  chainId?: ChainId | ExtraChainId
+  chainId?: ChainId
 } {
   // replace with address to impersonate
   const impersonate = false
