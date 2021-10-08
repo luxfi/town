@@ -1,4 +1,4 @@
-import { Currency } from '@sushiswap/sdk'
+import { Currency } from '@luxdefi/sdk'
 import CurrencyLogo from '../CurrencyLogo'
 import React from 'react'
 import { classNames } from '../../functions'

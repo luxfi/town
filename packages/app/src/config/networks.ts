@@ -1,4 +1,4 @@
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@luxdefi/sdk'
 import { isEnvironment } from '../functions/environment'
 
 export enum ExtraChainId {

@@ -2,7 +2,7 @@ import { DEFAULT_METAMASK_CHAIN_ID, NETWORK_ICON, NETWORK_LABEL, SUPPORTED_NETWO
 import React, { FC, Fragment } from 'react'
 import { Trans, useLingui } from '@lingui/react'
 
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@luxdefi/sdk'
 import HeadlessUIModal from '../../components/Modal/HeadlessUIModal'
 import Image from 'next/image'
 import NavLink from '../../components/NavLink'

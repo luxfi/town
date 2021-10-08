@@ -1,4 +1,4 @@
-import { Currency, TradeType, Trade as V2Trade } from '@sushiswap/sdk'
+import { Currency, TradeType, Trade as V2Trade } from '@luxdefi/sdk'
 import React, { useMemo } from 'react'
 
 import FormattedPriceImpact from '../exchange-v1/swap/FormattedPriceImpact'

@@ -9,7 +9,7 @@ import {
   poolsV2Query,
 } from '../queries'
 
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@luxdefi/sdk'
 import { GRAPH_HOST } from '../constants'
 import { getTokenSubset } from './exchange'
 import { request } from 'graphql-request'

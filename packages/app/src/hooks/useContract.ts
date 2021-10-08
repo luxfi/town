@@ -21,7 +21,7 @@ import {
   SUSHI_ADDRESS,
   TIMELOCK_ADDRESS,
   WNATIVE_ADDRESS,
-} from '@sushiswap/sdk'
+} from '@luxdefi/sdk'
 import { useMemo } from 'react'
 import { abis, addresses } from '../constants'
 import ARCHER_ROUTER_ABI from '../constants/abis/archer-router.json'

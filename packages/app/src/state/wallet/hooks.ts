@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Ether, JSBI, NATIVE, Token } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Ether, JSBI, NATIVE, Token } from '@luxdefi/sdk'
 import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks'
 
 import ERC20_ABI from '../../constants/abis/erc20.json'
@@ -9,7 +9,7 @@ import { useAllTokens } from '../../hooks/Tokens'
 import { useEffect, useMemo, useState } from 'react'
 import { useMulticall2Contract } from '../../hooks/useContract'
 import { TokenBalancesMap } from './types'
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@luxdefi/sdk'
 
 /**
  * Returns a map of the given addresses to their eventually consistent ETH balances.

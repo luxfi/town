@@ -15,7 +15,7 @@ import {
   useSushiPrice,
 } from '../services/graph'
 
-import { ChainId } from '@sushiswap/sdk'
+import { ChainId } from '@luxdefi/sdk'
 import { getAddress } from '@ethersproject/address'
 import useActiveWeb3React from './useActiveWeb3React'
 import { useMemo } from 'react'

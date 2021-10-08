@@ -1,4 +1,4 @@
-import { CurrencyAmount, Token } from '@sushiswap/sdk'
+import { CurrencyAmount, Token } from '@luxdefi/sdk'
 import { useActiveWeb3React, useInariContract } from '../../../hooks'
 import useTrait, { BaseTrait } from './useTrait'
 

@@ -1,6 +1,6 @@
 // NOTE: Try not to add anything to thie file, it's almost entirely refactored out.
 
-import { ARCHER_ROUTER_ADDRESS, ChainId, ROUTER_ADDRESS } from '@sushiswap/sdk'
+import { ARCHER_ROUTER_ADDRESS, ChainId, ROUTER_ADDRESS } from '@luxdefi/sdk'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 
 import { AddressZero } from '@ethersproject/constants'

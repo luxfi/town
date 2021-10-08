@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, JSBI } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Fraction, JSBI } from '@luxdefi/sdk'
 
 import React from 'react'
 

@@ -1,4 +1,4 @@
-import { Currency, NATIVE, SUSHI_ADDRESS } from '@sushiswap/sdk'
+import { Currency, NATIVE, SUSHI_ADDRESS } from '@luxdefi/sdk'
 import { Feature, featureEnabled } from '../../functions/feature'
 import React, { useEffect, useState } from 'react'
 

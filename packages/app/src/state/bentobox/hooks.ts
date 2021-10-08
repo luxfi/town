@@ -1,4 +1,4 @@
-import { KASHI_ADDRESS, USDC_ADDRESS, WNATIVE_ADDRESS } from '@sushiswap/sdk'
+import { KASHI_ADDRESS, USDC_ADDRESS, WNATIVE_ADDRESS } from '@luxdefi/sdk'
 import { useBentoBoxContract, useBoringHelperContract, useContract } from '../../hooks/useContract'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 

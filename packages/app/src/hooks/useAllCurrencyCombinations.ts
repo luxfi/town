@@ -1,5 +1,5 @@
 import { ADDITIONAL_BASES, BASES_TO_CHECK_TRADES_AGAINST, CUSTOM_BASES } from '../config/routing'
-import { Currency, Token } from '@sushiswap/sdk'
+import { Currency, Token } from '@luxdefi/sdk'
 
 import flatMap from 'lodash/flatMap'
 import { useActiveWeb3React } from './useActiveWeb3React'

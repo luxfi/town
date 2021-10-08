@@ -1,4 +1,4 @@
-import { Currency, Trade, TradeType } from '@sushiswap/sdk'
+import { Currency, Trade, TradeType } from '@luxdefi/sdk'
 import React, { Fragment, memo } from 'react'
 
 import { ChevronRightIcon } from '@heroicons/react/outline'

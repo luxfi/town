@@ -1,5 +1,5 @@
 import { AddressZero, HashZero } from '@ethersproject/constants'
-import { STOP_LIMIT_ORDER_ADDRESS, Token, getSignatureWithProviderBentobox } from '@sushiswap/sdk'
+import { STOP_LIMIT_ORDER_ADDRESS, Token, getSignatureWithProviderBentobox } from '@luxdefi/sdk'
 import { ZERO, calculateGasMargin } from '../functions'
 import { setFromBentoBalance, setLimitOrderApprovalPending } from '../state/limit-order/actions'
 import { useBentoBoxContract, useLimitOrderHelperContract } from './useContract'

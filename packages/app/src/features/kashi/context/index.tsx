@@ -1,4 +1,4 @@
-import { ChainId, Currency, KASHI_ADDRESS, NATIVE, Token, USDC_ADDRESS, WNATIVE, WNATIVE_ADDRESS } from '@sushiswap/sdk'
+import { ChainId, Currency, KASHI_ADDRESS, NATIVE, Token, USDC_ADDRESS, WNATIVE, WNATIVE_ADDRESS } from '@luxdefi/sdk'
 import React, { createContext, useCallback, useContext, useEffect, useReducer } from 'react'
 import { ZERO, e10, maximum, minimum } from '../../../functions/math'
 import {
@@ -14,7 +14,7 @@ import { useBentoBoxContract, useBoringHelperContract } from '../../../hooks/use
 
 import { BigNumber } from '@ethersproject/bignumber'
 import Fraction from '../../../entities/Fraction'
-import { bentobox } from '@sushiswap/sushi-data'
+import { bentobox } from '@luxdefi/sushi-data'
 import { defaultAbiCoder } from '@ethersproject/abi'
 import { getAddress } from '@ethersproject/address'
 import { getCurrency } from '../../../functions/currency'

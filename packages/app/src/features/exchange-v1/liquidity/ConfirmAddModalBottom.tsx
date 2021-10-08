@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Fraction, Percent } from '@sushiswap/sdk'
+import { Currency, CurrencyAmount, Fraction, Percent } from '@luxdefi/sdk'
 
 import Button from '../../../components/Button'
 import { Field } from '../../../state/mint/actions'

@@ -1,4 +1,4 @@
-import { ChainId, JSBI } from '@sushiswap/sdk'
+import { ChainId, JSBI } from '@luxdefi/sdk'
 
 import { BigNumber } from '@ethersproject/bignumber'
 

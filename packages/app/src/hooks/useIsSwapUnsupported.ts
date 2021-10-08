@@ -1,4 +1,4 @@
-import { Currency, Token } from '@sushiswap/sdk'
+import { Currency, Token } from '@luxdefi/sdk'
 
 import { useMemo } from 'react'
 import { useUnsupportedTokens } from './Tokens'
