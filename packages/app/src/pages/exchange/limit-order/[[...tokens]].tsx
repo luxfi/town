@@ -33,7 +33,7 @@ import PayFromToggle from '../../../features/exchange-v1/limit-order/PayFromTogg
 import PriceRatio from '../../../features/exchange-v1/limit-order/PriceRatio'
 import TokenWarningModal from '../../../modals/TokenWarningModal'
 import Typography from '../../../components/Typography'
-import limitOrderPairList from '@luxdefi/limit-order-pair-list/dist/limit-order.pairlist.json'
+import limitOrderPairList from '@sushiswap/limit-order-pair-list/dist/limit-order.pairlist.json'
 import swapArrowsAnimationData from '../../../animation/swap-arrows.json'
 import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../../hooks'

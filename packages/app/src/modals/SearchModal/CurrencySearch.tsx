@@ -5,7 +5,7 @@ import { useAllTokens, useIsUserAddedToken, useSearchInactiveTokenLists, useToke
 
 import AutoSizer from 'react-virtualized-auto-sizer'
 import Button from '../../components/Button'
-import CHAINLINK_TOKENS from '@luxdefi/chainlink-whitelist/dist/sushiswap-chainlink.whitelist.json'
+import CHAINLINK_TOKENS from '@sushiswap/chainlink-whitelist/dist/sushiswap-chainlink.whitelist.json'
 import Column from '../../components/Column'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'

@@ -1,5 +1,5 @@
 import { AppState } from '..'
-import DEFAULT_TOKEN_LIST from '@luxdefi/default-token-list'
+import DEFAULT_TOKEN_LIST from '@sushiswap/default-token-list'
 import { TokenList } from '@uniswap/token-lists'
 import { UNSUPPORTED_LIST_URLS } from '../../config/token-lists'
 import UNSUPPORTED_TOKEN_LIST from '../../constants/token-lists/sushiswap-v2-unsupported.tokenlist.json'

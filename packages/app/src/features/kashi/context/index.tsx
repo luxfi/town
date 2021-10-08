@@ -14,7 +14,7 @@ import { useBentoBoxContract, useBoringHelperContract } from '../../../hooks/use
 
 import { BigNumber } from '@ethersproject/bignumber'
 import Fraction from '../../../entities/Fraction'
-import { bentobox } from '@luxdefi/sushi-data'
+import { bentobox } from '@sushiswap/sushi-data'
 import { defaultAbiCoder } from '@ethersproject/abi'
 import { getAddress } from '@ethersproject/address'
 import { getCurrency } from '../../../functions/currency'
