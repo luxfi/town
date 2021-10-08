@@ -151,10 +151,10 @@ const chains: ChainObject = {
     link: 'https://blockscout.moonriver.moonbeam.network',
     builder: explorers.blockscout,
   },
-  // [ChainId.HARDHAT]: {
-  //   link: 'https://rinkeby.etherscan.io',
-  //   builder: explorers.etherscan,
-  // },
+  [ChainId.HARDHAT]: {
+    link: 'https://rinkeby.etherscan.io',
+    builder: explorers.etherscan,
+  },
 }
 
 export function getExplorerLink(

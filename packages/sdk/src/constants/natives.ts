@@ -42,5 +42,7 @@ export const NATIVE = {
   [ChainId.CELO]: Celo.onChain(ChainId.CELO),
   [ChainId.PALM]: Palm.onChain(ChainId.PALM),
   [ChainId.MOONRIVER]: Movr.onChain(ChainId.MOONRIVER),
-  [ChainId.FUSE]: Fuse.onChain(ChainId.FUSE)
+  [ChainId.FUSE]: Fuse.onChain(ChainId.FUSE),
+  [ChainId.HARDHAT]: Ether.onChain(ChainId.HARDHAT),
+  [ChainId.HARDHAT2]: Ether.onChain(ChainId.HARDHAT2),
 }

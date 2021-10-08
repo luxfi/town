@@ -169,6 +169,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@luxdefi/sdk": "file:./packages/sdk",
     "@sushiswap/core": "2.0.0-canary.0",
     "graphql-request": "^3.5.0",
     "react": "^17.0.2",

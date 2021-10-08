@@ -3433,6 +3433,17 @@
     solc "0.6.12"
     solidity-coverage "^0.7.16"
 
+"@luxdefi/sdk@file:./packages/sdk":
+  version "1.0.0"
+  dependencies:
+    big.js "^6.1.0"
+    decimal.js-light "^2.5.0"
+    isomorphic-unfetch "^3.1.0"
+    jsbi "^3.1.0"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+    toformat "^2.0.0"
+
 "@luxdefi/solidity@luxdefi/boring-solidity":
   version "1.2.3"
   resolved "https://codeload.github.com/luxdefi/boring-solidity/tar.gz/9e5f49f4453acebe99693c1619ca873829df0962"
