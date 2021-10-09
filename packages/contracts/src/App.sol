@@ -12,6 +12,7 @@ import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils
 
 import { IDrop } from './interfaces/IDrop.sol';
 import { IMedia } from './interfaces/IMedia.sol';
+import { IMarket } from './interfaces/IMarket.sol';
 import { ILux } from './interfaces/ILux.sol';
 import { IERC721Burnable } from './interfaces/IERC721Burnable.sol';
 
@@ -101,24 +102,25 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     return egg;
   }
 
-  // Accept lux and return NFT NFT
-  function buyNFT(uint256 dropId, uint256 tokenId) public payable returns (ILux.Token memory) {
+  // Accept ETH and return NFT NFT
+  function buyNFT(uint256 dropId, uint256 tokenId) public payable returns (IMarket.Bid memory) {
     console.log('buyNFT', dropId, tokenId);
 
     // Check egg price
     IDrop drop = IDrop(drops[dropId]);
     // require(lux.balanceOf(buyer) >= drop.tokenPrice(), 'Not enough lux');
+
     // Check if Ask exist in Market for this token
     // The ask can represent ETH or any ERC20 we support
     // if not use the default drop.tokenPrice() in ETH
 
     // Transfer funds
-    console.log('Transfer lux (tokenId,address,tokenPrice)', tokenId, address(this), drop.tokenPrice());
+    console.log('Transfer lux (tokenId,value,tokenPrice)', tokenId, msg.value, drop.tokenPrice(tokens[tokenId].name));
     // lux.transferFrom(buyer, address(this), drop.defaultPrice());
 
     // Mint and return NFT
     // return mintNFT(dropId, buyer);
-    // create a Bid with Market
+    // market.createBid()
   }
 
   // Enable owner to withdraw lux if necessary

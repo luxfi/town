@@ -7,7 +7,7 @@ import { ILux } from './ILux.sol';
 interface IDrop {
   function title() external view returns (string memory);
 
-  function tokenPrice() external view returns (uint256);
+  function tokenPrice(string memory name) external view returns (uint256);
 
   function totalMinted(string memory name) external view returns (uint256);
 

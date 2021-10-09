@@ -19806,119 +19806,39 @@
                 {
                   "components": [
                     {
-                      "internalType": "enum ILux.Type",
-                      "name": "kind",
-                      "type": "uint8"
-                    },
-                    {
-                      "internalType": "string",
-                      "name": "name",
-                      "type": "string"
-                    },
-                    {
                       "internalType": "uint256",
-                      "name": "id",
+                      "name": "amount",
                       "type": "uint256"
                     },
                     {
-                      "internalType": "uint256",
-                      "name": "timestamp",
-                      "type": "uint256"
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
                     },
                     {
-                      "components": [
-                        {
-                          "internalType": "string",
-                          "name": "tokenURI",
-                          "type": "string"
-                        },
-                        {
-                          "internalType": "string",
-                          "name": "metadataURI",
-                          "type": "string"
-                        },
-                        {
-                          "internalType": "bytes32",
-                          "name": "contentHash",
-                          "type": "bytes32"
-                        },
-                        {
-                          "internalType": "bytes32",
-                          "name": "metadataHash",
-                          "type": "bytes32"
-                        }
-                      ],
-                      "internalType": "struct IMedia.MediaData",
-                      "name": "data",
-                      "type": "tuple"
+                      "internalType": "address",
+                      "name": "bidder",
+                      "type": "address"
                     },
                     {
-                      "components": [
-                        {
-                          "components": [
-                            {
-                              "internalType": "uint256",
-                              "name": "value",
-                              "type": "uint256"
-                            }
-                          ],
-                          "internalType": "struct Decimal.D256",
-                          "name": "prevOwner",
-                          "type": "tuple"
-                        },
-                        {
-                          "components": [
-                            {
-                              "internalType": "uint256",
-                              "name": "value",
-                              "type": "uint256"
-                            }
-                          ],
-                          "internalType": "struct Decimal.D256",
-                          "name": "creator",
-                          "type": "tuple"
-                        },
-                        {
-                          "components": [
-                            {
-                              "internalType": "uint256",
-                              "name": "value",
-                              "type": "uint256"
-                            }
-                          ],
-                          "internalType": "struct Decimal.D256",
-                          "name": "owner",
-                          "type": "tuple"
-                        }
-                      ],
-                      "internalType": "struct IMarket.BidShares",
-                      "name": "bidShares",
-                      "type": "tuple"
+                      "internalType": "address",
+                      "name": "recipient",
+                      "type": "address"
                     },
                     {
                       "components": [
                         {
                           "internalType": "uint256",
-                          "name": "tokenId",
+                          "name": "value",
                           "type": "uint256"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "dropId",
-                          "type": "uint256"
-                        },
-                        {
-                          "internalType": "bool",
-                          "name": "burned",
-                          "type": "bool"
                         }
                       ],
-                      "internalType": "struct ILux.Meta",
-                      "name": "meta",
+                      "internalType": "struct Decimal.D256",
+                      "name": "sellOnShare",
                       "type": "tuple"
                     }
                   ],
-                  "internalType": "struct ILux.Token",
+                  "internalType": "struct IMarket.Bid",
                   "name": "",
                   "type": "tuple"
                 }
@@ -26829,119 +26749,39 @@
                 {
                   "components": [
                     {
-                      "internalType": "enum ILux.Type",
-                      "name": "kind",
-                      "type": "uint8"
-                    },
-                    {
-                      "internalType": "string",
-                      "name": "name",
-                      "type": "string"
-                    },
-                    {
                       "internalType": "uint256",
-                      "name": "id",
+                      "name": "amount",
                       "type": "uint256"
                     },
                     {
-                      "internalType": "uint256",
-                      "name": "timestamp",
-                      "type": "uint256"
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
                     },
                     {
-                      "components": [
-                        {
-                          "internalType": "string",
-                          "name": "tokenURI",
-                          "type": "string"
-                        },
-                        {
-                          "internalType": "string",
-                          "name": "metadataURI",
-                          "type": "string"
-                        },
-                        {
-                          "internalType": "bytes32",
-                          "name": "contentHash",
-                          "type": "bytes32"
-                        },
-                        {
-                          "internalType": "bytes32",
-                          "name": "metadataHash",
-                          "type": "bytes32"
-                        }
-                      ],
-                      "internalType": "struct IMedia.MediaData",
-                      "name": "data",
-                      "type": "tuple"
+                      "internalType": "address",
+                      "name": "bidder",
+                      "type": "address"
                     },
                     {
-                      "components": [
-                        {
-                          "components": [
-                            {
-                              "internalType": "uint256",
-                              "name": "value",
-                              "type": "uint256"
-                            }
-                          ],
-                          "internalType": "struct Decimal.D256",
-                          "name": "prevOwner",
-                          "type": "tuple"
-                        },
-                        {
-                          "components": [
-                            {
-                              "internalType": "uint256",
-                              "name": "value",
-                              "type": "uint256"
-                            }
-                          ],
-                          "internalType": "struct Decimal.D256",
-                          "name": "creator",
-                          "type": "tuple"
-                        },
-                        {
-                          "components": [
-                            {
-                              "internalType": "uint256",
-                              "name": "value",
-                              "type": "uint256"
-                            }
-                          ],
-                          "internalType": "struct Decimal.D256",
-                          "name": "owner",
-                          "type": "tuple"
-                        }
-                      ],
-                      "internalType": "struct IMarket.BidShares",
-                      "name": "bidShares",
-                      "type": "tuple"
+                      "internalType": "address",
+                      "name": "recipient",
+                      "type": "address"
                     },
                     {
                       "components": [
                         {
                           "internalType": "uint256",
-                          "name": "tokenId",
+                          "name": "value",
                           "type": "uint256"
-                        },
-                        {
-                          "internalType": "uint256",
-                          "name": "dropId",
-                          "type": "uint256"
-                        },
-                        {
-                          "internalType": "bool",
-                          "name": "burned",
-                          "type": "bool"
                         }
                       ],
-                      "internalType": "struct ILux.Meta",
-                      "name": "meta",
+                      "internalType": "struct Decimal.D256",
+                      "name": "sellOnShare",
                       "type": "tuple"
                     }
                   ],
-                  "internalType": "struct ILux.Token",
+                  "internalType": "struct IMarket.Bid",
                   "name": "",
                   "type": "tuple"
                 }

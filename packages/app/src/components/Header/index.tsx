@@ -26,7 +26,6 @@ import { useLingui } from '@lingui/react'
 function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
-  const [hardhatEthBalance, setHardhatEthBalance] = useState(false)
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
@@ -237,7 +236,7 @@ function AppBar(): JSX.Element {
                       {account && chainId && userEthBalance && (
                         <>
                           <div className="px-3 py-2 text-primary text-bold">
-                            {userEthBalance?.toSignificant(4)} {NATIVE[chainId]?.symbol || 'ETH'}
+                            {userEthBalance?.toFixed(0)} {NATIVE[chainId]?.symbol || 'ETH'}
                           </div>
                         </>
                       )}
