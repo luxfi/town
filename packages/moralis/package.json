@@ -10,7 +10,9 @@
     "plugins": "node ./scripts/moralisPlugins.js",
     "proxy": "frpc -c frpc.ini",
     "refresh": "node ./scripts/moralisRefresh.js",
-    "watch": "node ./scripts/moralisWatch.js"
+    "watch": "node ./scripts/moralisWatch.js",
+    "upload": "node ./scripts/moralisUpload.js && yarn uploaded",
+    "uploaded": "cp -R ./assets/uploaded ../app/src"
   },
   "dependencies": {
     "moralis-admin-cli": "^2.1.11",

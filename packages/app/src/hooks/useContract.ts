@@ -91,7 +91,6 @@ export function useContract(
   return useMemo(() => {
     if (!address || !ABI || !library) return null
 
-    console.log('useContract getContract', nameOrAddress, library)
     try {
       return getContract(address.toString(), ABI, library, withSignerIfPossible && account ? account : undefined)
     } catch (error) {

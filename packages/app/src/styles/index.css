@@ -86,6 +86,20 @@ input:focus {
 .lux-font {
   font-family: 'Open Sans', sans-serif, Arial, Helvetica;
   font-weight: 900;
-  font-size: 20px;
-  text-transform: uppercase;
+}
+
+video {
+  height: auto !important;
+  z-index: 1 !important;
+}
+.video-overlay {
+  z-index: 2 !important;
+}
+
+.Asset__token-id,
+.AssetModal__token-id {
+  position: relative;
+  bottom: 2px;
+  font-weight: bold;
+  font-family: 'Open Sans', sans-serif, Arial, Helvetica;
 }

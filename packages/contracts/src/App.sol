@@ -7,31 +7,28 @@ import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { Initializable } from '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
-import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
 import { IDrop } from './interfaces/IDrop.sol';
 import { IMedia } from './interfaces/IMedia.sol';
+import { IMarket } from './interfaces/IMarket.sol';
 import { ILux } from './interfaces/ILux.sol';
 import { IERC721Burnable } from './interfaces/IERC721Burnable.sol';
-import { IUniswapV2Pair } from './uniswapv2/interfaces/IUniswapV2Pair.sol';
 
 import './console.sol';
-
 
 contract App is UUPSUpgradeable, OwnableUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
 
-  Counters.Counter private dropIDs;
+  Counters.Counter private dropIds;
 
   // Declare an Event
-  event AddDrop(address indexed dropAddress, string title, uint256 indexed totalSupply);
-  event Burn(address indexed from, uint256 indexed tokenID);
-  event BuyNFT(address indexed owner, uint256 indexed tokenID);
-  event Mint(address indexed from, uint256 indexed tokenID);
-  event Swap(address indexed owner, uint256 indexed tokenID, uint256 indexed chainID);
+  event AddDrop(address indexed dropAddress, string title);
+  event Burn(address indexed from, uint256 indexed tokenId);
+  event BuyNFT(address indexed owner, uint256 indexed tokenId);
+  event Mint(address indexed from, uint256 indexed tokenId);
 
   // Mapping of Address to Drop ID
   mapping(uint256 => address) public drops;
@@ -47,16 +44,6 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
 
   // External contracts
   IMedia public media;
-  IERC20 public lux;
-  IUniswapV2Pair public pair;
-  address public bridge;
-  bool public unlocked;
-
-  // Only bridge can call method
-  modifier onlyBridge() {
-    require(msg.sender == bridge);
-    _;
-  }
 
   // Ensure only owner can upgrade contract
   function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
@@ -67,35 +54,20 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Configure App
-  function configure(
-    address _media,
-    address _lux,
-    address _pair,
-    address _bridge,
-    bool _unlocked
-  ) public onlyOwner {
+  function configure(address _media) public onlyOwner {
     media = IMedia(_media);
-    lux = IERC20(_lux);
-    pair = IUniswapV2Pair(_pair);
-    bridge = _bridge;
-    unlocked = _unlocked;
   }
 
   // Add new drop
   function addDrop(address dropAddress) public onlyOwner returns (uint256) {
     require(dropAddresses[dropAddress] == 0, 'Drop already added');
     IDrop drop = IDrop(dropAddress);
-    dropIDs.increment();
-    uint256 dropID = dropIDs.current();
-    drops[dropID] = dropAddress;
-    dropAddresses[dropAddress] = dropID;
-    emit AddDrop(dropAddress, drop.title(), drop.eggSupply());
-    return dropID;
-  }
-
-  // Set price for buying a name
-  function setNamePrice(uint256 price) public onlyOwner {
-    namePrice = price.mul(10**18);
+    dropIds.increment();
+    uint256 dropId = dropIds.current();
+    drops[dropId] = dropAddress;
+    dropAddresses[dropAddress] = dropId;
+    emit AddDrop(dropAddress, drop.title());
+    return dropId;
   }
 
   // Issue a new token to owner
@@ -108,39 +80,19 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Burn token owned by owner
-  function burn(address owner, uint256 tokenID) private {
-    console.log('burn', owner, tokenID);
-    media.burnToken(owner, tokenID);
-    tokens[tokenID].meta.burned = true;
-    emit Burn(owner, tokenID);
-  }
-
-  // Swap to new chain requested
-  function swap(
-    address owner,
-    uint256 tokenID,
-    uint256 chainID
-  ) external onlyBridge {
-    console.log('swap', owner, tokenID);
-    burn(owner, tokenID);
-    tokens[tokenID].meta.swapped = true;
-    emit Swap(owner, tokenID, chainID);
-  }
-
-  // Remint token swapped from another chain
-  function remint(
-    address owner,
-    ILux.Token memory token
-  ) external onlyBridge {
-    mint(owner, token);
+  function burn(address owner, uint256 tokenId) private {
+    console.log('burn', owner, tokenId);
+    media.burnToken(owner, tokenId);
+    tokens[tokenId].meta.burned = true;
+    emit Burn(owner, tokenId);
   }
 
   // Mint egg
-  function mintNFT(uint256 dropID, address owner) internal returns (ILux.Token memory) {
+  function mintNFT(uint256 dropId, address owner) internal returns (ILux.Token memory) {
     require(media.balanceOf(owner) < 3, 'Only 3 eggs allowed');
 
     // Get NFT for drop
-    IDrop drop = IDrop(drops[dropID]);
+    IDrop drop = IDrop(drops[dropId]);
     ILux.Token memory egg = drop.newNFT();
 
     // Mint NFT Token
@@ -150,80 +102,39 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     return egg;
   }
 
-
-  // Accept lux and return NFT NFT
-  function buyNFT(uint256 dropID, address buyer) private returns (ILux.Token memory) {
-    console.log('buyNFT', dropID);
+  // Accept ETH and return NFT NFT
+  function buyNFT(uint256 dropId, uint256 tokenId) public payable returns (IMarket.Bid memory) {
+    console.log('buyNFT', dropId, tokenId);
 
     // Check egg price
-    IDrop drop = IDrop(drops[dropID]);
-    require(lux.balanceOf(buyer) >= drop.eggPrice(), 'Not enough lux');
+    IDrop drop = IDrop(drops[dropId]);
+    // require(lux.balanceOf(buyer) >= drop.tokenPrice(), 'Not enough lux');
+
+    // Check if Ask exist in Market for this token
+    // The ask can represent ETH or any ERC20 we support
+    // if not use the default drop.tokenPrice() in ETH
 
     // Transfer funds
-    console.log('Transfer lux', buyer, address(this), drop.eggPrice());
-    lux.transferFrom(buyer, address(this), drop.eggPrice());
+    console.log('Transfer lux (tokenId,value,tokenPrice)', tokenId, msg.value, drop.tokenPrice(tokens[tokenId].name));
+    // lux.transferFrom(buyer, address(this), drop.defaultPrice());
 
     // Mint and return NFT
-    return mintNFT(dropID, buyer);
-  }
-
-  // Accept lux and return NFT NFT
-  function buyNFTs(uint256 dropID, uint256 quantity) public {
-    console.log('buyNFTs', dropID, quantity);
-    for (uint8 i = 0; i < quantity; i++) {
-      buyNFT(dropID, msg.sender);
-    }
-  }
-
-  function buyNFTsBNB(uint256 dropID, uint256 quantity) public payable {
-    console.log('buyNFTsBNB', dropID, quantity);
-
-    // Ensure enough BNB was sent
-    IDrop drop = IDrop(drops[dropID]);
-    uint256 bnbPrice = (drop.eggPrice() + (18000 * (10 ** 18))) / luxPriceBNB(); // 420k lux in BNB
-    console.log('msg.value', msg.value);
-    console.log('bnbPrice', bnbPrice);
-    console.log('drop.eggPrice', drop.eggPrice());
-    console.log('luxPriceBNB()', luxPriceBNB());
-    require(msg.value >= bnbPrice * quantity, "Not enough BNB");
-
-    for (uint8 i = 0; i < quantity; i++) {
-      mintNFT(dropID, msg.sender);
-    }
-  }
-
-  // Calculate price of lux denominted in BNB based on pair reserves
-  function luxPriceBNB() public view returns (uint256) {
-    (uint luxAmount, uint bnbAmount,) = pair.getReserves();
-    return luxAmount / bnbAmount;
-  }
-
-  // Return total amount of lux in contract
-  function supplyBNB() public view returns (uint256) {
-    return lux.balanceOf(address(this));
-  }
-
-  // Return total amount of lux in contract
-  function supplyLUX() public view returns (uint256) {
-    return lux.balanceOf(address(this));
+    // return mintNFT(dropId, buyer);
+    // market.createBid()
   }
 
   // Enable owner to withdraw lux if necessary
-  function withdrawBNB(address payable receiver, uint256 amount) public onlyOwner {
+  function withdraw(address payable receiver, uint256 amount) public onlyOwner {
     require(receiver.send(amount));
   }
 
-  // Enable owner to withdraw lux if necessary
-  function withdrawlux(address receiver, uint256 amount) public onlyOwner {
-    require(lux.transfer(receiver, amount));
-  }
-
   // Helper to do fractional math
-  function mul(uint x, uint y) internal pure returns (uint z) {
-    require(y == 0 || (z = x * y) / y == x, "Math overflow");
+  function mul(uint256 x, uint256 y) internal pure returns (uint256 z) {
+    require(y == 0 || (z = x * y) / y == x, 'Math overflow');
   }
 
   // Payable fallback functions
   receive() external payable {}
+
   fallback() external payable {}
 }

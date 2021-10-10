@@ -17,6 +17,8 @@
     "build:sdk": "yarn workspace @luxdefi/sdk build",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
     "dev": "yarn build:sdk && yarn workspace @luxdefi/app dev",
+    "upload": "yarn workspace @luxdefi/moralis upload",
+    "uploaded": "yarn workspace @luxdefi/moralis uploaded",
     "start": "yarn workspace @luxdefi/app start",
     "start:lab": "yarn workspace @luxdefi/lab start",
     "account": "yarn workspace @luxdefi/contracts account",

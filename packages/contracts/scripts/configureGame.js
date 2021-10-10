@@ -6,12 +6,12 @@ const NETWORK = process.env.HARDHAT_NETWORK ? process.env.HARDHAT_NETWORK : 'har
 console.log(`Configure game on ${NETWORK}`)
 
 const DEPLOYMENT = {
-  hardhat:  'localhost',
-  testnet:  'testnet',
-  mainnet:  'mainnet',
+  hardhat: 'localhost',
+  testnet: 'testnet',
+  mainnet: 'mainnet',
   ethereum: 'ethereum',
-  rinkeby:  'rinkeby',
-  ropsten:  'ropsten',
+  rinkeby: 'rinkeby',
+  ropsten: 'ropsten',
 }[NETWORK]
 
 const rarities = require('../utils/rarities.json')
@@ -23,7 +23,7 @@ const Market = require(`../deployments/${DEPLOYMENT}/Market.json`)
 const Media = require(`../deployments/${DEPLOYMENT}/Media.json`)
 const Drop = require(`../deployments/${DEPLOYMENT}/Drop.json`)
 const ZooKeeper = require(`../deployments/${DEPLOYMENT}/ZooKeeper.json`)
-const bridge =  require(`../deployments/${DEPLOYMENT}/Bridge.json`)
+const bridge = require(`../deployments/${DEPLOYMENT}/Bridge.json`)
 
 // Split game data into deploy-sized chunks
 function chunks(arr, size) {
@@ -92,37 +92,12 @@ async function main() {
 
   for (const v of eggs) {
     console.log('setEgg', v)
-    const tx = await drop.setEgg(v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
+    const tx = await drop.setEgg(v.kind, v.name, v.name, v.price, v.supply, v.tokenURI, v.metadataURI)
     await tx.wait()
   }
 
   console.log('configureEggs')
-  await drop.configureEggs('Base Egg', 'Hybrid Egg')
-
-  // Add rarities
-  rarities.sort(function (a, b) {
-    return a.probability - b.probability
-  })
-
-  for (const v of rarities) {
-    console.log('setRarity', v)
-    const tx = await drop.setRarity(v.name, v.probability, v.yield, v.boost)
-    await tx.wait()
-  }
-
-  // Add animals
-  for (const chunk of chunks(animals, 25)) {
-    console.log('setAnimals', chunk)
-    const tx = await drop.setAnimals(chunk)
-    await tx.wait()
-  }
-
-  // Add hybrids
-  for (const chunk of chunks(hybrids, 25)) {
-    console.log('setHybrids', chunk)
-    const tx = await drop.setHybrids(chunk)
-    await tx.wait()
-  }
+  // await drop.configureEggs('Base Egg', 'Hybrid Egg')
 }
 
 main()

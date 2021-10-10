@@ -1,41 +1,57 @@
 import { Modal } from 'react-morphing-modal'
 import { HiOutlineChevronLeft } from 'react-icons/hi'
 
-import AssetCard from './AssetCard'
-import { useState } from 'react'
-import { useActiveWeb3React } from '../hooks'
+import Asset from './Asset'
+import { useState, forwardRef } from 'react'
+import { useActiveWeb3React, useContract } from '../hooks'
 import { useETHBalances } from '../state/wallet/hooks'
 import Dots from '../components/Dots'
 import { t } from '@lingui/macro'
 import { i18n } from '@lingui/core'
+import Moralis from 'moralis'
 import { shortenAddress } from '../functions'
+import { useGasPrice } from '../state/network/hooks'
 
-const AssetModal = ({ tokenId, type, modalProps, height, otc }) => {
+const AssetModal = (props: any) => {
+  const { modalProps, tokenId, type, height, image, video } = props
   const [showHow, setShowHow] = useState(false)
   const { chainId, account } = useActiveWeb3React()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+  const gasPrice = useGasPrice()
+  const app = useContract('App')
+
+  const buyNFT = async () => {
+    // console.log(app)
+    const tx = await app.buyNFT(1, 1, { from: account, gasPrice, value: Moralis.Units.ETH('1') })
+    console.log(tx)
+
+    // const options = { type: 'native', amount: Moralis.Units.ETH('0.5'), receiver: app.address }
+    // let result = await Moralis.
+  }
 
   return (
-    <Modal {...modalProps} padding={0} closeButton={false}>
+    <Modal {...props.modalProps} padding={0} closeButton={false}>
       <div className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
-        <div className="flex items-stretch h-screen">
+        <div className="">
           <div
             onClick={modalProps.close}
-            className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer h-14 w-14"
+            className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14"
           >
             <HiOutlineChevronLeft />
           </div>
-          <AssetCard
-            className="self-center"
-            tokenId={tokenId}
-            type={type}
-            width={96}
-            height={height}
-            showPrice
-            autoPlay
-          />
+          <div className="flex items-stretch md:h-screen">
+            <Asset
+              className="self-center m-auto w-96"
+              tokenId={tokenId}
+              type={type}
+              showPrice
+              image={image}
+              video={video}
+              autoPlay
+            />
+          </div>
         </div>
-        <div className="flex items-stretch h-screen bg-gray-900">
+        <div className="flex items-stretch bg-gray-900 md:h-screen">
           <div className="self-center m-auto w-96">
             {showHow ? (
               <div>
@@ -53,14 +69,14 @@ const AssetModal = ({ tokenId, type, modalProps, height, otc }) => {
                 </button>
               </div>
             ) : (
-              <div>
+              <div className="sm:p-4 md:p-0">
                 <div className="py-3 text-right">
                   <div className="text-gray-500">{account && shortenAddress(account)}</div>
                   <div className="text-xl">
                     {account && chainId && (
                       <>
                         {userEthBalance ? (
-                          <div>Balance {userEthBalance?.toSignificant(4)} ETH</div>
+                          <div>Balance {userEthBalance?.toFixed(0)} ETH</div>
                         ) : (
                           <Dots>{i18n._(t`Loading`)}</Dots>
                         )}
@@ -71,8 +87,12 @@ const AssetModal = ({ tokenId, type, modalProps, height, otc }) => {
                 <button
                   type="button"
                   className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
+                  onClick={buyNFT}
                 >
-                  Reserve {type} #{tokenId}
+                  Reserve {type}{' '}
+                  <span className="px-2 py-1 ml-1 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetModal__token-id">
+                    {tokenId}
+                  </span>
                 </button>
                 <div className="pt-3">
                   <p className="text-center">You cannot withdraw a reservation once submitted.</p>

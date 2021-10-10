@@ -1,34 +1,38 @@
+import { ChainId } from '@luxdefi/sdk'
 import _ from 'lodash'
+import ipfsFiles from '../constants/ipfs'
 
-const NFT_VALIDATOR = 'Validator'
-const NFT_ATM = 'ATM'
-const NFT_WALLET = 'Genesis Wallet'
-const NFT_CASH = 'Cash'
+export const NFT_VALIDATOR = 'Validator'
+export const NFT_ATM = 'ATM'
+export const NFT_WALLET = 'Wallet'
+export const NFT_CASH = 'Cash'
 
 export const newNft = (tokenId, type, props = {}) => {
   return {
     tokenId,
     type,
+    image: ipfsFiles[ChainId.HARDHAT][`${type.toLowerCase()}.jpg`]?.url,
+    video: ipfsFiles[ChainId.HARDHAT][`${type.toLowerCase()}.mp4`]?.url,
     ...props,
   }
 }
 
 export const getOwnedNfts = () => {
-  return [newNft(1, NFT_VALIDATOR), newNft(2, NFT_ATM), newNft(3, NFT_WALLET), newNft(4, NFT_CASH)]
+  return [newNft(1, NFT_VALIDATOR), newNft(2, NFT_ATM), newNft(3, NFT_WALLET)]
 }
 
 export const getValidatorNfts = () => {
-  return _.times(4, (n) => newNft(n + 1, NFT_VALIDATOR))
+  return _.times(6, (n) => newNft(n + 1, NFT_VALIDATOR))
 }
 
 export const getAtmNfts = () => {
-  return _.times(4, (n) => newNft(n + 1, NFT_ATM))
+  return _.times(6, (n) => newNft(n + 7, NFT_ATM))
 }
 
 export const getWalletNfts = () => {
-  return _.times(4, (n) => newNft(n + 1, NFT_WALLET))
+  return _.times(6, (n) => newNft(n + 13, NFT_WALLET))
 }
 
 export const getCashNfts = () => {
-  return _.times(4, (n) => newNft(n + 1, NFT_CASH))
+  return _.times(6, (n) => newNft(n + 20, NFT_CASH))
 }
