@@ -1,5 +1,5 @@
 import { ChainId } from '@luxdefi/sdk'
-import localhostUploads from '../uploaded/localhost.json'
+import localhostUploads from '../ipfs/localhost.json'
 
 export default {
   [ChainId.MAINNET]: localhostUploads,
