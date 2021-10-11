@@ -8,10 +8,12 @@ import { classNames } from '../../functions/styling'
 import { t } from '@lingui/macro'
 import { useLingui } from '@lingui/react'
 import NavLink from '../NavLink'
+import Toggle from '../Toggle'
+import { useAnimationModeManager } from '../../state/user/hooks'
 
 const items = (i18n: I18n) => [
   {
-    name: i18n._(t`Docs`),
+    name: i18n._(t`About`),
     description: i18n._(t`Documentation for users of Sushi.`),
     href: 'https://docs.sushi.com',
     external: true,
@@ -51,7 +53,8 @@ const items = (i18n: I18n) => [
 export default function Menu() {
   const { i18n } = useLingui()
   const solutions = items(i18n)
-
+  const [animationMode, toggleSetAnimationMode] = useAnimationModeManager()
+  console.log('animationMode', animationMode)
   return (
     <Popover className="relative ml-auto md:m-0">
       {({ open }) => (
@@ -110,25 +113,118 @@ export default function Menu() {
             >
               <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                 <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
-                  {solutions.map((item) =>
-                    item.external ? (
-                      <ExternalLink
-                        key={item.name}
-                        href={item.href}
-                        className="block p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-dark-800"
+                  <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                    onClick={() => window.open('https://t.me/Zoolabs')}
+                  >
+                    About
+                    <div className="ml-4 sm:ml-14">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
                       >
-                        <p className="text-base font-medium text-high-emphesis">{item.name}</p>
-                        <p className="mt-1 text-sm text-secondary">{item.description}</p>
-                      </ExternalLink>
-                    ) : (
-                      <NavLink key={item.name} href={item.href}>
-                        <a className="block p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-dark-800">
-                          <p className="text-base font-medium text-high-emphesis">{item.name}</p>
-                          <p className="mt-1 text-sm text-secondary">{item.description}</p>
-                        </a>
-                      </NavLink>
-                    )
-                  )}
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                    onClick={() =>
+                      window.open('https://charts.bogged.finance/0x09E2b83Fe5485a7c8BeAa5DffD1D324A2B2D5c13')
+                    }
+                  >
+                    Analytics
+                    <div className="ml-4 sm:ml-14">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                  >
+                    Animation
+                    <div className="ml-4 sm:ml-14">
+                      <Toggle
+                        id="toggle-disable-multihop-button"
+                        isActive={animationMode}
+                        toggle={() => toggleSetAnimationMode()}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                    onClick={() => window.open('https://github.com/zoo-labs')}
+                  >
+                    Code
+                    <div className="ml-4 sm:ml-14">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
+                    style={{}}
+                    onClick={() =>
+                      window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')
+                    }
+                  >
+                    Discord
+                    <div className="ml-4 sm:ml-14">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                      </svg>
+                    </div>
+                  </div>
+                  {/* <div
+                    onClick={() => toggleTheme()}
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}>
+                    Theme
+                    <div className='ml-4 sm:ml-14'>
+                      {isDark ? <SunIcon fill={isDark ? 'white' : 'text'} width='18px' /> : <MoonIcon fill={isDark ? 'white' : 'textDisabled'} width='18px' />}
+                    </div>
+                  </div> */}
+                  {/* <div
+                    onClick={() => logout}
+                    className='flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer'
+                    style={{}}>
+                    Log Out
+                    <div className='ml-4 sm:ml-14'>
+                      <RiLogoutCircleLine fill='gray' />
+                    </div>
+                  </div> */}
                 </div>
               </div>
             </Popover.Panel>
