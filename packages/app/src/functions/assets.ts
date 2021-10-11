@@ -11,8 +11,8 @@ export const newNft = (tokenId, type, props = {}) => {
   return {
     tokenId,
     type,
-    image: ipfsFiles[ChainId.HARDHAT][`${type.toLowerCase()}.jpg`]?.url,
-    video: ipfsFiles[ChainId.HARDHAT][`${type.toLowerCase()}.mp4`]?.url,
+    image: `/nfts/${type.toLowerCase()}.gif`,
+    video: `/nfts/${type.toLowerCase()}.mp4`,
     ...props,
   }
 }
