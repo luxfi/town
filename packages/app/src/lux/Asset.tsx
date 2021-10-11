@@ -16,7 +16,7 @@ export type AssetProps = {
   getTriggerProps?: GetTriggerProps
 } & React.HTMLAttributes<HTMLDivElement>
 
-const textOffset = {
+const modalOffset = {
   [NFT_VALIDATOR]: 170,
   [NFT_ATM]: 40,
   [NFT_WALLET]: 140,
@@ -36,7 +36,10 @@ const Asset = (props: AssetProps) => {
       )}
       <div
         className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}
-        style={{ position: 'relative', bottom: props.showPrice ? textOffset[props.type] : 0 }}
+        style={{
+          position: props.showPrice ? 'relative' : 'static',
+          bottom: props.showPrice ? modalOffset[props.type] : 60,
+        }}
       >
         <div>
           <span className="text-lg text-gray-300">{props.type}</span>

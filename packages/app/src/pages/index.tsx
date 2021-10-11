@@ -56,7 +56,7 @@ export default function Dashboard() {
         <div className="text-xl text-center text-gray-600">Owned NFTs</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {ownedNfts.map((asset) => (
-            <Asset key={asset.tokenId} {...asset} showPrice={false} getTriggerProps={getTriggerProps} />
+            <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
       </div>
@@ -64,7 +64,7 @@ export default function Dashboard() {
         <div className="text-xl text-center text-gray-600">Validators</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {validatorNfts.map((asset) => (
-            <Asset key={asset.tokenId} {...asset} showPrice={false} getTriggerProps={getTriggerProps} />
+            <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function Dashboard() {
         <div className="text-xl text-center text-gray-600">ATMs</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {atmNfts.map((asset) => (
-            <Asset key={asset.tokenId} {...asset} showPrice={false} getTriggerProps={getTriggerProps} />
+            <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function Dashboard() {
         <div className="text-xl text-center text-gray-600">Genesis Wallets</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {walletNfts.map((asset) => (
-            <Asset key={asset.tokenId} {...asset} showPrice={false} getTriggerProps={getTriggerProps} />
+            <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function Dashboard() {
           <div className="text-xl text-center text-gray-600">Cash</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {cashNfts.map((asset) => (
-            <Asset key={asset.tokenId} {...asset} showPrice={false} getTriggerProps={getTriggerProps} />
+            <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
       </div> */}
