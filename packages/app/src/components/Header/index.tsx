@@ -41,7 +41,9 @@ function AppBar(): JSX.Element {
                   {/* <Image src="/logo.png" alt="Sushi" width="32px" height="32px" /> */}
 
                   <NavLink href="/">
-                    <div className="logo">LUX TOWN</div>
+                    <div className="logo">
+                      <img src="/logo.svg" className="w-10" />
+                    </div>
                   </NavLink>
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
