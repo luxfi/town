@@ -10,11 +10,11 @@ import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/O
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
 
+import { Decimal } from './Decimal.sol';
 import { IDrop } from './interfaces/IDrop.sol';
 import { IMedia } from './interfaces/IMedia.sol';
 import { IMarket } from './interfaces/IMarket.sol';
 import { ILux } from './interfaces/ILux.sol';
-import { IERC721Burnable } from './interfaces/IERC721Burnable.sol';
 
 import './console.sol';
 
@@ -27,8 +27,7 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
   // Declare an Event
   event AddDrop(address indexed dropAddress, string title);
   event Burn(address indexed from, uint256 indexed tokenId);
-  event BuyNFT(address indexed owner, uint256 indexed tokenId);
-  event Mint(address indexed from, uint256 indexed tokenId);
+  event Mint(uint256 indexed tokenId, ILux.Token token);
 
   // Mapping of Address to Drop ID
   mapping(uint256 => address) public drops;
@@ -70,12 +69,33 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     return dropId;
   }
 
+  function mintMany(
+    uint256 dropId,
+    string memory name,
+    uint256 quantity
+  ) public onlyOwner {
+    for (uint256 i = 0; i < quantity; i++) {
+      mint(dropId, name);
+    }
+  }
+
   // Issue a new token to owner
-  function mint(address owner, ILux.Token memory token) private returns (ILux.Token memory) {
-    console.log('mint', owner, token.name);
-    token = media.mintToken(owner, token);
+  function mint(uint256 dropId, string memory name) public onlyOwner returns (ILux.Token memory) {
+    IDrop drop = IDrop(drops[dropId]);
+
+    // Get NFT for drop
+    ILux.Token memory token = drop.newNFT(name);
+
+    token = media.mintToken(msg.sender, token);
+
+    drop.setFirstTokenId(name, token.id);
+
+    console.log('mint', msg.sender, token.name, token.id);
+
     tokens[token.id] = token;
-    emit Mint(owner, token.id);
+
+    emit Mint(token.id, token);
+
     return token;
   }
 
@@ -88,19 +108,17 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Mint egg
-  function mintNFT(uint256 dropId, address owner) internal returns (ILux.Token memory) {
-    require(media.balanceOf(owner) < 3, 'Only 3 eggs allowed');
+  // function mintNFT(uint256 dropId, address owner) internal returns (ILux.Token memory) {
+  //   // Get NFT for drop
+  //   IDrop drop = IDrop(drops[dropId]);
+  //   ILux.Token memory token = drop.newNFT();
 
-    // Get NFT for drop
-    IDrop drop = IDrop(drops[dropId]);
-    ILux.Token memory egg = drop.newNFT();
-
-    // Mint NFT Token
-    egg = mint(owner, egg);
-    console.log('minted egg', egg.id);
-    emit BuyNFT(owner, egg.id);
-    return egg;
-  }
+  //   // Mint NFT Token
+  //   egg = mint(egg);
+  //   console.log('minted egg', egg.id);
+  //   emit BuyNFT(owner, egg.id);
+  //   return egg;
+  // }
 
   // Accept ETH and return NFT NFT
   function buyNFT(uint256 dropId, uint256 tokenId) public payable returns (IMarket.Bid memory) {
@@ -115,12 +133,32 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     // if not use the default drop.tokenPrice() in ETH
 
     // Transfer funds
-    console.log('Transfer lux (tokenId,value,tokenPrice)', tokenId, msg.value, drop.tokenPrice(tokens[tokenId].name));
-    // lux.transferFrom(buyer, address(this), drop.defaultPrice());
+    console.log('Transfer ETH (tokenId,value,tokenPrice)', tokenId, msg.value, drop.tokenTypeAsk(tokens[tokenId].name));
+
+    // struct Bid {
+    //   // Amount of the currency being bid
+    //   uint256 amount;
+    //   // Address to the ERC20 token being used to bid
+    //   address currency;
+    //   // Address of the bidder
+    //   address bidder;
+    //   // Address of the recipient
+    //   address recipient;
+    //   // % of the next sale to award the current owner
+    //   Decimal.D256 sellOnShare;
+    // }
+    IMarket.Bid memory bid = IMarket.Bid(
+      msg.value, // amount
+      address(0), // currency
+      address(msg.sender), // bidder
+      address(msg.sender), // recipient
+      Decimal.D256(0) // sellOnShare
+    );
 
     // Mint and return NFT
-    // return mintNFT(dropId, buyer);
-    // market.createBid()
+    media.setBidFromApp(tokenId, bid);
+
+    return bid;
   }
 
   // Enable owner to withdraw lux if necessary

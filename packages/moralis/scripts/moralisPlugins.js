@@ -10,27 +10,21 @@ const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 
 const CHAIN_IDS = {
   hardhat: '0x539',
-  testnet: '0x61',
-  mainnet: '0x38',
-  ethereum: '0x1',
-  ropsten: '0x3',
+  testnet: '0x4',
+  mainnet: '0x1',
 }
 
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
-  hardhat: 'Local Dev Chain',
-  testnet: 'Lux Testnet',
-  mainnet: 'Lux Mainnet',
-  ethereum: 'Lux ETH Mainnet',
-  ropsten: 'Lux ETH (Ropsten)',
+  hardhat: 'Hardhat',
+  testnet: 'Testnet',
+  mainnet: 'Mainnet',
 }[NETWORK]
 
 const DEPLOYMENT = {
   hardhat: 'localhost',
   testnet: 'testnet',
   mainnet: 'mainnet',
-  ethereum: 'ethereum',
-  rinkeby: 'rinkeby',
 }[NETWORK]
 
 const BASE_ABI_PATH = `${__dirname}/../../contracts/deployments/${DEPLOYMENT}`
@@ -67,7 +61,7 @@ const getContractPlugins = (contract, contractName) => {
 
   // function for getting the topic
   const getTopic = (item) => `${item.name}(${item.inputs.reduce((a, o) => (a.push(fixType(o.type)), a), []).join()})`
-  
+
   const contractAddress = contract.address
 
   const plugins = [];
@@ -75,7 +69,7 @@ const getContractPlugins = (contract, contractName) => {
   // Loop through events in LuxKeeper ABI
   for (let i = 0; i < abiEvents.length; i++) {
     const event = abiEvents[i]
-    const tableName = contractName === 'LuxKeeper' ? event.name : `${contractName}${event.name}`
+    const tableName = `${event.name}`
     const description = tableName
     const topic = getTopic(event)
 
@@ -137,7 +131,7 @@ const getPlugins = async (contractNames = []) => {
   for (const contractName of contractNames) {
     plugins = plugins.concat(getContractPlugins(await getContract(contractName), contractName))
   }
-  
+
   return plugins;
 }
 
@@ -174,9 +168,9 @@ const addPlugins = async (contractNames = []) => {
         plugins: JSON.stringify(plugins),
       },
     })
-    
+
     console.log(`addPlugins: Successfully saved the contract events!`)
-    
+
     // Restart server to apply sync
     await restartServer(apiKey, apiSecret, server)
 
@@ -186,9 +180,9 @@ const addPlugins = async (contractNames = []) => {
   }
 }
 
-/**
- * Configures the events to subscribe to on a smart contract based on the abi file
- */
-;(async () => {
-  await addPlugins(['LuxKeeper', 'Market']);
-})()
+  /**
+   * Configures the events to subscribe to on a smart contract based on the abi file
+   */
+  ; (async () => {
+    await addPlugins(['App', 'Market']);
+  })()

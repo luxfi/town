@@ -43,10 +43,10 @@ const uploadToIPFS = async (uploadArgs = []) => {
                 ['atm.mp4', 'video/mp4'],
             ])
 
-            fs.writeFileSync(`${ASSETS_FOLDER}/uploaded/${DEPLOYMENT}.json`, JSON.stringify(responses, null, 2))
+            fs.writeFileSync(`${ASSETS_FOLDER}/ipfs/${DEPLOYMENT}.json`, JSON.stringify(responses, null, 2))
 
-            console.log(`Uploaded data saved to ./uploaded/${DEPLOYMENT}.json`)
-            console.log(`Copied ./uploaded to ../app/src/uploaded`)
+            console.log(`Uploaded data saved to ./ipfs/${DEPLOYMENT}.json`)
+            console.log(`Copied ./ipfs to ../app/src/ipfs`)
         } catch (error) {
             console.log(error)
         }

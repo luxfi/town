@@ -76,6 +76,11 @@ interface IMedia is IERC721 {
   function setBid(uint256 tokenId, IMarket.Bid calldata bid) external;
 
   /**
+   * @notice Set the bid on a piece of media
+   */
+  function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid) external;
+
+  /**
    * @notice Remove the bid on a piece of media
    */
   function removeBid(uint256 tokenId) external;

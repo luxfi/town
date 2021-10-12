@@ -103,3 +103,12 @@ video {
   font-weight: bold;
   font-family: 'Open Sans', sans-serif, Arial, Helvetica;
 }
+
+.AssetList__heading {
+  position: relative;
+  bottom: 16px;
+  display: table;
+  margin: 0 auto;
+  background-color: black;
+  padding: 0 10px;
+}

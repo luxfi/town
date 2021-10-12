@@ -7,11 +7,13 @@ import { ILux } from './ILux.sol';
 interface IDrop {
   function title() external view returns (string memory);
 
-  function tokenPrice(string memory name) external view returns (uint256);
+  function tokenTypeAsk(string memory name) external view returns (uint256);
 
   function totalMinted(string memory name) external view returns (uint256);
 
   function tokenSupply(string memory name) external view returns (uint256);
 
-  function newNFT() external returns (ILux.Token memory);
+  function newNFT(string memory name) external returns (ILux.Token memory);
+
+  function setFirstTokenId(string memory name, uint256 _firstTokenId) external;
 }

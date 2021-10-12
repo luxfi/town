@@ -9,19 +9,16 @@ require('dotenv').config()
 const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 const CHAIN_IDS = {
   hardhat: '0x539',
-  testnet: '0x61',
-  mainnet: '0x38',
-  ethereum: '0x1',
-  ropsten: '0x3',
+  testnet: '0x4',
+  mainnet: '0x1',
 }
 const CHAIN_ID = CHAIN_IDS[NETWORK]
 const SERVER_NAME = {
   hardhat: 'Hardhat',
-  testnet: 'Lux Testnet',
-  mainnet: 'Lux Mainnet',
-  ethereum: 'Lux ETH Mainnet',
-  ropsten: 'Lux ETH (Ropsten)',
+  testnet: 'Testnet',
+  mainnet: 'Mainnet',
 }[NETWORK]
+
 
   /**
    * Get Moralis logs

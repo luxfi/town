@@ -260,6 +260,14 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   }
 
   /**
+   * Custom version of setBid where App must be onlyApprovedOrOwner
+   * @notice see IMedia
+   */
+  function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid) public override nonReentrant onlyExistingToken(tokenId) onlyApprovedOrOwner(msg.sender, tokenId) {
+    IMarket(marketContract).setBid(tokenId, bid, bid.bidder);
+  }
+
+  /**
    * @notice see IMedia
    */
   function removeBid(uint256 tokenId) external override nonReentrant onlyTokenCreated(tokenId) {
@@ -471,7 +479,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   }
 
   function mintToken(address owner, ILux.Token memory token) external override nonReentrant returns (ILux.Token memory) {
-    console.log('mintToken', owner, token.name);
+    console.log('mintToken', owner, token.name, token.data.tokenURI);
     token = _hashToken(owner, token);
     _mintForCreator(owner, token.data, token.bidShares);
     uint256 id = getRecentToken(owner);

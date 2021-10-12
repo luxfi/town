@@ -5,36 +5,27 @@ require('dotenv').config()
 const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 
 const chainID = {
-  hardhat:  '0x539',
-  testnet:  '0x61',
-  mainnet:  '0x38',
-  ethereum: '0x1',
-  ropsten:  '0x3',
-  rinkeby:  '0x4',
+  hardhat: '0x539',
+  testnet: '0x4',
+  mainnet: '0x1',
 }[NETWORK]
 
 const subdomain = {
-  hardhat:  'crkoxpwp0jgk.moralishost.com',
-  // testnet:  'bv47r2tczd0v.moralishost.com',
-  testnet:  'dblpeaqbqk32.usemoralis.com',
-  mainnet:  'j0ixlvmwc1kz.usemoralis.com',
-  ethereum: 'csiwdg4boaa8.usemoralis.com',
-  ropsten:  '8sebtwlhn2ic.moralisweb3.com',
+  hardhat: 'udnjb2wy2cep.grandmoralis.com',
+  testnet: 'dblpeaqbqk32.usemoralis.com',
+  mainnet: 'j0ixlvmwc1kz.usemoralis.com',
 }[NETWORK]
 
 const DEPLOYMENT = {
-  hardhat:  'localhost',
-  testnet:  'testnet',
-  mainnet:  'mainnet',
-  ethereum: 'ethereum',
-  rinkeby:  'rinkeby',
-  ropsten:  'ropsten',
+  hardhat: 'localhost',
+  testnet: 'testnet',
+  mainnet: 'mainnet',
 }[NETWORK]
 
 const cached = __dirname + '/../../../node_modules/moralis-cached.js'
 const funcJS = fs.readFileSync(__dirname + '/../src/functions.js')
-const zkJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${DEPLOYMENT}/LuxKeeper.json`)
-const cloudFunctions = String(funcJS).replace('0x38', chainID).replace('ZK={}', 'ZK=' + zkJSON)
+const appJSON = fs.readFileSync(__dirname + `/../../contracts/deployments/${DEPLOYMENT}/App.json`)
+const cloudFunctions = String(funcJS).replace('0x38', chainID).replace('App={}', 'App=' + appJSON)
 
 fs.writeFileSync(cached, cloudFunctions)
 
