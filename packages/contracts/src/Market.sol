@@ -9,6 +9,7 @@ import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { SafeERC20 } from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
+// import { EnumerableSet } from '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
 import { Decimal } from './Decimal.sol';
 import { Media } from './Media.sol';
 import { IMarket } from './interfaces/IMarket.sol';
@@ -20,6 +21,12 @@ import { IMarket } from './interfaces/IMarket.sol';
 contract Market is IMarket, Ownable {
   using SafeMath for uint256;
   using SafeERC20 for IERC20;
+  // using EnumerableSet for EnumerableSet.AddressSet;
+
+  struct Reservation {
+    address bidder;
+    bool isReserved;
+  }
 
   /* *******
    * Globals
@@ -39,6 +46,9 @@ contract Market is IMarket, Ownable {
 
   // Mapping from token to the current ask for the token
   mapping(uint256 => Ask) private _tokenAsks;
+
+  // Mapping from tokenId to their (enumerable) set of bidders
+  mapping(uint256 => Reservation) private _tokenReservations;
 
   /* *********
    * Modifiers
@@ -149,7 +159,7 @@ contract Market is IMarket, Ownable {
     require(bidShares.creator.value.add(bid.sellOnShare.value) <= uint256(100).mul(Decimal.BASE), 'Market: Sell on fee invalid for share splitting');
     require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
     require(bid.amount != 0, 'Market: cannot bid amount of 0');
-    require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
+    // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
     require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
 
     Bid storage existingBid = _tokenBidders[tokenId][bid.bidder];
@@ -159,15 +169,19 @@ contract Market is IMarket, Ownable {
       removeBid(tokenId, bid.bidder);
     }
 
-    IERC20 token = IERC20(bid.currency);
+    if (bid.currency != address(0)) {
+      IERC20 token = IERC20(bid.currency);
+      // We must check the balance that was actually transferred to the market,
+      // as some tokens impose a transfer fee and would not actually transfer the
+      // full amount to the market, resulting in locked funds for refunds & bid acceptance
+      // uint256 beforeBalance = token.balanceOf(address(this));
+      token.safeTransferFrom(spender, address(this), bid.amount);
+      // uint256 afterBalance = token.balanceOf(address(this));
+    }
 
-    // We must check the balance that was actually transferred to the market,
-    // as some tokens impose a transfer fee and would not actually transfer the
-    // full amount to the market, resulting in locked funds for refunds & bid acceptance
-    uint256 beforeBalance = token.balanceOf(address(this));
-    token.safeTransferFrom(spender, address(this), bid.amount);
-    uint256 afterBalance = token.balanceOf(address(this));
-    _tokenBidders[tokenId][bid.bidder] = Bid(afterBalance.sub(beforeBalance), bid.currency, bid.bidder, bid.recipient, bid.sellOnShare);
+    _tokenBidders[tokenId][bid.bidder] = Bid(bid.amount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare);
+    _tokenReservations[tokenId] = Reservation(bid.bidder, true);
+
     emit BidCreated(tokenId, bid);
 
     // DO NOT automatically accept bids
@@ -177,6 +191,10 @@ contract Market is IMarket, Ownable {
     // }
   }
 
+  function getReservation(uint256 tokenId) public view returns (Reservation memory reservation) {
+    return _tokenReservations[tokenId];
+  }
+
   /**
    * @notice Removes the bid on a particular media for a bidder. The bid amount
    * is transferred from this contract to the bidder, if they have a bid placed.
@@ -184,15 +202,17 @@ contract Market is IMarket, Ownable {
   function removeBid(uint256 tokenId, address bidder) public override onlyMediaCaller {
     Bid storage bid = _tokenBidders[tokenId][bidder];
     uint256 bidAmount = bid.amount;
-    address bidCurrency = bid.currency;
 
     require(bid.amount > 0, 'Market: cannot remove bid amount of 0');
 
-    IERC20 token = IERC20(bidCurrency);
-
     emit BidRemoved(tokenId, bid);
     delete _tokenBidders[tokenId][bidder];
-    token.safeTransfer(bidder, bidAmount);
+
+    address bidCurrency = bid.currency;
+    if (bidCurrency != address(0)) {
+      IERC20 token = IERC20(bidCurrency);
+      token.safeTransfer(bidder, bidAmount);
+    }
   }
 
   /**

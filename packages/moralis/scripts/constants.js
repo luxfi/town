@@ -5,20 +5,20 @@ const MASTER_KEY = process.env.MASTER_KEY
 const NETWORK = process.env.NETWORK ? process.env.NETWORK : 'hardhat'
 
 const CHAIN_ID = {
-    ethereum: '0x1',
-    rinkeby: '0x4',
-    hardhat: '0x539',
+    mainnet: '0x1', // ethereum
+    testnet: '0x4', // rinkeby
+    hardhat: '0x539', // localhost 1337
 }[NETWORK]
 
 const SUBDOMAIN = {
-    ethereum: 'dblpeaqbqk32.usemoralis.com',
-    rinkeby: 'j0ixlvmwc1kz.usemoralis.com',
-    hardhat: 'fyl685diuhwz.moralishost.com',
+    mainnet: 'dblpeaqbqk32.usemoralis.com',
+    testnet: 'j0ixlvmwc1kz.usemoralis.com',
+    hardhat: 'udnjb2wy2cep.grandmoralis.com', // udnjb2wy2cep.grandmoralis.com
 }[NETWORK]
 
 const DEPLOYMENT = {
-    ethereum: 'ethereum',
-    rinkeby: 'rinkeby',
+    mainnet: 'mainnet',
+    testnet: 'testnet',
     hardhat: 'localhost',
 }[NETWORK]
 

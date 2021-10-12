@@ -17,10 +17,11 @@ contract Drop is Ownable {
   struct TokenType {
     ILux.Type kind;
     string name;
-    uint256 price;
+    IMarket.Ask ask;
     uint256 supply;
     uint256 timestamp; // time created
     uint256 minted; // amount minted
+    uint256 firstTokenId;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
   }
@@ -57,7 +58,7 @@ contract Drop is Ownable {
   function setTokenType(
     ILux.Type kind,
     string memory name,
-    uint256 price,
+    IMarket.Ask memory ask,
     uint256 supply,
     string memory tokenURI,
     string memory metadataURI
@@ -65,7 +66,7 @@ contract Drop is Ownable {
     TokenType memory tokenType;
     tokenType.kind = kind;
     tokenType.name = name;
-    tokenType.price = price.mul(10**18);
+    tokenType.ask = ask;
     tokenType.supply = supply;
     tokenType.data = getMediaData(tokenURI, metadataURI);
     tokenType.bidShares = getBidShares();
@@ -74,18 +75,28 @@ contract Drop is Ownable {
   }
 
   // Return price for current EggDrop
-  function tokenPrice(string memory name) public view returns (uint256) {
-    return getTokenType(name).price;
+  function tokenTypeAsk(string memory name) public view returns (IMarket.Ask memory) {
+    return getTokenType(name).ask;
   }
 
   function tokenSupply(string memory name) public view returns (uint256) {
     return getTokenType(name).supply;
   }
 
+  function setFirstTokenId(string memory name, uint256 _firstTokenId) external onlyApp {
+    if (tokenTypes[name].minted == 1) {
+      tokenTypes[name].firstTokenId = _firstTokenId;
+    }
+  }
+
+  function firstTokenId(string memory name) public view returns (uint256) {
+    return getTokenType(name).firstTokenId;
+  }
+
   // Return a new TokenType Token
   function newNFT(string memory name) external onlyApp returns (ILux.Token memory) {
     TokenType memory tokenType = getTokenType(name);
-    require(tokenSupply(name) == 0 || tokenType.minted < tokenSupply(name), 'Out of tokenTypes');
+    require(tokenSupply(name) == 0 || tokenType.minted < tokenSupply(name), 'Out of tokens');
 
     tokenType.minted++;
     tokenTypes[tokenType.name] = tokenType;

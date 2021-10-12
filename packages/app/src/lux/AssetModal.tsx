@@ -2,7 +2,7 @@ import { Modal } from 'react-morphing-modal'
 import { HiOutlineChevronLeft } from 'react-icons/hi'
 
 import Asset from './Asset'
-import { useState, forwardRef } from 'react'
+import { useState, forwardRef, useEffect } from 'react'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useETHBalances } from '../state/wallet/hooks'
 import Dots from '../components/Dots'
@@ -19,15 +19,30 @@ const AssetModal = (props: any) => {
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const gasPrice = useGasPrice()
   const app = useContract('App')
+  const media = useContract('Media')
+  const market = useContract('Market')
+
+  // console.log('App', app?.address)
+  // console.log('Market', market?.address)
 
   const buyNFT = async () => {
     // console.log(app)
-    const tx = await app.buyNFT(1, 1, { from: account, gasPrice, value: Moralis.Units.ETH('1') })
+    const tx = await app.buyNFT(1, props.tokenId, { from: account, gasPrice, value: Moralis.Units.ETH('1') })
     console.log(tx)
+    const tx2 = await market.bidForTokenBidder(1, account)
+    console.log(tx2)
+    // const tx3 = await market.isReserved(1)
+    // console.log(tx3)
 
     // const options = { type: 'native', amount: Moralis.Units.ETH('0.5'), receiver: app.address }
     // let result = await Moralis.
   }
+
+  useEffect(() => {
+    if (props.tokenId) {
+      market?.getReservation(props.tokenId).then(console.log)
+    }
+  }, [props.tokenId, chainId])
 
   return (
     <Modal {...props.modalProps} padding={0} closeButton={false}>
