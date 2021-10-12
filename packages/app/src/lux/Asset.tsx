@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { GetTriggerProps, OpenModal, TriggerProps } from 'react-morphing-modal/dist/types'
+import { ChainId, Token } from '@luxdefi/sdk'
+import { BigNumber } from 'ethers'
+import React, { useCallback, useEffect, useState } from 'react'
+import { GetTriggerProps } from 'react-morphing-modal/dist/types'
 import Player from 'react-player'
-import { NFT_VALIDATOR, NFT_ATM, NFT_WALLET, NFT_CASH } from '../functions/assets'
+import { NFT_ATM, NFT_CASH, NFT_VALIDATOR, NFT_WALLET } from '../functions/assets'
+import { useContract } from '../hooks'
+
 
 export type AssetProps = {
   tokenId: number
@@ -23,7 +27,37 @@ const modalOffset = {
   [NFT_CASH]: 150,
 }
 
+// TODO: MOVE THIS SHIT
+const currencyMap = (addr: string): Token => {
+  switch (addr) {
+    case `0x0000000000000000000000000000000000000000`:
+    default:
+      return new Token(ChainId.HARDHAT, '0x0000000000000000000000000000000000000000', 18, 'ETH', 'Ethereum')
+      break;
+  }
+}
+
 const Asset = (props: AssetProps) => {
+  const {tokenId, showPrice} = props;
+  const market = useContract('Market')
+  const [currentAskPrice, setCurrentAskPrice] = useState(BigNumber.from(0))
+  const [currency, setCurrency] = useState("ETH")
+
+  const updateAssetDetails = useCallback(() => {
+    async () => {
+    if (!tokenId || !showPrice) return;
+    const [amount, currency] = await market.currentAskForToken(tokenId);
+    setCurrentAskPrice(amount);
+    // TODO: Check on what currencies are accepted?
+    // TODO: Accept tokens from @luxdefi/sdk
+    const token = currencyMap(currency);
+    setCurrency(token.symbol);
+  }}, [tokenId, showPrice, market]);
+
+  useEffect(() => {
+    updateAssetDetails();
+  }, [tokenId, showPrice, currentAskPrice, currency, updateAssetDetails])
+
   return (
     <div
       className={`Asset ${props.className || ''} ${props.getTriggerProps ? 'cursor-pointer' : ''}`}
@@ -47,7 +81,7 @@ const Asset = (props: AssetProps) => {
             {props.tokenId}
           </span>
         </div>
-        {props.showPrice && <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">Price 1000 ETH</div>}
+        {props.showPrice && <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">Price {currentAskPrice.toNumber()} {currency}</div>}
       </div>
     </div>
   )

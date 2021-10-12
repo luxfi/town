@@ -1,8 +1,8 @@
+import { Token } from '../entities/Token'
+import { ChainId } from '../enums'
+import { TokenMap } from '../types/TokenMap'
 import { USDC_ADDRESS, WETH9_ADDRESS, WNATIVE_ADDRESS } from './addresses'
 
-import { ChainId } from '../enums'
-import { Token } from '../entities/Token'
-import { TokenMap } from '../types/TokenMap'
 
 export const USDC: TokenMap = {
   [ChainId.MAINNET]: new Token(ChainId.MAINNET, USDC_ADDRESS[ChainId.MAINNET], 6, 'USDC', 'USD Coin'),

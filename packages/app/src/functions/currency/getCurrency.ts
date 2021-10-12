@@ -50,6 +50,14 @@ export const USD_CURRENCY: { [chainId in ChainId]?: Currency } = {
   [ChainId.AVALANCHE]: { address: '0xde3A24028580884448a5397872046a019649b084', decimals: 6 },
 }
 
+export const ETH_CURRENCY: { [chainId in ChainId]?: Currency } = {
+  [ChainId.MAINNET]: {
+    address: '0x0000000000000000000000000000000000000000',
+    decimals: 18,
+  },
+
+}
+
 export function getCurrency(chainId: ChainId): Currency {
   return (
     USD_CURRENCY[chainId] || {
