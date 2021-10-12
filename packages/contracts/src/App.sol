@@ -85,6 +85,7 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
 
     // Get NFT for drop
     ILux.Token memory token = drop.newNFT(name);
+    IMarket.Ask memory defaultAsk = drop.tokenTypeAsk(name);
 
     token = media.mintToken(msg.sender, token);
 
@@ -93,6 +94,11 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     console.log('mint', msg.sender, token.name, token.id);
 
     tokens[token.id] = token;
+
+    // Set default ask
+    if (defaultAsk.amount > 0) {
+      media.setAsk(token.id, defaultAsk);
+    }
 
     emit Mint(token.id, token);
 
@@ -126,6 +132,9 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
 
     // Check egg price
     IDrop drop = IDrop(drops[dropId]);
+
+    // IMarket.Ask memory ask = market.currentAskForToken(tokenId);
+
     // require(lux.balanceOf(buyer) >= drop.tokenPrice(), 'Not enough lux');
 
     // Check if Ask exist in Market for this token
@@ -133,7 +142,7 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     // if not use the default drop.tokenPrice() in ETH
 
     // Transfer funds
-    console.log('Transfer ETH (tokenId,value,tokenPrice)', tokenId, msg.value, drop.tokenTypeAsk(tokens[tokenId].name));
+    // console.log('Transfer ETH (tokenId,value,tokenPrice)', tokenId, msg.value, );
 
     // struct Bid {
     //   // Amount of the currency being bid

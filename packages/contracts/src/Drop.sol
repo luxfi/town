@@ -115,7 +115,7 @@ contract Drop is Ownable {
   }
 
   // Get TokenType by name
-  function getTokenType(string memory name) private view returns (TokenType memory) {
+  function getTokenType(string memory name) public view returns (TokenType memory) {
     return tokenTypes[name];
   }
 

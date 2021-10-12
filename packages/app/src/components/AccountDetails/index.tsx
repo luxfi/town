@@ -118,7 +118,8 @@ const AccountDetails: FC<AccountDetailsProps> = ({
                     color="gray"
                     size="xs"
                     onClick={() => {
-                      ;(connector as any).close()
+                      console.log(connector)
+                      ;(connector as any).handleClose()
                     }}
                   >
                     {i18n._(t`Disconnect`)}

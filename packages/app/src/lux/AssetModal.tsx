@@ -22,9 +22,6 @@ const AssetModal = (props: any) => {
   const media = useContract('Media')
   const market = useContract('Market')
 
-  // console.log('App', app?.address)
-  // console.log('Market', market?.address)
-
   const buyNFT = async () => {
     // console.log(app)
     const tx = await app.buyNFT(1, props.tokenId, { from: account, gasPrice, value: Moralis.Units.ETH('1') })
