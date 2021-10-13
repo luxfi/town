@@ -4,7 +4,7 @@ import { Deploy } from '@luxdefi/contracts/utils/deploy'
 
 import configureGame from '../utils/configureGame'
 
-export default Deploy('Drop', {}, async ({ hre, ethers, deploy, deployments, deps }) => {
+export default Deploy('Drop', {}, async ({ hre, ethers, deploy }) => {
   const tx = await deploy(['Gen 0'])
 
   if (hre.network.name == 'mainnet') return
@@ -17,5 +17,5 @@ export default Deploy('Drop', {}, async ({ hre, ethers, deploy, deployments, dep
   // initial state for our Gen 0 drop. Do not expect this to work during
   // Testnet or Mainnet deployment -- use the standalone `yarn deploy:drop` to
   // update Testnet or Mainnet contracts.
-  await configureGame(app, drop, media)
+  await configureGame(hre.network.name, app, drop, media)
 })
