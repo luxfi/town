@@ -2,7 +2,7 @@ import { ChainId, CurrencyAmount, Token, Ether, Currency } from '@luxdefi/sdk'
 import React, { useCallback, useEffect, useState } from 'react'
 import { GetTriggerProps } from 'react-morphing-modal/dist/types'
 import Player from 'react-player'
-import { currencyMap } from '../config/currencies'
+import { getCurrency } from '../config/currencies'
 import { TYPE_ATM, TYPE_CASH, TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import { useActiveWeb3React, useContract } from '../hooks'
 
@@ -36,9 +36,7 @@ const Asset = (props: AssetProps) => {
     if (!tokenId || !showPrice) return
     const ask = await market.currentAskForToken(tokenId)
     setCurrentAskPrice(ask.amount)
-    // TODO: Check on what currencies are accepted?
-    // TODO: Accept tokens from @luxdefi/sdk
-    const currency = currencyMap(ask.currency, chainId)
+    const currency = getCurrency(ask.currency, chainId)
     setCurrency(currency)
   }, [tokenId, showPrice, market])
 
@@ -71,7 +69,7 @@ const Asset = (props: AssetProps) => {
         </div>
         {props.showPrice && currency && currentAskPrice && (
           <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
-            Price {CurrencyAmount.fromRawAmount(currency, currentAskPrice).toSignificant(10)} {currency.symbol}
+            Price {CurrencyAmount.fromRawAmount(currency, currentAskPrice).toFixed(0)} {currency.symbol}
           </div>
         )}
       </div>

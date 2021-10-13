@@ -2,21 +2,25 @@ import { Modal } from 'react-morphing-modal'
 import { HiOutlineChevronLeft } from 'react-icons/hi'
 
 import Asset from './Asset'
-import { useState, forwardRef, useEffect } from 'react'
+import { useState, forwardRef, useEffect, useCallback } from 'react'
 import { useActiveWeb3React, useContract } from '../hooks'
-import { useETHBalances } from '../state/wallet/hooks'
+import { useCurrencyBalance, useETHBalances } from '../state/wallet/hooks'
 import Dots from '../components/Dots'
 import { t } from '@lingui/macro'
 import { i18n } from '@lingui/core'
 import Moralis from 'moralis'
 import { shortenAddress } from '../functions'
 import { useGasPrice } from '../state/network/hooks'
+import { getCurrency } from '../config/currencies'
 
 const AssetModal = (props: any) => {
   const { modalProps, tokenId, type, height, image, video } = props
   const [showHow, setShowHow] = useState(false)
   const { chainId, account } = useActiveWeb3React()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+  const [currentAskPrice, setCurrentAskPrice] = useState(null)
+  const [currency, setCurrency] = useState(null)
+  // const [currencyBalance, setCurrencyBalance] = useState(null)
   const gasPrice = useGasPrice()
   const app = useContract('App')
   const media = useContract('Media')
@@ -34,6 +38,20 @@ const AssetModal = (props: any) => {
     // const options = { type: 'native', amount: Moralis.Units.ETH('0.5'), receiver: app.address }
     // let result = await Moralis.
   }
+
+  const currencyBalance = useCurrencyBalance(account, currency)
+
+  const updateAssetDetails = useCallback(async () => {
+    if (!tokenId) return
+    const ask = await market.currentAskForToken(tokenId)
+    setCurrentAskPrice(ask.amount)
+    const currency = getCurrency(ask.currency, chainId)
+    setCurrency(currency)
+  }, [tokenId, market, account])
+
+  useEffect(() => {
+    updateAssetDetails()
+  }, [tokenId, updateAssetDetails])
 
   useEffect(() => {
     if (props.tokenId) {
@@ -85,10 +103,12 @@ const AssetModal = (props: any) => {
                 <div className="py-3 text-right">
                   <div className="text-gray-500">{account && shortenAddress(account)}</div>
                   <div className="text-xl">
-                    {account && chainId && (
+                    {account && chainId && currency && (
                       <>
-                        {userEthBalance ? (
-                          <div>Balance {userEthBalance?.toFixed(0)} ETH</div>
+                        {currencyBalance ? (
+                          <div>
+                            Balance {currencyBalance?.toFixed(0)} {currency.symbol}
+                          </div>
                         ) : (
                           <Dots>{i18n._(t`Loading`)}</Dots>
                         )}

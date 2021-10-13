@@ -73,7 +73,7 @@
     "configure:testnet": "hardhat run --network testnet scripts/configureGame.js",
     "configure:mainnet": "hardhat run --network mainnet scripts/configureGame.js",
     "fundFaucet:testnet": "hardhat run --network testnet scripts/fundFaucet.ts",
-    "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ../app/src/contracts.json && cp ../app/src/contracts.json ../lab/src/contracts.json",
+    "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ./contracts.json && cp ./contracts.json ../app/src/contracts.json && cp ./contracts.json ../lab/src/contracts.json",
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
     "format": "prettier . --write",
     "generate": "hardhat generate",

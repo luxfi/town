@@ -5,7 +5,7 @@
     "strict": false,
     "lib": ["dom", "dom.iterable", "esnext", "esnext.asynciterable"],
     "typeRoots": ["./node_modules/@types", "./types"],
-    "allowJs": true,
+    "allowJs": false,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
