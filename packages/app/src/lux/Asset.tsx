@@ -2,6 +2,7 @@ import { ChainId, CurrencyAmount, Token, Ether, Currency } from '@luxdefi/sdk'
 import React, { useCallback, useEffect, useState } from 'react'
 import { GetTriggerProps } from 'react-morphing-modal/dist/types'
 import Player from 'react-player'
+import { currencyMap } from '../config/currencies'
 import { TYPE_ATM, TYPE_CASH, TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import { useActiveWeb3React, useContract } from '../hooks'
 
@@ -23,16 +24,6 @@ const modalOffset = {
   [TYPE_ATM]: 40,
   [TYPE_WALLET]: 140,
   [TYPE_CASH]: 150,
-}
-
-// TODO: MOVE THIS SHIT
-const currencyMap = (addr: string, chainId: ChainId): Currency => {
-  switch (addr) {
-    case `0x0000000000000000000000000000000000000000`:
-      return Ether.onChain(chainId)
-    default:
-      return Ether.onChain(chainId)
-  }
 }
 
 const Asset = (props: AssetProps) => {
