@@ -8,17 +8,22 @@ import { useCurrencyBalance, useETHBalances } from '../state/wallet/hooks'
 import Dots from '../components/Dots'
 import { t } from '@lingui/macro'
 import { i18n } from '@lingui/core'
-import Moralis from 'moralis'
 import { shortenAddress } from '../functions'
 import { useGasPrice } from '../state/network/hooks'
 import { getCurrency } from '../config/currencies'
+import { Ask, AskCurrency, Bid } from './types'
+import { CurrencyAmount } from '@luxdefi/sdk'
+import { formatError } from '../functions/lux'
+import { ethers } from 'ethers'
+import { ERC20_ABI } from '../constants/abis/erc20'
 
 const AssetModal = (props: any) => {
   const { modalProps, tokenId, type, height, image, video } = props
   const [showHow, setShowHow] = useState(false)
-  const { chainId, account } = useActiveWeb3React()
+  const { chainId, account, library } = useActiveWeb3React()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const [currentAskPrice, setCurrentAskPrice] = useState(null)
+  const [ask, setAsk] = useState(null)
   const [currency, setCurrency] = useState(null)
   // const [currencyBalance, setCurrencyBalance] = useState(null)
   const gasPrice = useGasPrice()
@@ -26,14 +31,35 @@ const AssetModal = (props: any) => {
   const media = useContract('Media')
   const market = useContract('Market')
 
-  const buyNFT = async () => {
-    // console.log(app)
-    const tx = await app.buyNFT(1, props.tokenId, { from: account, gasPrice, value: Moralis.Units.ETH('1') })
-    console.log(tx)
-    const tx2 = await market.bidForTokenBidder(1, account)
-    console.log(tx2)
-    // const tx3 = await market.isReserved(1)
-    // console.log(tx3)
+  const approveAskAllowance = async (ask: Ask) => {
+    const erc20 = new ethers.Contract(ask.currency, ERC20_ABI, library.getSigner(account))
+    return erc20.approve(market.address, ask.amount)
+  }
+
+  const buyNFT = async (ask: Ask, currency: AskCurrency) => {
+    console.log({ ask, currency })
+    if (currency.isNative) {
+      const tx = await app.buyNFT(1, props.tokenId, { from: account, gasPrice, value: ask.amount })
+      console.log(await tx.wait())
+    } else {
+      try {
+        const bid: Bid = {
+          amount: ask.amount,
+          currency: currency.address,
+          bidder: account,
+          recipient: account,
+          sellOnShare: { value: 0 },
+          offline: ask.offline,
+        }
+        const approvalTx = await approveAskAllowance(ask)
+        console.log(await approvalTx.wait())
+        const tx = await media.setBid(props.tokenId, bid)
+        console.log(await tx.wait())
+      } catch (error) {
+        console.log(error)
+        console.log(formatError(error))
+      }
+    }
 
     // const options = { type: 'native', amount: Moralis.Units.ETH('0.5'), receiver: app.address }
     // let result = await Moralis.
@@ -42,10 +68,17 @@ const AssetModal = (props: any) => {
   const currencyBalance = useCurrencyBalance(account, currency)
 
   const updateAssetDetails = useCallback(async () => {
+    console.log('AssetModal - updateAssetDetails')
     if (!tokenId) return
-    const ask = await market.currentAskForToken(tokenId)
+    const ask: Ask = await market.currentAskForToken(tokenId)
+    setAsk(ask)
     setCurrentAskPrice(ask.amount)
-    const currency = getCurrency(ask.currency, chainId)
+    const currency: AskCurrency = getCurrency(ask.currency, chainId)
+    console.log('AssetModal - updateAssetDetails', {
+      tokenId,
+      ask,
+      amount: CurrencyAmount.fromRawAmount(currency, ask.amount).toFixed(0),
+    })
     setCurrency(currency)
   }, [tokenId, market, account])
 
@@ -119,7 +152,11 @@ const AssetModal = (props: any) => {
                 <button
                   type="button"
                   className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
-                  onClick={buyNFT}
+                  onClick={() => {
+                    if (ask && currency) {
+                      buyNFT(ask, currency)
+                    }
+                  }}
                 >
                   Reserve {type}{' '}
                   <span className="px-2 py-1 ml-1 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetModal__token-id">

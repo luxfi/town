@@ -12,6 +12,7 @@ import {
   getWalletNfts,
   getCashNfts,
   TYPE_VALIDATOR,
+  TYPE_WALLET,
 } from '../functions/assets'
 import AssetModal from '../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
@@ -25,11 +26,15 @@ export default function Dashboard() {
   // const [cashNfts, setCashNfts] = useState([])
   const [selectedNft, setSelectedNft] = useState(null)
 
-  const { modalProps, getTriggerProps, activeModal } = useModal({
+  const {
+    modalProps,
+    getTriggerProps,
+    activeModal: tokenId,
+  } = useModal({
     background: 'black',
   })
 
-  console.log(activeModal)
+  console.log({ tokenId })
 
   // const onAssetClick = (asset: AssetProps) => {
   //   open(modalRef, {
@@ -38,20 +43,20 @@ export default function Dashboard() {
   // }
 
   useEffect(() => {
-    setOwnedNfts(getOwnedNfts())
-    setValidatorNfts(getValidatorNfts())
-    setAtmNfts(getAtmNfts())
-    setWalletNfts(getWalletNfts())
+    // setOwnedNfts(getOwnedNfts())
+    // setValidatorNfts(getValidatorNfts())
+    // setAtmNfts(getAtmNfts())
+    // setWalletNfts(getWalletNfts())
     // setCashNfts(getCashNfts())
   }, [])
 
   useEffect(() => {
     const nft = [...ownedNfts, ...validatorNfts, ...atmNfts, ...walletNfts].filter(
-      (asset) => asset.tokenId === activeModal
+      (asset) => asset.tokenId === tokenId
     )[0]
 
     setSelectedNft(nft)
-  }, [activeModal])
+  }, [tokenId])
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12" maxWidth="6xl">
@@ -60,41 +65,52 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      <div className="mb-10 border-2 border-gray-700 rounded">
+      {/* <div className="mb-10 border-2 border-gray-700 rounded">
         <div className="text-xl text-center text-gray-600 bg-black AssetList__heading bottom-5">Owned NFTs</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {ownedNfts.map((asset) => (
             <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
-      </div>
+      </div> */}
+      <AssetList
+        tokenType={TYPE_VALIDATOR}
+        tokenName="Validator"
+        getTriggerProps={getTriggerProps}
+        onLoadAssets={(assets: object[]) => setValidatorNfts(assets)}
+      />
 
-      {/* <AssetList tokenType={TYPE_VALIDATOR} tokenName="Validator" getTriggerProps={getTriggerProps} /> */}
+      <AssetList
+        tokenType={TYPE_WALLET}
+        tokenName="Wallet"
+        getTriggerProps={getTriggerProps}
+        onLoadAssets={(assets: object[]) => setWalletNfts(assets)}
+      />
 
-      <div className="mb-10">
+      {/* <div className="mb-10">
         <div className="text-xl text-center text-gray-600">Validators</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {validatorNfts.map((asset) => (
             <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
-      </div>
-      <div className="mb-10">
+      </div> */}
+      {/* <div className="mb-10">
         <div className="text-xl text-center text-gray-600">ATMs</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {atmNfts.map((asset) => (
             <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
-      </div>
-      <div className="mb-10">
+      </div> */}
+      {/* <div className="mb-10">
         <div className="text-xl text-center text-gray-600">Genesis Wallets</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {walletNfts.map((asset) => (
             <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={getTriggerProps} />
           ))}
         </div>
-      </div>
+      </div> */}
       {/* <div className="mb-10">
         <div className="text-xl text-center text-gray-600">Cash</div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">

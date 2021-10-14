@@ -1,6 +1,5 @@
 import { ChainId } from '@luxdefi/sdk'
 import _ from 'lodash'
-import ipfsFiles from '../constants/ipfs'
 
 export const TYPE_VALIDATOR = 'Validator'
 export const TYPE_ATM = 'ATM'

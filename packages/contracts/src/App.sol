@@ -43,6 +43,7 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
 
   // External contracts
   IMedia public media;
+  IMarket public market;
 
   // Ensure only owner can upgrade contract
   function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
@@ -53,8 +54,9 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
   }
 
   // Configure App
-  function configure(address _media) public onlyOwner {
+  function configure(address _media, address _market) public onlyOwner {
     media = IMedia(_media);
+    market = IMarket(_market);
   }
 
   // Add new drop
@@ -133,7 +135,7 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     // Check egg price
     IDrop drop = IDrop(drops[dropId]);
 
-    // IMarket.Ask memory ask = market.currentAskForToken(tokenId);
+    IMarket.Ask memory ask = market.currentAskForToken(tokenId);
 
     // require(lux.balanceOf(buyer) >= drop.tokenPrice(), 'Not enough lux');
 
@@ -161,7 +163,8 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
       address(0), // currency
       address(msg.sender), // bidder
       address(msg.sender), // recipient
-      Decimal.D256(0) // sellOnShare
+      Decimal.D256(0), // sellOnShare,
+      ask.offline
     );
 
     // Mint and return NFT
