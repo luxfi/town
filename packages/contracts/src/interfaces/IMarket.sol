@@ -21,6 +21,8 @@ interface IMarket {
     address recipient;
     // % of the next sale to award the current owner
     Decimal.D256 sellOnShare;
+    // Flag bid as offline for OTC sale
+    bool offline;
   }
 
   struct Ask {
@@ -28,6 +30,8 @@ interface IMarket {
     uint256 amount;
     // Address to the ERC20 token being asked
     address currency;
+    // Flag ask as offline for OTC sale
+    bool offline;
   }
 
   struct BidShares {

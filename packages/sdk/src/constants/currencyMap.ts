@@ -3,19 +3,20 @@ import { ChainId } from '../enums'
 import { USDC_ADDRESS, WETH9_ADDRESS, USDT_ADDRESS } from './addresses'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+const UNDEPLOYED_ADDRESS = ZERO_ADDRESS
 
 export const getCurrencyConstants = (contracts: any) => {
   const MAINNET_WETH = WETH9_ADDRESS[ChainId.MAINNET]
   const MAINNET_USDC = USDC_ADDRESS[ChainId.MAINNET]
   const MAINNET_USDT = USDT_ADDRESS[ChainId.MAINNET]
 
-  const RINKEBY_WETH = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.WETH?.address
-  const RINKEBY_USDC = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.USDC?.address
-  const RINKEBY_USDT = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.USDT?.address
+  const RINKEBY_WETH = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.WETH?.address || UNDEPLOYED_ADDRESS
+  const RINKEBY_USDC = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.USDC?.address || UNDEPLOYED_ADDRESS
+  const RINKEBY_USDT = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.USDT?.address || UNDEPLOYED_ADDRESS
 
-  const HARDHAT_WETH = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.WETH?.address
-  const HARDHAT_USDC = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.USDC?.address
-  const HARDHAT_USDT = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.USDT?.address
+  const HARDHAT_WETH = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.WETH?.address || UNDEPLOYED_ADDRESS
+  const HARDHAT_USDC = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.USDC?.address || UNDEPLOYED_ADDRESS
+  const HARDHAT_USDT = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.USDT?.address || UNDEPLOYED_ADDRESS
 
   return {
     MAINNET_WETH,
@@ -42,6 +43,18 @@ export const getCurrencyMap = (contracts: any) => {
     HARDHAT_USDC,
     HARDHAT_USDT,
   } = getCurrencyConstants(contracts)
+
+  console.log({
+    MAINNET_WETH,
+    MAINNET_USDC,
+    MAINNET_USDT,
+    RINKEBY_WETH,
+    RINKEBY_USDC,
+    RINKEBY_USDT,
+    HARDHAT_WETH,
+    HARDHAT_USDC,
+    HARDHAT_USDT,
+  })
 
   return {
     [ChainId.MAINNET]: {

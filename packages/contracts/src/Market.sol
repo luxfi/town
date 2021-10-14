@@ -162,6 +162,8 @@ contract Market is IMarket, Ownable {
     // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
     require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
 
+    IMarket.Ask memory ask = _tokenAsks[tokenId];
+
     Bid storage existingBid = _tokenBidders[tokenId][bid.bidder];
 
     // If there is an existing bid, refund it before continuing
@@ -169,7 +171,7 @@ contract Market is IMarket, Ownable {
       removeBid(tokenId, bid.bidder);
     }
 
-    if (bid.currency != address(0)) {
+    if (bid.currency != address(0) && !ask.offline) {
       IERC20 token = IERC20(bid.currency);
       // We must check the balance that was actually transferred to the market,
       // as some tokens impose a transfer fee and would not actually transfer the
@@ -179,7 +181,7 @@ contract Market is IMarket, Ownable {
       // uint256 afterBalance = token.balanceOf(address(this));
     }
 
-    _tokenBidders[tokenId][bid.bidder] = Bid(bid.amount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare);
+    _tokenBidders[tokenId][bid.bidder] = Bid(bid.amount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, ask.offline);
     _tokenReservations[tokenId] = Reservation(bid.bidder, true);
 
     emit BidCreated(tokenId, bid);

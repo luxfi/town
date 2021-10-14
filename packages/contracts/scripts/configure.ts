@@ -1,5 +1,5 @@
-const hre = require('hardhat')
-const ethers = hre.ethers
+import { ethers } from 'hardhat'
+import mint from '../utils/mint'
 
 const NETWORK = process.env.HARDHAT_NETWORK ? process.env.HARDHAT_NETWORK : 'hardhat'
 
@@ -13,30 +13,15 @@ const DEPLOYMENT = {
 }[NETWORK]
 
 const App = require(`../deployments/${DEPLOYMENT}/App.json`)
-// const bridge = require(`../deployments/${DEPLOYMENT}/Bridge.json`)
-
-// Split game data into deploy-sized chunks
-function chunks(arr, size) {
-  const res = []
-  for (let i = 0; i < arr.length; i += size) {
-    const chunk = arr.slice(i, i + size)
-    res.push(chunk)
-  }
-  return res
-}
+const Drop = require(`../deployments/${DEPLOYMENT}/Drop.json`)
 
 async function main() {
   const [signer] = await ethers.getSigners()
 
-  // console.log(await ethers.getNamedSigners())
-
   const app = await (await ethers.getContractAt('App', App.address)).connect(signer)
+  const drop = await (await ethers.getContractAt('Drop', Drop.address)).connect(signer)
 
-  await app.mintMany(1, 'Validator', 10)
-  await app.mintMany(1, 'ATM', 10)
-  await app.mintMany(1, 'Wallet', 10)
-
-  console.log('Minted')
+  await mint(app, drop, NETWORK)
 }
 
 main()
