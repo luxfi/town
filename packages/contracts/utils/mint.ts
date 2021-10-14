@@ -97,7 +97,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.ATM,
       name: 'ATM',
-      ask: getAsk(chainId, 'WETH', '290'),
+      ask: getAsk(chainId, 'WETH', '135'),
       supply: 10,
     },
     {

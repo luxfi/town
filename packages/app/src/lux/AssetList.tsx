@@ -1,12 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { GetTriggerProps, OpenModal, TriggerProps } from 'react-morphing-modal/dist/types'
 import Player from 'react-player'
-import { NFT_VALIDATOR, NFT_ATM, NFT_WALLET, NFT_CASH } from '../functions/assetLists'
+// import { NFT_VALIDATOR, NFT_ATM, NFT_WALLET, NFT_CASH } from '../functions/assetLists'
 import { useContract } from '../hooks'
 import Asset from './Asset'
 import _ from 'lodash'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { newNft } from '../functions/assets'
+
+type PaginatedAssets = {
+  type: string
+  page: number
+  start: number
+  end: number
+  endTokenId: number
+  totalPages: number
+  assets: object[]
+}
 
 export type AssetListProps = {
   className?: string
@@ -14,24 +24,58 @@ export type AssetListProps = {
   tokenName: string
   autoPlay?: boolean
   getTriggerProps?: GetTriggerProps
+  onLoadAssets: (assets: object[]) => void
 } & React.HTMLAttributes<HTMLDivElement>
-const perPage = 6
 
-const getAssets = (type: string, firstTokenId: number, totalMinted: number, page: number) => {
-  const start = page * perPage - perPage
-  const end = page * perPage
-  // const finalEnd = end >=  ? end : totalMinted
+const getPages = (total: number, perPage: number) => {
+  var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
+  var remainder = total % perPage
+  if (remainder > 0) {
+    chunks.push(remainder)
+  }
+  return chunks
+}
 
-  return _.range(start, end).map((tokenId) => newNft(tokenId, type))
+const getPaginatedAssets = (
+  type: string,
+  firstTokenId: number,
+  totalMinted: number,
+  page: number,
+  perPage: number = 6
+): PaginatedAssets => {
+  const pages = getPages(totalMinted, perPage)
+  const totalPages = pages.length
+  const pageQuantity = pages[page - 1]
+  const start = page * perPage - perPage + firstTokenId
+  const end = start + pageQuantity
+  const endTokenId = end - 1
+  return {
+    type,
+    page,
+    start,
+    end,
+    endTokenId,
+    totalPages,
+    assets: _.range(start, end).map((tokenId) => newNft(tokenId, type)),
+  }
 }
 
 const AssetList = (props: AssetListProps) => {
-  const [assets, setAssets] = useState([])
+  const [paginatedAssets, setPaginatedAssets] = useState({
+    start: 0,
+    end: 6,
+    assets: [],
+    totalPages: 1,
+    endTokenId: 5,
+  })
+  const { assets, start, end, endTokenId } = paginatedAssets
   const [firstTokenId, setFirstTokenId] = useState(null)
   const [totalMinted, setTotalMinted] = useState(null)
   const [page, setPage] = useState(1)
 
   const drop = useContract('Drop')
+
+  // console.log(props.tokenName, { firstTokenId, totalMinted })
 
   useEffect(() => {
     drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
@@ -39,24 +83,38 @@ const AssetList = (props: AssetListProps) => {
   }, [props.tokenName])
 
   useEffect(() => {
-    if (typeof firstTokenId === 'number' && typeof totalMinted === 'number') {
-      setAssets(getAssets(props.tokenName, firstTokenId, totalMinted, page))
+    if (firstTokenId >= 0 && totalMinted) {
+      const paginatedAssets = getPaginatedAssets(props.tokenName, firstTokenId, totalMinted, page)
+      console.log(paginatedAssets)
+      setPaginatedAssets(paginatedAssets)
+      props.onLoadAssets(paginatedAssets.assets)
     }
-  }, [firstTokenId, totalMinted, page])
+  }, [props.tokenName, firstTokenId, totalMinted, page])
 
-  console.log('AssetList', { firstTokenId, totalMinted })
+  const previousPage = (page) => {
+    if (page > 1) {
+      setPage(page - 1)
+    }
+  }
+
+  const nextPage = (page, paginatedAssets) => {
+    if (page < paginatedAssets.totalPages) {
+      setPage(page + 1)
+    }
+  }
 
   return (
     <div className={`AssetList`}>
       <div className="mb-10">
-        <div className="text-xl text-center text-gray-600">{props.tokenName} NFTs</div>
         <div className="text-center">
           <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
-            <div className="cursor-pointer">
+            <div className="cursor-pointer" onClick={() => previousPage(page)}>
               <HiOutlineChevronLeft />
             </div>
-            <div>{props.tokenName}s 0-6</div>
-            <div className="cursor-pointer">
+            <div>
+              {props.tokenName}s {start} to {endTokenId}
+            </div>
+            <div className="cursor-pointer" onClick={() => nextPage(page, paginatedAssets)}>
               <HiOutlineChevronRight />
             </div>
           </div>
