@@ -1,10 +1,8 @@
-import { ChainId, CurrencyAmount, Token, Ether, Currency } from '@luxdefi/sdk'
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { GetTriggerProps } from 'react-morphing-modal/dist/types'
 import Player from 'react-player'
-import { getCurrency } from '../config/currencies'
 import { TYPE_ATM, TYPE_CASH, TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
-import { useActiveWeb3React, useContract } from '../hooks'
+import { useAsset } from './state'
 
 export type AssetProps = {
   tokenId: number
@@ -28,21 +26,7 @@ const modalOffset = {
 
 const Asset = (props: AssetProps) => {
   const { tokenId, showPrice } = props
-  const { chainId } = useActiveWeb3React()
-  const market = useContract('Market')
-  const [currentAskPrice, setCurrentAskPrice] = useState(null)
-  const [currency, setCurrency] = useState(null)
-  const updateAssetDetails = useCallback(async () => {
-    if (!tokenId || !showPrice) return
-    const ask = await market.currentAskForToken(tokenId)
-    setCurrentAskPrice(ask.amount)
-    const currency = getCurrency(ask.currency, chainId)
-    setCurrency(currency)
-  }, [tokenId, showPrice, market])
-
-  useEffect(() => {
-    updateAssetDetails()
-  }, [tokenId, updateAssetDetails])
+  const { formattedAmount, symbol } = useAsset(tokenId)
 
   return (
     <div
@@ -57,8 +41,8 @@ const Asset = (props: AssetProps) => {
       <div
         className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}
         style={{
-          position: props.showPrice ? 'relative' : 'static',
-          bottom: props.showPrice ? modalOffset[props.type] : 60,
+          position: showPrice ? 'relative' : 'static',
+          bottom: showPrice ? modalOffset[props.type] : 60,
         }}
       >
         <div>
@@ -67,9 +51,9 @@ const Asset = (props: AssetProps) => {
             {props.tokenId}
           </span>
         </div>
-        {props.showPrice && currency && currentAskPrice && (
+        {showPrice && formattedAmount && (
           <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
-            Price {CurrencyAmount.fromRawAmount(currency, currentAskPrice).toFixed(0)} {currency.symbol}
+            {formattedAmount} {symbol}
           </div>
         )}
       </div>

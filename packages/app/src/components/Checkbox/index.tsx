@@ -2,11 +2,12 @@ import QuestionHelper from '../QuestionHelper'
 import React from 'react'
 import Settings from '../Settings'
 
-export type Color = 'pink' | 'blue'
+export type Color = 'pink' | 'blue' | 'indigo'
 
 const COLOR = {
   pink: 'checked:bg-pink checked:border-transparent focus:ring-pink',
   blue: 'checked:bg-blue checked:border-transparent focus:ring-blue',
+  indigo: 'checked:bg-indigo checked:border-transparent focus:ring-indigo',
 }
 
 export interface CheckboxProps {
@@ -24,7 +25,7 @@ function Checkbox({
     <input
       type="checkbox"
       onChange={(event) => set(event.target.checked)}
-      className={`appearance-none h-5 w-5 rounded-sm bg-dark-700 border-transparent disabled:bg-dark-1000 disabled:border-dark-800 ${COLOR[color]} ${className}`}
+      className={`h-5 w-5 rounded-sm bg-dark-700 border-transparent disabled:bg-dark-1000 disabled:border-dark-800 cursor-pointer ${COLOR[color]} ${className}`}
       {...rest}
     />
   )

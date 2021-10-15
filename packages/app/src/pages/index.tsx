@@ -34,22 +34,6 @@ export default function Dashboard() {
     background: 'black',
   })
 
-  console.log({ tokenId })
-
-  // const onAssetClick = (asset: AssetProps) => {
-  //   open(modalRef, {
-  //     id: asset.tokenId,
-  //   })
-  // }
-
-  useEffect(() => {
-    // setOwnedNfts(getOwnedNfts())
-    // setValidatorNfts(getValidatorNfts())
-    // setAtmNfts(getAtmNfts())
-    // setWalletNfts(getWalletNfts())
-    // setCashNfts(getCashNfts())
-  }, [])
-
   useEffect(() => {
     const nft = [...ownedNfts, ...validatorNfts, ...atmNfts, ...walletNfts].filter(
       (asset) => asset.tokenId === tokenId

@@ -90,7 +90,6 @@ export function useContract(
 
   return useMemo(() => {
     if (!address || !ABI || !library) return null
-
     try {
       return getContract(address.toString(), ABI, library, withSignerIfPossible && account ? account : undefined)
     } catch (error) {
@@ -100,12 +99,16 @@ export function useContract(
   }, [nameOrAddress, address, ABI, library, withSignerIfPossible, account])
 }
 
-export function useLuxToken(): Contract | null {
-  return useContract('LUX')
+export function useApp(): Contract | null {
+  return useContract('App')
 }
 
 export function useDrop(): Contract | null {
   return useContract('Drop')
+}
+
+export function useMedia(): Contract | null {
+  return useContract('Media')
 }
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {

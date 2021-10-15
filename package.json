@@ -25,7 +25,7 @@
     "account": "yarn workspace @luxdefi/contracts account",
     "accounts": "yarn workspace @luxdefi/contracts accounts",
     "balance": "yarn workspace @luxdefi/contracts balance",
-    "chain": "yarn workspace @luxdefi/contracts chain & yarn configure",
+    "chain": "yarn workspace @luxdefi/contracts chain",
     "chain2": "yarn workspace @luxdefi/contracts chain2",
     "compile": "yarn workspace @luxdefi/contracts compile",
     "deploy": "yarn workspace @luxdefi/contracts deploy",

@@ -75,17 +75,16 @@ const AssetList = (props: AssetListProps) => {
 
   const drop = useContract('Drop')
 
-  // console.log(props.tokenName, { firstTokenId, totalMinted })
-
   useEffect(() => {
-    drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
-    drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
+    if (drop) {
+      drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
+      drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
+    }
   }, [props.tokenName])
 
   useEffect(() => {
     if (firstTokenId >= 0 && totalMinted) {
       const paginatedAssets = getPaginatedAssets(props.tokenName, firstTokenId, totalMinted, page)
-      console.log(paginatedAssets)
       setPaginatedAssets(paginatedAssets)
       props.onLoadAssets(paginatedAssets.assets)
     }

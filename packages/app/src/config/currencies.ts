@@ -1,7 +1,20 @@
-import { ChainId, Currency, getCurrencyMap } from '@luxdefi/sdk'
-import contracts from '../contracts.json'
+import { ChainId, Currency, getCurrencyMap, getSymbolCurrency, CurrencySymbol } from '@luxdefi/sdk'
+import contractsJson from '../contracts.json'
 
-export const getCurrency = (addr: string, chainId: ChainId): Currency => {
-  const map = getCurrencyMap(contracts)
-  return map[chainId][addr]
+export const contracts = contractsJson
+
+export const SUPPORTED_PAYMENT_CURRENCIES = [
+  CurrencySymbol.ETH,
+  CurrencySymbol.USDC,
+  CurrencySymbol.USDT,
+  CurrencySymbol.WETH,
+]
+
+export const getCurrencyToken = (tokenAddress: string, chainId: ChainId): Currency => {
+  const map = getCurrencyMap(contractsJson)
+  return map[chainId][tokenAddress]
+}
+
+export const getSupportedPaymentCurrencies = (chainId: ChainId): Currency[] => {
+  return SUPPORTED_PAYMENT_CURRENCIES.map((symbol) => getSymbolCurrency(contractsJson, chainId, symbol))
 }

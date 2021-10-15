@@ -1,7 +1,7 @@
 import { NETWORK_ICON, NETWORK_LABEL } from '../../config/networks'
 
 import Image from 'next/image'
-import NetworkModel from '../../modals/NetworkModal'
+import NetworkModal from '../../modals/NetworkModal'
 import React from 'react'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useNetworkModalToggle } from '../../state/application/hooks'
@@ -22,7 +22,7 @@ function Web3Network(): JSX.Element | null {
         <Image src={NETWORK_ICON[chainId]} alt="Switch Network" className="rounded-md" width="22px" height="22px" />
         <div className="text-primary">{NETWORK_LABEL[chainId]}</div>
       </div>
-      <NetworkModel />
+      <NetworkModal />
     </div>
   )
 }

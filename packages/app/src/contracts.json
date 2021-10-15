@@ -21795,37 +21795,6 @@
                   "internalType": "uint256",
                   "name": "tokenId",
                   "type": "uint256"
-                }
-              ],
-              "name": "getReservation",
-              "outputs": [
-                {
-                  "components": [
-                    {
-                      "internalType": "address",
-                      "name": "bidder",
-                      "type": "address"
-                    },
-                    {
-                      "internalType": "bool",
-                      "name": "isReserved",
-                      "type": "bool"
-                    }
-                  ],
-                  "internalType": "struct Market.Reservation",
-                  "name": "reservation",
-                  "type": "tuple"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "tokenId",
-                  "type": "uint256"
                 },
                 {
                   "internalType": "uint256",
@@ -23811,7 +23780,7 @@
           ]
         },
         "Multicall": {
-          "address": "0x2A0fDff8EACc09cC6e9606FE5d210d5C6325895e",
+          "address": "0xC20203717EA10c2D491B19DFcc0e2F1d1d9eaf8B",
           "abi": [
             {
               "inputs": [
@@ -23955,7 +23924,7 @@
           ]
         },
         "Multicall2": {
-          "address": "0x4112EBC22650A3Df7242a38Bcb5B9F3db5c362f6",
+          "address": "0x79b66A1726C5259B5de939DFc6a943ba60bf9199",
           "abi": [
             {
               "inputs": [
@@ -26535,37 +26504,6 @@
                   ],
                   "internalType": "struct IMarket.Ask",
                   "name": "",
-                  "type": "tuple"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "tokenId",
-                  "type": "uint256"
-                }
-              ],
-              "name": "getReservation",
-              "outputs": [
-                {
-                  "components": [
-                    {
-                      "internalType": "address",
-                      "name": "bidder",
-                      "type": "address"
-                    },
-                    {
-                      "internalType": "bool",
-                      "name": "isReserved",
-                      "type": "bool"
-                    }
-                  ],
-                  "internalType": "struct Market.Reservation",
-                  "name": "reservation",
                   "type": "tuple"
                 }
               ],

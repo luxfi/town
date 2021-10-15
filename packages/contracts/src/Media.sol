@@ -142,6 +142,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
    */
   constructor(string memory name, string memory symbol) ERC721(name, symbol) {
     _registerInterface(_INTERFACE_ID_ERC721_METADATA);
+    _tokenIdTracker.increment(); // start at 1
   }
 
   /**
