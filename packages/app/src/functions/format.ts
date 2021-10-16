@@ -1,6 +1,6 @@
 // CONVENTION formatFoo -> string
 
-import { Currency, CurrencyAmount, Fraction, JSBI, Price } from '@luxdefi/sdk'
+import { BigintIsh, Currency, CurrencyAmount, Fraction, JSBI, Price } from '@luxdefi/sdk'
 
 import { BigNumberish } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
@@ -182,4 +182,17 @@ export function formatDateAgo(date: Date) {
     return `${Math.floor(secondsAgo / 2592000)} Month${secondsAgo / 5184000 >= 1 ? 's' : ''} Ago`
 
   return `${Math.floor(secondsAgo / 31536000)} Year${secondsAgo / 63072000 >= 1 ? 's' : ''} Ago`
+}
+
+export const formatCurrencyFromRawAmount = (token: Currency, amount: BigintIsh) => {
+  return CurrencyAmount.fromRawAmount(token, amount).toFixed(0)
+}
+
+export const numberWithCommas = (num: number) => {
+  const values = num.toString().split('.')
+  return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
+}
+
+export const formatCurrencyAmountWithCommas = (token: Currency, amount: BigintIsh) => {
+  return numberWithCommas(formatCurrencyFromRawAmount(token, amount))
 }

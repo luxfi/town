@@ -2,8 +2,43 @@ import { Token, Ether } from '../entities'
 import { ChainId } from '../enums'
 import { USDC_ADDRESS, WETH9_ADDRESS, USDT_ADDRESS } from './addresses'
 
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
-const UNDEPLOYED_ADDRESS = ZERO_ADDRESS
+export enum CurrencySymbol {
+  DAI = 'DAI',
+  ETH = 'ETH',
+  WETH = 'WETH',
+  USDC = 'USDC',
+  USDT = 'USDT',
+}
+
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+export const UNDEPLOYED_ADDRESS = ZERO_ADDRESS
+
+// export const AvalancheLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/avax.jpg'
+// export const BinanceCoinLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/bnb.jpg'
+export const EthLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg'
+export const WethLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/weth.jpg'
+export const UsdcLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/usdc.jpg'
+export const UsdtLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/usdt.jpg'
+export const DaiLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/dai.jpg'
+// export const xDaiLogo =
+//   'https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/xdai/assets/0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d/logo.svg'
+// export const FantomLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/ftm.jpg'
+// export const HarmonyLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/one.jpg'
+// export const HecoLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/heco.jpg'
+// export const MaticLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/polygon.jpg'
+// export const MoonbeamLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/eth.jpg'
+// export const OKExLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/okt.jpg'
+// export const CeloLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/celo.jpg'
+// export const PalmLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/palm.jpg'
+// export const MovrLogo = 'https://raw.githubusercontent.com/sushiswap/icons/master/token/movr.jpg'
+
+export const CURRENCY_SYMBOL_LOGO = {
+  [CurrencySymbol.DAI]: DaiLogo,
+  [CurrencySymbol.ETH]: EthLogo,
+  [CurrencySymbol.WETH]: WethLogo,
+  [CurrencySymbol.USDC]: UsdcLogo,
+  [CurrencySymbol.USDT]: UsdtLogo,
+}
 
 export const getCurrencyConstants = (contracts: any) => {
   const MAINNET_WETH = WETH9_ADDRESS[ChainId.MAINNET]
@@ -44,36 +79,24 @@ export const getCurrencyMap = (contracts: any) => {
     HARDHAT_USDT,
   } = getCurrencyConstants(contracts)
 
-  console.log({
-    MAINNET_WETH,
-    MAINNET_USDC,
-    MAINNET_USDT,
-    RINKEBY_WETH,
-    RINKEBY_USDC,
-    RINKEBY_USDT,
-    HARDHAT_WETH,
-    HARDHAT_USDC,
-    HARDHAT_USDT,
-  })
-
   return {
     [ChainId.MAINNET]: {
       [ZERO_ADDRESS]: Ether.onChain(ChainId.MAINNET),
-      [MAINNET_WETH]: new Token(ChainId.MAINNET, MAINNET_WETH, 18, 'WETH', 'WETH'),
       [MAINNET_USDC]: new Token(ChainId.MAINNET, MAINNET_USDC, 6, 'USDC', 'USDC'),
       [MAINNET_USDT]: new Token(ChainId.MAINNET, MAINNET_USDT, 6, 'USDT', 'USDT'),
+      [MAINNET_WETH]: new Token(ChainId.MAINNET, MAINNET_WETH, 18, 'WETH', 'WETH'),
     },
     [ChainId.RINKEBY]: {
       [ZERO_ADDRESS]: Ether.onChain(ChainId.RINKEBY),
-      [RINKEBY_WETH]: new Token(ChainId.RINKEBY, RINKEBY_WETH, 18, 'WETH', 'WETH'),
       [RINKEBY_USDC]: new Token(ChainId.RINKEBY, RINKEBY_USDC, 6, 'USDC', 'USDC'),
       [RINKEBY_USDT]: new Token(ChainId.RINKEBY, RINKEBY_USDT, 6, 'USDT', 'USDT'),
+      [RINKEBY_WETH]: new Token(ChainId.RINKEBY, RINKEBY_WETH, 18, 'WETH', 'WETH'),
     },
     [ChainId.HARDHAT]: {
       [ZERO_ADDRESS]: Ether.onChain(ChainId.HARDHAT),
-      [HARDHAT_WETH]: new Token(ChainId.HARDHAT, HARDHAT_WETH, 18, 'WETH', 'WETH'),
       [HARDHAT_USDC]: new Token(ChainId.HARDHAT, HARDHAT_USDC, 6, 'USDC', 'USDC'),
       [HARDHAT_USDT]: new Token(ChainId.HARDHAT, HARDHAT_USDT, 6, 'USDT', 'USDT'),
+      [HARDHAT_WETH]: new Token(ChainId.HARDHAT, HARDHAT_WETH, 18, 'WETH', 'WETH'),
     },
   }
 }
@@ -94,21 +117,27 @@ export const getSymbolCurrencyMap = (contracts: any) => {
   return {
     [ChainId.MAINNET]: {
       ETH: Ether.onChain(ChainId.MAINNET),
-      WETH: new Token(ChainId.MAINNET, MAINNET_WETH, 18, 'WETH', 'WETH'),
       USDC: new Token(ChainId.MAINNET, MAINNET_USDC, 6, 'USDC', 'USDC'),
       USDT: new Token(ChainId.MAINNET, MAINNET_USDT, 6, 'USDT', 'USDT'),
+      WETH: new Token(ChainId.MAINNET, MAINNET_WETH, 18, 'WETH', 'WETH'),
     },
     [ChainId.RINKEBY]: {
       ETH: Ether.onChain(ChainId.RINKEBY),
-      WETH: new Token(ChainId.RINKEBY, RINKEBY_WETH, 18, 'WETH', 'WETH'),
       USDC: new Token(ChainId.RINKEBY, RINKEBY_USDC, 6, 'USDC', 'USDC'),
       USDT: new Token(ChainId.RINKEBY, RINKEBY_USDT, 6, 'USDT', 'USDT'),
+      WETH: new Token(ChainId.RINKEBY, RINKEBY_WETH, 18, 'WETH', 'WETH'),
     },
     [ChainId.HARDHAT]: {
       ETH: Ether.onChain(ChainId.HARDHAT),
-      WETH: new Token(ChainId.HARDHAT, HARDHAT_WETH, 18, 'WETH', 'WETH'),
       USDC: new Token(ChainId.HARDHAT, HARDHAT_USDC, 6, 'USDC', 'USDC'),
       USDT: new Token(ChainId.HARDHAT, HARDHAT_USDT, 6, 'USDT', 'USDT'),
+      WETH: new Token(ChainId.HARDHAT, HARDHAT_WETH, 18, 'WETH', 'WETH'),
     },
   }
+}
+
+export const getSymbolCurrency = (contracts: any, chainId: ChainId, symbol: CurrencySymbol) => {
+  const map: any = getSymbolCurrencyMap(contracts)
+  const tokensBySymbol = map[chainId]
+  return tokensBySymbol[symbol]
 }

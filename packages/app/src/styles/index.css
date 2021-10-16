@@ -112,3 +112,7 @@ video {
   background-color: black;
   padding: 0 10px;
 }
+
+.z-10001 {
+  z-index: 10;
+}

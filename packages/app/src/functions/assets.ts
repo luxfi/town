@@ -11,7 +11,7 @@ export const newNft = (tokenId, type, props = {}) => {
     tokenId,
     type,
     image: `/nfts/${type.toLowerCase()}.gif`,
-    video: `/nfts/${type.toLowerCase()}.mp4`,
+    video: `/nfts/${type.toLowerCase()}.mov`,
     ...props,
   }
 }

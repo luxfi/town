@@ -27,7 +27,7 @@ export default function Modal({
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" onClose={onDismiss} className="fixed inset-0 z-10 overflow-y-hidden backdrop-blur-md">
+        <Dialog as="div" onClose={onDismiss} className="fixed inset-0 overflow-y-hidden Modal z-10001 backdrop-blur-md">
           <Dialog.Overlay className="fixed inset-0 bg-black backdrop-blur-md opacity-30" />
           <div className="flex items-center justify-center h-screen px-4">
             <Transition.Child

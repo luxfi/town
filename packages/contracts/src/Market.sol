@@ -9,7 +9,7 @@ import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { SafeERC20 } from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
-// import { EnumerableSet } from '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
+
 import { Decimal } from './Decimal.sol';
 import { Media } from './Media.sol';
 import { IMarket } from './interfaces/IMarket.sol';
@@ -22,11 +22,6 @@ contract Market is IMarket, Ownable {
   using SafeMath for uint256;
   using SafeERC20 for IERC20;
   // using EnumerableSet for EnumerableSet.AddressSet;
-
-  struct Reservation {
-    address bidder;
-    bool isReserved;
-  }
 
   /* *******
    * Globals
@@ -46,9 +41,6 @@ contract Market is IMarket, Ownable {
 
   // Mapping from token to the current ask for the token
   mapping(uint256 => Ask) private _tokenAsks;
-
-  // Mapping from tokenId to their (enumerable) set of bidders
-  mapping(uint256 => Reservation) private _tokenReservations;
 
   /* *********
    * Modifiers
@@ -171,18 +163,20 @@ contract Market is IMarket, Ownable {
       removeBid(tokenId, bid.bidder);
     }
 
+    uint256 bidAmount = bid.amount;
+
     if (bid.currency != address(0) && !ask.offline) {
       IERC20 token = IERC20(bid.currency);
       // We must check the balance that was actually transferred to the market,
       // as some tokens impose a transfer fee and would not actually transfer the
       // full amount to the market, resulting in locked funds for refunds & bid acceptance
-      // uint256 beforeBalance = token.balanceOf(address(this));
+      uint256 beforeBalance = token.balanceOf(address(this));
       token.safeTransferFrom(spender, address(this), bid.amount);
-      // uint256 afterBalance = token.balanceOf(address(this));
+      uint256 afterBalance = token.balanceOf(address(this));
+      bidAmount = afterBalance.sub(beforeBalance);
     }
 
-    _tokenBidders[tokenId][bid.bidder] = Bid(bid.amount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, ask.offline);
-    _tokenReservations[tokenId] = Reservation(bid.bidder, true);
+    _tokenBidders[tokenId][bid.bidder] = Bid(bidAmount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, ask.offline);
 
     emit BidCreated(tokenId, bid);
 
@@ -191,10 +185,6 @@ contract Market is IMarket, Ownable {
     //   // Finalize exchange
     //   _finalizeNFTTransfer(tokenId, bid.bidder);
     // }
-  }
-
-  function getReservation(uint256 tokenId) public view returns (Reservation memory reservation) {
-    return _tokenReservations[tokenId];
   }
 
   /**

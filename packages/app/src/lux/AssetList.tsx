@@ -23,6 +23,8 @@ export type AssetListProps = {
   tokenType: string
   tokenName: string
   autoPlay?: boolean
+  animate?: boolean
+  large?: boolean
   getTriggerProps?: GetTriggerProps
   onLoadAssets: (assets: object[]) => void
 } & React.HTMLAttributes<HTMLDivElement>
@@ -75,17 +77,16 @@ const AssetList = (props: AssetListProps) => {
 
   const drop = useContract('Drop')
 
-  // console.log(props.tokenName, { firstTokenId, totalMinted })
-
   useEffect(() => {
-    drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
-    drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
+    if (drop) {
+      drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
+      drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
+    }
   }, [props.tokenName])
 
   useEffect(() => {
     if (firstTokenId >= 0 && totalMinted) {
       const paginatedAssets = getPaginatedAssets(props.tokenName, firstTokenId, totalMinted, page)
-      console.log(paginatedAssets)
       setPaginatedAssets(paginatedAssets)
       props.onLoadAssets(paginatedAssets.assets)
     }
@@ -112,7 +113,7 @@ const AssetList = (props: AssetListProps) => {
               <HiOutlineChevronLeft />
             </div>
             <div>
-              {props.tokenName}s {start} to {endTokenId}
+              {props.tokenType}s {start} to {endTokenId}
             </div>
             <div className="cursor-pointer" onClick={() => nextPage(page, paginatedAssets)}>
               <HiOutlineChevronRight />
@@ -121,7 +122,14 @@ const AssetList = (props: AssetListProps) => {
         </div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {assets.map((asset) => (
-            <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={props.getTriggerProps} />
+            <Asset
+              key={asset.tokenId}
+              {...asset}
+              showPrice={false}
+              animate={props.animate}
+              large={props.large}
+              getTriggerProps={props.getTriggerProps}
+            />
           ))}
         </div>
       </div>
