@@ -23,6 +23,8 @@ export type AssetListProps = {
   tokenType: string
   tokenName: string
   autoPlay?: boolean
+  animate?: boolean
+  large?: boolean
   getTriggerProps?: GetTriggerProps
   onLoadAssets: (assets: object[]) => void
 } & React.HTMLAttributes<HTMLDivElement>
@@ -111,7 +113,7 @@ const AssetList = (props: AssetListProps) => {
               <HiOutlineChevronLeft />
             </div>
             <div>
-              {props.tokenName}s {start} to {endTokenId}
+              {props.tokenType}s {start} to {endTokenId}
             </div>
             <div className="cursor-pointer" onClick={() => nextPage(page, paginatedAssets)}>
               <HiOutlineChevronRight />
@@ -120,7 +122,14 @@ const AssetList = (props: AssetListProps) => {
         </div>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {assets.map((asset) => (
-            <Asset key={asset.tokenId} {...asset} showPrice={false} autoPlay getTriggerProps={props.getTriggerProps} />
+            <Asset
+              key={asset.tokenId}
+              {...asset}
+              showPrice={false}
+              animate={props.animate}
+              large={props.large}
+              getTriggerProps={props.getTriggerProps}
+            />
           ))}
         </div>
       </div>

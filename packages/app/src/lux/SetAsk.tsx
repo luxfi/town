@@ -69,6 +69,12 @@ const SetAsk = ({ type, tokenId, children }) => {
         <SelectCurrency onSelect={onSelectCurrency} />
       ) : (
         <>
+          <h2 className="mb-10 text-xl text-center">
+            Set Ask for {type}{' '}
+            <span className="px-2 py-1 ml-1 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetModal__token-id">
+              {tokenId}
+            </span>
+          </h2>
           <div className="relative flex items-center w-full mb-4">
             <Input.Numeric
               className="w-full p-3 text-2xl rounded bg-dark-700 focus:ring focus:ring-indigo-600"
@@ -97,15 +103,12 @@ const SetAsk = ({ type, tokenId, children }) => {
             className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
             onClick={() => setAsk(tokenId, value, selectedCurrencyToken, offline)}
           >
-            Set Ask for {type}{' '}
-            <span className="px-2 py-1 ml-1 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetModal__token-id">
-              {tokenId}
-            </span>
+            Set Ask
           </button>
           <div className="">
-            <div className="py-3">
+            <div className="pt-3">
               <Switch.Group>
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-center">
                   <Switch.Label className="mr-3 cursor-pointer">
                     <Typography>{i18n._(t`Offline Ask`)}</Typography>
                   </Switch.Label>
@@ -126,6 +129,7 @@ const SetAsk = ({ type, tokenId, children }) => {
               </Switch.Group>
             </div>
           </div>
+          <div>{children}</div>
         </>
       )}
     </div>

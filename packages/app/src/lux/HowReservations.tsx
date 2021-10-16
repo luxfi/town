@@ -1,8 +1,8 @@
-const How = ({ onClick }) => {
+const HowReservations = ({ onClick }) => {
   return (
     <div>
-      <h2 className="pb-4 text-2xl">How do reservations work?</h2>
-      <p className="mb-5">
+      <h2 className="mb-6 text-xl">How do reservations work?</h2>
+      <p className="mb-10">
         Reserve your NFT to ensure you are part of the LUX network at launch. If your bid is not accepted, your
         reservation will be refunded.
       </p>
@@ -17,4 +17,4 @@ const How = ({ onClick }) => {
   )
 }
 
-export default How
+export default HowReservations

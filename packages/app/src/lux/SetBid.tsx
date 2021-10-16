@@ -52,7 +52,7 @@ const SetBid = ({ type, tokenId, children }) => {
 
   return (
     <div className="sm:p-4 md:p-0">
-      <div className="py-3 text-right">
+      <div className="mb-10 text-right">
         <div className="text-gray-500">{account && shortenAddress(account)}</div>
         <div className="text-xl">
           <>

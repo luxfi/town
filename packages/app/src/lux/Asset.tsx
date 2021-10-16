@@ -14,15 +14,10 @@ export type AssetProps = {
   width?: number
   showPrice?: boolean
   autoPlay?: boolean
+  animate?: boolean
+  large?: boolean
   getTriggerProps?: GetTriggerProps
 } & React.HTMLAttributes<HTMLDivElement>
-
-const modalOffset = {
-  [TYPE_VALIDATOR]: 170,
-  [TYPE_ATM]: 40,
-  [TYPE_WALLET]: 140,
-  [TYPE_CASH]: 150,
-}
 
 const Asset = (props: AssetProps) => {
   const { tokenId, showPrice } = props
@@ -33,18 +28,12 @@ const Asset = (props: AssetProps) => {
       className={`Asset ${props.className || ''} ${props.getTriggerProps ? 'cursor-pointer' : ''}`}
       {...(props.getTriggerProps ? props.getTriggerProps({ id: props.tokenId }) : {})}
     >
-      {props.autoPlay ? (
+      {props.large ? (
         <Player url={props.video} playing={true} loop width={'auto'} height={'auto'} style={{ height: 'auto' }} />
       ) : (
         <img src={props.image} alt={`${props.type} ${props.tokenId}`} />
       )}
-      <div
-        className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}
-        style={{
-          position: showPrice ? 'relative' : 'static',
-          bottom: showPrice ? modalOffset[props.type] : 60,
-        }}
-      >
+      <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
           <span className="text-lg text-gray-300">{props.type}</span>
           <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font Asset__token-id">
