@@ -1,3 +1,5 @@
+import { Token } from '@luxdefi/sdk'
+import { ZERO_ADDRESS } from '@luxdefi/sdk'
 import { Currency, CurrencyAmount } from '@luxdefi/sdk'
 import { useEffect, useMemo, useState } from 'react'
 import { getCurrencyToken } from '../config/currencies'
@@ -21,7 +23,7 @@ export function useAsset(tokenId: number) {
   const { account, chainId } = useActiveWeb3React()
   const [owner, setOwner] = useState(null)
   const [ask, setAsk] = useState(null)
-  const [currencyToken, setCurrencyToken] = useState(null)
+  const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18))
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [formattedBalance, setFormattedBalance] = useState(null)
 
@@ -52,16 +54,15 @@ export function useAsset(tokenId: number) {
     }
   }, [currencyBalance])
 
-  return useMemo((): AssetState => {
-    return {
-      owner,
-      isOwner: account === owner,
-      currencyToken,
-      currencyBalance,
-      formattedAmount,
-      formattedBalance,
-      symbol: currencyToken && currencyToken.symbol,
-      ask,
-    }
-  }, [tokenId, account, owner, ask, chainId, currencyToken, currencyBalance])
+  return {
+    owner,
+    isOwner: account === owner,
+    currencyToken,
+    currencyBalance,
+    formattedAmount,
+    formattedBalance,
+    balance: currencyBalance?.toFixed(0) || '0',
+    symbol: currencyToken && currencyToken.symbol,
+    ask,
+  }
 }

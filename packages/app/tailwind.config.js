@@ -40,7 +40,7 @@ module.exports = {
         blue: '#0993ec',
         pink: '#f338c3',
         green: '#7cff6b',
-        red: '#ff3838',
+        red: 'crimson',
         yellow: '#ffd166',
 
         'opaque-blue': '#0993ec80',
