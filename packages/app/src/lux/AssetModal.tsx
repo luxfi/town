@@ -66,7 +66,6 @@ const AssetModal = (props: any) => {
                   <HowReservations onClick={() => showSection('setBid')} />
                 ) : (
                   <SetBid type={type} tokenId={tokenId}>
-                    <p className="pt-3 text-center">You cannot withdraw a reservation once submitted.</p>
                     <p
                       className="pt-8 text-center text-gray-500 cursor-pointer"
                       onClick={() => showSection('howReservations')}

@@ -16,6 +16,8 @@ import { calculateGasMargin } from '../functions/trade'
 import { useActiveWeb3React } from './useActiveWeb3React'
 import { useTokenAllowance } from './useTokenAllowance'
 import { useTokenContract } from './useContract'
+import { wait } from '../functions/lux'
+import { ChainId } from '@luxdefi/sdk'
 
 export enum ApprovalState {
   UNKNOWN = 'UNKNOWN',
@@ -29,7 +31,7 @@ export function useApproveCallback(
   amountToApprove?: CurrencyAmount<Currency>,
   spender?: string
 ): [ApprovalState, () => Promise<void>] {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const token = amountToApprove?.currency?.isToken ? amountToApprove.currency : undefined
   const currentAllowance = useTokenAllowance(token, account ?? undefined, spender)
   const pendingApproval = useHasPendingApproval(token?.address, spender)
@@ -93,6 +95,7 @@ export function useApproveCallback(
           summary: 'Approve ' + amountToApprove.currency.symbol,
           approval: { tokenAddress: token.address, spender: spender },
         })
+        return response
       })
       .catch((error: Error) => {
         console.debug('Failed to approve token', error)

@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { GetTriggerProps, OpenModal, TriggerProps } from 'react-morphing-modal/dist/types'
-import Player from 'react-player'
-// import { NFT_VALIDATOR, NFT_ATM, NFT_WALLET, NFT_CASH } from '../functions/assetLists'
 import { useContract } from '../hooks'
 import Asset from './Asset'
 import _ from 'lodash'
@@ -70,7 +68,7 @@ const AssetList = (props: AssetListProps) => {
     totalPages: 1,
     endTokenId: 5,
   })
-  const { assets, start, end, endTokenId } = paginatedAssets
+  const { assets, start, endTokenId } = paginatedAssets
   const [firstTokenId, setFirstTokenId] = useState(null)
   const [totalMinted, setTotalMinted] = useState(null)
   const [page, setPage] = useState(1)
@@ -105,33 +103,44 @@ const AssetList = (props: AssetListProps) => {
   }
 
   return (
-    <div className={`AssetList`}>
-      <div className="mb-10">
-        <div className="text-center">
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
-            <div className="cursor-pointer" onClick={() => previousPage(page)}>
-              <HiOutlineChevronLeft />
+    <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
+      <div className="">
+        <div className="grid grid-cols-2 gap-5">
+          <div className="text-2xl text-indigo-600">{props.tokenType}s</div>
+          <div className="flex justify-end">
+            <div
+              onClick={() => previousPage(page)}
+              className={`p-2 mr-3 rounded-full cursor-pointer ${
+                page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+              }`}
+            >
+              <HiOutlineChevronLeft size={16} />
             </div>
-            <div>
-              {props.tokenType}s {start} to {endTokenId}
+            <div className="pt-1 text-lg">
+              {start} to {endTokenId}
             </div>
-            <div className="cursor-pointer" onClick={() => nextPage(page, paginatedAssets)}>
-              <HiOutlineChevronRight />
+            <div
+              onClick={() => nextPage(page, paginatedAssets)}
+              className={`p-2 ml-3 rounded-full cursor-pointer ${
+                page < paginatedAssets?.totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+              }`}
+            >
+              <HiOutlineChevronRight size={16} />
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
-          {assets.map((asset) => (
-            <Asset
-              key={asset.tokenId}
-              {...asset}
-              showPrice={false}
-              animate={props.animate}
-              large={props.large}
-              getTriggerProps={props.getTriggerProps}
-            />
-          ))}
-        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
+        {assets.map((asset, i) => (
+          <Asset
+            key={asset.tokenId}
+            {...asset}
+            showPrice={false}
+            animate={props.animate}
+            large={props.large}
+            getTriggerProps={props.getTriggerProps}
+          />
+        ))}
       </div>
     </div>
   )

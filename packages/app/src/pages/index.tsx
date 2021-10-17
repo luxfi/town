@@ -5,27 +5,18 @@ import { i18n } from '@lingui/core'
 import { t } from '@lingui/macro'
 import Asset, { AssetProps } from '../lux/Asset'
 import { useEffect, useRef, useState } from 'react'
-import {
-  getOwnedNfts,
-  getValidatorNfts,
-  getAtmNfts,
-  getWalletNfts,
-  getCashNfts,
-  TYPE_VALIDATOR,
-  TYPE_WALLET,
-} from '../functions/assets'
+import { TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import AssetModal from '../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
 import AssetList from '../lux/AssetList'
 
-const listTypes = [{ type: 'Validator' }, { type: 'ATM' }, { type: 'Wallet' }]
+const listTypes = [
+  { type: 'Validator', name: 'Validator' },
+  { type: 'ATM', name: 'ATM' },
+  { type: 'Wallet', name: 'Wallet' },
+]
 
 export default function Dashboard() {
-  const [ownedNfts, setOwnedNfts] = useState([])
-  const [validatorNfts, setValidatorNfts] = useState([])
-  const [atmNfts, setAtmNfts] = useState([])
-  const [walletNfts, setWalletNfts] = useState([])
-  // const [cashNfts, setCashNfts] = useState([])
   const [selectedNft, setSelectedNft] = useState(null)
 
   const [typeNfts, setTypeNfts] = useState({
@@ -56,7 +47,7 @@ export default function Dashboard() {
   }, [tokenId])
 
   return (
-    <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12" maxWidth="6xl">
+    <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
       <Head>
         <title>Dashboard | Lux Town</title>
         <meta name="description" content="Lux Town" />
@@ -64,8 +55,9 @@ export default function Dashboard() {
 
       {listTypes.map((list) => (
         <AssetList
+          key={list.name}
           tokenType={list.type}
-          tokenName={list.type}
+          tokenName={list.name}
           getTriggerProps={getTriggerProps}
           onLoadAssets={(assets) => onLoadAssets(list.type, assets)}
         />

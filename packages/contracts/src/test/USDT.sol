@@ -4,8 +4,10 @@ pragma solidity ^0.8.4;
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
 contract USDT is ERC20 {
-  constructor(uint256 initialSupply) ERC20('USDT Token', 'USDT') {
-    _mint(msg.sender, initialSupply);
+  constructor(uint256 mintAmount, address[] memory accounts) ERC20('USDT', 'USDT') {
+    for (uint256 i = 0; i < accounts.length; i++) {
+      _mint(accounts[i], mintAmount);
+    }
   }
 
   /**

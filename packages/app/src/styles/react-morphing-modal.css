@@ -16,7 +16,7 @@
   transition: opacity 0.365s, -webkit-transform 0.365s;
   transition: transform 0.365s, opacity 0.365s;
   transition: transform 0.365s, opacity 0.365s, -webkit-transform 0.365s;
-  z-index: 10002;
+  z-index: 12;
   -webkit-transform: scale(0);
   transform: scale(0);
   opacity: 0;
@@ -57,7 +57,7 @@
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  z-index: 10000;
+  /* z-index: 1; */
 }
 .RMM__container--is-active {
   pointer-events: initial;
@@ -70,7 +70,7 @@
   height: 100%;
   overflow: auto;
   padding: 6rem 15%;
-  z-index: 10001;
+  z-index: 9;
   opacity: 0;
   -webkit-transition: opacity 0.2s;
   transition: opacity 0.2s;

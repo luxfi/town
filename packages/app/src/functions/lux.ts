@@ -1,3 +1,5 @@
+import { ChainId } from '@luxdefi/sdk'
+
 export const sortData = (data: Array<any>, byType: string) => {
   return data.sort((a, b) => Number(b.tokenID) - Number(a.tokenID))
 }
@@ -6,6 +8,17 @@ export const wait = (timeout) => {
     setTimeout(resolve, timeout)
   })
 }
+
+export const waitOnHardhat = (chainId: ChainId, timeout) => {
+  return new Promise((resolve) => {
+    if ([ChainId.HARDHAT, ChainId.HARDHAT2].includes(chainId)) {
+      setTimeout(resolve, timeout)
+    } else {
+      resolve(undefined)
+    }
+  })
+}
+
 export const timer = (countDownDate) => {
   // Update the count down every 1 second
   const x = setInterval(function () {
