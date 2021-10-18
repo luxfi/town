@@ -24,3 +24,18 @@ public/workbox*.js.map
 .env
 
 lokalise.yaml
+
+# Ignore data files created by running the Docker Compose setup locally
+/packages/subgraph/graphnode/data/
+/packages/subgraph/graphnode/parity/chains/
+/packages/subgraph/graphnode/parity/network/
+
+/packages/subgraph/tests/integration-tests/**/build
+/packages/subgraph/tests/integration-tests/**/generated
+/packages/subgraph/tests/integration-tests/**/node_modules
+/packages/subgraph/tests/integration-tests/**/yarn.lock
+
+# Built solidity contracts.
+/packages/subgraph/tests/integration-tests/**/bin
+/packages/subgraph/tests/integration-tests/**/abis
+/packages/subgraph/tests/integration-tests/**/truffle_output

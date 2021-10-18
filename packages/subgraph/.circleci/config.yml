@@ -1,0 +1,82 @@
+env_defaults: &env_defaults
+  working_directory: ~
+  docker:
+    - image: circleci/node:14.15.1
+
+version: 2.1
+jobs:
+  prepare:
+    <<: *env_defaults
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1.0-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1.0-dependencies-
+
+      - node/install-packages:
+          pkg-manager: yarn
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1.0-dependencies-{{ checksum "yarn.lock" }}
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+
+  build:
+    <<: *env_defaults
+    steps:
+      - checkout
+      - attach_workspace:
+            at: .
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          command: yarn prepare:local
+          name: Create Subgraph for Local
+      - run:
+          command: yarn codegen
+          name: Create Types
+      - run:
+          command: yarn build
+          name: Build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - types
+
+  deploy_rinkeby:
+    <<: *env_defaults
+    steps:
+      - checkout
+      - attach_workspace:
+            at: .
+      - run:
+            command: yarn prepare:rinkeby
+            name: Create Subgraph for Rinkeby
+      - run:
+          command: yarn graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token $GRAPH_ACCESS_TOKEN ourzora/zora-v1-rinkeby
+orbs:
+  node: circleci/node@4.1.0
+workflows:
+  build_and_deploy:
+    jobs:
+      - prepare
+      - build:
+          requires:
+            - prepare
+      - deploy_rinkeby:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

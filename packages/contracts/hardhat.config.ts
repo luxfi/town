@@ -2,7 +2,6 @@ import { task } from 'hardhat/config'
 import { HardhatUserConfig } from 'hardhat/types'
 
 import 'hardhat-deploy'
-import '@atixlabs/hardhat-time-n-mine'
 import '@typechain/hardhat'
 import '@nomiclabs/hardhat-web3'
 import '@nomiclabs/hardhat-ethers'

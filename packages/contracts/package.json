@@ -25,7 +25,6 @@
     "typescript": "^4.4.2"
   },
   "dependencies": {
-    "@atixlabs/hardhat-time-n-mine": "^0.0.5",
     "@ethersproject/abi": "^5.4.0",
     "@ethersproject/abstract-signer": "^5.4.1",
     "@ethersproject/constants": "^5.4.0",
@@ -58,7 +57,7 @@
     "account": "hardhat account",
     "accounts": "hardhat accounts",
     "balance": "hardhat balance",
-    "chain": "hardhat node --network hardhat --show-stack-traces && hardhat --network localhost timeIncrease 5",
+    "chain": "hardhat node --network hardhat --show-stack-traces --hostname 0.0.0.0",
     "chain2": "hardhat node --network hardhat2 --show-stack-traces",
     "clean": "rm -rf artifacts && rm -rf cache && rm -rf types",
     "compile": "hardhat compile",
