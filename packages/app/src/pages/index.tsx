@@ -8,15 +8,11 @@ import { useEffect, useRef, useState } from 'react'
 import { TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import AssetModal from '../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
-import AssetList from '../lux/AssetList'
+import AssetList, { ContentUriFilter } from '../lux/AssetList'
 import { gql, useQuery } from '@apollo/client'
 import { request } from 'graphql-request'
-
-const listTypes = [
-  { type: 'Validator', name: 'Validator' },
-  { type: 'ATM', name: 'ATM' },
-  { type: 'Wallet', name: 'Wallet' },
-]
+import { useActiveWeb3React } from '../hooks'
+import { useRouter } from 'next/router'
 
 const GET_ASSETS = gql`
 query GetMedias {
@@ -53,35 +49,32 @@ query GetMedias {
 `;
 
 export default function Dashboard() {
+  const { account } = useActiveWeb3React()
 
-  const [selectedNft, setSelectedNft] = useState(null)
+  const router = useRouter()
+  const { tokenId } = router.query
 
-  const [typeNfts, setTypeNfts] = useState({
-    Validator: [],
-    ATM: [],
-    Wallet: [],
-  })
+  console.log({ tokenId })
   
   const {
     modalProps,
     getTriggerProps,
-    activeModal: tokenId,
+    activeModal: activeTokenId,
+    open: openModal,
   } = useModal({
     background: 'black',
+    onOpen: () => {
+      console.log(tokenId)
+    }
   })
-  
+
   useEffect(() => {
-    const nft = listTypes
-    .map((list) => typeNfts[list.type])
-    .flat()
-    .filter((asset) => asset.tokenId === tokenId)[0]
-    
-    setSelectedNft(nft)
-  }, [tokenId])
-  
-  const onLoadAssets = (type, assets: object[]) => {
-    setTypeNfts((typeNfts) => ({ ...typeNfts, [type]: assets }))
-  }
+    if (activeTokenId) {
+      // router.push(`/?tokenId=${activeTokenId.toString()}`, undefined, { shallow: true })
+    } else {
+      // open()
+    }
+  }, [activeTokenId, tokenId])
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
@@ -90,17 +83,17 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      {listTypes.map((list) => (
-        <AssetList
-          key={list.name}
-          tokenType={list.type}
-          tokenName={list.name}
-          getTriggerProps={getTriggerProps}
-          onLoadAssets={(assets) => onLoadAssets(list.type, assets)}
-        />
-      ))}
+      <AssetList
+        title="My NFTs"
+        where={{ owner: account }}
+        perPage={24}
+        // tokenType={list.type}
+        // tokenName={list.name}
+        openModal={openModal}
+        // onLoadAssets={(assets) => onLoadAssets(list.type, assets)}
+      />
 
-      <AssetModal {...selectedNft} modalProps={modalProps} />
+      <AssetModal tokenId={tokenId} modalProps={modalProps} />
     </Container>
   )
 }

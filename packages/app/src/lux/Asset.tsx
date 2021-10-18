@@ -1,5 +1,6 @@
-import React from 'react'
-import { GetTriggerProps } from 'react-morphing-modal/dist/types'
+import { useRouter } from 'next/router'
+import React, { useEffect, useRef } from 'react'
+import { GetTriggerProps, OpenModal } from 'react-morphing-modal/dist/types'
 import Player from 'react-player'
 import { TYPE_ATM, TYPE_CASH, TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import { useAsset } from './state'
@@ -17,16 +18,36 @@ export type AssetProps = {
   animate?: boolean
   large?: boolean
   getTriggerProps?: GetTriggerProps
+  openModal?: OpenModal
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Asset = (props: AssetProps) => {
+  const router = useRouter()
+  const { tokenId: activeTokenId } = router.query
+  const assetRef = useRef(null);
   const { tokenId, showPrice } = props
   const { formattedAmount, symbol } = useAsset(tokenId)
 
+  // const handleClick = () => {
+  //   props.onClick && props.onClick(tokenId)
+  // }
+
+  const onClick = () => {
+    router.push(`/?tokenId=${tokenId.toString()}`, undefined, { shallow: true })
+    props.openModal && props.openModal(assetRef, { id: tokenId })
+  }
+
+  useEffect(() => {
+    if (tokenId && tokenId.toString() === activeTokenId) {
+      props.openModal && props.openModal(assetRef)
+    }
+  }, [tokenId])
+
   return (
     <div
-      className={`Asset ${props.className || ''} ${props.getTriggerProps ? 'cursor-pointer' : ''}`}
-      {...(props.getTriggerProps ? props.getTriggerProps({ id: props.tokenId }) : {})}
+      className={`Asset ${props.className || ''} ${props.openModal ? 'cursor-pointer' : ''}`}
+      ref={assetRef}
+      onClick={onClick}
     >
       {props.large ? (
         <Player url={props.video} playing={true} loop width={'auto'} height={'auto'} style={{ height: 'auto' }} />

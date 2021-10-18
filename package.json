@@ -59,8 +59,9 @@
     "subgraph:create-local": "yarn workspace @luxdefi/subgraph create-local",
     "subgraph:deploy-local": "yarn workspace @luxdefi/subgraph deploy-local",
     "subgraph:start": "yarn subgraph:prepare-local && yarn subgraph:codegen && yarn subgraph:create-local && yarn subgraph:deploy-local",
-    "graphnode:start": "yarn workspace @luxdefi/subgraph graphnode:start",
-    "graphnode:clean": "yarn workspace @luxdefi/subgraph graphnode:clean",
+    "graphnode:start": "yarn workspace @luxdefi/graphnode start",
+    "graphnode:docker": "yarn workspace @luxdefi/graphnode docker",
+    "graphnode:clean": "yarn workspace @luxdefi/graphnode clean",
     "format": "yarn workspace @luxdefi/app format && yarn workspace @luxdefi/contracts format && yarn workspace @luxdefi/moralis format"
   },
   "workspaces": {

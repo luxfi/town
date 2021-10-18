@@ -8,10 +8,21 @@ import { newNft } from '../functions/assets'
 import { useQuery, gql } from '@apollo/client'
 import { type } from 'os'
 
+export enum ContentUriFilter {
+  ATM = "atm",
+  CASH = "cash",
+  WALLET = "wallet",
+  VALIDATOR = "validator",
+}
+
+export type MediaFilter = {
+  owner?: string
+  contentURI_contains?: ContentUriFilter
+}
 
 const GET_ASSETS = gql`
-query GetAssets {
-	medias {
+query GetAssets($where: Media_filter, $first: Int) {
+	medias(first: $first, where: $where) {
     id
     transfers {
       id
@@ -53,17 +64,6 @@ type PaginatedAssets = {
   assets: object[]
 }
 
-export type AssetListProps = {
-  className?: string
-  tokenType: string
-  tokenName: string
-  autoPlay?: boolean
-  animate?: boolean
-  large?: boolean
-  getTriggerProps?: GetTriggerProps
-  onLoadAssets: (assets: object[]) => void
-} & React.HTMLAttributes<HTMLDivElement>
-
 const getPages = (total: number, perPage: number) => {
   var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
   var remainder = total % perPage
@@ -97,11 +97,37 @@ const getPaginatedAssets = (
   }
 }
 
+export type AssetListProps = {
+  title: string
+  tokenType?: string
+  tokenName?: string
+  perPage?: number
+  where?: MediaFilter
+  className?: string
+  autoPlay?: boolean
+  animate?: boolean
+  large?: boolean
+  getTriggerProps?: GetTriggerProps
+  onLoadAssets?: (assets: object[]) => void
+  openModal?: OpenModal
+} & React.HTMLAttributes<HTMLDivElement>
+
 const AssetList = (props: AssetListProps) => {
 
+  const where = props.where || {}
+
   const { loading, error } = useQuery(GET_ASSETS, {
+    variables: {
+      where: {
+        ...where,
+        owner: where.owner && where.owner.toLowerCase()
+      },
+      first: props.perPage || 100,
+    },
     onCompleted: ({ medias }) => {
-      setAssets(medias.map(({ id }) => newNft(id, props.tokenType)))
+      const assets = medias.map(({ id }) => newNft(id, props.tokenType || 'Validator'))
+      setAssets(assets)
+      props.onLoadAssets && props.onLoadAssets(assets)
     }
   });
 
@@ -123,12 +149,12 @@ const AssetList = (props: AssetListProps) => {
 
   console.log(assets)
 
-  useEffect(() => {
-    if (drop) {
-      drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
-      drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
-    }
-  }, [props.tokenName])
+  // useEffect(() => {
+  //   if (drop) {
+  //     drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
+  //     drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
+  //   }
+  // }, [props.tokenName])
 
   useEffect(() => {
     if (firstTokenId >= 0 && totalMinted) {
@@ -154,7 +180,7 @@ const AssetList = (props: AssetListProps) => {
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
       <div className="">
         <div className="grid grid-cols-2 gap-5">
-          <div className="text-2xl text-indigo-600">{props.tokenType}s</div>
+          <div className="text-2xl text-indigo-600">{props.title}</div>
           <div className="flex justify-end">
             <div
               onClick={() => previousPage(page)}
@@ -187,6 +213,7 @@ const AssetList = (props: AssetListProps) => {
             animate={props.animate}
             large={props.large}
             getTriggerProps={props.getTriggerProps}
+            openModal={props.openModal}
           />
         ))}
       </div>

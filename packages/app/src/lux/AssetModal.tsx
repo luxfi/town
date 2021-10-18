@@ -8,6 +8,7 @@ import HowReservations from './HowReservations'
 import SetBid from './SetBid'
 import SetAsk from './SetAsk'
 import HowOffline from './HowOffline'
+import { useRouter } from 'next/router'
 
 const defaultShow = {
   setAsk: false,
@@ -17,6 +18,7 @@ const defaultShow = {
 }
 
 const AssetModal = (props: any) => {
+  const router = useRouter()
   const { modalProps, tokenId, type, height, image, video } = props
   const { ask, formattedBalance, isOwner, symbol } = useAsset(tokenId)
 
@@ -26,19 +28,26 @@ const AssetModal = (props: any) => {
     setShow({ ...defaultShow, [section]: true })
   }
 
+  console.log({ router })
+
+  const onClose = () => {
+    router.push('/')
+    modalProps.close()
+  }
+
   return (
     <Modal {...props.modalProps} padding={0} closeButton={false}>
       <div className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
         <div className="">
           <div
-            onClick={modalProps.close}
+            onClick={onClose}
             className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14"
           >
             <HiOutlineChevronLeft />
           </div>
           <div className="flex items-stretch md:h-screen">
             <div className="self-center m-auto w-96">
-              <Asset tokenId={tokenId} type={type} showPrice image={image} video={video} large />
+              <Asset tokenId={tokenId} type={type} showPrice image={image} video={video} large openModal={props.openModal}/>
             </div>
           </div>
         </div>

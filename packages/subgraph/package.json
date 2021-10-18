@@ -18,9 +18,7 @@
     "build": "graph build",
     "deploy": "graph deploy luxdefi/luxtown --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-local": "graph deploy luxdefi/luxtown --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
-    "runAuction": "ts-node scripts/auctionHouse.ts",
-    "graphnode:start": "cd ./graphnode && docker-compose up",
-    "graphnode:clean": "cd ./graphnode && docker-compose down && rm -rf ./data"
+    "runAuction": "ts-node scripts/auctionHouse.ts"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.0.16",

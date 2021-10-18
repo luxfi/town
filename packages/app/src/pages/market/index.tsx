@@ -103,7 +103,7 @@ export default function Market() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      {listTypes.map((list) => (
+      {/* {listTypes.map((list) => (
         <AssetList
           key={list.name}
           tokenType={list.type}
@@ -111,7 +111,7 @@ export default function Market() {
           getTriggerProps={getTriggerProps}
           onLoadAssets={(assets) => onLoadAssets(list.type, assets)}
         />
-      ))}
+      ))} */}
 
       <AssetModal {...selectedNft} modalProps={modalProps} />
     </Container>

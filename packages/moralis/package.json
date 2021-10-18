@@ -2,6 +2,7 @@
   "name": "@luxdefi/moralis",
   "version": "1.0.0",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "drop": "node ./scripts/moralisDropTables.js",
     "format": "prettier --write src/* scripts/*",
