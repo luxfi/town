@@ -6,7 +6,39 @@ import _ from 'lodash'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { newNft } from '../functions/assets'
 import { useQuery, gql } from '@apollo/client'
-import { type } from 'os'
+
+const getPages = (total: number, perPage: number) => {
+  var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
+  var remainder = total % perPage
+  if (remainder > 0) {
+    chunks.push(remainder)
+  }
+  return chunks
+}
+
+// const getPaginatedAssets = (
+//   type: string,
+//   firstTokenId: number,
+//   totalMinted: number,
+//   page: number,
+//   perPage: number = 6
+// ): PaginatedAssets => {
+//   const pages = getPages(totalMinted, perPage)
+//   const totalPages = pages.length
+//   const pageQuantity = pages[page - 1]
+//   const start = page * perPage - perPage + firstTokenId
+//   const end = start + pageQuantity
+//   const endTokenId = end - 1
+//   return {
+//     type,
+//     page,
+//     start,
+//     end,
+//     endTokenId,
+//     totalPages,
+//     assets: _.range(start, end).map((tokenId) => newNft(tokenId, contentURI)),
+//   }
+// }
 
 export enum ContentUriFilter {
   ATM = "atm",
@@ -21,81 +53,17 @@ export type MediaFilter = {
 }
 
 const GET_ASSETS = gql`
-query GetAssets($where: Media_filter, $first: Int) {
-	medias(first: $first, where: $where) {
-    id
-    transfers {
+  query GetAssets($where: Media_filter, $first: Int) {
+    medias(first: $first, where: $where) {
       id
-      createdAtTimestamp
-      from {
+      contentURI
+      metadataHash
+      owner {
         id
       }
-      to {
-        id
-        
-      }
-    }
-    owner {
-      id
-      
-    }
-    metadataHash
-    contentURI
-    currentAsk {
-      currency {
-        id
-      }
-      amount
-    }
-		currentBids {
-      amount
     }
   }
-}
 `;
-
-type PaginatedAssets = {
-  type: string
-  page: number
-  start: number
-  end: number
-  endTokenId: number
-  totalPages: number
-  assets: object[]
-}
-
-const getPages = (total: number, perPage: number) => {
-  var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
-  var remainder = total % perPage
-  if (remainder > 0) {
-    chunks.push(remainder)
-  }
-  return chunks
-}
-
-const getPaginatedAssets = (
-  type: string,
-  firstTokenId: number,
-  totalMinted: number,
-  page: number,
-  perPage: number = 6
-): PaginatedAssets => {
-  const pages = getPages(totalMinted, perPage)
-  const totalPages = pages.length
-  const pageQuantity = pages[page - 1]
-  const start = page * perPage - perPage + firstTokenId
-  const end = start + pageQuantity
-  const endTokenId = end - 1
-  return {
-    type,
-    page,
-    start,
-    end,
-    endTokenId,
-    totalPages,
-    assets: _.range(start, end).map((tokenId) => newNft(tokenId, type)),
-  }
-}
 
 export type AssetListProps = {
   title: string
@@ -125,9 +93,8 @@ const AssetList = (props: AssetListProps) => {
       first: props.perPage || 100,
     },
     onCompleted: ({ medias }) => {
-      const assets = medias.map(({ id }) => newNft(id, props.tokenType || 'Validator'))
-      setAssets(assets)
-      props.onLoadAssets && props.onLoadAssets(assets)
+      setAssets(medias)
+      props.onLoadAssets && props.onLoadAssets(medias)
     }
   });
 
@@ -156,13 +123,13 @@ const AssetList = (props: AssetListProps) => {
   //   }
   // }, [props.tokenName])
 
-  useEffect(() => {
-    if (firstTokenId >= 0 && totalMinted) {
-      const paginatedAssets = getPaginatedAssets(props.tokenName, firstTokenId, totalMinted, page)
-      setPaginatedAssets(paginatedAssets)
-      props.onLoadAssets(paginatedAssets.assets)
-    }
-  }, [props.tokenName, firstTokenId, totalMinted, page])
+  // useEffect(() => {
+  //   if (firstTokenId >= 0 && totalMinted) {
+  //     const paginatedAssets = getPaginatedAssets(props.tokenName, firstTokenId, totalMinted, page)
+  //     setPaginatedAssets(paginatedAssets)
+  //     props.onLoadAssets(paginatedAssets.assets)
+  //   }
+  // }, [props.tokenName, firstTokenId, totalMinted, page])
 
   const previousPage = (page) => {
     if (page > 1) {
@@ -207,12 +174,12 @@ const AssetList = (props: AssetListProps) => {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
         {assets.map((asset, i) => (
           <Asset
-            key={asset.tokenId}
-            {...asset}
+            key={asset.id}
+            tokenId={asset.id}
+            contentURI={asset.contentURI}
             showPrice={false}
             animate={props.animate}
             large={props.large}
-            getTriggerProps={props.getTriggerProps}
             openModal={props.openModal}
           />
         ))}

@@ -7,6 +7,7 @@ import { formatCurrencyAmountWithCommas, numberWithCommas } from '../functions'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
 import { Ask } from './types'
+import { useQuery, gql } from '@apollo/client'
 
 export type AssetState = {
   ask: Ask
@@ -19,15 +20,55 @@ export type AssetState = {
   symbol: string
 }
 
-export function useAsset(tokenId: number) {
+export type UseAssetOptions = {
+  isActive?: boolean
+}
+
+const GET_ASSET = gql`
+  query GetAsset($id: Int!) {
+    media(id:$id) {
+      id
+      contentURI
+      createdAtTimestamp
+      owner {
+        id 
+      }
+      currentAsk {
+        currency {
+          id
+        }
+        amount
+      }
+      currentBids {
+        amount
+    }
+    }
+  }
+`
+
+const defaultAsset = {
+  contentURI: null,
+  currentBids: [],
+}
+
+export function useAsset(tokenId: number | string) {
   const { account, chainId } = useActiveWeb3React()
   const [owner, setOwner] = useState(null)
   const [ask, setAsk] = useState(null)
-  const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18))
+  const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18) as Currency)
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [formattedBalance, setFormattedBalance] = useState(null)
+  const [asset, setAsset] = useState(defaultAsset)
 
-  const app = useContract('App')
+  const { loading, error } = useQuery(GET_ASSET, {
+    variables: {
+      id: tokenId ? parseInt(tokenId.toString()) : 0,
+    },
+    onCompleted: ({ media }) => {
+      setAsset(media || defaultAsset)
+    }
+  });
+
   const media = useContract('Media')
   const market = useContract('Market')
 
@@ -54,6 +95,8 @@ export function useAsset(tokenId: number) {
     }
   }, [currencyBalance])
 
+  console.log(media.contentURI)
+
   return {
     owner,
     isOwner: account === owner,
@@ -64,5 +107,7 @@ export function useAsset(tokenId: number) {
     balance: currencyBalance?.toFixed(0) || '0',
     symbol: currencyToken && currencyToken.symbol,
     ask,
+    contentURI: asset?.contentURI,
+    currentBids: asset?.currentBids,
   }
 }

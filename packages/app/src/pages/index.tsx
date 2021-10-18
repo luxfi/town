@@ -8,73 +8,35 @@ import { useEffect, useRef, useState } from 'react'
 import { TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import AssetModal from '../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
-import AssetList, { ContentUriFilter } from '../lux/AssetList'
+import AssetList from '../lux/AssetList'
 import { gql, useQuery } from '@apollo/client'
-import { request } from 'graphql-request'
 import { useActiveWeb3React } from '../hooks'
 import { useRouter } from 'next/router'
 
 const GET_ASSETS = gql`
-query GetMedias {
-	medias {
-    id
-    transfers {
+  query GetMedias {
+    medias {
       id
-      createdAtTimestamp
-      from {
+      contentURI
+      metadataHash
+      owner {
         id
       }
-      to {
-        id
-        
-      }
-    }
-    owner {
-      id
-      
-    }
-    metadataHash
-    contentURI
-    currentAsk {
-      currency {
-        id
-      }
-      amount
-    }
-		currentBids {
-      amount
     }
   }
-}
 `;
 
 export default function Dashboard() {
   const { account } = useActiveWeb3React()
-
   const router = useRouter()
   const { tokenId } = router.query
-
-  console.log({ tokenId })
   
   const {
     modalProps,
-    getTriggerProps,
-    activeModal: activeTokenId,
     open: openModal,
   } = useModal({
     background: 'black',
-    onOpen: () => {
-      console.log(tokenId)
-    }
   })
-
-  useEffect(() => {
-    if (activeTokenId) {
-      // router.push(`/?tokenId=${activeTokenId.toString()}`, undefined, { shallow: true })
-    } else {
-      // open()
-    }
-  }, [activeTokenId, tokenId])
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
@@ -87,10 +49,7 @@ export default function Dashboard() {
         title="My NFTs"
         where={{ owner: account }}
         perPage={24}
-        // tokenType={list.type}
-        // tokenName={list.name}
         openModal={openModal}
-        // onLoadAssets={(assets) => onLoadAssets(list.type, assets)}
       />
 
       <AssetModal tokenId={tokenId} modalProps={modalProps} />

@@ -9,6 +9,7 @@ import SetBid from './SetBid'
 import SetAsk from './SetAsk'
 import HowOffline from './HowOffline'
 import { useRouter } from 'next/router'
+import { gql, useQuery } from '@apollo/client'
 
 const defaultShow = {
   setAsk: false,
@@ -20,20 +21,19 @@ const defaultShow = {
 const AssetModal = (props: any) => {
   const router = useRouter()
   const { modalProps, tokenId, type, height, image, video } = props
-  const { ask, formattedBalance, isOwner, symbol } = useAsset(tokenId)
-
+  const { ask, contentURI, formattedAmount, formattedBalance, isOwner, symbol } = useAsset(tokenId)
   const [show, setShow] = useState(defaultShow)
 
   const showSection = (section) => {
     setShow({ ...defaultShow, [section]: true })
   }
 
-  console.log({ router })
-
   const onClose = () => {
-    router.push('/')
+    router.push(router.pathname)
     modalProps.close()
   }
+
+  console.log({ tokenId, contentURI })
 
   return (
     <Modal {...props.modalProps} padding={0} closeButton={false}>
@@ -47,7 +47,15 @@ const AssetModal = (props: any) => {
           </div>
           <div className="flex items-stretch md:h-screen">
             <div className="self-center m-auto w-96">
-              <Asset tokenId={tokenId} type={type} showPrice image={image} video={video} large openModal={props.openModal}/>
+              <Asset 
+                tokenId={tokenId} 
+                contentURI={contentURI} 
+                formattedAmount={formattedAmount} 
+                symbol={symbol} 
+                openModal={props.openModal}
+                showPrice 
+                large 
+              />
             </div>
           </div>
         </div>

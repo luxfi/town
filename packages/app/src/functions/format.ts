@@ -188,7 +188,7 @@ export const formatCurrencyFromRawAmount = (token: Currency, amount: BigintIsh) 
   return CurrencyAmount.fromRawAmount(token, amount).toFixed(0)
 }
 
-export const numberWithCommas = (num: number) => {
+export const numberWithCommas = (num: number | string) => {
   const values = num.toString().split('.')
   return values[0].replace(/.(?=(?:.{3})+$)/g, '$&,') + (values.length == 2 ? '.' + values[1] : '')
 }
