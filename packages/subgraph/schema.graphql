@@ -2,6 +2,8 @@ type Media @entity {
   "The tokenId on the Zora Media Contract"
   id: ID!
 
+  # tokenType: String!
+
   "The transaction hash the media was created at"
   transactionHash: String!
 

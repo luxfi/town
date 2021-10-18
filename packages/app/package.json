@@ -169,7 +169,9 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@apollo/client": "^3.4.16",
     "@sushiswap/core": "2.0.0-canary.0",
+    "graphql": "^15.6.1",
     "graphql-request": "^3.5.0",
     "moralis": "^0.0.74",
     "react": "^17.0.2",

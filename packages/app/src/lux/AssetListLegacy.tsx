@@ -5,43 +5,6 @@ import Asset from './Asset'
 import _ from 'lodash'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { newNft } from '../functions/assets'
-import { useQuery, gql } from '@apollo/client'
-import { type } from 'os'
-
-
-const GET_ASSETS = gql`
-query GetAssets {
-	medias {
-    id
-    transfers {
-      id
-      createdAtTimestamp
-      from {
-        id
-      }
-      to {
-        id
-        
-      }
-    }
-    owner {
-      id
-      
-    }
-    metadataHash
-    contentURI
-    currentAsk {
-      currency {
-        id
-      }
-      amount
-    }
-		currentBids {
-      amount
-    }
-  }
-}
-`;
 
 type PaginatedAssets = {
   type: string
@@ -98,15 +61,6 @@ const getPaginatedAssets = (
 }
 
 const AssetList = (props: AssetListProps) => {
-
-  const { loading, error } = useQuery(GET_ASSETS, {
-    onCompleted: ({ medias }) => {
-      setAssets(medias.map(({ id }) => newNft(id, props.tokenType)))
-    }
-  });
-
-  const [assets, setAssets] = useState([])
-
   const [paginatedAssets, setPaginatedAssets] = useState({
     start: 0,
     end: 6,
@@ -114,14 +68,12 @@ const AssetList = (props: AssetListProps) => {
     totalPages: 1,
     endTokenId: 5,
   })
-  const { start, endTokenId } = paginatedAssets
+  const { assets, start, endTokenId } = paginatedAssets
   const [firstTokenId, setFirstTokenId] = useState(null)
   const [totalMinted, setTotalMinted] = useState(null)
   const [page, setPage] = useState(1)
 
   const drop = useContract('Drop')
-
-  console.log(assets)
 
   useEffect(() => {
     if (drop) {

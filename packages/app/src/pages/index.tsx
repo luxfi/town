@@ -9,6 +9,8 @@ import { TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import AssetModal from '../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
 import AssetList from '../lux/AssetList'
+import { gql, useQuery } from '@apollo/client'
+import { request } from 'graphql-request'
 
 const listTypes = [
   { type: 'Validator', name: 'Validator' },
@@ -16,7 +18,42 @@ const listTypes = [
   { type: 'Wallet', name: 'Wallet' },
 ]
 
+const GET_ASSETS = gql`
+query GetMedias {
+	medias {
+    id
+    transfers {
+      id
+      createdAtTimestamp
+      from {
+        id
+      }
+      to {
+        id
+        
+      }
+    }
+    owner {
+      id
+      
+    }
+    metadataHash
+    contentURI
+    currentAsk {
+      currency {
+        id
+      }
+      amount
+    }
+		currentBids {
+      amount
+    }
+  }
+}
+`;
+
 export default function Dashboard() {
+
   const [selectedNft, setSelectedNft] = useState(null)
 
   const [typeNfts, setTypeNfts] = useState({
@@ -24,11 +61,7 @@ export default function Dashboard() {
     ATM: [],
     Wallet: [],
   })
-
-  const onLoadAssets = (type, assets: object[]) => {
-    setTypeNfts((typeNfts) => ({ ...typeNfts, [type]: assets }))
-  }
-
+  
   const {
     modalProps,
     getTriggerProps,
@@ -36,15 +69,19 @@ export default function Dashboard() {
   } = useModal({
     background: 'black',
   })
-
+  
   useEffect(() => {
     const nft = listTypes
-      .map((list) => typeNfts[list.type])
-      .flat()
-      .filter((asset) => asset.tokenId === tokenId)[0]
-
+    .map((list) => typeNfts[list.type])
+    .flat()
+    .filter((asset) => asset.tokenId === tokenId)[0]
+    
     setSelectedNft(nft)
   }, [tokenId])
+  
+  const onLoadAssets = (type, assets: object[]) => {
+    setTypeNfts((typeNfts) => ({ ...typeNfts, [type]: assets }))
+  }
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">

@@ -48,22 +48,22 @@ function AppBar(): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      {/* <NavLink href="/">
+                      <NavLink href="/">
                         <a
                           id={`swap-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Dashboard`)}
                         </a>
-                      </NavLink> */}
-                      {/* <NavLink href="/market">
+                      </NavLink>
+                      <NavLink href="/market">
                         <a
                           id={`swap-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Market`)}
                         </a>
-                      </NavLink> */}
+                      </NavLink>
                       {/* <NavLink href="/swap">
                         <a
                           id={`swap-nav-link`}

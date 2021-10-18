@@ -19,9 +19,9 @@ dataSources:
         - Media
       abis:
         - name: Media
-          file: ./abis/Media.json
+          file: ./abis/{{deployment}}/Media.json
         - name: Market
-          file: ./abis/Market.json
+          file: ./abis/{{deployment}}/Market.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
@@ -50,7 +50,7 @@ dataSources:
         - Bid
       abis:
         - name: Market
-          file: ./abis/Market.json
+          file: ./abis/{{deployment}}/Market.json
         - name: ERC20
           file: ./abis/ERC20.json
         - name: ERC20SymbolBytes
@@ -60,14 +60,14 @@ dataSources:
       eventHandlers:
         - event: BidShareUpdated(indexed uint256,((uint256),(uint256),(uint256)))
           handler: handleBidShareUpdated
-        - event: AskCreated(indexed uint256,(uint256,address))
+        - event: AskCreated(indexed uint256,(uint256,address,bool))
           handler: handleAskCreated
-        - event: AskRemoved(indexed uint256,(uint256,address))
+        - event: AskRemoved(indexed uint256,(uint256,address,bool))
           handler: handleAskRemoved
-        - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256)))
+        - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256),bool))
           handler: handleBidCreated
-        - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256)))
+        - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256),bool))
           handler: handleBidRemoved
-        - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256)))
+        - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256),bool))
           handler: handleBidFinalized
       file: ./src/market.ts
