@@ -1,13 +1,11 @@
-import { Token } from '@luxdefi/sdk'
-import { ZERO_ADDRESS } from '@luxdefi/sdk'
-import { Currency, CurrencyAmount } from '@luxdefi/sdk'
-import { useEffect, useMemo, useState } from 'react'
+import { Currency, CurrencyAmount, Token, ZERO_ADDRESS } from '@luxdefi/sdk'
+import { useEffect, useState } from 'react'
+import { useQuery, gql } from '@apollo/client'
 import { getCurrencyToken } from '../config/currencies'
 import { formatCurrencyAmountWithCommas, numberWithCommas } from '../functions'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
 import { Ask } from './types'
-import { useQuery, gql } from '@apollo/client'
 
 export type AssetState = {
   ask: Ask
@@ -49,6 +47,22 @@ const GET_ASSET = gql`
 const defaultAsset = {
   contentURI: null,
   currentBids: [],
+}
+
+const typeLabelMap = {
+  validator: 'Validator',
+  atm: 'ATM',
+  cash: 'ATM',
+  wallet: 'Wallet',
+}
+
+export const getContent = (contentURI) => {
+  const type = contentURI?.match(/\/(\w+)\.(\w+)$/)[1] || ''
+  return{
+    type: typeLabelMap[type],
+    image: `/nfts/${type.toLowerCase()}.gif`,
+    video: `/nfts/${type.toLowerCase()}.mov`,
+  }
 }
 
 export function useAsset(tokenId: number | string) {
@@ -95,7 +109,7 @@ export function useAsset(tokenId: number | string) {
     }
   }, [currencyBalance])
 
-  console.log(media.contentURI)
+  const { type, video, image } = getContent(asset?.contentURI)
 
   return {
     owner,
@@ -109,5 +123,8 @@ export function useAsset(tokenId: number | string) {
     ask,
     contentURI: asset?.contentURI,
     currentBids: asset?.currentBids,
+    type, 
+    video, 
+    image,
   }
 }

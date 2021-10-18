@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
-import { GetTriggerProps, OpenModal } from 'react-morphing-modal/dist/types'
 import Player from 'react-player'
-import { TYPE_ATM, TYPE_CASH, TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
-import { useAsset } from './state'
+import { GetTriggerProps, OpenModal } from 'react-morphing-modal/dist/types'
+import { getContent } from './state'
 
 export type AssetProps = {
   tokenId: number | string
@@ -21,15 +20,6 @@ export type AssetProps = {
   openModal?: OpenModal
 } & React.HTMLAttributes<HTMLDivElement>
 
-const getContent = (contentURI) => {
-  const type = contentURI?.match(/\/(\w+)\.(\w+)$/)[1] || ''
-  return{
-    type,
-    image: `/nfts/${type.toLowerCase()}.gif`,
-    video: `/nfts/${type.toLowerCase()}.mov`,
-  }
-}
-
 const Asset = (props: AssetProps) => {
   const router = useRouter()
   const assetRef = useRef(null);
@@ -43,11 +33,11 @@ const Asset = (props: AssetProps) => {
     props.openModal && props.openModal(assetRef, { id: tokenId })
   }
 
-  useEffect(() => {
-    if (isActive) {
-      props.openModal && props.openModal(assetRef)
-    }
-  }, [tokenId])
+  // useEffect(() => {
+  //   if (isActive) {
+  //     props.openModal && props.openModal(assetRef)
+  //   }
+  // }, [tokenId])
 
   return (
     <div

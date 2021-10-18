@@ -1,13 +1,14 @@
 import { BigintIsh, Token } from '@luxdefi/sdk'
+import { BigNumber } from 'ethers'
 
 export type Ask = {
-  amount: BigintIsh
+  amount: BigintIsh | BigNumber
   currency: string
   offline: boolean
 }
 
 export type Bid = {
-  amount: BigintIsh
+  amount: BigintIsh | BigNumber
   currency: string
   bidder: string
   recipient: string

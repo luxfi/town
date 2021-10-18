@@ -49,12 +49,12 @@ export enum ContentUriFilter {
 
 export type MediaFilter = {
   owner?: string
-  contentURI_contains?: ContentUriFilter
+  contentURI_contains?: ContentUriFilter,
 }
 
 const GET_ASSETS = gql`
-  query GetAssets($where: Media_filter, $first: Int) {
-    medias(first: $first, where: $where) {
+  query GetAssets($where: Media_filter, $first: Int, $orderBy: Media_orderBy) {
+    medias(first: $first, where: $where, orderBy: $orderBy) {
       id
       contentURI
       metadataHash
@@ -71,6 +71,7 @@ export type AssetListProps = {
   tokenName?: string
   perPage?: number
   where?: MediaFilter
+  orderBy?: string,
   className?: string
   autoPlay?: boolean
   animate?: boolean
@@ -81,15 +82,15 @@ export type AssetListProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const AssetList = (props: AssetListProps) => {
-
   const where = props.where || {}
 
   const { loading, error } = useQuery(GET_ASSETS, {
     variables: {
       where: {
         ...where,
-        owner: where.owner && where.owner.toLowerCase()
+        owner: where.owner && where.owner.toLowerCase(),
       },
+      orderBy: props.orderBy && props.orderBy || 'id',
       first: props.perPage || 100,
     },
     onCompleted: ({ medias }) => {
@@ -107,14 +108,11 @@ const AssetList = (props: AssetListProps) => {
     totalPages: 1,
     endTokenId: 5,
   })
+
   const { start, endTokenId } = paginatedAssets
-  const [firstTokenId, setFirstTokenId] = useState(null)
-  const [totalMinted, setTotalMinted] = useState(null)
   const [page, setPage] = useState(1)
 
   const drop = useContract('Drop')
-
-  console.log(assets)
 
   // useEffect(() => {
   //   if (drop) {
@@ -132,20 +130,19 @@ const AssetList = (props: AssetListProps) => {
   // }, [props.tokenName, firstTokenId, totalMinted, page])
 
   const previousPage = (page) => {
-    if (page > 1) {
-      setPage(page - 1)
-    }
+    // if (page > 1) {
+    //   setPage(page - 1)
+    // }
   }
 
   const nextPage = (page, paginatedAssets) => {
-    if (page < paginatedAssets.totalPages) {
-      setPage(page + 1)
-    }
+    // if (page < paginatedAssets.totalPages) {
+    //   setPage(page + 1)
+    // }
   }
 
   return (
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
-      <div className="">
         <div className="grid grid-cols-2 gap-5">
           <div className="text-2xl text-indigo-600">{props.title}</div>
           <div className="flex justify-end">
@@ -170,7 +167,6 @@ const AssetList = (props: AssetListProps) => {
             </div>
           </div>
         </div>
-      </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
         {assets.map((asset, i) => (
           <Asset

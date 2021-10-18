@@ -2,14 +2,13 @@ import { Modal } from 'react-morphing-modal'
 import { HiOutlineChevronLeft } from 'react-icons/hi'
 
 import Asset from './Asset'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useAsset } from './state'
 import HowReservations from './HowReservations'
 import SetBid from './SetBid'
 import SetAsk from './SetAsk'
 import HowOffline from './HowOffline'
 import { useRouter } from 'next/router'
-import { gql, useQuery } from '@apollo/client'
 
 const defaultShow = {
   setAsk: false,
@@ -20,8 +19,10 @@ const defaultShow = {
 
 const AssetModal = (props: any) => {
   const router = useRouter()
-  const { modalProps, tokenId, type, height, image, video } = props
-  const { ask, contentURI, formattedAmount, formattedBalance, isOwner, symbol } = useAsset(tokenId)
+  const assetModalRef = useRef(null)
+  const { tokenId: routerTokenId } = router.query
+  const { modalProps, tokenId, type } = props
+  const { ask, contentURI, formattedAmount, isOwner, symbol } = useAsset(tokenId)
   const [show, setShow] = useState(defaultShow)
 
   const showSection = (section) => {
@@ -33,11 +34,15 @@ const AssetModal = (props: any) => {
     modalProps.close()
   }
 
-  console.log({ tokenId, contentURI })
+  useEffect(() => {
+    if (routerTokenId) {
+      props.openModal && props.openModal(assetModalRef, { id: routerTokenId })
+    }
+  }, [routerTokenId])
 
   return (
     <Modal {...props.modalProps} padding={0} closeButton={false}>
-      <div className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
+      <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
         <div className="">
           <div
             onClick={onClose}
@@ -48,11 +53,10 @@ const AssetModal = (props: any) => {
           <div className="flex items-stretch md:h-screen">
             <div className="self-center m-auto w-96">
               <Asset 
-                tokenId={tokenId} 
+                tokenId={routerTokenId || tokenId} 
                 contentURI={contentURI} 
                 formattedAmount={formattedAmount} 
-                symbol={symbol} 
-                openModal={props.openModal}
+                symbol={symbol}
                 showPrice 
                 large 
               />

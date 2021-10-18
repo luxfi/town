@@ -52,7 +52,7 @@ export default function Dashboard() {
         openModal={openModal}
       />
 
-      <AssetModal tokenId={tokenId} modalProps={modalProps} />
+      <AssetModal tokenId={tokenId} modalProps={modalProps} openModal={openModal} />
     </Container>
   )
 }
