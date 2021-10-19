@@ -73,15 +73,18 @@ const AssetModal = (props: any) => {
                 {show.howOffline ? (
                   <HowOffline onClick={() => showSection('setAsk')} />
                 ) : (
-                  <SetAsk tokenId={tokenId}>
-                    {/* <p className="text-center">You cannot withdraw a reservation once submitted.</p> */}
-                    <p
-                      className="pt-8 text-center text-gray-500 cursor-pointer"
-                      onClick={() => showSection('howOffline')}
-                    >
-                      How do offline asks work?
-                    </p>
-                  </SetAsk>
+                  <>
+                    <SetAsk tokenId={tokenId}>
+                      {/* <p className="text-center">You cannot withdraw a reservation once submitted.</p> */}
+                      <p
+                        className="pt-8 text-center text-gray-500 cursor-pointer"
+                        onClick={() => showSection('howOffline')}
+                      >
+                        How do offline asks work?
+                      </p>
+                    </SetAsk>
+                    <BidList title="Bids" hideToken where={{ media: tokenId }} />
+                  </>
                 )}
               </div>
             ) : (
@@ -98,7 +101,7 @@ const AssetModal = (props: any) => {
                         How do reservations work?
                       </p>
                     </SetBid>
-                    <BidList title="Bids" where={{ media: tokenId }} />
+                    <BidList title="Bids" hideToken where={{ media: tokenId }} />
                   </>
                 )}
               </div>

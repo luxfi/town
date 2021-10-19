@@ -29,8 +29,6 @@ const SetBid = ({ tokenId, children }) => {
   const app = useContract('App')
   const market = useContract('Market')
   const media = useContract('Media')
-
-  console.log('SetBid', { currencyToken })
   
   const [approvalState, approve] = useApproveCallback(
     CurrencyAmount.fromRawAmount(currencyToken, ask?.amount || 0),

@@ -29,11 +29,18 @@ export type CurrencyReponse = {
   id: string
 }
 
+export type MediaReponse = {
+  id: string
+  contentURI: string
+  owner: UserResponse
+}
+
 export type BidResponse = {
   id: string
   amount: BigintIsh
   currency: CurrencyReponse
   bidder: UserResponse
   recipient: UserResponse
+  media: MediaReponse
   createdAtTimestamp: string
 }

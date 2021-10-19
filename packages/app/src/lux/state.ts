@@ -138,6 +138,10 @@ export function useAsset(tokenId: number | string) {
   }
 }
 
+export function useBids(tokenId: number | string) {
+
+}
+
 // Example
 // {
 //   ethereum: {

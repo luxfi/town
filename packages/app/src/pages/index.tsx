@@ -31,7 +31,7 @@ export default function Dashboard() {
           <BidList where={{ bidder: account }} />
         </div>
         <div>
-          <AssetList title="My NFTs" where={{ owner: account }} perPage={24} cols={3} openModal={openModal} />
+          <AssetList title="My NFTs" where={{ owner: account }} perPage={24} cols={4} openModal={openModal} />
         </div>
       </div>
 

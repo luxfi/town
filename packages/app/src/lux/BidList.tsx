@@ -16,6 +16,13 @@ const GET_BIDS = gql`
       bidder {
         id
       }
+      media {
+        id
+        contentURI
+        owner {
+          id
+        }
+      }
     }
   }
 `
@@ -28,9 +35,10 @@ export type BidFilter = {
 export type BidListProps = {
   where?: BidFilter
   title?: string
+  hideToken?: boolean
 }
 
-const BidList = ({ where, title }: BidListProps) => {
+const BidList = ({ where, title, hideToken }: BidListProps) => {
   const { getUsdAmount } = usePrice()
   const { loading, error, data } = useQuery(GET_BIDS, {
     variables: {
@@ -51,7 +59,7 @@ const BidList = ({ where, title }: BidListProps) => {
       {bids.length > 0 && (
         <div className="px-4 py-3 mt-10 bg-black rounded-lg">
           {title && <div className="pb-2 text-indigo-500">{title}</div>}
-          {bids.map((bid: BidResponse) => <Bid key={bid.id} bid={bid} getUsdAmount={getUsdAmount} />)}
+          {bids.map((bid: BidResponse) => <Bid key={bid.id} bid={bid} getUsdAmount={getUsdAmount} hideToken={hideToken} />)}
         </div>
       )}
     </>)
