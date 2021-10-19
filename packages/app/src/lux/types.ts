@@ -35,4 +35,5 @@ export type BidResponse = {
   currency: CurrencyReponse
   bidder: UserResponse
   recipient: UserResponse
+  createdAtTimestamp: string
 }

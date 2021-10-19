@@ -1,14 +1,18 @@
-import { Currency, Token, ZERO_ADDRESS } from '@luxdefi/sdk'
+import { BigintIsh, Currency, Token, ZERO_ADDRESS } from '@luxdefi/sdk'
 import { useEffect, useState } from 'react'
+import TimeAgo from 'react-timeago'
 import { getCurrencyTokenLowerCase } from '../config/currencies'
 import { formatCurrencyAmountWithCommas, shortenAddress } from '../functions'
 import { useActiveWeb3React } from '../hooks'
-import { usePrice } from './state'
 import { BidResponse } from './types'
 
-const Bid = (bid: BidResponse) => {
+export type BidProps = {
+  bid: BidResponse
+  getUsdAmount: (tokenAddress: string, tokenAmount: BigintIsh) => {}
+}
+
+const Bid = ({ bid, getUsdAmount }: BidProps) => { 
   const { chainId } = useActiveWeb3React()
-  const { getUsdAmount } = usePrice()
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18) as Currency)
 
@@ -26,7 +30,7 @@ const Bid = (bid: BidResponse) => {
     <div className="grid grid-cols-2 my-3 Bid">
       <div className="">
         <div>{shortenAddress(bid?.bidder?.id)} Placed a bid</div>
-        {/* <small>30 mins ago</small> */}
+        <small><TimeAgo date={new Date(parseInt(bid.createdAtTimestamp) * 1000 + 120)}/></small>
       </div>
       <div className="text-right">
         <div>{formattedAmount} {currencyToken?.symbol}</div>

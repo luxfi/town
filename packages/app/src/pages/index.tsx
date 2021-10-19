@@ -26,8 +26,9 @@ export default function Dashboard() {
       </Head>
 
       <div className="grid grid-cols-2">
-        <div>
-          <BidList title="My Bids" where={{ bidder: account }} />
+        <div className="pr-5">
+          <div className="text-2xl text-indigo-600">My Bids</div>
+          <BidList where={{ bidder: account }} />
         </div>
         <div>
           <AssetList title="My NFTs" where={{ owner: account }} perPage={24} cols={3} openModal={openModal} />

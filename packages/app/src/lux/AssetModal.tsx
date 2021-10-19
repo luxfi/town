@@ -98,7 +98,7 @@ const AssetModal = (props: any) => {
                         How do reservations work?
                       </p>
                     </SetBid>
-                    <BidList where={{ media: tokenId }} />
+                    <BidList title="Bids" where={{ media: tokenId }} />
                   </>
                 )}
               </div>

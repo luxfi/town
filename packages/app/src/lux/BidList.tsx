@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { BidResponse } from './types'
 import Bid from './Bid'
 import { useQuery, gql } from '@apollo/client'
+import { usePrice } from './state'
 
 const GET_BIDS = gql`
   query GetBids($where: Bid_filter, $first: Int) {
     bids(where: $where) {
       id
       amount
+      createdAtTimestamp
       currency {
         id
       }
@@ -28,7 +30,8 @@ export type BidListProps = {
   title?: string
 }
 
-const BidList = ({ where, title = 'Bids' }: BidListProps) => {
+const BidList = ({ where, title }: BidListProps) => {
+  const { getUsdAmount } = usePrice()
   const { loading, error, data } = useQuery(GET_BIDS, {
     variables: {
       where: {
@@ -48,7 +51,7 @@ const BidList = ({ where, title = 'Bids' }: BidListProps) => {
       {bids.length > 0 && (
         <div className="px-4 py-3 mt-10 bg-black rounded-lg">
           {title && <div className="pb-2 text-indigo-500">{title}</div>}
-          {bids.map((bid: BidResponse) => <Bid key={bid.id} {...bid} />)}
+          {bids.map((bid: BidResponse) => <Bid key={bid.id} bid={bid} getUsdAmount={getUsdAmount} />)}
         </div>
       )}
     </>)
