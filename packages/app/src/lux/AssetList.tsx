@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { newNft } from '../functions/assets'
 import { useQuery, gql } from '@apollo/client'
+import { useRouter } from 'next/router'
 
 const getPages = (total: number, perPage: number) => {
   var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
@@ -70,6 +71,7 @@ export type AssetListProps = {
   tokenType?: string
   tokenName?: string
   perPage?: number
+  cols?: number
   where?: MediaFilter
   orderBy?: string,
   className?: string
@@ -82,6 +84,7 @@ export type AssetListProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const AssetList = (props: AssetListProps) => {
+  const router = useRouter()
   const where = props.where || {}
 
   const { loading, error } = useQuery(GET_ASSETS, {
@@ -141,6 +144,10 @@ const AssetList = (props: AssetListProps) => {
     // }
   }
 
+  const onClick = (tokenId: number | string) => {
+    router.push(`${router.pathname}?tokenId=${tokenId}`, undefined, { shallow: true })
+  }
+
   return (
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
         <div className="grid grid-cols-2 gap-5">
@@ -167,7 +174,7 @@ const AssetList = (props: AssetListProps) => {
             </div>
           </div>
         </div>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
+      <div className={`grid grid-cols-1 gap-5 md:grid-cols-${props.cols || 6}`}>
         {assets.map((asset, i) => (
           <Asset
             key={asset.id}
@@ -176,7 +183,7 @@ const AssetList = (props: AssetListProps) => {
             showPrice={false}
             animate={props.animate}
             large={props.large}
-            openModal={props.openModal}
+            onClick={() => onClick(asset.id)}
           />
         ))}
       </div>

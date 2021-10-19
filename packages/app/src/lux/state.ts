@@ -1,8 +1,8 @@
-import { Currency, CurrencyAmount, Token, ZERO_ADDRESS } from '@luxdefi/sdk'
 import { useEffect, useState } from 'react'
+import { BigintIsh, Currency, CurrencyAmount, CurrencySymbol, Ether, Token, ZERO_ADDRESS, cachedFetch } from '@luxdefi/sdk'
 import { useQuery, gql } from '@apollo/client'
-import { getCurrencyToken } from '../config/currencies'
-import { formatCurrencyAmountWithCommas, numberWithCommas } from '../functions'
+import { getCurrencyToken, getCurrencyTokenLowerCase } from '../config/currencies'
+import { formatCurrencyAmountWithCommas, formatCurrencyFromRawAmount, numberWithCommas } from '../functions'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
 import { Ask } from './types'
@@ -32,14 +32,20 @@ const GET_ASSET = gql`
         id 
       }
       currentAsk {
+        amount
         currency {
           id
         }
-        amount
       }
       currentBids {
         amount
-    }
+        currency {
+          id
+        }
+        bidder {
+          id
+        }
+      }
     }
   }
 `
@@ -60,8 +66,8 @@ export const getContent = (contentURI) => {
   const type = contentURI?.match(/\/(\w+)\.(\w+)$/)[1] || ''
   return{
     type: typeLabelMap[type],
-    image: `/nfts/${type.toLowerCase()}.gif`,
-    video: `/nfts/${type.toLowerCase()}.mov`,
+    image: type && `/nfts/${type.toLowerCase()}.gif`,
+    video: type && `/nfts/${type.toLowerCase()}.mov`,
   }
 }
 
@@ -69,11 +75,12 @@ export function useAsset(tokenId: number | string) {
   const { account, chainId } = useActiveWeb3React()
   const [owner, setOwner] = useState(null)
   const [ask, setAsk] = useState(null)
+  const [usdAmount, setUsdAmount] = useState(null)
   const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18) as Currency)
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [formattedBalance, setFormattedBalance] = useState(null)
   const [asset, setAsset] = useState(defaultAsset)
-
+  const { getUsdAmount } = usePrice()
   const { loading, error } = useQuery(GET_ASSET, {
     variables: {
       id: tokenId ? parseInt(tokenId.toString()) : 0,
@@ -100,6 +107,7 @@ export function useAsset(tokenId: number | string) {
       const token = getCurrencyToken(ask.currency, chainId)
       setCurrencyToken(token)
       setFormattedAmount(formatCurrencyAmountWithCommas(token, ask.amount))
+      setUsdAmount(getUsdAmount(ask.currency, ask.amount))
     }
   }, [ask, chainId])
 
@@ -112,19 +120,88 @@ export function useAsset(tokenId: number | string) {
   const { type, video, image } = getContent(asset?.contentURI)
 
   return {
+    ask,
     owner,
     isOwner: account === owner,
     currencyToken,
     currencyBalance,
     formattedAmount,
     formattedBalance,
+    usdAmount,
     balance: currencyBalance?.toFixed(0) || '0',
     symbol: currencyToken && currencyToken.symbol,
-    ask,
     contentURI: asset?.contentURI,
     currentBids: asset?.currentBids,
     type, 
     video, 
     image,
+  }
+}
+
+// Example
+// {
+//   ethereum: {
+//     usd: 3650.52
+//   }
+//   weth: {
+//     usd: 3640.05
+//   }
+// }
+export type CoingeckoPrices = {
+  [coinId: string]: {
+    usd: number
+  }
+}
+
+export const usePrice = () => {
+  const coinIds = [
+    'ethereum',
+    'weth'
+  ]
+  const COINGECKO_API_V3 = `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds.join(',')}&vs_currencies=usd`
+  const symbolMap = {
+    [CurrencySymbol.ETH]: 'ethereum',
+    [CurrencySymbol.WETH]: 'weth',
+  }
+  const { chainId } = useActiveWeb3React()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [prices, setPrices] = useState<CoingeckoPrices>({})
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      setLoading(true)
+      const prices = await cachedFetch(COINGECKO_API_V3, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+      }, 1000 * 60 * 2) // cache for 2 minutes
+      setPrices(prices)
+      setLoading(false)
+    }
+    
+    fetchPrices()
+  }, [])
+
+  const getPrices = (symbol: string) => {
+    return prices[symbolMap[symbol]]
+  }
+
+  const getUsdPrice = (symbol: string): number => {
+    return getPrices(symbol)?.usd || 0
+  }
+
+  const getUsdAmount = (tokenAddress: string, tokenAmount: BigintIsh): string => {
+    const currencyToken = getCurrencyTokenLowerCase(tokenAddress, chainId) || new Token(chainId, ZERO_ADDRESS, 2)
+    const usdPrice = getUsdPrice(currencyToken?.symbol)
+    const amount = formatCurrencyFromRawAmount(currencyToken, tokenAmount)
+    return usdPrice ? numberWithCommas((parseFloat(amount) * usdPrice).toFixed(0)) : numberWithCommas(amount)
+  }
+
+  return {
+    loading,
+    prices,
+    getPrices,
+    getUsdAmount,
   }
 }

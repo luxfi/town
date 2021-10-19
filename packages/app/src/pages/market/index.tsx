@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { TYPE_VALIDATOR, TYPE_WALLET } from '../../functions/assets'
 import AssetModal from '../../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
-import AssetList from '../../lux/AssetList'
+import AssetList, { ContentUriFilter } from '../../lux/AssetList'
 import { gql, useQuery } from '@apollo/client'
 import { request } from 'graphql-request'
 
@@ -18,83 +18,29 @@ const listTypes = [
   { type: 'Wallet', name: 'Wallet' },
 ]
 
+const map = {
+  ATM: ContentUriFilter.ATM,
+  Wallet: ContentUriFilter.WALLET,
+  Validator: ContentUriFilter.VALIDATOR,
+}
+
 const GET_ASSETS = gql`
-query GetMedias {
-	medias {
-    id
-    transfers {
+  query GetAssets {
+    medias {
       id
-      createdAtTimestamp
-      from {
+      contentURI
+      metadataHash
+      owner {
         id
       }
-      to {
-        id
-        
-      }
-    }
-    owner {
-      id
-      
-    }
-    metadataHash
-    contentURI
-    currentAsk {
-      currency {
-        id
-      }
-      amount
-    }
-		currentBids {
-      amount
     }
   }
-}
-`;
+`
 
 export default function Market() {
-
-  const { loading, error, data } = useQuery(GET_ASSETS, {
-    onCompleted: (data) => {
-      console.log('onCompleted', data)
-    }
-  });
-
-  const [selectedNft, setSelectedNft] = useState(null)
-
-  const [assets, setAssets] = useState([])
-
-  const [typeNfts, setTypeNfts] = useState({
-    Validator: [],
-    ATM: [],
-    Wallet: [],
-  })
-  
-  const {
-    modalProps,
-    getTriggerProps,
-    activeModal: tokenId,
-  } = useModal({
+  const { modalProps, open: openModal } = useModal({
     background: 'black',
   })
-  
-  useEffect(() => {
-    const nft = listTypes
-    .map((list) => typeNfts[list.type])
-    .flat()
-    .filter((asset) => asset.tokenId === tokenId)[0]
-    
-    setSelectedNft(nft)
-  }, [tokenId])
-  
-  const onLoadAssets = (type, assets: object[]) => {
-    setTypeNfts((typeNfts) => ({ ...typeNfts, [type]: assets }))
-  }
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-    console.log({ data })
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
@@ -103,17 +49,18 @@ export default function Market() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      {/* {listTypes.map((list) => (
+      {listTypes.map((list) => (
         <AssetList
           key={list.name}
+          title={list.name}
           tokenType={list.type}
           tokenName={list.name}
-          getTriggerProps={getTriggerProps}
-          onLoadAssets={(assets) => onLoadAssets(list.type, assets)}
+          where={{ contentURI_contains: map[list.type] }}
+          perPage={6}
         />
-      ))} */}
+      ))}
 
-      <AssetModal {...selectedNft} modalProps={modalProps} />
+      <AssetModal modalProps={modalProps} openModal={openModal} />
     </Container>
   )
 }

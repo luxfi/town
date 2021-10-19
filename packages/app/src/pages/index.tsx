@@ -9,32 +9,12 @@ import { TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import AssetModal from '../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
 import AssetList from '../lux/AssetList'
-import { gql, useQuery } from '@apollo/client'
 import { useActiveWeb3React } from '../hooks'
-import { useRouter } from 'next/router'
-
-const GET_ASSETS = gql`
-  query GetMedias {
-    medias {
-      id
-      contentURI
-      metadataHash
-      owner {
-        id
-      }
-    }
-  }
-`;
+import BidList from '../lux/BidList'
 
 export default function Dashboard() {
   const { account } = useActiveWeb3React()
-  const router = useRouter()
-  const { tokenId } = router.query
-  
-  const {
-    modalProps,
-    open: openModal,
-  } = useModal({
+  const { modalProps, open: openModal } = useModal({
     background: 'black',
   })
 
@@ -45,14 +25,16 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      <AssetList
-        title="My NFTs"
-        where={{ owner: account }}
-        perPage={24}
-        openModal={openModal}
-      />
+      <div className="grid grid-cols-2">
+        <div>
+          <BidList title="My Bids" where={{ bidder: account }} />
+        </div>
+        <div>
+          <AssetList title="My NFTs" where={{ owner: account }} perPage={24} cols={3} openModal={openModal} />
+        </div>
+      </div>
 
-      <AssetModal tokenId={tokenId} modalProps={modalProps} openModal={openModal} />
+      <AssetModal modalProps={modalProps} openModal={openModal} />
     </Container>
   )
 }

@@ -8,6 +8,7 @@ export type AssetProps = {
   tokenId: number | string
   contentURI: string
   formattedAmount?: string
+  usdAmount?: string
   symbol?: string
   className?: string
   height?: number
@@ -15,40 +16,22 @@ export type AssetProps = {
   showPrice?: boolean
   autoPlay?: boolean
   animate?: boolean
-  large?: boolean
-  getTriggerProps?: GetTriggerProps
-  openModal?: OpenModal
+  large?: boolean,
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Asset = (props: AssetProps) => {
-  const router = useRouter()
-  const assetRef = useRef(null);
-  const { tokenId, showPrice, formattedAmount, symbol } = props
-  const { tokenId: activeTokenId } = router.query
-  const isActive = tokenId === activeTokenId
+  const { tokenId, showPrice, formattedAmount, usdAmount, symbol } = props
   const { type, image, video } = getContent(props.contentURI)
-
-  const onClick = () => {
-    router.push(`/?tokenId=${tokenId}`, undefined, { shallow: true })
-    props.openModal && props.openModal(assetRef, { id: tokenId })
-  }
-
-  // useEffect(() => {
-  //   if (isActive) {
-  //     props.openModal && props.openModal(assetRef)
-  //   }
-  // }, [tokenId])
 
   return (
     <div
-      className={`Asset ${props.className || ''} ${props.openModal ? 'cursor-pointer' : ''}`}
-      ref={assetRef}
-      onClick={onClick}
+      className={`Asset ${props.className || ''} ${props.onClick ? 'cursor-pointer' : ''}`}
+      onClick={props.onClick}
     >
-      {props.large ? (
+      {props.large && video? (
         <Player url={video} playing={true} loop width={'auto'} height={'auto'} style={{ height: 'auto' }} />
       ) : (
-        <img src={image} alt={`${type} ${tokenId}`} />
+        image && <img src={image} alt={`${type} ${tokenId}`} />
       )}
       <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
@@ -58,9 +41,14 @@ const Asset = (props: AssetProps) => {
           </span>
         </div>
         {showPrice && formattedAmount && symbol && (
-          <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
-            {formattedAmount} {symbol}
-          </div>
+          <>
+            <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
+              {formattedAmount} {symbol}
+            </div>
+            {usdAmount !== '0' && <div className="text-gray-400">
+              ${usdAmount}
+            </div>}
+          </>          
         )}
       </div>
     </div>

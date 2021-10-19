@@ -1,6 +1,6 @@
 const HowReservations = ({ onClick }) => {
   return (
-    <div>
+    <div className="m-auto w-96">
       <h2 className="mb-6 text-xl">How do reservations work?</h2>
       <p className="mb-10">
         Reserve your NFT to ensure you are part of the LUX network at launch. If your bid is not accepted, your

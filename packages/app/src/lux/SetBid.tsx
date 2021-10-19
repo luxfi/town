@@ -19,9 +19,9 @@ import { InfinityLoader } from './InfinityLoader'
 import { useAddPopup } from '../state/application/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 
-const SetBid = ({ type, tokenId, children }) => {
+const SetBid = ({ tokenId, children }) => {
   const { account, chainId } = useActiveWeb3React()
-  const { ask, currencyToken, formattedAmount, formattedBalance, symbol } = useAsset(tokenId)
+  const { ask, currencyToken, formattedAmount, formattedBalance, symbol, type } = useAsset(tokenId)
   const [pendingTx, setPendingTx] = useState(null)
   const addPopup = useAddPopup()
   const addTransaction = useTransactionAdder()
@@ -30,6 +30,8 @@ const SetBid = ({ type, tokenId, children }) => {
   const market = useContract('Market')
   const media = useContract('Media')
 
+  console.log('SetBid', { currencyToken })
+  
   const [approvalState, approve] = useApproveCallback(
     CurrencyAmount.fromRawAmount(currencyToken, ask?.amount || 0),
     market.address
@@ -89,7 +91,7 @@ const SetBid = ({ type, tokenId, children }) => {
   }, [tokenId, account, chainId])
 
   return (
-    <div className="sm:p-4 md:p-0">
+    <div className="m-auto sm:p-4 md:p-0 w-96">
       <div className="mb-10 text-right">
         <div className={`${formattedBalance === '0' ? 'text-red' : 'text-gray-500'}`}>
           {account && shortenAddress(account)}
@@ -111,16 +113,16 @@ const SetBid = ({ type, tokenId, children }) => {
         formattedBalance !== '0' && (
           <button
             type="button"
-            className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
+            className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
             onClick={approve}
           >
-            Approve {formattedAmount} {symbol}
+            Approve Bid {formattedAmount} {symbol}
           </button>
         )}
       {formattedBalance === '0' && (
         <button
           type="button"
-          className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in rounded-lg shadow-md bg-red focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
+          className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in rounded-lg shadow-md w-96 bg-red focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
           disabled
         >
           Insufficient {symbol} Balance
@@ -129,7 +131,7 @@ const SetBid = ({ type, tokenId, children }) => {
       {!currencyToken?.isNative && approvalState === ApprovalState.PENDING && (
         <button
           type="button"
-          className="flex justify-center w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-black rounded-lg shadow-md hover:bg-red focus:ring-offset-red focus:outline-none focus:ring-offset-2"
+          className="flex justify-center px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-black rounded-lg shadow-md w-96 hover:bg-red focus:ring-offset-red focus:outline-none focus:ring-offset-2"
           disabled
         >
           Approving
@@ -137,20 +139,19 @@ const SetBid = ({ type, tokenId, children }) => {
         </button>
       )}
       {(approvalState === ApprovalState.APPROVED || currencyToken?.isNative) && formattedBalance !== '0' && (
-        <button
-          type="button"
-          className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
-          onClick={() => {
-            if (ask && currencyToken) {
-              buyNFT(ask, currencyToken)
-            }
-          }}
-        >
-          Reserve {type}{' '}
-          <span className="px-2 py-1 ml-1 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetModal__token-id">
-            {tokenId}
-          </span>
-        </button>
+        <div className="text-center">
+          <button
+            type="button"
+            className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
+            onClick={() => {
+              if (ask && currencyToken) {
+                buyNFT(ask, currencyToken)
+              }
+            }}
+          >
+            Place Bid {formattedAmount} {symbol}
+          </button>
+        </div>
       )}
       <div className="pt-3">
         {pendingTx ? (

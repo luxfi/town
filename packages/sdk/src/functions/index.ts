@@ -4,5 +4,6 @@ export { computeConstantProductPoolAddress } from './computeConstantProductPoolA
 export { computePoolInitCodeHash } from './computePoolInitCodeHash'
 export { sortedInsert } from './sortedInsert'
 export { sqrt } from './sqrt'
+export { cachedFetch } from './cache'
 export { validateAndParseAddress } from './validateAndParseAddress'
 export { validateSolidityTypeInstance } from './validateSolidityTypeInstance'

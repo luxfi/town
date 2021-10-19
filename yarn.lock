@@ -4936,6 +4936,11 @@
   resolved "https://registry.yarnpkg.com/@types/lru-cache/-/lru-cache-5.1.1.tgz#c48c2e27b65d2a153b19bfc1a317e30872e01eef"
   integrity sha512-ssE3Vlrys7sdIzs5LOxCzTVMsU7i9oa/IaW92wF32JFb3CVczqOkru2xspuKczHEbG3nvmPY7IFqVmGGHdNbYw==
 
+"@types/memory-cache@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@types/memory-cache/-/memory-cache-0.2.1.tgz#00caf5d737e4acc100f5b98152c635edabdb00d7"
+  integrity sha512-6rmz3bMqJNkj0HIN3AMhOfRN+JhnxxTULeBkwgilfnspjABtKG6ig8mbIzkOjtmiRw+WG1B56z+BO6htGz3IBw==
+
 "@types/minimatch@*", "@types/minimatch@^3.0.3":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.5.tgz#1001cc5e6a3704b83c236027e77f2f58ea010f40"
@@ -5829,7 +5834,7 @@
     js-sha3 "0.8.0"
     query-string "6.13.5"
 
-"@walletconnect/web3-provider@1.6.0", "@walletconnect/web3-provider@^1.5.2":
+"@walletconnect/web3-provider@^1.5.2":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@walletconnect/web3-provider/-/web3-provider-1.6.0.tgz#bfdf7a177350bcc5c867571d168b57c0c69f42e4"
   integrity sha512-tNHoD0RbSkaxLO3gLhK4b7T6dkkbtxyuz1LxEgFrQKsYTomihYsTaC11RNVEahArKSWDtNosIfbSOPbLNYFubg==

@@ -32,10 +32,12 @@
     "*.md": "prettier --write"
   },
   "dependencies": {
+    "@types/memory-cache": "^0.2.1",
     "big.js": "^6.1.0",
     "decimal.js-light": "^2.5.0",
     "isomorphic-unfetch": "^3.1.0",
     "jsbi": "^3.1.0",
+    "memory-cache": "^0.2.0",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
     "toformat": "^2.0.0"

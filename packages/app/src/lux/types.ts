@@ -17,3 +17,22 @@ export type Bid = {
 }
 
 export type CurrencyToken = Token
+
+
+// GraphQL Response Types
+
+export type UserResponse = {
+  id: string
+}
+
+export type CurrencyReponse = {
+  id: string
+}
+
+export type BidResponse = {
+  id: string
+  amount: BigintIsh
+  currency: CurrencyReponse
+  bidder: UserResponse
+  recipient: UserResponse
+}
