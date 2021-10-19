@@ -11,6 +11,7 @@ git clone https://github.com/luxdefi/luxtown.git
 ```
 
 > Install and start your 👷‍ Hardhat chain
+- Make sure to add a mnemonic at `packages/contracts/mnemonic.txt`
 ```bash
 cd luxtown
 yarn
@@ -23,13 +24,25 @@ yarn chain
 - The first command spins up the container
 - The second command builds and starts Graph Node separately
 - The Graph Node connects to PostgreSQL and IPFS
+- This will take a lot of time to build the first time
 ```bash
+// On a new tab
 yarn graphnode:docker
+// On a new tab
 yarn graphnode:start
 ```
+Successful Docker output
+![](success-docker.png)
+
+Successful Graph Node output
+![](success-graphnode.png)
 
 > Start the Lux Town Subgraph
 ```bash
+// On a new tab
+yarn subgraph:prepare-local
 yarn subgraph:start
 ```
 
+Successful Subgraph output
+![](success-subgraph.png)
