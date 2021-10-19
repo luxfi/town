@@ -1,0 +1,97 @@
+scalar BigInt
+scalar Boolean
+scalar Bytes
+scalar ID
+scalar Int
+scalar String
+
+type Query {
+  indexingStatusForCurrentVersion(subgraphName: String!): SubgraphIndexingStatus
+  indexingStatusForPendingVersion(subgraphName: String!): SubgraphIndexingStatus
+  indexingStatusesForSubgraphName(
+    subgraphName: String!
+  ): [SubgraphIndexingStatus!]!
+  indexingStatuses(subgraphs: [String!]): [SubgraphIndexingStatus!]!
+  proofOfIndexing(
+    subgraph: String!
+    blockNumber: Int!
+    blockHash: Bytes!
+    indexer: Bytes
+  ): Bytes
+  subgraphFeatures(subgraphId: String!): SubgraphFeatures!
+}
+
+type SubgraphIndexingStatus {
+  subgraph: String!
+  synced: Boolean!
+
+  # Note that the health can be implied from fatalError and nonFatalErrors:
+  # - If fatalError is non-null, then health is 'failed'.
+  # - Else if nonFatalErrors is non-empty, then health is 'unhealthy'.
+  # - Else health is 'healthy'.
+  health: Health!
+
+  "If the subgraph has failed, this is the error caused it"
+  fatalError: SubgraphError
+
+  "Sorted from first to last, limited to first 1000"
+  nonFatalErrors: [SubgraphError!]!
+  chains: [ChainIndexingStatus!]!
+  entityCount: BigInt!
+  node: String
+}
+
+interface ChainIndexingStatus {
+  network: String!
+  chainHeadBlock: Block
+  earliestBlock: Block
+  latestBlock: Block
+  lastHealthyBlock: Block
+}
+
+type EthereumIndexingStatus implements ChainIndexingStatus {
+  network: String!
+  chainHeadBlock: Block
+  earliestBlock: Block
+  latestBlock: Block
+  lastHealthyBlock: Block
+}
+
+type Block {
+  hash: Bytes!
+  number: BigInt!
+}
+
+type SubgraphError {
+  message: String!
+
+  # Context for the error.
+  block: Block
+  handler: String
+
+  # `true` means we have certainty that the error is deterministic.
+  deterministic: Boolean!
+}
+
+enum Health {
+  "Subgraph syncing normally"
+  healthy
+  "Subgraph syncing but with errors"
+  unhealthy
+  "Subgraph halted due to errors"
+  failed
+}
+
+
+type SubgraphFeatures {
+  features: [Feature!]!
+  errors: [String!]!
+  network: String
+}
+
+enum Feature {
+  nonFatalErrors,
+  grafting,
+  fullTextSearch,
+  ipfsOnEthereumContracts,
+}
