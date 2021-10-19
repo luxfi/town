@@ -31,10 +31,11 @@ yarn graphnode:docker
 // On a new tab
 yarn graphnode:start
 ```
-Successful Docker output
+> Successful Docker output
 ![](success-docker.png)
 
-Successful Graph Node output
+
+> Successful Graph Node output
 ![](success-graphnode.png)
 
 > Start the Lux Town Subgraph
@@ -44,5 +45,11 @@ yarn subgraph:prepare-local
 yarn subgraph:start
 ```
 
-Successful Subgraph output
+> Successful Subgraph output
 ![](success-subgraph.png)
+
+> Start the App
+```bash
+// On a new tab
+yarn dev
+```
