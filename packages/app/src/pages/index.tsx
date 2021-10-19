@@ -9,42 +9,14 @@ import { TYPE_VALIDATOR, TYPE_WALLET } from '../functions/assets'
 import AssetModal from '../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
 import AssetList from '../lux/AssetList'
-
-const listTypes = [
-  { type: 'Validator', name: 'Validator' },
-  { type: 'ATM', name: 'ATM' },
-  { type: 'Wallet', name: 'Wallet' },
-]
+import { useActiveWeb3React } from '../hooks'
+import BidList from '../lux/BidList'
 
 export default function Dashboard() {
-  const [selectedNft, setSelectedNft] = useState(null)
-
-  const [typeNfts, setTypeNfts] = useState({
-    Validator: [],
-    ATM: [],
-    Wallet: [],
-  })
-
-  const onLoadAssets = (type, assets: object[]) => {
-    setTypeNfts((typeNfts) => ({ ...typeNfts, [type]: assets }))
-  }
-
-  const {
-    modalProps,
-    getTriggerProps,
-    activeModal: tokenId,
-  } = useModal({
+  const { account } = useActiveWeb3React()
+  const { modalProps, open: openModal } = useModal({
     background: 'black',
   })
-
-  useEffect(() => {
-    const nft = listTypes
-      .map((list) => typeNfts[list.type])
-      .flat()
-      .filter((asset) => asset.tokenId === tokenId)[0]
-
-    setSelectedNft(nft)
-  }, [tokenId])
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
@@ -53,17 +25,17 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      {listTypes.map((list) => (
-        <AssetList
-          key={list.name}
-          tokenType={list.type}
-          tokenName={list.name}
-          getTriggerProps={getTriggerProps}
-          onLoadAssets={(assets) => onLoadAssets(list.type, assets)}
-        />
-      ))}
+      <div className="grid grid-cols-2">
+        <div className="pr-5">
+          <div className="text-2xl text-indigo-600">My Bids</div>
+          <BidList where={{ bidder: account }} />
+        </div>
+        <div>
+          <AssetList title="My NFTs" where={{ owner: account }} perPage={24} cols={4} openModal={openModal} />
+        </div>
+      </div>
 
-      <AssetModal {...selectedNft} modalProps={modalProps} />
+      <AssetModal modalProps={modalProps} openModal={openModal} />
     </Container>
   )
 }

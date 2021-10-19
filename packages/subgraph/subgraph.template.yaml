@@ -1,0 +1,73 @@
+specVersion: 0.0.2
+description: Lux Town
+repository: https://github.com/luxdefi/luxtown
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Media
+    network: '{{network}}'
+    source:
+      address: '{{mediaAddress}}'
+      abi: Media
+      startBlock: {{mediaStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Media
+      abis:
+        - name: Media
+          file: ./abis/{{deployment}}/Media.json
+        - name: Market
+          file: ./abis/{{deployment}}/Market.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: TokenURIUpdated(indexed uint256,address,string)
+          handler: handleTokenURIUpdated
+        - event: TokenMetadataURIUpdated(indexed uint256,address,string)
+          handler: handleTokenMetadataURIUpdated
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+      file: ./src/media.ts
+  - kind: ethereum/contract
+    name: Market
+    network: '{{network}}'
+    source:
+      address: '{{marketAddress}}'
+      abi: Market
+      startBlock: {{marketStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Ask
+        - Bid
+      abis:
+        - name: Market
+          file: ./abis/{{deployment}}/Market.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: BidShareUpdated(indexed uint256,((uint256),(uint256),(uint256)))
+          handler: handleBidShareUpdated
+        - event: AskCreated(indexed uint256,(uint256,address,bool))
+          handler: handleAskCreated
+        - event: AskRemoved(indexed uint256,(uint256,address,bool))
+          handler: handleAskRemoved
+        - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleBidCreated
+        - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleBidRemoved
+        - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleBidFinalized
+      file: ./src/market.ts

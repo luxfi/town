@@ -1,0 +1,9 @@
+{
+  "network": "mainnet",
+  "deployment": "localhost",
+  "marketAddress": "0xb3C26aAFa12DeBE5EcFd5dA4D71E9910586dDAF7",
+  "marketStartBlock": 1,
+  "mediaAddress": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19",
+  "mediaStartBlock": 2,
+  "wethAddress": "0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60"
+}

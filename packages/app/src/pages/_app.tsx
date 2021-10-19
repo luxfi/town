@@ -29,6 +29,18 @@ import { nanoid } from '@reduxjs/toolkit'
 import { remoteLoader } from '@lingui/remote-loader'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: 'http://127.0.0.1:8000/subgraphs/name/luxdefi/luxtown',
+  cache: new InMemoryCache()
+});
 
 const Web3ProviderNetwork = dynamic(() => import('../components/Web3ProviderNetwork'), { ssr: false })
 
@@ -141,6 +153,7 @@ function MyApp({
         <meta key="og:image" property="og:image" content="https://lux.financial/lux.png" />
         <meta key="og:description" property="og:description" content="The future is decentralized." />
       </Head>
+      <ApolloProvider client={client}>
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
         <Web3ReactProvider getLibrary={getLibrary}>
           <Web3ProviderNetwork getLibrary={getLibrary}>
@@ -167,6 +180,7 @@ function MyApp({
           </Web3ProviderNetwork>
         </Web3ReactProvider>
       </I18nProvider>
+      </ApolloProvider>
     </Fragment>
   )
 }

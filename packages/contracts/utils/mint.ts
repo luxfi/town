@@ -92,31 +92,25 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
       kind: TokenType.VALIDATOR,
       name: 'Validator',
       ask: getAsk(chainId, 'ETH', '290'),
-      supply: 10,
+      supply: 14,
     },
     {
       kind: TokenType.ATM,
       name: 'ATM',
       ask: getAsk(chainId, 'WETH', '135'),
-      supply: 10,
+      supply: 14,
     },
     {
       kind: TokenType.WALLET,
       name: 'Wallet',
       ask: getAsk(chainId, 'USDC', '20000'),
-      supply: 10,
+      supply: 14,
     },
     {
       kind: TokenType.WALLET,
       name: 'Wallet_USDT',
       ask: getAsk(chainId, 'USDT', '30000'),
-      supply: 10,
-    },
-    {
-      kind: TokenType.WALLET,
-      name: 'Wallet_Offline',
-      ask: getAsk(chainId, 'USDC', '40000', true),
-      supply: 10,
+      supply: 14,
     },
   ]
 
@@ -128,7 +122,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
 
   console.log('Minting...')
   for (const t of tokenTypes) {
-    for (const quantity of chunkQuantity(t.supply, 100)) {
+    for (const quantity of chunkQuantity(t.supply, 25)) {
       console.log(`App.mintMany(1, ${t.name}, ${quantity})`)
       const tx = await app.mintMany(1, t.name, quantity)
       await tx.wait()

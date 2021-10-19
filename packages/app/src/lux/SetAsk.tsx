@@ -18,15 +18,13 @@ import { CheckIcon, MinusIcon, PlusIcon } from '@heroicons/react/solid'
 import { t } from '@lingui/macro'
 import { i18n } from '@lingui/core'
 
-const SetAsk = ({ type, tokenId, children }) => {
+const SetAsk = ({ tokenId, children }) => {
   const { account } = useActiveWeb3React()
-  const { ask, currencyToken } = useAsset(tokenId)
-  console.log(ask)
+  const { ask, currencyToken, type } = useAsset(tokenId)
   const [value, setValue] = useState('')
   const [offline, setOffline] = useState(false)
   const [selectedCurrencyToken, setSelectedCurrencyToken] = useState(null)
   const [showSelectCurrency, setShowSelectCurrecy] = useState(false)
-
   const gasPrice = useGasPrice()
   const media = useContract('Media')
 

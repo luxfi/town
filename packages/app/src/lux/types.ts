@@ -1,13 +1,14 @@
 import { BigintIsh, Token } from '@luxdefi/sdk'
+import { BigNumber } from 'ethers'
 
 export type Ask = {
-  amount: BigintIsh
+  amount: BigintIsh | BigNumber
   currency: string
   offline: boolean
 }
 
 export type Bid = {
-  amount: BigintIsh
+  amount: BigintIsh | BigNumber
   currency: string
   bidder: string
   recipient: string
@@ -16,3 +17,30 @@ export type Bid = {
 }
 
 export type CurrencyToken = Token
+
+
+// GraphQL Response Types
+
+export type UserResponse = {
+  id: string
+}
+
+export type CurrencyReponse = {
+  id: string
+}
+
+export type MediaReponse = {
+  id: string
+  contentURI: string
+  owner: UserResponse
+}
+
+export type BidResponse = {
+  id: string
+  amount: BigintIsh
+  currency: CurrencyReponse
+  bidder: UserResponse
+  recipient: UserResponse
+  media: MediaReponse
+  createdAtTimestamp: string
+}

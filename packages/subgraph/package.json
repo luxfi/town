@@ -1,0 +1,53 @@
+{
+  "name": "@luxdefi/subgraph",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "chain": "ganache-cli --networkId 50 --accounts 20 -e 10000000000 -l 10000000 -m 'concert load couple harbor equip island argue ramp clarify fence smart topic'",
+    "seed-graph": "ts-node scripts/seed",
+    "deploy-contracts": "ts-node scripts/deploy.ts",
+    "prepare:mainnet": "mustache config/1.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:rinkeby": "mustache config/4.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:mumbai": "mustache config/80001.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:polygon": "mustache config/137.json subgraph.template.yaml > subgraph.yaml",
+    "prepare:local": "mustache config/1337.json subgraph.template.yaml > subgraph.yaml",
+    "create": "graph create luxdefi/luxtown --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create luxdefi/luxtown --node http://127.0.0.1:8020",
+    "test": "jest",
+    "codegen": "graph codegen --output-dir types",
+    "build": "graph build",
+    "deploy": "graph deploy luxdefi/luxtown --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-local": "graph deploy luxdefi/luxtown --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "runAuction": "ts-node scripts/auctionHouse.ts"
+  },
+  "devDependencies": {
+    "@ethersproject/providers": "^5.0.16",
+    "@fleekhq/fleek-storage-js": "^1.0.9",
+    "@graphprotocol/graph-cli": "^0.20.0",
+    "@graphprotocol/graph-ts": "^0.20.0",
+    "@types/jest": "^26.0.15",
+    "@types/sjcl": "^1.0.29",
+    "@zoralabs/core": "^1.0.1",
+    "@zoralabs/zdk": "^1.2.1",
+    "axios": "^0.21.0",
+    "axios-retry": "^3.1.9",
+    "dotenv": "^8.2.0",
+    "ethers": "^5.0",
+    "ganache-cli": "^6.12.2",
+    "graphql-request": "^3.3.0",
+    "jest": "^26.6.3",
+    "jest-serial-runner": "^1.1.0",
+    "mustache": "^4.1.0",
+    "random-words": "^1.1.1",
+    "sjcl": "^1.0.8",
+    "system-commands": "^1.1.7",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "@zoralabs/auction-house": "1.1.0"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  }
+}

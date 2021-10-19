@@ -53,17 +53,15 @@
     "proxy": "yarn workspace @luxdefi/moralis proxy",
     "watch": "yarn workspace @luxdefi/moralis watch",
     "lab": "yarn workspace @luxdefi/lab start",
-    "deploy-graph": "yarn deploy && yarn graph-ship-local",
-    "graph-build": "yarn workspace @luxdefi/subgraph graph build",
-    "graph-codegen": "yarn workspace @luxdefi/subgraph graph codegen",
-    "graph-create-local": "yarn workspace @luxdefi/subgraph graph create --node http://localhost:8020/ scaffold-eth/your-contract",
-    "graph-deploy-local": "yarn workspace @luxdefi/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 scaffold-eth/your-contract",
-    "graph-prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
-    "graph-remove-local": "yarn workspace @luxdefi/subgraph graph remove --node http://localhost:8020/ scaffold-eth/your-contract",
-    "graph-ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
-    "run-graph-node": "yarn workspace @luxdefi/graph-node run-graph-node",
-    "remove-graph-node": "yarn workspace @luxdefi/graph-node remove-graph-node",
-    "clean-graph-node": "yarn workspace @luxdefi/graph-node clean-graph-node",
+    "subgraph:build": "yarn workspace @luxdefi/subgraph build",
+    "subgraph:codegen": "yarn workspace @luxdefi/subgraph codegen",
+    "subgraph:prepare-local": "yarn workspace @luxdefi/subgraph prepare:local",
+    "subgraph:create-local": "yarn workspace @luxdefi/subgraph create-local",
+    "subgraph:deploy-local": "yarn workspace @luxdefi/subgraph deploy-local",
+    "subgraph:start": "yarn subgraph:prepare-local && yarn subgraph:codegen && yarn subgraph:create-local && yarn subgraph:deploy-local",
+    "graphnode:start": "yarn workspace @luxdefi/graphnode start",
+    "graphnode:docker": "yarn workspace @luxdefi/graphnode docker",
+    "graphnode:clean": "yarn workspace @luxdefi/graphnode clean",
     "format": "yarn workspace @luxdefi/app format && yarn workspace @luxdefi/contracts format && yarn workspace @luxdefi/moralis format"
   },
   "workspaces": {
@@ -76,5 +74,8 @@
       "**/@luxdefi/framework",
       "**/@luxdefi/solidity"
     ]
+  },
+  "resolutions": {
+    "node-hid": "./resolutions/node-hid"
   }
 }
