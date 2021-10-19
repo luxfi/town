@@ -48,8 +48,15 @@ yarn subgraph:start
 > Successful Subgraph output
 ![](success-subgraph.png)
 
-> Start the App
+> Build the SDK and Configure
+- Running configure will mint a small number of NFTs for testing
 ```bash
 // On a new tab
+yarn build:sdk
+yarn configure
+```
+
+> Start the App
+```bash
 yarn dev
 ```

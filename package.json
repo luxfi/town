@@ -76,6 +76,7 @@
     ]
   },
   "resolutions": {
+    "ts-node": "^10.2.1",
     "node-hid": "./resolutions/node-hid"
   }
 }
