@@ -8,11 +8,7 @@
     "@typechain/ethers-v5": "^7.0.1",
     "@typechain/hardhat": "^2.3.0",
     "@typechain/web3-v1": "^3.1.0",
-    "@types/chai": "^4.2.21",
     "@types/chai-as-promised": "^7.1.4",
-    "@types/mocha": "^9.0.0",
-    "@types/node": "^16.7.2",
-    "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "chalk": "^4.1.2",
     "ethers": "^5.4.5",
@@ -22,7 +18,7 @@
     "node-watch": "^0.7.1",
     "ts-node": "^10.3.0",
     "typechain": "^5.1.2",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.4"
   },
   "dependencies": {
     "@ethersproject/abi": "^5.4.0",
@@ -75,7 +71,7 @@
     "configure:mainnet": "hardhat run --network mainnet scripts/configure.ts",
     "fundFaucet:testnet": "hardhat run --network testnet scripts/fundFaucet.ts",
     "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ./contracts.json && cp ./contracts.json ../app/src/contracts.json && cp ./contracts.json ../lab/src/contracts.json && yarn subgraph:abis-localhost",
-    "subgraph:abis-localhost": "cp -R ./deployments/localhost ../subgraph/abis/localhost",
+    "subgraph:abis-localhost": "cp -R ./deployments/localhost ../subgraph/abis",
     "fork": "hardhat node --fork https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad",
     "format": "prettier . --write",
     "generate": "hardhat generate",

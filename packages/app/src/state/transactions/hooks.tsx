@@ -7,6 +7,8 @@ import { TransactionDetails } from './reducer'
 import { TransactionResponse } from '@ethersproject/providers'
 import { addTransaction } from './actions'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+import { useAddPopup } from '../application/hooks'
+import { formatError } from '../../functions'
 
 export interface TransactionResponseLight {
   hash: string
@@ -138,4 +140,48 @@ export function useUserHasSubmittedClaim(account?: string): {
   }, [account, allTransactions])
 
   return { claimSubmitted: Boolean(claimTxn), claimTxn }
+}
+
+export type UseTransactionPopupsProps = {
+  onPendingTx?: (transactionHash: string) => void
+  onTransactionReceipt?: (receipt: any) => void
+}
+
+export function useTransactionPopups({ onPendingTx, onTransactionReceipt }: UseTransactionPopupsProps = {}) {
+  const addPopup = useAddPopup()
+  const addTransaction = useTransactionAdder()
+
+  const addErrorPopup = (error) => {
+    return addPopup({
+      txn: {
+        hash: null,
+        summary: formatError(error),
+        success: false,
+      },
+    })
+  }
+
+  const addWarningPopup = (summary: string) => {
+    return addPopup({
+      txn: {
+        hash: null,
+        summary,
+        success: false,
+      },
+    })
+  }
+
+  const addTransactionPopup = useCallback(async (tx: any, summary: string) => {
+    onPendingTx && onPendingTx(tx.hash)
+    addTransaction(tx, { summary })
+    // await waitOnHardhat(chainId, 100000)
+    const receipt = await tx.wait()
+    onTransactionReceipt && onTransactionReceipt(receipt)
+  }, [onPendingTx, onTransactionReceipt])
+
+  return {
+    addErrorPopup,
+    addTransactionPopup,
+    addWarningPopup,
+  }
 }

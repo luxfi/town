@@ -1,6 +1,5 @@
 import { ChainId, Currency, getCurrencyMap, getSymbolCurrency, CurrencySymbol, Token } from '@luxdefi/sdk'
 import contractsJson from '../contracts.json'
-import { CurrencyToken } from '../lux/types'
 
 export const contracts = contractsJson
 

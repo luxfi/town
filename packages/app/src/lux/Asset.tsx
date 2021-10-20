@@ -1,27 +1,73 @@
-import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import Player from 'react-player'
-import { GetTriggerProps, OpenModal } from 'react-morphing-modal/dist/types'
+import { BigintIsh, ZERO_ADDRESS } from '@luxdefi/sdk'
 import { getContent } from './state'
+import { Ask, Bid, HighestBid } from './types'
+import { useActiveWeb3React, useContract } from '../hooks'
+import { useAddPopup } from '../state/application/hooks'
+import { formatError } from '../functions/lux'
 
 export type AssetProps = {
   tokenId: number | string
   contentURI: string
+  ask?: Ask
   formattedAmount?: string
   usdAmount?: string
   symbol?: string
+  highest?: HighestBid
   className?: string
   height?: number
   width?: number
   showPrice?: boolean
+  isOwner?: boolean
   autoPlay?: boolean
   animate?: boolean
   large?: boolean,
+  getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string,
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Asset = (props: AssetProps) => {
-  const { tokenId, showPrice, formattedAmount, usdAmount, symbol } = props
+  const addPopup = useAddPopup()
+  const { account } = useActiveWeb3React()
+  const { ask, highest, tokenId, showPrice, formattedAmount, usdAmount, symbol, getUsdAmount, isOwner } = props
   const { type, image, video } = getContent(props.contentURI)
+  const app = useContract('App')
+  const market = useContract('Market')
+  const media = useContract('Media')
+
+  const acceptBid = async () => {
+    try {
+      const highestBid = await market.bidForTokenBidder(tokenId, highest.bid.bidder.id)
+
+      const bid: Bid = {
+        amount: highestBid.amount,
+        currency: highestBid.currency,
+        bidder: highestBid.bidder,
+        recipient: highestBid.bidder,
+        sellOnShare: { value: 0 },
+        offline: highestBid.offline,
+      }
+
+      console.log('acceptBid', {tokenId, ask})
+      console.log('bid', bid)
+
+      if (bid.currency === ZERO_ADDRESS) {
+        // App contract handles ETH (ZERO_ADDRESS)
+        const tx = await app.acceptBid(tokenId, highestBid)
+      } else {
+        const tx = await media.acceptBid(tokenId, highestBid)
+      }
+    } catch (error) {
+      console.log(error)
+      addPopup({
+        txn: {
+          hash: null,
+          summary: formatError(error),
+          success: false,
+        },
+      })
+    }
+  }
 
   return (
     <div
@@ -42,12 +88,35 @@ const Asset = (props: AssetProps) => {
         </div>
         {showPrice && formattedAmount && symbol && (
           <>
-            <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
-              {formattedAmount} {symbol}
+          {highest && getUsdAmount && ask ? (
+            <div className="flex justify-between px-3 py-3 my-3 bg-indigo-400 rounded-lg">
+              <div className="text-black">
+                <div className="text-lg">
+                Highest Bid
+                </div>
+                <div className="text-2xl font-bold">
+                {formattedAmount} {symbol}
+                </div>
+              </div>
+
+              {isOwner && <button
+                type="button"
+                className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-900 rounded-lg shadow-md hover:bg-black focus:outline-none"
+                onClick={acceptBid}
+              >
+                Accept Bid
+              </button>}
             </div>
-            {usdAmount !== '0' && <div className="text-gray-400">
-              ${usdAmount}
-            </div>}
+          ) : (
+            <>
+              <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
+                {formattedAmount} {symbol}
+              </div>
+              {usdAmount !== '0' && <div className="text-gray-400">
+                ${usdAmount}
+              </div>}
+            </>
+          )}
           </>          
         )}
       </div>

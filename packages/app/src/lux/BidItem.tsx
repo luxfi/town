@@ -14,7 +14,7 @@ export type BidProps = {
   hideToken?: boolean
 }
 
-const Bid = ({ bid, getUsdAmount, hideToken }: BidProps) => {
+const BidItem = ({ bid, getUsdAmount, hideToken }: BidProps) => {
   const { chainId, account } = useActiveWeb3React()
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18) as Currency)
@@ -73,4 +73,4 @@ const Bid = ({ bid, getUsdAmount, hideToken }: BidProps) => {
   )
 }
 
-export default Bid
+export default BidItem

@@ -196,3 +196,13 @@ export const numberWithCommas = (num: number | string) => {
 export const formatCurrencyAmountWithCommas = (token: Currency, amount: BigintIsh) => {
   return numberWithCommas(formatCurrencyFromRawAmount(token, amount))
 }
+
+export const formatError = (err: any) => {
+  if (err?.data?.message) {
+    return err?.data?.message?.replace(/Error: Returned error: /, '')
+  } else if (err.code) {
+    return err.message
+  } else {
+    return err.toString().replace(/Error: Returned error: /, '')
+  }
+}

@@ -5,7 +5,13 @@ import { getCurrencyToken, getCurrencyTokenLowerCase } from '../config/currencie
 import { formatCurrencyAmountWithCommas, formatCurrencyFromRawAmount, numberWithCommas } from '../functions'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
-import { Ask } from './types'
+import { Ask, CoingeckoPrices, HighestBid } from './types'
+import _ from 'lodash'
+
+const symbolMap = {
+  [CurrencySymbol.ETH]: 'ethereum',
+  [CurrencySymbol.WETH]: 'weth',
+}
 
 export type AssetState = {
   ask: Ask
@@ -29,7 +35,7 @@ const GET_ASSET = gql`
       contentURI
       createdAtTimestamp
       owner {
-        id 
+        id
       }
       currentAsk {
         amount
@@ -80,7 +86,8 @@ export function useAsset(tokenId: number | string) {
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [formattedBalance, setFormattedBalance] = useState(null)
   const [asset, setAsset] = useState(defaultAsset)
-  const { getUsdAmount } = usePrice()
+  const { getUsdAmount, prices } = usePrice()
+  const { highest } = useBids(tokenId, prices)
   const { loading, error } = useQuery(GET_ASSET, {
     variables: {
       id: tokenId ? parseInt(tokenId.toString()) : 0,
@@ -133,27 +140,10 @@ export function useAsset(tokenId: number | string) {
     contentURI: asset?.contentURI,
     currentBids: asset?.currentBids,
     type, 
-    video, 
+    video,
     image,
-  }
-}
-
-export function useBids(tokenId: number | string) {
-
-}
-
-// Example
-// {
-//   ethereum: {
-//     usd: 3650.52
-//   }
-//   weth: {
-//     usd: 3640.05
-//   }
-// }
-export type CoingeckoPrices = {
-  [coinId: string]: {
-    usd: number
+    highest,
+    getUsdAmount,
   }
 }
 
@@ -163,10 +153,6 @@ export const usePrice = () => {
     'weth'
   ]
   const COINGECKO_API_V3 = `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds.join(',')}&vs_currencies=usd`
-  const symbolMap = {
-    [CurrencySymbol.ETH]: 'ethereum',
-    [CurrencySymbol.WETH]: 'weth',
-  }
   const { chainId } = useActiveWeb3React()
   const [loading, setLoading] = useState<boolean>(false)
   const [prices, setPrices] = useState<CoingeckoPrices>({})
@@ -207,5 +193,64 @@ export const usePrice = () => {
     prices,
     getPrices,
     getUsdAmount,
+  }
+}
+
+const GET_BIDS = gql`
+  query GetBids($where: Bid_filter, $first: Int) {
+    bids(where: $where) {
+      id
+      amount
+      createdAtTimestamp
+      currency {
+        id
+      }
+      bidder {
+        id
+      }
+      media {
+        id
+        contentURI
+        owner {
+          id
+        }
+      }
+    }
+  }
+`
+
+export function useBids(tokenId: number | string, prices: CoingeckoPrices) {
+  const { chainId } = useActiveWeb3React()
+  const [bids, setBids] = useState([])
+  const { loading, error, data } = useQuery(GET_BIDS, {
+    variables: {
+      where: {
+        media: tokenId?.toString(),
+      },
+    },
+    fetchPolicy: 'no-cache',
+    onCompleted: ({ bids }) => {
+      setBids(bids)
+    },
+  });
+
+  const usdBids = _.orderBy(bids.map((bid) => {
+    const currencyToken = getCurrencyTokenLowerCase(bid.currency.id, chainId)
+    const usdPrice = prices[symbolMap[currencyToken.symbol]]?.usd
+    const amount = formatCurrencyFromRawAmount(currencyToken, bid.amount)
+    const usdAmount = parseFloat(amount) * usdPrice
+    return {
+      bid,
+      usdAmount,
+      createdAtTimestamp: bid.createdAtTimestamp,
+    }
+  }), ['usdAmount', 'createdAtTimestamp'], ['asc', 'desc'])
+
+  const highest: HighestBid = usdBids[0]
+
+  return {
+    bids,
+    usdBids,
+    highest,
   }
 }

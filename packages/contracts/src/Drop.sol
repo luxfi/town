@@ -21,7 +21,6 @@ contract Drop is Ownable {
     uint256 supply;
     uint256 timestamp; // time created
     uint256 minted; // amount minted
-    uint256 firstTokenId;
     IMedia.MediaData data;
     IMarket.BidShares bidShares;
   }
@@ -81,16 +80,6 @@ contract Drop is Ownable {
 
   function tokenSupply(string memory name) public view returns (uint256) {
     return getTokenType(name).supply;
-  }
-
-  function setFirstTokenId(string memory name, uint256 _firstTokenId) external onlyApp {
-    if (tokenTypes[name].minted == 1) {
-      tokenTypes[name].firstTokenId = _firstTokenId;
-    }
-  }
-
-  function firstTokenId(string memory name) public view returns (uint256) {
-    return getTokenType(name).firstTokenId;
   }
 
   // Return a new TokenType Token

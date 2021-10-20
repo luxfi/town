@@ -17,6 +17,7 @@ import Typography from '../components/Typography'
 import { CheckIcon, MinusIcon, PlusIcon } from '@heroicons/react/solid'
 import { t } from '@lingui/macro'
 import { i18n } from '@lingui/core'
+import { SetAskButton } from './SetAskButton'
 
 const SetAsk = ({ tokenId, children }) => {
   const { account } = useActiveWeb3React()
@@ -25,8 +26,6 @@ const SetAsk = ({ tokenId, children }) => {
   const [offline, setOffline] = useState(false)
   const [selectedCurrencyToken, setSelectedCurrencyToken] = useState(null)
   const [showSelectCurrency, setShowSelectCurrecy] = useState(false)
-  const gasPrice = useGasPrice()
-  const media = useContract('Media')
 
   useEffect(() => {
     if (ask && currencyToken) {
@@ -35,25 +34,6 @@ const SetAsk = ({ tokenId, children }) => {
       setOffline(ask.offline)
     }
   }, [ask, currencyToken])
-
-  const setAsk = async (tokenId: number, rawAmount: string, currencyToken: Currency, offline: boolean = false) => {
-    try {
-      if (value) {
-        const token = currencyToken as Token
-        const ask: Ask = {
-          currency: currencyToken.isNative ? ZERO_ADDRESS : token.address,
-          amount: ethers.utils.parseUnits(rawAmount, currencyToken.decimals),
-          offline,
-        }
-        const tx = await media.setAsk(tokenId, ask, { from: account, gasPrice })
-        console.log(await tx.wait())
-      } else {
-      }
-    } catch (error) {
-      console.log(error)
-      console.log(formatError(error))
-    }
-  }
 
   const onSelectCurrency = (currencyToken) => {
     setSelectedCurrencyToken(currencyToken)
@@ -96,13 +76,13 @@ const SetAsk = ({ tokenId, children }) => {
               </Button>
             )}
           </div>
-          <button
-            type="button"
-            className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
-            onClick={() => setAsk(tokenId, value, selectedCurrencyToken, offline)}
-          >
-            Set Ask
-          </button>
+          <SetAskButton
+            tokenType={type}
+            tokenId={tokenId}
+            amount={value}
+            currencyToken={selectedCurrencyToken}
+            offline={offline}
+          />
           <div className="">
             <div className="pt-3">
               <Switch.Group>

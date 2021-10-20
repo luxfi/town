@@ -76,11 +76,6 @@ interface IMedia is IERC721 {
   function setBid(uint256 tokenId, IMarket.Bid calldata bid) external;
 
   /**
-   * @notice Set the bid on a piece of media
-   */
-  function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid) external;
-
-  /**
    * @notice Remove the bid on a piece of media
    */
   function removeBid(uint256 tokenId) external;
@@ -111,10 +106,27 @@ interface IMedia is IERC721 {
     EIP712Signature calldata sig
   ) external;
 
-  // Added for Zoo
+  // Added for App
+
+  /**
+   * @notice Set the bid on a piece of media
+   */
+  function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external;
+
+  /**
+   * @notice Remove the bid on a piece of media
+   */
+  function removeBidFromApp(uint256 tokenId, address sender) external;
+
+  function acceptBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external;
+
   function mintToken(address owner, ILux.Token memory tokenID) external returns (ILux.Token memory);
 
   function burnToken(address owner, uint256 tokenID) external;
 
   function tokenExists(uint256 tokenID) external returns (bool);
+
+  function tokenCreator(uint256 tokenID) external returns (address);
+  
+  function previousTokenOwner(uint256 tokenID) external returns (address);
 }

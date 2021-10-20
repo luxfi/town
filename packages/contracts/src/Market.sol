@@ -201,7 +201,8 @@ contract Market is IMarket, Ownable {
     delete _tokenBidders[tokenId][bidder];
 
     address bidCurrency = bid.currency;
-    if (bidCurrency != address(0)) {
+
+    if (bidCurrency != address(0) && !bid.offline) {
       IERC20 token = IERC20(bidCurrency);
       token.safeTransfer(bidder, bidAmount);
     }
@@ -229,23 +230,6 @@ contract Market is IMarket, Ownable {
   }
 
   /**
-   * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
-   * See {_finalizeNFTTransfer}
-   * Provided bid must match a bid in storage. This is to prevent a race condition
-   * where a bid may change while the acceptBid call is in transit.
-   * A bid cannot be accepted if it cannot be split equally into its shareholders.
-   * This should only revert in rare instances (example, a low bid with a zero-decimal token),
-   * but is necessary to ensure fairness to all shareholders.
-   */
-  function offlineBid(uint256 tokenId, Bid calldata bid) public onlyOwner {
-    require(bid.amount > 0, 'Market: cannot accept bid of 0');
-    require(isValidBid(tokenId, bid.amount), 'Market: Bid invalid for share splitting');
-    emit BidCreated(tokenId, bid);
-    _tokenBidders[tokenId][bid.bidder] = bid;
-    _finalizeNFTTransfer(tokenId, bid.bidder);
-  }
-
-  /**
    * @notice Given a token ID and a bidder, this method transfers the value of
    * the bid to the shareholders. It also transfers the ownership of the media
    * to the bid recipient. Finally, it removes the accepted bid and the current ask.
@@ -254,14 +238,16 @@ contract Market is IMarket, Ownable {
     Bid memory bid = _tokenBidders[tokenId][bidder];
     BidShares storage bidShares = _bidShares[tokenId];
 
-    IERC20 token = IERC20(bid.currency);
+    if (bid.currency != address(0) && !bid.offline) {
+      IERC20 token = IERC20(bid.currency);
 
-    // Transfer bid share to owner of media
-    token.safeTransfer(IERC721(mediaContract).ownerOf(tokenId), splitShare(bidShares.owner, bid.amount));
-    // Transfer bid share to creator of media
-    token.safeTransfer(Media(mediaContract).tokenCreators(tokenId), splitShare(bidShares.creator, bid.amount));
-    // Transfer bid share to previous owner of media (if applicable)
-    token.safeTransfer(Media(mediaContract).previousTokenOwners(tokenId), splitShare(bidShares.prevOwner, bid.amount));
+      // Transfer bid share to owner of media
+      token.safeTransfer(IERC721(mediaContract).ownerOf(tokenId), splitShare(bidShares.owner, bid.amount));
+      // Transfer bid share to creator of media
+      token.safeTransfer(Media(mediaContract).tokenCreators(tokenId), splitShare(bidShares.creator, bid.amount));
+      // Transfer bid share to previous owner of media (if applicable)
+      token.safeTransfer(Media(mediaContract).previousTokenOwners(tokenId), splitShare(bidShares.prevOwner, bid.amount));
+    }
 
     // Transfer media to bid recipient
     Media(mediaContract).auctionTransfer(tokenId, bid.recipient);
