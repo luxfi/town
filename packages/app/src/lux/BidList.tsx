@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BidResponse } from './types'
-import Bid from './Bid'
+import BidItem from './BidItem'
 import { useQuery, gql } from '@apollo/client'
 import { usePrice } from './state'
 
@@ -59,7 +59,7 @@ const BidList = ({ where, title, hideToken }: BidListProps) => {
       {bids.length > 0 && (
         <div className="px-4 py-3 mt-10 bg-black rounded-lg">
           {title && <div className="pb-2 text-indigo-500">{title}</div>}
-          {bids.map((bid: BidResponse) => <Bid key={bid.id} bid={bid} getUsdAmount={getUsdAmount} hideToken={hideToken} />)}
+          {bids.map((bid: BidResponse) => <BidItem key={bid.id} bid={bid} getUsdAmount={getUsdAmount} hideToken={hideToken} />)}
         </div>
       )}
     </>)

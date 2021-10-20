@@ -4,13 +4,13 @@ pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
-import { Address } from '@openzeppelin/contracts/utils/Address.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { Initializable } from '@openzeppelin/contracts/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
-import { ReentrancyGuard } from '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+import { AddressUpgradeable } from '@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol';
+import { ReentrancyGuardUpgradeable } from '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
 
 import { Decimal } from './Decimal.sol';
 import { IDrop } from './interfaces/IDrop.sol';
@@ -20,10 +20,10 @@ import { ILux } from './interfaces/ILux.sol';
 
 import './console.sol';
 
-contract App is OwnableUpgradeable, ReentrancyGuard, UUPSUpgradeable {
+contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
-  using Address for address;
+  using AddressUpgradeable for address payable;
 
   Counters.Counter private dropIds;
 
@@ -114,7 +114,7 @@ contract App is OwnableUpgradeable, ReentrancyGuard, UUPSUpgradeable {
    * is transferred from the spender to this contract to be held until removed or accepted.
    * If another bid already exists for the bidder, it is refunded.
    */
-  function setBid(uint256 tokenId, IMarket.Bid memory bid) public payable {
+  function setBid(uint256 tokenId, IMarket.Bid memory bid) public payable nonReentrant {
     media.setBidFromApp(tokenId, bid, msg.sender);
   }
 
@@ -129,7 +129,8 @@ contract App is OwnableUpgradeable, ReentrancyGuard, UUPSUpgradeable {
    */
   function acceptBid(uint256 tokenId, IMarket.Bid memory bid) public nonReentrant {
     
-    // IMarket.BidShares memory bidShares = market.bidSharesForToken(tokenId);
+    IMarket.BidShares memory bidShares = market.bidSharesForToken(tokenId);
+    
     address owner = media.ownerOf(tokenId);
     address creator = media.tokenCreator(tokenId);
     address prevOwner = media.previousTokenOwner(tokenId);
@@ -138,11 +139,11 @@ contract App is OwnableUpgradeable, ReentrancyGuard, UUPSUpgradeable {
     
     if (!bid.offline) {      
       // Transfer bid share to owner of media
-      owner.sendValue(market.splitShare(bidShares.owner, bid.amount));
+      payable(owner).sendValue(market.splitShare(bidShares.owner, bid.amount));
       // Transfer bid share to creator of media
-      creator.sendValue(market.splitShare(bidShares.creator, bid.amount));
+      payable(creator).sendValue(market.splitShare(bidShares.creator, bid.amount));
       // Transfer bid share to previous owner of media (if applicable)
-      prevOwner.sendValue(market.splitShare(bidShares.prevOwner, bid.amount));
+      payable(prevOwner).sendValue(market.splitShare(bidShares.prevOwner, bid.amount));
     }
   }
 
