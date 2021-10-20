@@ -63,6 +63,7 @@ export const getEmoji = (rarity) => {
 }
 
 export const formatError = (err) => {
+  console.log(err)
   if (err?.data?.message) {
     return err?.data?.message?.replace(/Error: Returned error: /, '')
   } else if (err.code) {

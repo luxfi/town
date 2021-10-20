@@ -1,4 +1,4 @@
-import { BigintIsh, Token } from '@luxdefi/sdk'
+import { Currency, BigintIsh, Token } from '@luxdefi/sdk'
 import { BigNumber } from 'ethers'
 
 export type Ask = {
@@ -15,8 +15,6 @@ export type Bid = {
   sellOnShare: { value: number }
   offline: boolean
 }
-
-export type CurrencyToken = Token
 
 
 // GraphQL Response Types
@@ -42,5 +40,26 @@ export type BidResponse = {
   bidder: UserResponse
   recipient: UserResponse
   media: MediaReponse
+  createdAtTimestamp: string
+}
+
+// Example
+// {
+//   ethereum: {
+//     usd: 3650.52
+//   }
+//   weth: {
+//     usd: 3640.05
+//   }
+// }
+export type CoingeckoPrices = {
+  [coinId: string]: {
+    usd: number
+  }
+}
+
+export type HighestBid = {
+  bid: BidResponse
+  usdAmount: number
   createdAtTimestamp: string
 }

@@ -5,7 +5,7 @@ import { formatCurrencyAmount, formatCurrencyFromRawAmount, shortenAddress, shor
 import { formatError, wait, waitOnHardhat } from '../functions/lux'
 import { ApprovalState, useActiveWeb3React, useApproveCallback, useContract } from '../hooks'
 import { useAsset } from './state'
-import { Ask, CurrencyToken, Bid } from './types'
+import { Ask, Bid } from './types'
 import { ERC20_ABI } from '../constants/abis/erc20'
 import { ethers } from 'ethers'
 import { useGasPrice } from '../state/network/hooks'
@@ -43,11 +43,20 @@ const SetBid = ({ tokenId, children }) => {
     console.log({ tx, receipt })
   }
 
-  const buyNFT = async (ask: Ask, currencyToken: CurrencyToken) => {
-    if (currencyToken.isNative) {
+  const setBid = async (ask: Ask, currencyToken: Currency) => {
+    const bid: Bid = {
+      amount: ask.amount,
+      currency: currencyToken.address || ZERO_ADDRESS,
+      bidder: account,
+      recipient: account,
+      sellOnShare: { value: 0 },
+      offline: ask.offline,
+    }
+
+    if (bid.currency === ZERO_ADDRESS) {
       try {
-        const tx = await app.buyNFT(1, tokenId, { from: account, gasPrice, value: ask.amount })
-        await waitForTransaction(tx, `Reserved ${type} ${tokenId}`)
+        const tx = await app.setBid(tokenId, bid, { from: account, gasPrice, value: bid.amount })
+        await waitForTransaction(tx, `Placed Bid for ${type} ${tokenId}`)
       } catch (error) {
         console.log(error)
         addPopup({
@@ -60,17 +69,8 @@ const SetBid = ({ tokenId, children }) => {
       }
     } else {
       try {
-        const bid: Bid = {
-          amount: ask.amount,
-          currency: currencyToken.address,
-          bidder: account,
-          recipient: account,
-          sellOnShare: { value: 0 },
-          offline: ask.offline,
-        }
-
         const tx = await media.setBid(tokenId, bid)
-        await waitForTransaction(tx, `Reserved ${type} ${tokenId}`)
+        await waitForTransaction(tx, `Placed Bid for ${type} ${tokenId}`)
       } catch (error) {
         console.log(error)
         addPopup({
@@ -143,7 +143,7 @@ const SetBid = ({ tokenId, children }) => {
             className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
             onClick={() => {
               if (ask && currencyToken) {
-                buyNFT(ask, currencyToken)
+                setBid(ask, currencyToken)
               }
             }}
           >

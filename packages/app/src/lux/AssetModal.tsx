@@ -23,7 +23,7 @@ const AssetModal = (props: any) => {
   const { tokenId: routerTokenId } = router.query
   const { modalProps } = props
   const [tokenId, setTokenId] = useState(null)
-  const { ask, contentURI, formattedAmount, isOwner, symbol, usdAmount } = useAsset(tokenId)
+  const { ask, highest, getUsdAmount, contentURI, formattedAmount, isOwner, symbol, usdAmount } = useAsset(tokenId)
   const [show, setShow] = useState(defaultShow)
 
   const showSection = (section) => {
@@ -54,14 +54,18 @@ const AssetModal = (props: any) => {
           </div>
           <div className="flex items-stretch md:h-screen">
             <div className="self-center m-auto w-96">
-              <Asset 
+              <Asset
+                ask={ask}
                 tokenId={tokenId} 
                 contentURI={contentURI} 
                 formattedAmount={formattedAmount}
                 usdAmount={usdAmount}
+                getUsdAmount={getUsdAmount}
+                highest={highest}
                 symbol={symbol}
-                showPrice 
-                large 
+                isOwner={isOwner}
+                showPrice
+                large
               />
             </div>
           </div>

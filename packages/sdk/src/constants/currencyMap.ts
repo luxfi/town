@@ -141,3 +141,7 @@ export const getSymbolCurrency = (contracts: any, chainId: ChainId, symbol: Curr
   const tokensBySymbol = map[chainId]
   return tokensBySymbol[symbol]
 }
+
+export const isNativeCurrency = (currency: string) => {
+  return currency === ZERO_ADDRESS
+}

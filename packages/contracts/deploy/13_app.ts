@@ -17,7 +17,7 @@ export default Deploy(
 
     // Configure contracts to talk to each other
     await market.configure(media.address)
-    await media.configure(market.address)
+    await media.configure(app.address, market.address)
     await app.configure(media.address, market.address)
   },
 )

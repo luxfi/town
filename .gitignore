@@ -26,10 +26,12 @@ public/workbox*.js.map
 lokalise.yaml
 
 # Ignore data files created by running the Docker Compose setup locally
-/packages/subgraph/graphnode/data/
-/packages/subgraph/graphnode/parity/chains/
-/packages/subgraph/graphnode/parity/network/
+/packages/graphnode/docker/data/
+/packages/graphnode/docker/data/
+/packages/graphnode/docker/parity/chains/
+/packages/graphnode/docker/parity/network/
 
+/packages/subgraph/abis/localhost/**
 /packages/subgraph/tests/integration-tests/**/build
 /packages/subgraph/tests/integration-tests/**/generated
 /packages/subgraph/tests/integration-tests/**/node_modules

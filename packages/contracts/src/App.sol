@@ -4,11 +4,13 @@ pragma solidity >=0.8.4;
 pragma experimental ABIEncoderV2;
 
 import { Counters } from '@openzeppelin/contracts/utils/Counters.sol';
+import { Address } from '@openzeppelin/contracts/utils/Address.sol';
 import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { Initializable } from '@openzeppelin/contracts/proxy/utils/Initializable.sol';
 import { OwnableUpgradeable } from '@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol';
 import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { UUPSUpgradeable } from '@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol';
+import { ReentrancyGuard } from '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 
 import { Decimal } from './Decimal.sol';
 import { IDrop } from './interfaces/IDrop.sol';
@@ -18,15 +20,15 @@ import { ILux } from './interfaces/ILux.sol';
 
 import './console.sol';
 
-contract App is UUPSUpgradeable, OwnableUpgradeable {
+contract App is OwnableUpgradeable, ReentrancyGuard, UUPSUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
+  using Address for address;
 
   Counters.Counter private dropIds;
 
   // Declare an Event
   event AddDrop(address indexed dropAddress, string title);
-  event Burn(address indexed from, uint256 indexed tokenId);
   event Mint(uint256 indexed tokenId, ILux.Token token);
 
   // Mapping of Address to Drop ID
@@ -61,7 +63,7 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
 
   // Add new drop
   function addDrop(address dropAddress) public onlyOwner returns (uint256) {
-    require(dropAddresses[dropAddress] == 0, 'Drop already added');
+    require(dropAddresses[dropAddress] == 0, 'App: Drop already added');
     IDrop drop = IDrop(dropAddress);
     dropIds.increment();
     uint256 dropId = dropIds.current();
@@ -87,11 +89,10 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
 
     // Get NFT for drop
     ILux.Token memory token = drop.newNFT(name);
+    
     IMarket.Ask memory defaultAsk = drop.tokenTypeAsk(name);
 
     token = media.mintToken(msg.sender, token);
-
-    drop.setFirstTokenId(name, token.id);
 
     console.log('mint', msg.sender, token.name, token.id);
 
@@ -107,80 +108,62 @@ contract App is UUPSUpgradeable, OwnableUpgradeable {
     return token;
   }
 
-  // Burn token owned by owner
-  function burn(address owner, uint256 tokenId) private {
-    console.log('burn', owner, tokenId);
-    media.burnToken(owner, tokenId);
-    tokens[tokenId].meta.burned = true;
-    emit Burn(owner, tokenId);
+  // Set Bid with ETH
+  /**
+   * @notice Sets the bid on a particular media for a bidder. The token being used to bid
+   * is transferred from the spender to this contract to be held until removed or accepted.
+   * If another bid already exists for the bidder, it is refunded.
+   */
+  function setBid(uint256 tokenId, IMarket.Bid memory bid) public payable {
+    media.setBidFromApp(tokenId, bid, msg.sender);
   }
 
-  // Mint egg
-  // function mintNFT(uint256 dropId, address owner) internal returns (ILux.Token memory) {
-  //   // Get NFT for drop
-  //   IDrop drop = IDrop(drops[dropId]);
-  //   ILux.Token memory token = drop.newNFT();
+  /**
+   * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
+   * See {_finalizeNFTTransfer}
+   * Provided bid must match a bid in storage. This is to prevent a race condition
+   * where a bid may change while the acceptBid call is in transit.
+   * A bid cannot be accepted if it cannot be split equally into its shareholders.
+   * This should only revert in rare instances (example, a low bid with a zero-decimal token),
+   * but is necessary to ensure fairness to all shareholders.
+   */
+  function acceptBid(uint256 tokenId, IMarket.Bid memory bid) public nonReentrant {
+    
+    // IMarket.BidShares memory bidShares = market.bidSharesForToken(tokenId);
+    address owner = media.ownerOf(tokenId);
+    address creator = media.tokenCreator(tokenId);
+    address prevOwner = media.previousTokenOwner(tokenId);
 
-  //   // Mint NFT Token
-  //   egg = mint(egg);
-  //   console.log('minted egg', egg.id);
-  //   emit BuyNFT(owner, egg.id);
-  //   return egg;
-  // }
+    media.acceptBid(tokenId, bid);
+    
+    if (!bid.offline) {      
+      // Transfer bid share to owner of media
+      owner.sendValue(market.splitShare(bidShares.owner, bid.amount));
+      // Transfer bid share to creator of media
+      creator.sendValue(market.splitShare(bidShares.creator, bid.amount));
+      // Transfer bid share to previous owner of media (if applicable)
+      prevOwner.sendValue(market.splitShare(bidShares.prevOwner, bid.amount));
+    }
+  }
 
-  // Accept ETH and return NFT NFT
-  function buyNFT(uint256 dropId, uint256 tokenId) public payable returns (IMarket.Bid memory) {
-    console.log('buyNFT', dropId, tokenId);
-
-    // Check egg price
-    IDrop drop = IDrop(drops[dropId]);
-
-    IMarket.Ask memory ask = market.currentAskForToken(tokenId);
-
-    // require(lux.balanceOf(buyer) >= drop.tokenPrice(), 'Not enough lux');
-
-    // Check if Ask exist in Market for this token
-    // The ask can represent ETH or any ERC20 we support
-    // if not use the default drop.tokenPrice() in ETH
-
-    // Transfer funds
-    // console.log('Transfer ETH (tokenId,value,tokenPrice)', tokenId, msg.value, );
-
-    // struct Bid {
-    //   // Amount of the currency being bid
-    //   uint256 amount;
-    //   // Address to the ERC20 token being used to bid
-    //   address currency;
-    //   // Address of the bidder
-    //   address bidder;
-    //   // Address of the recipient
-    //   address recipient;
-    //   // % of the next sale to award the current owner
-    //   Decimal.D256 sellOnShare;
-    // }
-    IMarket.Bid memory bid = IMarket.Bid(
-      msg.value, // amount
-      address(0), // currency
-      address(msg.sender), // bidder
-      address(msg.sender), // recipient
-      Decimal.D256(0), // sellOnShare,
-      ask.offline
-    );
-
-    // Mint and return NFT
-    media.setBidFromApp(tokenId, bid);
-
-    return bid;
+  /**
+   * @notice Removes the bid on a particular media for a bidder. The bid amount
+   * is transferred from this contract to the bidder, if they have a bid placed.
+   */
+  function removeBid(uint256 tokenId, address payable bidder) public nonReentrant {
+    IMarket.Bid memory bid = market.bidForTokenBidder(tokenId, bidder); // Get the bid before it is removed
+    
+    media.removeBidFromApp(tokenId, msg.sender);
+    
+    // Refund bidder if it is not an offline bid.
+    if (!bid.offline) {
+      bidder.sendValue(bid.amount);
+    }
   }
 
   // Enable owner to withdraw lux if necessary
   function withdraw(address payable receiver, uint256 amount) public onlyOwner {
-    require(receiver.send(amount));
-  }
-
-  // Helper to do fractional math
-  function mul(uint256 x, uint256 y) internal pure returns (uint256 z) {
-    require(y == 0 || (z = x * y) / y == x, 'Math overflow');
+    receiver.sendValue(amount);
   }
 
   // Payable fallback functions
