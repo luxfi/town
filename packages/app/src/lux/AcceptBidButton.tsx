@@ -6,14 +6,13 @@ import { useTransactionPopups } from '../state/transactions/hooks'
 import { Bid, BidResponse } from './types'
 
 export type AcceptBidButtonProps = {
-  tokenId: number
+  tokenId: number | string
   tokenType: string
-  bid: BidResponse
-  currency: string
+  bidder: string
   onError?: (error) => void
 }
 
-export const AcceptBidButton = ({ bid: bidResponse, tokenId, tokenType, currency, onError }: AcceptBidButtonProps) => {
+export const AcceptBidButton = ({ bidder, tokenId, tokenType, onError }: AcceptBidButtonProps) => {
   const { account } = useActiveWeb3React()
   const gasPrice = useGasPrice()
   const app = useContract('App')
@@ -21,7 +20,6 @@ export const AcceptBidButton = ({ bid: bidResponse, tokenId, tokenType, currency
   const market = useContract('Market')
   const [bid, setBid] = useState(null)
   const { addErrorPopup, addTransactionPopup } = useTransactionPopups()
-  const bidder = bidResponse?.bidder?.id
 
   useEffect(() => {
     if (tokenId) {
@@ -31,8 +29,8 @@ export const AcceptBidButton = ({ bid: bidResponse, tokenId, tokenType, currency
             currency: marketBid.currency,
             bidder: marketBid.bidder,
             recipient: marketBid.bidder,
-            sellOnShare: { value: 0 },
             offline: marketBid.offline,
+            sellOnShare: { value: 0 },
         }
         setBid(bid)
       })
@@ -44,12 +42,10 @@ export const AcceptBidButton = ({ bid: bidResponse, tokenId, tokenType, currency
       return
     }
 
-    console.log(bid)
-
     try {
       const txSummary = `Accepted Bid for ${tokenType} ${tokenId}`
 
-      if (isNativeCurrency(currency)) {
+      if (isNativeCurrency(bid.currency)) {
         const tx = await app.acceptBid(tokenId, bid, { from: account, gasPrice })
         addTransactionPopup(tx, txSummary)
       } else {
@@ -60,7 +56,7 @@ export const AcceptBidButton = ({ bid: bidResponse, tokenId, tokenType, currency
       addErrorPopup(error)
       onError && onError(error)
     }
-  }, [bid, app, media, account, tokenId, currency])
+  }, [bid, app, media, account, tokenId])
 
   return (
     <button

@@ -74,8 +74,8 @@ export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
           {isBidder(account) && (
             <RemoveBidButton tokenId={tokenId} tokenType={type} currency={currency} onError={onClose} />
           )}
-          {isOwner(account) && (
-            <AcceptBidButton bid={bid} tokenId={tokenId} tokenType={type} currency={currency} onError={onClose} />
+          {isOwner(account) && bid && (
+            <AcceptBidButton bidder={bidder} tokenId={tokenId} tokenType={type} onError={onClose} />
           )}
         </div>
       </div>

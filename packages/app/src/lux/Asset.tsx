@@ -6,6 +6,7 @@ import { Ask, Bid, HighestBid } from './types'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useAddPopup } from '../state/application/hooks'
 import { formatError } from '../functions/lux'
+import { AcceptBidButton } from './AcceptBidButton'
 
 export type AssetProps = {
   tokenId: number | string
@@ -34,41 +35,42 @@ const Asset = (props: AssetProps) => {
   const app = useContract('App')
   const market = useContract('Market')
   const media = useContract('Media')
+  const bidder = highest?.bid?.bidder?.id
 
-  const acceptBid = async () => {
-    try {
-      const highestBid = await market.bidForTokenBidder(tokenId, highest.bid.bidder.id)
+  // const acceptBid = async () => {
+  //   try {
+  //     const highestBid = await market.bidForTokenBidder(tokenId, highest.bid.bidder.id)
 
-      const bid: Bid = {
-        amount: highestBid.amount,
-        currency: highestBid.currency,
-        bidder: highestBid.bidder,
-        recipient: highestBid.bidder,
-        sellOnShare: { value: 0 },
-        offline: highestBid.offline,
-      }
+  //     const bid: Bid = {
+  //       amount: highestBid.amount,
+  //       currency: highestBid.currency,
+  //       bidder: highestBid.bidder,
+  //       recipient: highestBid.bidder,
+  //       sellOnShare: { value: 0 },
+  //       offline: highestBid.offline,
+  //     }
 
-      console.log('acceptBid', {tokenId, ask})
-      console.log('bid', bid)
+  //     console.log('acceptBid', {tokenId, ask})
+  //     console.log('bid', bid)
 
-      if (bid.currency === ZERO_ADDRESS) {
-        // App contract handles ETH (ZERO_ADDRESS)
-        const tx = await app.acceptBid(tokenId, highestBid)
-      } else {
-        // Media contract handles ETH (ZERO_ADDRESS)
-        const tx = await media.acceptBid(tokenId, highestBid)
-      }
-    } catch (error) {
-      console.log(error)
-      addPopup({
-        txn: {
-          hash: null,
-          summary: formatError(error),
-          success: false,
-        },
-      })
-    }
-  }
+  //     if (bid.currency === ZERO_ADDRESS) {
+  //       // App contract handles ETH (ZERO_ADDRESS)
+  //       const tx = await app.acceptBid(tokenId, highestBid)
+  //     } else {
+  //       // Media contract handles ETH (ZERO_ADDRESS)
+  //       const tx = await media.acceptBid(tokenId, highestBid)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //     addPopup({
+  //       txn: {
+  //         hash: null,
+  //         summary: formatError(error),
+  //         success: false,
+  //       },
+  //     })
+  //   }
+  // }
 
   return (
     <div
@@ -100,13 +102,7 @@ const Asset = (props: AssetProps) => {
                 </div>
               </div>
 
-              {isOwner && <button
-                type="button"
-                className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-900 rounded-lg shadow-md hover:bg-black focus:outline-none"
-                onClick={acceptBid}
-              >
-                Accept Bid
-              </button>}
+              {isOwner && <AcceptBidButton bidder={bidder} tokenId={tokenId} tokenType={type} />}
             </div>
           ) : (
             <>
