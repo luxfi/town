@@ -1,46 +1,17 @@
-import Container from '../../components/Container'
+import _ from 'lodash'
 import Head from 'next/head'
-import Card from '../../components/Card'
-import { i18n } from '@lingui/core'
-import { t } from '@lingui/macro'
-import Asset, { AssetProps } from '../../lux/Asset'
-import { useEffect, useRef, useState } from 'react'
-import { TYPE_VALIDATOR, TYPE_WALLET } from '../../functions/assets'
-import AssetModal from '../../lux/AssetModal'
 import { useModal } from 'react-morphing-modal'
-import AssetList, { ContentUriFilter } from '../../lux/AssetList'
-import { gql, useQuery } from '@apollo/client'
-import { request } from 'graphql-request'
-
-const listTypes = [
-  { type: 'Validator', name: 'Validator' },
-  { type: 'ATM', name: 'ATM' },
-  { type: 'Wallet', name: 'Wallet' },
-]
-
-const map = {
-  ATM: ContentUriFilter.ATM,
-  Wallet: ContentUriFilter.WALLET,
-  Validator: ContentUriFilter.VALIDATOR,
-}
-
-const GET_ASSETS = gql`
-  query GetAssets {
-    medias {
-      id
-      contentURI
-      metadataHash
-      owner {
-        id
-      }
-    }
-  }
-`
+import Container from '../../components/Container'
+import AssetModal from '../../lux/AssetModal'
+import AssetList from '../../lux/AssetList'
+import { useTokenTypes } from '../../lux/state'
 
 export default function Market() {
   const { modalProps, open: openModal } = useModal({
     background: 'black',
   })
+
+  const { tokenTypes, tokenAggregates } = useTokenTypes();
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
@@ -49,13 +20,14 @@ export default function Market() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      {listTypes.map((list) => (
+      {tokenTypes.map((tokenType) => (
         <AssetList
-          key={list.name}
-          title={list.name}
-          tokenType={list.type}
-          tokenName={list.name}
-          where={{ contentURI_contains: map[list.type] }}
+          key={tokenType.name}
+          title={tokenType.name}
+          tokenType={tokenType.name}
+          tokenName={tokenType.name}
+          totalMinted={tokenType.minted}
+          where={{ metadataURI_contains: `name=__${_.snakeCase(tokenType.name)}__` }}
           perPage={6}
         />
       ))}

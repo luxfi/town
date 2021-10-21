@@ -33,10 +33,11 @@ contract Drop is Ownable {
 
   // mapping of TokenType name to TokenType
   mapping(string => TokenType) public tokenTypes;
+  string[] public tokenNames;
 
   // Ensure only ZK can call method
   modifier onlyApp() {
-    require(appAddress == msg.sender, 'LuxDrop: Only App can call this method');
+    require(appAddress == msg.sender, 'Drop: Only App can call this method');
     _;
   }
 
@@ -62,6 +63,8 @@ contract Drop is Ownable {
     string memory tokenURI,
     string memory metadataURI
   ) public onlyOwner returns (TokenType memory) {
+    TokenType memory existingTokenType = tokenTypes[name];
+    require(existingTokenType.supply == 0, 'Drop: TokenType name already exists');
     TokenType memory tokenType;
     tokenType.kind = kind;
     tokenType.name = name;
@@ -69,8 +72,19 @@ contract Drop is Ownable {
     tokenType.supply = supply;
     tokenType.data = getMediaData(tokenURI, metadataURI);
     tokenType.bidShares = getBidShares();
+    tokenType.timestamp = block.timestamp;
     tokenTypes[name] = tokenType;
+    tokenNames.push(name);
     return tokenType;
+  }
+
+  function getTokenTypes() public view returns(TokenType[] memory){
+    TokenType[] memory _tokenTypes = new TokenType[](tokenNames.length);
+    uint256 i = 0;
+    for (i; i < tokenNames.length; i++) {
+      _tokenTypes[i] = tokenTypes[tokenNames[i]];
+    }
+    return _tokenTypes;
   }
 
   // Return price for current EggDrop

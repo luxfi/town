@@ -69,7 +69,8 @@ const typeLabelMap = {
 }
 
 export const getContent = (contentURI) => {
-  const type = contentURI?.match(/\/(\w+)\.(\w+)$/)[1] || ''
+  const match = contentURI?.match(/\/(\w+)\.[mov|mp4|gif]/)
+  const type = match && match[1] || ''
   return{
     type: typeLabelMap[type],
     image: type && `/nfts/${type.toLowerCase()}.gif`,
@@ -260,4 +261,52 @@ export const useIsAddress = (address2: string) => {
     if (!account || !address2) return false
     return isSameAddress(account, address2)
   })
+}
+
+// ask: (3) [BigNumber, '0x0000000000000000000000000000000000000000', false, amount: BigNumber, currency: '0x0000000000000000000000000000000000000000', offline: false]
+// bidShares: (3) [Array(1), Array(1), Array(1), prevOwner: Array(1), creator: Array(1), owner: Array(1)]
+// data: (4) ['https://lux.town/nfts/validator.mp4?', 'https://lux.town/api/metadata/validator.json?', '0x0000000000000000000000000000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000000000000000000000000000', tokenURI: 'https://lux.town/nfts/validator.mp4?', metadataURI: 'https://lux.town/api/metadata/validator.json?', contentHash: '0x0000000000000000000000000000000000000000000000000000000000000000', metadataHash: '0x0000000000000000000000000000000000000000000000000000000000000000']
+// kind: 0
+// minted: BigNumber {_hex: '0x0e', _isBigNumber: true}
+// name: "Validator"
+// supply: BigNumber {_hex: '0x0e', _isBigNumber: true}
+// timestamp: BigNumber {_hex: '0x00', _isBigNumber: true}
+
+export type TokenType = {
+  name: string
+  kind: number
+  minted: number
+  supply: number
+  timestamp: number
+  contentURI: string
+  metadataURI: string
+}
+
+export const useTokenTypes = () => {
+  const [tokenTypes, setTokenTypes] = useState([])
+  const [tokenAggregates, setTokenAggregates] = useState({
+    minted: 0,
+  })
+  const drop = useContract('Drop')
+  const transformTokenType = (tokenType: any): TokenType => {
+    return {
+      name: tokenType.name,
+      kind: tokenType.kind,
+      minted: tokenType.minted.toNumber(),
+      supply: tokenType.supply.toNumber(),
+      timestamp: tokenType.timestamp.toNumber(),
+      contentURI: tokenType.tokenURI,
+      metadataURI: tokenType.metadataURI,
+    }
+  }
+  useEffect(() => {
+    drop.getTokenTypes().then((tokenTypes) => {
+      const transformed: any[] = tokenTypes.map(transformTokenType)
+      setTokenTypes(transformed)
+      setTokenAggregates({
+        minted: _.reduce(transformed.map(({ minted }) => minted), (sum: number, minted) => sum + minted, 0),
+      })
+    })
+  }, [])
+  return { tokenTypes, tokenAggregates }
 }

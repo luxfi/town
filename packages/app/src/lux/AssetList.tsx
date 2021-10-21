@@ -7,6 +7,8 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { newNft } from '../functions/assets'
 import { useQuery, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
+import { ethers } from 'ethers'
+import { useTokenTypes } from './state'
 
 const getPages = (total: number, perPage: number) => {
   var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
@@ -17,40 +19,10 @@ const getPages = (total: number, perPage: number) => {
   return chunks
 }
 
-// const getPaginatedAssets = (
-//   type: string,
-//   firstTokenId: number,
-//   totalMinted: number,
-//   page: number,
-//   perPage: number = 6
-// ): PaginatedAssets => {
-//   const pages = getPages(totalMinted, perPage)
-//   const totalPages = pages.length
-//   const pageQuantity = pages[page - 1]
-//   const start = page * perPage - perPage + firstTokenId
-//   const end = start + pageQuantity
-//   const endTokenId = end - 1
-//   return {
-//     type,
-//     page,
-//     start,
-//     end,
-//     endTokenId,
-//     totalPages,
-//     assets: _.range(start, end).map((tokenId) => newNft(tokenId, contentURI)),
-//   }
-// }
-
-export enum ContentUriFilter {
-  ATM = "atm",
-  CASH = "cash",
-  WALLET = "wallet",
-  VALIDATOR = "validator",
-}
-
 export type MediaFilter = {
   owner?: string
-  contentURI_contains?: ContentUriFilter,
+  contentURI_contains?: string
+  metadataURI_contains?: string
 }
 
 const GET_ASSETS = gql`
@@ -58,22 +30,24 @@ const GET_ASSETS = gql`
     medias(skip: $skip, first: $first, where: $where, orderBy: $orderBy) {
       id
       contentURI
+      metadataURI
       metadataHash
       owner {
         id
       }
     }
   }
-`;
+`
 
 export type AssetListProps = {
   title: string
   tokenType?: string
   tokenName?: string
+  totalMinted?: number
   perPage?: number
   cols?: number
   where?: MediaFilter
-  orderBy?: string,
+  orderBy?: string
   className?: string
   autoPlay?: boolean
   animate?: boolean
@@ -83,37 +57,49 @@ export type AssetListProps = {
   openModal?: OpenModal
 } & React.HTMLAttributes<HTMLDivElement>
 
-const AssetList = (props: AssetListProps) => {
+const AssetList = ({
+  animate,
+  cols,
+  tokenName,
+  totalMinted,
+  title,
+  large = false,
+  where = {},
+  perPage = 6,
+  orderBy = 'id',
+  onLoadAssets,
+}: AssetListProps) => {
   const router = useRouter()
-  const where = props.where || {}
   const [totalPages, setTotalPages] = useState(1)
   const [assets, setAssets] = useState([])
   const [page, setPage] = useState(1)
   const [pageOffset, setPageOffset] = useState(0)
   const drop = useContract('Drop')
-  const { perPage } = props
-
+  const tokenTypes = useTokenTypes();
+  
   const { loading, error } = useQuery(GET_ASSETS, {
     variables: {
       where: {
         ...where,
         owner: where.owner && where.owner.toLowerCase(),
       },
-      orderBy: props.orderBy && props.orderBy || 'id',
+      orderBy,
       skip: pageOffset,
       first: perPage || 100,
     },
     onCompleted: ({ medias }) => {
       setAssets(medias)
-      props.onLoadAssets && props.onLoadAssets(medias)
-    }
-  });
+      onLoadAssets && onLoadAssets(medias)
+    },
+  })
+
+  console.log('totalMinted', totalMinted)
 
   useEffect(() => {
-    drop.totalMinted(props.tokenName).then((totalMintedBn) => {
-      setTotalPages(Math.ceil(totalMintedBn.toNumber() / perPage))
-    })
-  }, [props.tokenName])
+    if (totalMinted) {
+      setTotalPages(Math.ceil(totalMinted / perPage))
+    }
+  }, [totalMinted])
 
   const previousPage = useCallback(() => {
     if (page > 1) {
@@ -137,39 +123,37 @@ const AssetList = (props: AssetListProps) => {
 
   return (
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
-        <div className="grid grid-cols-2 gap-5">
-          <div className="text-2xl text-indigo-600">{props.title}</div>
-          <div className="flex justify-end">
-            <div
-              onClick={previousPage}
-              className={`p-2 mr-3 rounded-full cursor-pointer ${
-                page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
-              }`}
-            >
-              <HiOutlineChevronLeft size={16} />
-            </div>
-            <div className="pt-1 text-lg">
-              Page {page} of {totalPages}
-            </div>
-            <div
-              onClick={nextPage}
-              className={`p-2 ml-3 rounded-full cursor-pointer ${
-                page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
-              }`}
-            >
-              <HiOutlineChevronRight size={16} />
-            </div>
+      <div className="grid grid-cols-2 gap-5">
+        <div className="text-2xl text-indigo-600">{title}</div>
+        <div className="flex justify-end">
+          <div
+            onClick={previousPage}
+            className={`p-2 mr-3 rounded-full cursor-pointer ${page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'}`}
+          >
+            <HiOutlineChevronLeft size={16} />
+          </div>
+          <div className="pt-1 text-lg">
+            Page {page} of {totalPages}
+          </div>
+          <div
+            onClick={nextPage}
+            className={`p-2 ml-3 rounded-full cursor-pointer ${
+              page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+            }`}
+          >
+            <HiOutlineChevronRight size={16} />
           </div>
         </div>
-      <div className={`grid grid-cols-1 gap-5 md:grid-cols-${props.cols || 6}`}>
+      </div>
+      <div className={`grid grid-cols-1 gap-5 md:grid-cols-${cols || 6}`}>
         {assets.map((asset, i) => (
           <Asset
             key={asset.id}
             tokenId={asset.id}
             contentURI={asset.contentURI}
             showPrice={false}
-            animate={props.animate}
-            large={props.large}
+            animate={animate}
+            large={large}
             onClick={() => onClick(asset.id)}
           />
         ))}
