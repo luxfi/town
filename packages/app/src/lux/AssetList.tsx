@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { GetTriggerProps, OpenModal, TriggerProps } from 'react-morphing-modal/dist/types'
 import { useContract } from '../hooks'
 import Asset from './Asset'
@@ -54,8 +54,8 @@ export type MediaFilter = {
 }
 
 const GET_ASSETS = gql`
-  query GetAssets($where: Media_filter, $first: Int, $orderBy: Media_orderBy) {
-    medias(first: $first, where: $where, orderBy: $orderBy) {
+  query GetAssets($where: Media_filter, $skip: Int, $first: Int, $orderBy: Media_orderBy) {
+    medias(skip: $skip, first: $first, where: $where, orderBy: $orderBy) {
       id
       contentURI
       metadataHash
@@ -86,7 +86,12 @@ export type AssetListProps = {
 const AssetList = (props: AssetListProps) => {
   const router = useRouter()
   const where = props.where || {}
-  const [totalMinted, setTotalMinted] = useState(null)
+  const [totalPages, setTotalPages] = useState(1)
+  const [assets, setAssets] = useState([])
+  const [page, setPage] = useState(1)
+  const [pageOffset, setPageOffset] = useState(0)
+  const drop = useContract('Drop')
+  const { perPage } = props
 
   const { loading, error } = useQuery(GET_ASSETS, {
     variables: {
@@ -95,7 +100,8 @@ const AssetList = (props: AssetListProps) => {
         owner: where.owner && where.owner.toLowerCase(),
       },
       orderBy: props.orderBy && props.orderBy || 'id',
-      first: props.perPage || 100,
+      skip: pageOffset,
+      first: perPage || 100,
     },
     onCompleted: ({ medias }) => {
       setAssets(medias)
@@ -103,46 +109,27 @@ const AssetList = (props: AssetListProps) => {
     }
   });
 
-  const [assets, setAssets] = useState([])
-
-  const [paginatedAssets, setPaginatedAssets] = useState({
-    start: 0,
-    end: 6,
-    assets: [],
-    totalPages: 1,
-    endTokenId: 5,
-  })
-
-  const { start, endTokenId } = paginatedAssets
-  const [page, setPage] = useState(1)
-
-  const drop = useContract('Drop')
-
   useEffect(() => {
-    if (drop) {
-      drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
-    }
+    drop.totalMinted(props.tokenName).then((totalMintedBn) => {
+      setTotalPages(Math.ceil(totalMintedBn.toNumber() / perPage))
+    })
   }, [props.tokenName])
 
-  // useEffect(() => {
-  //   if (firstTokenId >= 0 && totalMinted) {
-  //     const paginatedAssets = getPaginatedAssets(props.tokenName, firstTokenId, totalMinted, page)
-  //     setPaginatedAssets(paginatedAssets)
-  //     props.onLoadAssets(paginatedAssets.assets)
-  //   }
-  // }, [props.tokenName, firstTokenId, totalMinted, page])
+  const previousPage = useCallback(() => {
+    if (page > 1) {
+      setPage(page - 1)
+    }
+  }, [page])
 
-  const previousPage = (page) => {
-    // if (page > 1) {
-    //   setPage(page - 1)
-    // }
-  }
+  const nextPage = useCallback(() => {
+    if (page < totalPages) {
+      setPage(page + 1)
+    }
+  }, [page, totalPages])
 
-  const nextPage = (page, paginatedAssets) => {
-    // if (page < paginatedAssets.totalPages) {
-    //   setPage(page + 1)
-    // }
-  }
+  useEffect(() => {
+    setPageOffset(page * perPage - perPage)
+  }, [page])
 
   const onClick = (tokenId: number | string) => {
     router.push(`${router.pathname}?tokenId=${tokenId}`, undefined, { shallow: true })
@@ -154,7 +141,7 @@ const AssetList = (props: AssetListProps) => {
           <div className="text-2xl text-indigo-600">{props.title}</div>
           <div className="flex justify-end">
             <div
-              onClick={() => previousPage(page)}
+              onClick={previousPage}
               className={`p-2 mr-3 rounded-full cursor-pointer ${
                 page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
               }`}
@@ -162,12 +149,12 @@ const AssetList = (props: AssetListProps) => {
               <HiOutlineChevronLeft size={16} />
             </div>
             <div className="pt-1 text-lg">
-              {start} to {endTokenId}
+              Page {page} of {totalPages}
             </div>
             <div
-              onClick={() => nextPage(page, paginatedAssets)}
+              onClick={nextPage}
               className={`p-2 ml-3 rounded-full cursor-pointer ${
-                page < paginatedAssets?.totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+                page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
               }`}
             >
               <HiOutlineChevronRight size={16} />
