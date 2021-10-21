@@ -65,11 +65,7 @@ const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
             {usdAmount && <small className="text-gray-500">${usdAmount}</small>}
           </div>
           {onClick && <div onClick={() => onClick(bid)}>
-            {account.toLowerCase() === bid.media.owner.id.toLowerCase() ? (
-              <PencilIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
-            ) : (
-              <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
-            )}
+            <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
           </div>}
         </div>
       </div>

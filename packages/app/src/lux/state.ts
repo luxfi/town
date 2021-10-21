@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { BigintIsh, Currency, CurrencyAmount, CurrencySymbol, Ether, Token, ZERO_ADDRESS, cachedFetch } from '@luxdefi/sdk'
 import { useQuery, gql } from '@apollo/client'
 import { getCurrencyToken, getCurrencyTokenLowerCase } from '../config/currencies'
-import { formatCurrencyAmountWithCommas, formatCurrencyFromRawAmount, numberWithCommas } from '../functions'
+import { formatCurrencyAmountWithCommas, formatCurrencyFromRawAmount, isSameAddress, numberWithCommas } from '../functions'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
 import { Ask, CoingeckoPrices, HighestBid } from './types'
@@ -253,4 +253,11 @@ export function useBids(tokenId: number | string, prices: CoingeckoPrices) {
     usdBids,
     highest,
   }
+}
+
+export const useIsAddress = (address2: string) => {
+  return ((account: string) => {
+    if (!account || !address2) return false
+    return isSameAddress(account, address2)
+  })
 }

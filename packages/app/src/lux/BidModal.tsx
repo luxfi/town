@@ -8,7 +8,7 @@ import {
 import Image from 'next/image'
 import Modal from '../components/Modal'
 import ModalHeader from '../components/ModalHeader'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import TimeAgo from 'react-timeago'
 import { useActiveWeb3React } from '../hooks/useActiveWeb3React'
 import { getContent, usePrice } from './state'
@@ -20,6 +20,7 @@ import Account from './Account'
 import { getCurrencyTokenLowerCase } from '../config/currencies'
 import { Currency, Token, ZERO_ADDRESS } from '@luxdefi/sdk'
 import BidItem from './BidItem'
+import { AcceptBidButton } from './AcceptBidButton'
 
 export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
   const { account } = useActiveWeb3React()
@@ -34,12 +35,27 @@ export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
     }
   }, [bid])
 
-  if (!bid) return <></>
+  const { type } = getContent(bid?.media?.contentURI)
+  const bidder = bid?.bidder?.id
+  const owner = bid?.media?.owner?.id
+  const currency = bid?.currency?.id
+  const tokenId = bid?.media?.id
 
-  const { type } = getContent(bid.media?.contentURI)
-  const bidder = bid.bidder?.id
-  const currency = bid.currency?.id
-  const tokenId = bid.media?.id
+  const isBidder = useCallback((account: string) => {
+    if (!account || !bidder) {
+      return false
+    }
+    return isSameAddress(account, bidder)
+  }, [bidder])
+
+  const isOwner = useCallback((account: string) => {
+    if (!account || !owner) {
+      return false
+    }
+    return isSameAddress(account, owner)
+  }, [owner])
+
+  if (!bid) return <></>
 
   return (
     <Modal isOpen={isOpen} onDismiss={onClose} maxWidth={672}>
@@ -55,8 +71,11 @@ export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
       <div className="grid grid-flow-row-dense grid-cols-1 gap-5 pt-5 overflow-y-auto md:grid-cols-2">
         <div></div>
         <div>
-          {isSameAddress(account, bidder) && (
+          {isBidder(account) && (
             <RemoveBidButton tokenId={tokenId} tokenType={type} currency={currency} onError={onClose} />
+          )}
+          {isOwner(account) && bid && (
+            <AcceptBidButton bidder={bidder} tokenId={tokenId} tokenType={type} onError={onClose} />
           )}
         </div>
       </div>
