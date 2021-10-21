@@ -151,14 +151,14 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
    * @notice Removes the bid on a particular media for a bidder. The bid amount
    * is transferred from this contract to the bidder, if they have a bid placed.
    */
-  function removeBid(uint256 tokenId, address payable bidder) public nonReentrant {
-    IMarket.Bid memory bid = market.bidForTokenBidder(tokenId, bidder); // Get the bid before it is removed
+  function removeBid(uint256 tokenId) public nonReentrant {
+    IMarket.Bid memory bid = market.bidForTokenBidder(tokenId, msg.sender); // Get the bid before it is removed
     
     media.removeBidFromApp(tokenId, msg.sender);
     
     // Refund bidder if it is not an offline bid.
-    if (!bid.offline) {
-      bidder.sendValue(bid.amount);
+    if (bid.amount > 0 && !bid.offline) {
+      payable(bid.bidder).sendValue(bid.amount);
     }
   }
 

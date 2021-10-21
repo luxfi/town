@@ -35,10 +35,11 @@ export type BidFilter = {
 export type BidListProps = {
   where?: BidFilter
   title?: string
-  hideToken?: boolean
+  showToken?: boolean
+  onClick?: any
 }
 
-const BidList = ({ where, title, hideToken }: BidListProps) => {
+const BidList = ({ where, title, showToken, onClick }: BidListProps) => {
   const { getUsdAmount } = usePrice()
   const { loading, error, data } = useQuery(GET_BIDS, {
     variables: {
@@ -50,7 +51,7 @@ const BidList = ({ where, title, hideToken }: BidListProps) => {
     },
     fetchPolicy: 'no-cache',
     pollInterval: 10000,
-  });
+  })
 
   const bids = data?.bids || []
 
@@ -59,10 +60,15 @@ const BidList = ({ where, title, hideToken }: BidListProps) => {
       {bids.length > 0 && (
         <div className="px-4 py-3 mt-10 bg-black rounded-lg">
           {title && <div className="pb-2 text-indigo-500">{title}</div>}
-          {bids.map((bid: BidResponse) => <BidItem key={bid.id} bid={bid} getUsdAmount={getUsdAmount} hideToken={hideToken} />)}
+          {bids.map((bid: BidResponse) => (
+            <div className="my-3">
+              <BidItem key={bid.id} bid={bid} getUsdAmount={getUsdAmount} showToken={showToken} onClick={onClick} />
+            </div>
+          ))}
         </div>
       )}
-    </>)
+    </>
+  )
 }
 
 export default BidList

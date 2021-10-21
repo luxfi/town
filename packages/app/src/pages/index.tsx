@@ -25,13 +25,13 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
+      <AssetList title="My NFTs" where={{ owner: account }} perPage={24} cols={6} openModal={openModal} />
       <div className="grid grid-cols-2">
         <div className="pr-5">
           <div className="text-2xl text-indigo-600">My Bids</div>
-          <BidList where={{ bidder: account }} />
+          <BidList where={{ bidder: account }} showToken />
         </div>
         <div>
-          <AssetList title="My NFTs" where={{ owner: account }} perPage={24} cols={4} openModal={openModal} />
         </div>
       </div>
 

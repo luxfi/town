@@ -48,7 +48,7 @@ export const SetBidButton = ({
         const tx = await app.setBid(tokenId, bid, { from: account, gasPrice, value: bid.amount })
         addTransactionPopup(tx, txSummary)
       } else {
-        const tx = await media.setBid(tokenId, bid, { from: account, gasPrice, value: bid.amount })
+        const tx = await media.setBid(tokenId, bid, { from: account, gasPrice })
         addTransactionPopup(tx, txSummary)
       }
     } catch (error) {

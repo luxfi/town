@@ -1,6 +1,6 @@
 // CONVENTION isFoo -> boolean
 
-import { ChainId, Currency, Token } from '@luxdefi/sdk'
+import { Token } from '@luxdefi/sdk'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { TokenAddressMap } from '../state/lists/hooks'
@@ -31,3 +31,8 @@ export function isAddress(value: any): string | false {
 export function isTokenOnList(tokenAddressMap: TokenAddressMap, token?: Token): boolean {
   return Boolean(token?.isToken && tokenAddressMap[token.chainId]?.[token.address])
 }
+
+export function isSameAddress(address1: string, address2: string): boolean {
+  return getAddress(address1) === getAddress(address2)
+}
+

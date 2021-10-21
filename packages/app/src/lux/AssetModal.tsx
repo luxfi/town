@@ -9,6 +9,8 @@ import SetBid from './SetBid'
 import SetAsk from './SetAsk'
 import HowOffline from './HowOffline'
 import BidList from './BidList'
+import { Bid } from './types'
+import BidModal from './BidModal'
 
 const defaultShow = {
   setAsk: false,
@@ -25,6 +27,8 @@ const AssetModal = (props: any) => {
   const [tokenId, setTokenId] = useState(null)
   const { ask, highest, getUsdAmount, contentURI, formattedAmount, isOwner, symbol, usdAmount } = useAsset(tokenId)
   const [show, setShow] = useState(defaultShow)
+  const [showBidModal, setShowBidModal] = useState(false)
+  const [modalBid, setModalBid] = useState(null)
 
   const showSection = (section) => {
     setShow({ ...defaultShow, [section]: true })
@@ -42,78 +46,86 @@ const AssetModal = (props: any) => {
     }
   }, [routerTokenId])
 
+  const onClickBid = (bid: Bid) => {
+    setModalBid(bid)
+    setShowBidModal(!showBidModal)
+  }
+
   return (
-    <Modal {...props.modalProps} padding={0} closeButton={false}>
-      <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
-        <div className="">
-          <div
-            onClick={onClose}
-            className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14"
-          >
-            <HiOutlineChevronLeft />
+    <>
+    <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)}/>
+      <Modal {...props.modalProps} padding={0} closeButton={false}>
+        <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
+          <div className="">
+            <div
+              onClick={onClose}
+              className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14"
+            >
+              <HiOutlineChevronLeft />
+            </div>
+            <div className="flex items-stretch md:h-screen">
+              <div className="self-center m-auto w-96">
+                <Asset
+                  ask={ask}
+                  tokenId={tokenId}
+                  contentURI={contentURI}
+                  formattedAmount={formattedAmount}
+                  usdAmount={usdAmount}
+                  getUsdAmount={getUsdAmount}
+                  highest={highest}
+                  symbol={symbol}
+                  isOwner={isOwner}
+                  showPrice
+                  large
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex items-stretch md:h-screen">
-            <div className="self-center m-auto w-96">
-              <Asset
-                ask={ask}
-                tokenId={tokenId} 
-                contentURI={contentURI} 
-                formattedAmount={formattedAmount}
-                usdAmount={usdAmount}
-                getUsdAmount={getUsdAmount}
-                highest={highest}
-                symbol={symbol}
-                isOwner={isOwner}
-                showPrice
-                large
-              />
+          <div className="flex items-stretch bg-gray-900 md:h-screen">
+            <div className="self-center w-full px-8">
+              {isOwner ? (
+                <div>
+                  {show.howOffline ? (
+                    <HowOffline onClick={() => showSection('setAsk')} />
+                  ) : (
+                    <>
+                      <SetAsk tokenId={tokenId}>
+                        {/* <p className="text-center">You cannot withdraw a reservation once submitted.</p> */}
+                        <p
+                          className="pt-8 text-center text-gray-500 cursor-pointer"
+                          onClick={() => showSection('howOffline')}
+                        >
+                          How do offline asks work?
+                        </p>
+                      </SetAsk>
+                      <BidList title="Bids" hideToken where={{ media: tokenId }} onClick={onClickBid} />
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div>
+                  {show.howReservations ? (
+                    <HowReservations onClick={() => showSection('setBid')} />
+                  ) : (
+                    <>
+                      <SetBid tokenId={tokenId}>
+                        <p
+                          className="pt-8 text-center text-gray-500 cursor-pointer"
+                          onClick={() => showSection('howReservations')}
+                        >
+                          How do reservations work?
+                        </p>
+                      </SetBid>
+                      <BidList title="Bids" where={{ media: tokenId }} onClick={onClickBid} />
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
-        <div className="flex items-stretch bg-gray-900 md:h-screen">
-          <div className="self-center w-full px-8">
-            {isOwner ? (
-              <div>
-                {show.howOffline ? (
-                  <HowOffline onClick={() => showSection('setAsk')} />
-                ) : (
-                  <>
-                    <SetAsk tokenId={tokenId}>
-                      {/* <p className="text-center">You cannot withdraw a reservation once submitted.</p> */}
-                      <p
-                        className="pt-8 text-center text-gray-500 cursor-pointer"
-                        onClick={() => showSection('howOffline')}
-                      >
-                        How do offline asks work?
-                      </p>
-                    </SetAsk>
-                    <BidList title="Bids" hideToken where={{ media: tokenId }} />
-                  </>
-                )}
-              </div>
-            ) : (
-              <div>
-                {show.howReservations ? (
-                  <HowReservations onClick={() => showSection('setBid')} />
-                ) : (
-                  <>
-                    <SetBid tokenId={tokenId}>
-                      <p
-                        className="pt-8 text-center text-gray-500 cursor-pointer"
-                        onClick={() => showSection('howReservations')}
-                      >
-                        How do reservations work?
-                      </p>
-                    </SetBid>
-                    <BidList title="Bids" hideToken where={{ media: tokenId }} />
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </Modal>
+      </Modal>
+    </>
   )
 }
 

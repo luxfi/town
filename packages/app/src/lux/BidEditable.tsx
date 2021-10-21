@@ -1,10 +1,10 @@
 import { BidResponse } from './types'
-import Bid from './Bid'
+import BidItem from './BidItem'
 
 const BidEditable = (bid: BidResponse) => {
   return (
     <div className="BidEditable">
-      <Bid {...bid} />
+      <BidItem bid={bid} />
     </div>
   )
 }

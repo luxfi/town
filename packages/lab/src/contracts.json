@@ -9661,11 +9661,6 @@
                   "internalType": "uint256",
                   "name": "tokenId",
                   "type": "uint256"
-                },
-                {
-                  "internalType": "address payable",
-                  "name": "bidder",
-                  "type": "address"
                 }
               ],
               "name": "removeBid",

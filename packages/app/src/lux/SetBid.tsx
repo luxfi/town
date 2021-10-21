@@ -14,10 +14,7 @@ const SetBid = ({ tokenId, children }) => {
   const { account, chainId } = useActiveWeb3React()
   const { ask, currencyToken, formattedAmount, formattedBalance, symbol, type } = useAsset(tokenId)
   const [pendingTx, setPendingTx] = useState(null)
-  const gasPrice = useGasPrice()
-  const app = useContract('App')
   const market = useContract('Market')
-  const media = useContract('Media')
   
   const [approvalState, approve] = useApproveCallback(
     CurrencyAmount.fromRawAmount(currencyToken, ask?.amount || 0),
