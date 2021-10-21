@@ -61,8 +61,8 @@ const BidList = ({ where, title, showToken, onClick }: BidListProps) => {
         <div className="px-4 py-3 mt-10 bg-black rounded-lg">
           {title && <div className="pb-2 text-indigo-500">{title}</div>}
           {bids.map((bid: BidResponse) => (
-            <div className="my-3">
-              <BidItem key={bid.id} bid={bid} getUsdAmount={getUsdAmount} showToken={showToken} onClick={onClick} />
+            <div className="my-3" key={bid.id}>
+              <BidItem bid={bid} getUsdAmount={getUsdAmount} showToken={showToken} onClick={onClick} />
             </div>
           ))}
         </div>

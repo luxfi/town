@@ -11,15 +11,6 @@ import { useActiveWeb3React } from '../hooks/useActiveWeb3React'
 import { useLingui } from '@lingui/react'
 import useENSName from '../hooks/useENSName'
 
-const WalletIcon: FC<{ size?: number; src: string; alt: string }> = ({ size, src, alt, children }) => {
-  return (
-    <div className="flex flex-row items-end justify-center mr-2 flex-nowrap md:items-center">
-      <Image src={src} alt={alt} width={size} height={size} />
-      {children}
-    </div>
-  )
-}
-
 interface AccountProps {
   label?: string
   account?: string

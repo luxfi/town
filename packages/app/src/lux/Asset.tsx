@@ -55,6 +55,7 @@ const Asset = (props: AssetProps) => {
         // App contract handles ETH (ZERO_ADDRESS)
         const tx = await app.acceptBid(tokenId, highestBid)
       } else {
+        // Media contract handles ETH (ZERO_ADDRESS)
         const tx = await media.acceptBid(tokenId, highestBid)
       }
     } catch (error) {
