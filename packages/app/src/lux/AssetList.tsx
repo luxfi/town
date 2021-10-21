@@ -86,6 +86,7 @@ export type AssetListProps = {
 const AssetList = (props: AssetListProps) => {
   const router = useRouter()
   const where = props.where || {}
+  const [totalMinted, setTotalMinted] = useState(null)
 
   const { loading, error } = useQuery(GET_ASSETS, {
     variables: {
@@ -117,12 +118,11 @@ const AssetList = (props: AssetListProps) => {
 
   const drop = useContract('Drop')
 
-  // useEffect(() => {
-  //   if (drop) {
-  //     drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
-  //     drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
-  //   }
-  // }, [props.tokenName])
+  useEffect(() => {
+    if (drop) {
+      drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
+    }
+  }, [props.tokenName])
 
   // useEffect(() => {
   //   if (firstTokenId >= 0 && totalMinted) {
