@@ -9,7 +9,7 @@ import SetBid from './SetBid'
 import SetAsk from './SetAsk'
 import HowOffline from './HowOffline'
 import BidList from './BidList'
-import { Bid, BidResponse } from './types'
+import { Bid, GraphBid } from './types'
 import BidModal from './BidModal'
 
 const defaultShow = {
@@ -18,6 +18,18 @@ const defaultShow = {
   howReservations: false,
   howOffline: false,
 }
+
+const NoBids = () => (
+  <div>
+    Be the first to place a bid.
+  </div>
+)
+
+const NoAsks = () => (
+  <div>
+    Be the first to place a bid.
+  </div>
+)
 
 const AssetModal = (props: any) => {
   const router = useRouter()
@@ -46,7 +58,7 @@ const AssetModal = (props: any) => {
     }
   }, [routerTokenId])
 
-  const onClickBid = (bid: BidResponse) => {
+  const onClickBid = (bid: GraphBid) => {
     setModalBid(bid)
     setShowBidModal(!showBidModal)
   }
@@ -83,7 +95,7 @@ const AssetModal = (props: any) => {
             </div>
           </div>
           <div className="flex items-stretch bg-gray-900 md:h-screen">
-            <div className="self-center w-full px-8">
+            <div className="self-center m-auto w-96">
               {isOwner ? (
                 <div>
                   {show.howOffline ? (
@@ -99,7 +111,8 @@ const AssetModal = (props: any) => {
                           How do offline asks work?
                         </p>
                       </SetAsk>
-                      <BidList title="Bids" where={{ media: tokenId }} onClick={onClickBid} />
+                      <div className="pt-8 text-indigo-500">Bids</div>
+                      <BidList where={{ media: tokenId }} onClick={onClickBid} />
                     </>
                   )}
                 </div>
@@ -117,7 +130,8 @@ const AssetModal = (props: any) => {
                           How do reservations work?
                         </p>
                       </SetBid>
-                      <BidList title="Bids" where={{ media: tokenId }} onClick={onClickBid} />
+                      <div className="pt-8 text-indigo-500">Bids</div>
+                      <BidList empty={<NoBids />} where={{ media: tokenId }} onClick={onClickBid} />
                     </>
                   )}
                 </div>

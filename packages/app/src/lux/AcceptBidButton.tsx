@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useGasPrice } from '../state/network/hooks'
 import { useTransactionPopups } from '../state/transactions/hooks'
-import { Bid, BidResponse, TokenId } from './types'
+import { Bid, GraphBid, TokenId } from './types'
 
 export type AcceptBidButtonProps = {
   tokenId: TokenId

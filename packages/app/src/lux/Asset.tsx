@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Player from 'react-player'
 import { BigintIsh, ZERO_ADDRESS } from '@luxdefi/sdk'
 import { getContent } from './state'
-import { Ask, Bid, BidResponse, HighestBid } from './types'
+import { Ask, Bid, GraphBid, HighestBid } from './types'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { EyeIcon } from '@heroicons/react/solid'
 import { shortenAddress } from '../functions'
@@ -25,7 +25,7 @@ export type AssetProps = {
   animate?: boolean
   large?: boolean,
   getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string,
-  onClickBid?: (bid: BidResponse) => void,
+  onClickBid?: (bid: GraphBid) => void,
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Asset = (props: AssetProps) => {
@@ -39,7 +39,7 @@ const Asset = (props: AssetProps) => {
 
   // console.log('Asset', askAmount)
 
-  const onClickBid = (bid: BidResponse) => {
+  const onClickBid = (bid: GraphBid) => {
     props.onClickBid && props.onClickBid(bid)
   }
 

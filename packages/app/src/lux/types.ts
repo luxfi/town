@@ -20,39 +20,39 @@ export type Bid = {
 
 // GraphQL Response Types
 
-export type UserResponse = {
+export type GraphUser = {
   id: string
 }
 
-export type CurrencyReponse = {
+export type GraphCurrency = {
   id: string
 }
 
-export type MediaReponse = {
+export type GraphMedia = {
   id: string
   contentURI: string
-  owner: UserResponse
+  owner: GraphUser
 }
 
-export type BidResponse = {
+export type GraphAsk = {
   id: string
   amount: BigintIsh
-  currency: CurrencyReponse
-  bidder: UserResponse
-  recipient: UserResponse
-  media: MediaReponse
+  owner: GraphUser
+  currency: GraphCurrency
+  media: GraphMedia
   createdAtTimestamp: string
 }
 
-// Example
-// {
-//   ethereum: {
-//     usd: 3650.52
-//   }
-//   weth: {
-//     usd: 3640.05
-//   }
-// }
+export type GraphBid = {
+  id: string
+  amount: BigintIsh
+  currency: GraphCurrency
+  bidder: GraphUser
+  recipient: GraphUser
+  media: GraphMedia
+  createdAtTimestamp: string
+}
+
 export type CoingeckoPrices = {
   [coinId: string]: {
     usd: number
@@ -60,7 +60,7 @@ export type CoingeckoPrices = {
 }
 
 export type HighestBid = {
-  bid: BidResponse
+  bid: GraphBid
   usdAmount: number
   createdAtTimestamp: string
 }

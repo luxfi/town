@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { GetTriggerProps, OpenModal, TriggerProps } from 'react-morphing-modal/dist/types'
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
+import Link from 'next/link'
 import { useContract } from '../hooks'
 import Asset from './Asset'
 import _ from 'lodash'
-import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 import { newNft } from '../functions/assets'
 import { useQuery, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
@@ -52,6 +53,7 @@ export type AssetListProps = {
   autoPlay?: boolean
   animate?: boolean
   large?: boolean
+  empty?: JSX.Element
   getTriggerProps?: GetTriggerProps
   onLoadAssets?: (assets: object[]) => void
   openModal?: OpenModal
@@ -64,6 +66,7 @@ const AssetList = ({
   totalMinted,
   title,
   large = false,
+  empty,
   where = {},
   perPage = 6,
   orderBy = 'id',
@@ -74,8 +77,6 @@ const AssetList = ({
   const [assets, setAssets] = useState([])
   const [page, setPage] = useState(1)
   const [pageOffset, setPageOffset] = useState(0)
-  const drop = useContract('Drop')
-  const tokenTypes = useTokenTypes();
   
   const { loading, error } = useQuery(GET_ASSETS, {
     variables: {
@@ -86,6 +87,8 @@ const AssetList = ({
       orderBy,
       skip: pageOffset,
       first: perPage || 100,
+      fetchPolicy: 'no-cache',
+      pollInterval: 10000,
     },
     onCompleted: ({ medias }) => {
       setAssets(medias)
@@ -143,19 +146,23 @@ const AssetList = ({
           </div>
         </div>}
       </div>
-      <div className={`grid grid-cols-1 gap-5 md:grid-cols-${cols || 6}`}>
-        {assets.map((asset, i) => (
-          <Asset
-            key={asset.id}
-            tokenId={asset.id}
-            contentURI={asset.contentURI}
-            showPrice={false}
-            animate={animate}
-            large={large}
-            onClick={() => onClick(asset.id)}
-          />
-        ))}
-      </div>
+      {assets.length > 0 ? (
+        <div className={`grid grid-cols-1 gap-5 md:grid-cols-${cols || 6}`}>
+          {assets.map((asset, i) => (
+            <Asset
+              key={asset.id}
+              tokenId={asset.id}
+              contentURI={asset.contentURI}
+              showPrice={false}
+              animate={animate}
+              large={large}
+              onClick={() => onClick(asset.id)}
+            />
+          ))}
+        </div>
+      ) : (
+        empty ? empty : <div className="py-3">Go to the <Link href="/market">Market</Link> to buy your first Lux NFT.</div>
+      )}
     </div>
   )
 }

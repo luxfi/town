@@ -14,6 +14,8 @@ import { Decimal } from './Decimal.sol';
 import { Media } from './Media.sol';
 import { IMarket } from './interfaces/IMarket.sol';
 
+import './console.sol';
+
 /**
  * @title A Market for pieces of media
  * @notice This contract contains all of the market logic for Media
@@ -193,16 +195,18 @@ contract Market is IMarket, Ownable {
    */
   function removeBid(uint256 tokenId, address bidder) public override onlyMediaCaller {
     Bid storage bid = _tokenBidders[tokenId][bidder];
+    address bidCurrency = bid.currency;
     uint256 bidAmount = bid.amount;
+    bool bidOffline = bid.offline;
 
     require(bid.amount > 0, 'Market: cannot remove bid amount of 0');
 
     emit BidRemoved(tokenId, bid);
     delete _tokenBidders[tokenId][bidder];
 
-    address bidCurrency = bid.currency;
+    console.log('Market.removeBid', tokenId, bidCurrency, bidOffline);
 
-    if (bidCurrency != address(0) && !bid.offline) {
+    if (bidCurrency != address(0) && !bidOffline) {
       IERC20 token = IERC20(bidCurrency);
       token.safeTransfer(bidder, bidAmount);
     }

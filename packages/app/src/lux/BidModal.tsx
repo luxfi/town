@@ -1,15 +1,6 @@
-import {
-  AVAILABLE_NETWORKS,
-  DEFAULT_METAMASK_CHAIN_ID,
-  NETWORK_ICON,
-  NETWORK_LABEL,
-  SUPPORTED_NETWORKS,
-} from '../config/networks'
-import Image from 'next/image'
 import Modal from '../components/Modal'
 import ModalHeader from '../components/ModalHeader'
 import React, { useCallback, useEffect, useState } from 'react'
-import TimeAgo from 'react-timeago'
 import { useActiveWeb3React } from '../hooks/useActiveWeb3React'
 import { getContent, usePrice } from './state'
 import { formatCurrencyAmountWithCommas, isSameAddress, shortenAddress } from '../functions'
@@ -55,7 +46,7 @@ export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
 
   return (
     <Modal isOpen={isOpen} onDismiss={onClose} maxWidth={672}>
-      <ModalHeader onClose={onClose} title={`Placed a bid on ${given_name || type} ${tokenId}`} />
+      <ModalHeader onClose={onClose} title={`Bid for ${given_name || type} ${tokenId}`} />
 
       <BidItem bid={bid} />
 

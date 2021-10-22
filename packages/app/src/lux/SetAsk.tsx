@@ -83,30 +83,28 @@ const SetAsk = ({ tokenId, children }) => {
             currencyToken={selectedCurrencyToken}
             offline={offline}
           />
-          <div className="">
-            <div className="pt-3">
-              <Switch.Group>
-                <div className="flex items-center justify-center">
-                  <Switch.Label className="mr-3 cursor-pointer">
-                    <Typography>{i18n._(t`Offline Ask`)}</Typography>
-                  </Switch.Label>
-                  <Switch
-                    checked={offline}
-                    onChange={() => setOffline(!offline)}
-                    className="bg-indigo-500 bg-opacity-60 border border-indigo-600 border-opacity-80 relative inline-flex items-center h-[32px] rounded-full w-[54px] transition-colors focus:outline-none"
+          {/* <div className="pt-3">
+            <Switch.Group>
+              <div className="flex items-center justify-center">
+                <Switch.Label className="mr-3 cursor-pointer">
+                  <Typography>{i18n._(t`Offline Ask`)}</Typography>
+                </Switch.Label>
+                <Switch
+                  checked={offline}
+                  onChange={() => setOffline(!offline)}
+                  className="bg-indigo-500 bg-opacity-60 border border-indigo-600 border-opacity-80 relative inline-flex items-center h-[32px] rounded-full w-[54px] transition-colors focus:outline-none"
+                >
+                  <span
+                    className={`${
+                      offline ? 'translate-x-[23px] bg-gray-300' : 'translate-x-[1px] bg-indigo-400'
+                    } inline-block w-7 h-7 transform  rounded-full transition-transform text-indigo-600`}
                   >
-                    <span
-                      className={`${
-                        offline ? 'translate-x-[23px] bg-gray-300' : 'translate-x-[1px] bg-indigo-400'
-                      } inline-block w-7 h-7 transform  rounded-full transition-transform text-indigo-600`}
-                    >
-                      {offline ? <CheckIcon /> : ''}
-                    </span>
-                  </Switch>
-                </div>
-              </Switch.Group>
-            </div>
-          </div>
+                    {offline ? <CheckIcon /> : ''}
+                  </span>
+                </Switch>
+              </div>
+            </Switch.Group>
+          </div> */}
           <div>{children}</div>
         </>
       )}
