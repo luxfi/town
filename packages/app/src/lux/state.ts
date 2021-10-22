@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 import { BigintIsh, Currency, CurrencyAmount, CurrencySymbol, Ether, Token, ZERO_ADDRESS, cachedFetch } from '@luxdefi/sdk'
 import { useQuery, gql } from '@apollo/client'
+import queryString from 'query-string'
+import _ from 'lodash'
 import { getCurrencyToken, getCurrencyTokenLowerCase } from '../config/currencies'
 import { formatCurrencyAmountWithCommas, formatCurrencyFromRawAmount, isSameAddress, numberWithCommas } from '../functions'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
 import { Ask, CoingeckoPrices, HighestBid } from './types'
-import _ from 'lodash'
 
 const symbolMap = {
   [CurrencySymbol.ETH]: 'ethereum',
@@ -61,20 +62,16 @@ const defaultAsset = {
   currentBids: [],
 }
 
-const typeLabelMap = {
-  validator: 'Validator',
-  atm: 'ATM',
-  cash: 'ATM',
-  wallet: 'Wallet',
-}
-
 export const getContent = (contentURI) => {
-  const match = contentURI?.match(/\/(\w+)\.[mov|mp4|gif]/)
+  const match = contentURI?.match(/\/(atm|validator|cash|wallet)\./)
   const type = match && match[1] || ''
+  const uri = contentURI ? queryString.parseUrl(contentURI) : {} as any
+
   return{
-    type: typeLabelMap[type],
+    type: _.upperFirst(type),
     image: type && `/nfts/${type.toLowerCase()}.gif`,
     video: type && `/nfts/${type.toLowerCase()}.mov`,
+    ...uri.query,
   }
 }
 
@@ -221,9 +218,9 @@ const GET_BIDS = gql`
 `
 
 export function useBids(tokenId: number | string, prices: CoingeckoPrices) {
-  const { chainId } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const [bids, setBids] = useState([])
-  const { loading, error, data } = useQuery(GET_BIDS, {
+  const { loading, error, refetch } = useQuery(GET_BIDS, {
     variables: {
       where: {
         media: tokenId?.toString(),
@@ -262,15 +259,6 @@ export const useIsAddress = (address2: string) => {
     return isSameAddress(account, address2)
   })
 }
-
-// ask: (3) [BigNumber, '0x0000000000000000000000000000000000000000', false, amount: BigNumber, currency: '0x0000000000000000000000000000000000000000', offline: false]
-// bidShares: (3) [Array(1), Array(1), Array(1), prevOwner: Array(1), creator: Array(1), owner: Array(1)]
-// data: (4) ['https://lux.town/nfts/validator.mp4?', 'https://lux.town/api/metadata/validator.json?', '0x0000000000000000000000000000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000000000000000000000000000', tokenURI: 'https://lux.town/nfts/validator.mp4?', metadataURI: 'https://lux.town/api/metadata/validator.json?', contentHash: '0x0000000000000000000000000000000000000000000000000000000000000000', metadataHash: '0x0000000000000000000000000000000000000000000000000000000000000000']
-// kind: 0
-// minted: BigNumber {_hex: '0x0e', _isBigNumber: true}
-// name: "Validator"
-// supply: BigNumber {_hex: '0x0e', _isBigNumber: true}
-// timestamp: BigNumber {_hex: '0x00', _isBigNumber: true}
 
 export type TokenType = {
   name: string

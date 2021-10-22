@@ -14,27 +14,24 @@ export type BidProps = {
   showToken?: boolean
   label?: string
   summary?: string
-  onClick?: any
+  onClick?: (bid: BidResponse) => void
 }
 
 const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
   const { chainId, account } = useActiveWeb3React()
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18) as Currency)
-  const [tokenId, setTokenId] = useState(null)
-  const [type, setType] = useState(null)
-  const { getUsdAmount } = usePrice()
 
+  // const [type, setType] = useState(null)
+  const { getUsdAmount } = usePrice()
+  const { type, given_name } = getContent(bid.media.contentURI)
+  const tokenId = bid?.media?.id
+  
   useEffect(() => {
     const token = getCurrencyTokenLowerCase(bid.currency.id, chainId)
     if (token) {
       setCurrencyToken(token)
       setFormattedAmount(formatCurrencyAmountWithCommas(token, bid.amount))
-    }
-    if (bid.media) {
-      const { type } = getContent(bid.media.contentURI)
-      setType(type)
-      setTokenId(bid.media.id)
     }
   }, [chainId])
 
@@ -44,7 +41,7 @@ const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
     <div className="BidItem">
       {showToken && (
         <div>
-          <span className="text-lg text-gray-300">{type}</span>
+          <span className="text-lg text-gray-300">{given_name || type}</span>
           <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font Asset__token-id">
             {tokenId}
           </span>

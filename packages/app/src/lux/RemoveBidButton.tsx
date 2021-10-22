@@ -3,15 +3,17 @@ import { useCallback } from 'react'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useGasPrice } from '../state/network/hooks'
 import { useTransactionPopups } from '../state/transactions/hooks'
+import { TokenId } from './types'
 
 export type RemoveBidButtonProps = {
-  tokenId: number
+  tokenId: TokenId
   tokenType: string
   currency: string
   onError?: (error) => void
+  onRemove?: (tokenId: TokenId) => void
 }
 
-export const RemoveBidButton = ({ tokenId, tokenType, currency, onError }: RemoveBidButtonProps) => {
+export const RemoveBidButton = ({ tokenId, tokenType, currency, onError, onRemove }: RemoveBidButtonProps) => {
   const { account } = useActiveWeb3React()
   const gasPrice = useGasPrice()
   const app = useContract('App')
@@ -30,6 +32,9 @@ export const RemoveBidButton = ({ tokenId, tokenType, currency, onError }: Remov
         const tx = await media.removeBid(tokenId, { from: account, gasPrice })
         addTransactionPopup(tx, txSummary)
       }
+
+      onRemove && onRemove(tokenId)
+
     } catch (error) {
       addErrorPopup(error)
       onError && onError(error)

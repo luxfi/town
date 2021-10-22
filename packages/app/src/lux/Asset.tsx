@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Player from 'react-player'
 import { BigintIsh, ZERO_ADDRESS } from '@luxdefi/sdk'
 import { getContent } from './state'
-import { Ask, Bid, HighestBid } from './types'
+import { Ask, Bid, BidResponse, HighestBid } from './types'
 import { useActiveWeb3React, useContract } from '../hooks'
-import { useAddPopup } from '../state/application/hooks'
-import { formatError } from '../functions/lux'
-import { AcceptBidButton } from './AcceptBidButton'
+import { EyeIcon } from '@heroicons/react/solid'
+import { shortenAddress } from '../functions'
+import TimeAgo from 'react-timeago'
 
 export type AssetProps = {
   tokenId: number | string
@@ -25,52 +25,23 @@ export type AssetProps = {
   animate?: boolean
   large?: boolean,
   getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string,
+  onClickBid?: (bid: BidResponse) => void,
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Asset = (props: AssetProps) => {
-  const addPopup = useAddPopup()
   const { account } = useActiveWeb3React()
   const { ask, highest, tokenId, showPrice, formattedAmount, usdAmount, symbol, getUsdAmount, isOwner } = props
-  const { type, image, video } = getContent(props.contentURI)
-  const app = useContract('App')
+  const [bid, setBid] = useState(null)
   const market = useContract('Market')
-  const media = useContract('Media')
+  const { type, image, video, given_name } = getContent(props.contentURI)
   const bidder = highest?.bid?.bidder?.id
+  // const askAmount = ethers.utils.formatUnits(ask?.amount as BigNumberish, 1)
 
-  // const acceptBid = async () => {
-  //   try {
-  //     const highestBid = await market.bidForTokenBidder(tokenId, highest.bid.bidder.id)
+  // console.log('Asset', askAmount)
 
-  //     const bid: Bid = {
-  //       amount: highestBid.amount,
-  //       currency: highestBid.currency,
-  //       bidder: highestBid.bidder,
-  //       recipient: highestBid.bidder,
-  //       sellOnShare: { value: 0 },
-  //       offline: highestBid.offline,
-  //     }
-
-  //     console.log('acceptBid', {tokenId, ask})
-  //     console.log('bid', bid)
-
-  //     if (bid.currency === ZERO_ADDRESS) {
-  //       // App contract handles ETH (ZERO_ADDRESS)
-  //       const tx = await app.acceptBid(tokenId, highestBid)
-  //     } else {
-  //       // Media contract handles ETH (ZERO_ADDRESS)
-  //       const tx = await media.acceptBid(tokenId, highestBid)
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //     addPopup({
-  //       txn: {
-  //         hash: null,
-  //         summary: formatError(error),
-  //         success: false,
-  //       },
-  //     })
-  //   }
-  // }
+  const onClickBid = (bid: BidResponse) => {
+    props.onClickBid && props.onClickBid(bid)
+  }
 
   return (
     <div
@@ -84,7 +55,7 @@ const Asset = (props: AssetProps) => {
       )}
       <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
-          <span className="text-lg text-gray-300">{type}</span>
+          <span className="text-lg text-gray-300">{given_name || type}</span>
           <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font Asset__token-id">
             {tokenId}
           </span>
@@ -92,16 +63,47 @@ const Asset = (props: AssetProps) => {
         {showPrice && formattedAmount && symbol && (
           <>
           {highest && getUsdAmount && ask ? (
-            <div className="flex justify-between px-3 py-3 my-3 bg-indigo-400 rounded-lg">
-              <div className="text-black">
-                <div className="text-lg">
-                Highest Bid
+            <div className="grid grid-cols-2 px-3 py-2 my-3 bg-indigo-300 rounded-lg">
+            <div className="text-left">
+              <div className="text-xl text-black">Highest Bid</div>
+              {/* <div>Bidder {shortenAddress(highest?.bid?.bidder?.id)} {summary}</div> */}
+              <div className="text-gray-700">
+                By {shortenAddress(highest?.bid?.bidder?.id)}
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <div className="text-right ">
+                <div className="text-xl font-bold text-black">
+                  {formattedAmount} {symbol}
                 </div>
-                <div className="text-2xl font-bold">
+                {usdAmount && <small className="text-gray-700">${usdAmount}</small>}
+              </div>
+              {<div onClick={() => onClickBid(highest.bid)}>
+                <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
+              </div>}
+            </div>
+          </div>
+          ) : (
+            <>
+              <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
+                {formattedAmount} {symbol}
+              </div>
+              {usdAmount !== '0' && <div className="text-gray-400">
+                ${usdAmount}
+              </div>}
+            </>
+          )}
+          {/* {highest && getUsdAmount && ask ? (
+            <div className="grid grid-cols-2 px-3 py-3 my-3 bg-indigo-300 rounded-lg">
+              <div className="text-left">
+                <div className="text-lg text-indigo-700">
+                  Highest Bid
+                </div>
+                <div className="text-xl font-bold text-black">
                 {formattedAmount} {symbol}
                 </div>
               </div>
-
+              
               {isOwner && <AcceptBidButton bidder={bidder} tokenId={tokenId} tokenType={type} />}
             </div>
           ) : (
@@ -113,7 +115,7 @@ const Asset = (props: AssetProps) => {
                 ${usdAmount}
               </div>}
             </>
-          )}
+          )} */}
           </>          
         )}
       </div>

@@ -1,18 +1,20 @@
 import { isNativeCurrency } from '@luxdefi/sdk'
+import { ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useGasPrice } from '../state/network/hooks'
 import { useTransactionPopups } from '../state/transactions/hooks'
-import { Bid, BidResponse } from './types'
+import { Bid, BidResponse, TokenId } from './types'
 
 export type AcceptBidButtonProps = {
-  tokenId: number | string
+  tokenId: TokenId
   tokenType: string
   bidder: string
   onError?: (error) => void
+  onAccept?: (tokenId: TokenId) => void
 }
 
-export const AcceptBidButton = ({ bidder, tokenId, tokenType, onError }: AcceptBidButtonProps) => {
+export const AcceptBidButton = ({ bidder, tokenId, tokenType, onAccept, onError }: AcceptBidButtonProps) => {
   const { account } = useActiveWeb3React()
   const gasPrice = useGasPrice()
   const app = useContract('App')
@@ -45,6 +47,8 @@ export const AcceptBidButton = ({ bidder, tokenId, tokenType, onError }: AcceptB
     try {
       const txSummary = `Accepted Bid for ${tokenType} ${tokenId}`
 
+      console.log(ethers.utils.formatEther(bid.amount))
+
       if (isNativeCurrency(bid.currency)) {
         const tx = await app.acceptBid(tokenId, bid, { from: account, gasPrice })
         addTransactionPopup(tx, txSummary)
@@ -52,6 +56,8 @@ export const AcceptBidButton = ({ bidder, tokenId, tokenType, onError }: AcceptB
         const tx = await media.acceptBid(tokenId, bid, { from: account, gasPrice })
         addTransactionPopup(tx, txSummary)
       }
+
+      onAccept && onAccept(tokenId)
     } catch (error) {
       addErrorPopup(error)
       onError && onError(error)

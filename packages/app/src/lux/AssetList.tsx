@@ -93,8 +93,6 @@ const AssetList = ({
     },
   })
 
-  console.log('totalMinted', totalMinted)
-
   useEffect(() => {
     if (totalMinted) {
       setTotalPages(Math.ceil(totalMinted / perPage))
@@ -125,7 +123,7 @@ const AssetList = ({
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
       <div className="grid grid-cols-2 gap-5">
         <div className="text-2xl text-indigo-600">{title}</div>
-        <div className="flex justify-end">
+        {totalPages > 1 && <div className="flex justify-end">
           <div
             onClick={previousPage}
             className={`p-2 mr-3 rounded-full cursor-pointer ${page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'}`}
@@ -143,7 +141,7 @@ const AssetList = ({
           >
             <HiOutlineChevronRight size={16} />
           </div>
-        </div>
+        </div>}
       </div>
       <div className={`grid grid-cols-1 gap-5 md:grid-cols-${cols || 6}`}>
         {assets.map((asset, i) => (

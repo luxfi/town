@@ -135,7 +135,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     address creator = media.tokenCreator(tokenId);
     address prevOwner = media.previousTokenOwner(tokenId);
 
-    media.acceptBid(tokenId, bid);
+    media.acceptBidFromApp(tokenId, bid, msg.sender);
     
     if (!bid.offline) {      
       // Transfer bid share to owner of media

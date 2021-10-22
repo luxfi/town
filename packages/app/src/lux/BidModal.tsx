@@ -14,11 +14,7 @@ import { useActiveWeb3React } from '../hooks/useActiveWeb3React'
 import { getContent, usePrice } from './state'
 import { formatCurrencyAmountWithCommas, isSameAddress, shortenAddress } from '../functions'
 import { RemoveBidButton } from './RemoveBidButton'
-import { getAddress } from 'ethers/lib/utils'
 import { useContract } from '../hooks'
-import Account from './Account'
-import { getCurrencyTokenLowerCase } from '../config/currencies'
-import { Currency, Token, ZERO_ADDRESS } from '@luxdefi/sdk'
 import BidItem from './BidItem'
 import { AcceptBidButton } from './AcceptBidButton'
 
@@ -35,7 +31,7 @@ export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
     }
   }, [bid])
 
-  const { type } = getContent(bid?.media?.contentURI)
+  const { type, given_name } = getContent(bid?.media?.contentURI)
   const bidder = bid?.bidder?.id
   const owner = bid?.media?.owner?.id
   const currency = bid?.currency?.id
@@ -59,7 +55,7 @@ export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
 
   return (
     <Modal isOpen={isOpen} onDismiss={onClose} maxWidth={672}>
-      <ModalHeader onClose={onClose} title={`Placed a bid on ${type} ${tokenId}`} />
+      <ModalHeader onClose={onClose} title={`Placed a bid on ${given_name || type} ${tokenId}`} />
 
       <BidItem bid={bid} />
 
@@ -72,10 +68,10 @@ export default function BidModal({ bid, isOpen, onClose }): JSX.Element | null {
         <div></div>
         <div>
           {isBidder(account) && (
-            <RemoveBidButton tokenId={tokenId} tokenType={type} currency={currency} onError={onClose} />
+            <RemoveBidButton tokenId={tokenId} tokenType={type} currency={currency} onRemove={onClose} onError={onClose} />
           )}
           {isOwner(account) && bid && (
-            <AcceptBidButton bidder={bidder} tokenId={tokenId} tokenType={type} onError={onClose} />
+            <AcceptBidButton bidder={bidder} tokenId={tokenId} tokenType={type} onAccept={onClose} onError={onClose} />
           )}
         </div>
       </div>

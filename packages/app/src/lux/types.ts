@@ -1,6 +1,8 @@
 import { Currency, BigintIsh, Token } from '@luxdefi/sdk'
 import { BigNumber } from 'ethers'
 
+export type TokenId = string | number
+
 export type Ask = {
   amount: BigintIsh | BigNumber
   currency: string
@@ -15,7 +17,6 @@ export type Bid = {
   sellOnShare: { value: number }
   offline: boolean
 }
-
 
 // GraphQL Response Types
 

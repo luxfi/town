@@ -9,7 +9,7 @@ import SetBid from './SetBid'
 import SetAsk from './SetAsk'
 import HowOffline from './HowOffline'
 import BidList from './BidList'
-import { Bid } from './types'
+import { Bid, BidResponse } from './types'
 import BidModal from './BidModal'
 
 const defaultShow = {
@@ -46,14 +46,14 @@ const AssetModal = (props: any) => {
     }
   }, [routerTokenId])
 
-  const onClickBid = (bid: Bid) => {
+  const onClickBid = (bid: BidResponse) => {
     setModalBid(bid)
     setShowBidModal(!showBidModal)
   }
 
   return (
     <>
-    <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)}/>
+      <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)} />
       <Modal {...props.modalProps} padding={0} closeButton={false}>
         <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
           <div className="">
@@ -77,6 +77,7 @@ const AssetModal = (props: any) => {
                   isOwner={isOwner}
                   showPrice
                   large
+                  onClickBid={onClickBid}
                 />
               </div>
             </div>
@@ -98,7 +99,7 @@ const AssetModal = (props: any) => {
                           How do offline asks work?
                         </p>
                       </SetAsk>
-                      <BidList title="Bids" hideToken where={{ media: tokenId }} onClick={onClickBid} />
+                      <BidList title="Bids" where={{ media: tokenId }} onClick={onClickBid} />
                     </>
                   )}
                 </div>
