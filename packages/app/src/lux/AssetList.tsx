@@ -40,6 +40,10 @@ const GET_ASSETS = gql`
   }
 `
 
+const Empty = ({ empty }) => (
+  empty ? empty : <div className="py-3">Go to the <Link href="/market">Market</Link> to buy your first Lux NFT.</div>
+)
+
 export type AssetListProps = {
   title: string
   tokenType?: string
@@ -51,6 +55,7 @@ export type AssetListProps = {
   orderBy?: string
   className?: string
   autoPlay?: boolean
+  showPageNumbers?: boolean
   animate?: boolean
   large?: boolean
   empty?: JSX.Element
@@ -62,7 +67,6 @@ export type AssetListProps = {
 const AssetList = ({
   animate,
   cols,
-  tokenName,
   totalMinted,
   title,
   large = false,
@@ -70,7 +74,7 @@ const AssetList = ({
   where = {},
   perPage = 6,
   orderBy = 'id',
-  onLoadAssets,
+  showPageNumbers = true,
 }: AssetListProps) => {
   const router = useRouter()
   const [totalPages, setTotalPages] = useState(1)
@@ -78,7 +82,7 @@ const AssetList = ({
   const [page, setPage] = useState(1)
   const [pageOffset, setPageOffset] = useState(0)
   
-  const { loading, error } = useQuery(GET_ASSETS, {
+  const { loading, error, data } = useQuery(GET_ASSETS, {
     variables: {
       where: {
         ...where,
@@ -87,13 +91,9 @@ const AssetList = ({
       orderBy,
       skip: pageOffset,
       first: perPage || 100,
-      fetchPolicy: 'no-cache',
-      pollInterval: 10000,
     },
-    onCompleted: ({ medias }) => {
-      setAssets(medias)
-      onLoadAssets && onLoadAssets(medias)
-    },
+    fetchPolicy: 'no-cache',
+    pollInterval: 10000,
   })
 
   useEffect(() => {
@@ -118,6 +118,10 @@ const AssetList = ({
     setPageOffset(page * perPage - perPage)
   }, [page])
 
+  useEffect(() => {
+    setAssets(data?.medias || [])
+  }, [data])
+
   const onClick = (tokenId: number | string) => {
     router.push(`${router.pathname}?tokenId=${tokenId}`, undefined, { shallow: true })
   }
@@ -133,9 +137,9 @@ const AssetList = ({
           >
             <HiOutlineChevronLeft size={16} />
           </div>
-          <div className="pt-1 text-lg">
+          {showPageNumbers && <div className="pt-1 text-lg">
             Page {page} of {totalPages}
-          </div>
+          </div>}
           <div
             onClick={nextPage}
             className={`p-2 ml-3 rounded-full cursor-pointer ${
@@ -161,7 +165,7 @@ const AssetList = ({
           ))}
         </div>
       ) : (
-        empty ? empty : <div className="py-3">Go to the <Link href="/market">Market</Link> to buy your first Lux NFT.</div>
+        page === 1 && <Empty empty={empty} />
       )}
     </div>
   )

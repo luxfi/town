@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from 'hardhat/config'
 
 import fs from 'fs'
+import { ethers } from 'ethers'
 
 const alchemyKey = 'EuD-FVgI2gMBGf0aypDghsPHYWHB9nhn'
 
@@ -56,14 +57,27 @@ const networks: HardhatUserConfig['networks'] = {
       mnemonic: mnemonic(),
     },
   },
+  // testnet: {
+  //   url: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+  //   chainId: 4,
+  //   // gasPrice: 11e9,
+  //   // gas: 20e6,
+  //   accounts: {
+  //     mnemonic: mnemonic(),
+  //   },
+  // },
   testnet: {
-    url: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
-    chainId: 97,
-    gasPrice: 11e9,
-    gas: 20e6,
+    url: `https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161`,
     accounts: {
       mnemonic: mnemonic(),
     },
+    chainId: 3,
+    live: true,
+    saveDeployments: true,
+    tags: ["staging"],
+    gasPrice: ethers.utils.parseUnits(`${3 * 7}`, 'gwei').toNumber(),
+    blockGasLimit: 4000000,
+    gasMultiplier: 2,
   },
 }
 

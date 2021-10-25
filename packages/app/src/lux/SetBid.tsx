@@ -1,14 +1,14 @@
-import { Currency, CurrencyAmount, Token, ZERO_ADDRESS } from '@luxdefi/sdk'
+import { useEffect, useState } from 'react'
+import { CurrencyAmount } from '@luxdefi/sdk'
 import { i18n } from '@lingui/core'
 import { t } from '@lingui/macro'
-import Dots from '../components/Dots'
-import { formatCurrencyAmount, formatCurrencyFromRawAmount, shortenAddress, shortenString } from '../functions'
+import { shortenAddress, shortenString } from '../functions'
 import { ApprovalState, useActiveWeb3React, useApproveCallback, useContract } from '../hooks'
 import { useAsset } from './state'
-import { useGasPrice } from '../state/network/hooks'
-import { useEffect, useState } from 'react'
 import { InfinityLoader } from './InfinityLoader'
 import { SetBidButton } from './SetBidButton'
+import Dots from '../components/Dots'
+import { getExplorerLink } from '../functions/explorer'
 
 const SetBid = ({ tokenId, children }) => {
   const { account, chainId } = useActiveWeb3React()
@@ -86,7 +86,7 @@ const SetBid = ({ tokenId, children }) => {
         {pendingTx ? (
           <p className="cursor-pointer ">
             <a
-              href={`https://etherscan.io/tx/${pendingTx}`}
+              href={getExplorerLink(chainId, pendingTx, 'transaction')}
               target="_blockchain_browser"
               className="flex justify-center"
             >

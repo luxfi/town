@@ -103,7 +103,7 @@ export const AVAILABLE_NETWORKS: number[] = [
 ]
 
 if (!isEnvironment('prod')) {
-  AVAILABLE_NETWORKS.push(ChainId.RINKEBY)
+  AVAILABLE_NETWORKS.push(ChainId.ROPSTEN)
   AVAILABLE_NETWORKS.push(ChainId.HARDHAT)
 }
 
@@ -141,6 +141,17 @@ export const SUPPORTED_NETWORKS: {
     },
     rpcUrls: ['https://rinkeby.infura.io/v3'],
     blockExplorerUrls: ['https://rinkeby.etherscan.com'],
+  },
+  [ChainId.ROPSTEN]: {
+    chainId: '0x3',
+    chainName: 'Ropsten',
+    nativeCurrency: {
+      name: 'Ethereum',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://ropsten.infura.io/v3'],
+    blockExplorerUrls: ['https://ropsten.etherscan.com'],
   },
   [ChainId.FANTOM]: {
     chainId: '0xfa',

@@ -4,3 +4,9 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[context.deploy-preview.environment]
+  NETLIFY_USE_YARN = true
+
+[context.branch-deploy.environment]
+  NETLIFY_USE_YARN = true

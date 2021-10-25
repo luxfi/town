@@ -1,6 +1,6 @@
 // 14_drop.ts
 import { Deploy } from '@luxdefi/contracts/utils/deploy'
-import mint from '../utils/mint'
+// import mint from '../utils/mint'
 
 export default Deploy('Drop', {}, async ({ hre, ethers, deploy }) => {
   const tx = await deploy(['Gen 0'])
@@ -9,16 +9,10 @@ export default Deploy('Drop', {}, async ({ hre, ethers, deploy }) => {
 
   const drop = await ethers.getContractAt('Drop', tx.address)
   const app = await ethers.getContract('App')
-  const media = await ethers.getContract('Media')
 
-  console.log('Configure Add Drop to App', drop.address)
-  await app.addDrop(drop.address)
+  console.log('App.addDrop', drop.address)
+  await (await app.addDrop(drop.address)).wait()
 
-  console.log('Configure Drop with App', app.address)
-  await drop.configure(app.address)
-
-  console.log('Configure media.setApprovalForAll', app.address)
-  await media.setApprovalForAll(app.address, true)
-
-  // await mint(app, drop, hre.network.name)
+  console.log('Drop.configure', app.address)
+  await (await drop.configure(app.address)).wait()
 })

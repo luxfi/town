@@ -37,12 +37,12 @@ export function handleBidShareUpdated(event: BidShareUpdated): void {
   let media = Media.load(tokenId)
   if (media == null) {
     log.error('Media is null for tokenId: {}', [tokenId])
+  } else {
+    media.creatorBidShare = bidShares.creator.value
+    media.ownerBidShare = bidShares.owner.value
+    media.prevOwnerBidShare = bidShares.prevOwner.value
+    media.save()
   }
-
-  media.creatorBidShare = bidShares.creator.value
-  media.ownerBidShare = bidShares.owner.value
-  media.prevOwnerBidShare = bidShares.prevOwner.value
-  media.save()
 
   log.info(`Completed handler for BidShareUpdated Event for tokenId: {}, bidShares: {}`, [
     tokenId,
@@ -66,6 +66,7 @@ export function handleAskCreated(event: AskCreated): void {
   let media = Media.load(tokenId)
   if (media == null) {
     log.error('Media is null for tokenId: {}', [tokenId])
+    return
   }
 
   let currency = findOrCreateCurrency(onchainAsk.currency.toHexString())

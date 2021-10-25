@@ -11,6 +11,13 @@ enum TokenType {
   CASH = 3,
 }
 
+const TOKEN_TYPES = {
+  [TokenType.VALIDATOR]: 'validator',
+  [TokenType.ATM]: 'atm',
+  [TokenType.CASH]: 'cash',
+  [TokenType.WALLET]: 'wallet',
+}
+
 const TOKEN_URI = {
   [TokenType.VALIDATOR]: 'https://lux.town/nfts/validator.mov',
   [TokenType.ATM]: 'https://lux.town/nfts/atm.mov',
@@ -27,7 +34,7 @@ const METADATA_URI = {
 
 const CHAIN_IDS = {
   mainnet: ChainId.MAINNET,
-  testnet: ChainId.RINKEBY,
+  testnet: ChainId.ROPSTEN,
   hardhat: ChainId.HARDHAT,
   localhost: ChainId.HARDHAT,
 }
@@ -48,12 +55,17 @@ type TokenTypeInput = {
   }
 }
 
+const MILLION = 1000000
+
+const wait = async (ms: number) => {
+  return new Promise((resolve) => setTimeout(() => resolve(true), ms))
+}
+
 const getTokenTypes = (network: string, mainnetTokenTypes: TokenTypeInput[], testTokenTypes: TokenTypeInput[]) => {
   return (network === 'mainnet' ? mainnetTokenTypes : testTokenTypes).map((t) => {
     const q = {
       name: `__${_.snakeCase(t.name)}__`,
-      kind: `__${t.kind}__`,
-      supply: t.supply,
+      type: `__${TOKEN_TYPES[t.kind]}__`,
       ...t.queryString
     }
     return {
@@ -80,79 +92,219 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
 
   console.log({ network, chainId })
 
+  // Validator 100
+  // Wallet
+  // - 10B Lux x 1
+  // - 1B Lux x 10
+  // - 100M Lux x 100
+  // - 10M Lux x1000
+  // - 1M Lux x10000
+  // ATM 1000
+
   const mainnetTokenTypes = [
     {
       kind: TokenType.VALIDATOR,
       name: 'Validator',
-      ask: getAsk(chainId, 'ETH', '290'),
-      supply: 18000,
-      queryString: {}
-    },
-    {
-      kind: TokenType.ATM,
-      name: 'ATM',
-      ask: getAsk(chainId, 'ETH', '290'),
-      supply: 18000,
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 100,
       queryString: {}
     },
     {
       kind: TokenType.WALLET,
-      name: 'Wallet',
-      ask: getAsk(chainId, 'ETH', '290'),
-      supply: 18000,
+      name: 'Wallet 10B Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 1,
+      queryString: {
+        lux: 10000000000000,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 1B Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 10,
+      queryString: {
+        lux: 1000 * MILLION,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 100M Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 100,
+      queryString: {
+        lux: 100 * MILLION,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 10M Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 1000,
+      queryString: {
+        lux: 10 * MILLION,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 1M Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 10000,
+      queryString: {
+        lux: MILLION,
+      }
+    },
+    {
+      kind: TokenType.ATM,
+      name: 'ATM',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 1000,
       queryString: {}
     },
   ]
+
+
+  console.log(getAsk(chainId, 'USDT', `${MILLION}`))
+
 
   // Add tokenType
   const testTokenTypes = [
     {
       kind: TokenType.VALIDATOR,
       name: 'Validator',
-      ask: getAsk(chainId, 'ETH', '290'),
-      supply: 14,
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 100,
       queryString: {}
     },
-    {
-      kind: TokenType.ATM,
-      name: 'ATM',
-      ask: getAsk(chainId, 'WETH', '135'),
-      supply: 14,
-      queryString: {}
-    },
-    {
-      kind: TokenType.WALLET,
-      name: 'Wallet 1,000,000 Lux',
-      ask: getAsk(chainId, 'USDC', '20000'),
-      supply: 14,
-      queryString: {
-        lux: 1000000
-      }
-    },
-    {
-      kind: TokenType.WALLET,
-      name: 'Wallet 30,000 Lux',
-      ask: getAsk(chainId, 'USDT', '30000'),
-      supply: 14,
-      queryString: {
-        lux: 30000,
-      }
-    },
+    // {
+    //   kind: TokenType.WALLET,
+    //   name: 'Wallet 10B Lux',
+    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
+    //   supply: 1,
+    //   queryString: {
+    //     lux: 10000000000000,
+    //   }
+    // },
+    // {
+    //   kind: TokenType.WALLET,
+    //   name: 'Wallet 1B Lux',
+    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
+    //   supply: 10,
+    //   queryString: {
+    //     lux: 1000 * MILLION,
+    //   }
+    // },
+    // {
+    //   kind: TokenType.WALLET,
+    //   name: 'Wallet 100M Lux',
+    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
+    //   supply: 100,
+    //   queryString: {
+    //     lux: 100 * MILLION,
+    //   }
+    // },
+    // {
+    //   kind: TokenType.WALLET,
+    //   name: 'Wallet 10M Lux',
+    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
+    //   supply: 1000,
+    //   queryString: {
+    //     lux: 10 * MILLION,
+    //   }
+    // },
+    // {
+    //   kind: TokenType.WALLET,
+    //   name: 'Wallet 1M Lux',
+    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
+    //   supply: 10000,
+    //   queryString: {
+    //     lux: MILLION,
+    //   }
+    // },
+    // {
+    //   kind: TokenType.ATM,
+    //   name: 'ATM',
+    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
+    //   supply: 1000,
+    //   queryString: {}
+    // },
   ]
 
   const tokenTypes = getTokenTypes(network, mainnetTokenTypes, testTokenTypes)
 
   for (const t of tokenTypes) {
-    await drop.setTokenType(t.kind, t.name, t.ask, t.supply, t.tokenURI, t.metadataURI)
-  }
 
-  console.log('Minting...')
-  for (const t of tokenTypes) {
-    for (const quantity of chunkQuantity(t.supply, 25)) {
-      console.log(`App.mintMany(1, ${t.name}, ${quantity})`)
-      const tx = await app.mintMany(1, t.name, quantity)
+    const existingTokenType = await drop.getTokenType(t.name)
+
+    if (!existingTokenType.name) {
+      console.log('Drop.setTokenType', t.kind, t.name, t.ask, t.supply, t.tokenURI, t.metadataURI)
+      const tx = await drop.setTokenType(t.kind, t.name, t.ask, t.supply, t.tokenURI, t.metadataURI)
       await tx.wait()
     }
   }
+
+
+  const configuredTypes = await drop.getTokenTypes()
+
+  if (configuredTypes.length > 0) {
+    console.log('Drop: Token types')
+    configuredTypes.forEach((configureType) => {
+      console.log(`- ${configureType.name}`)
+    })
+  }
+
+  console.log('Minting...')
+
+  // for (const configuredType of configuredTypes) {
+  //   const name = configuredType.name
+  //   const minted = configuredType.minted.toNumber()
+  //   const supply = configuredType.supply.toNumber()
+  //   const remaining = supply - minted
+
+  //   console.log(name, {
+  //     minted,
+  //     supply,
+  //     remaining,
+  //   })
+    
+  //   if (minted < 30) {
+  //     for (let i = 0; i < remaining; i++) {
+  //       console.log(`App.mint(1, ${name}) #${supply - remaining + i + 1}`)
+  //       const tx = await app.mint(1, name)
+  //       await tx.wait()
+  //       await wait(5000)
+  //     }
+  //   }
+  // }
+  
+  // const tx = await app.mint(1, 'Validator')
+  // console.log(tx)
+  for (const configuredType of configuredTypes) {
+
+    const name = configuredType.name
+    const minted = configuredType.minted.toNumber()
+    const supply = configuredType.supply.toNumber()
+    const remaining = supply - minted
+    let currentMinted = minted
+
+    console.log(name, {
+      minted,
+      supply,
+      remaining,
+    })
+
+    for (const quantity of chunkQuantity(remaining, 7)) {
+      if (quantity > 0 && currentMinted < 30) {
+        console.log(`App.mintMany(1, ${name}, ${quantity})`)
+        const tx = await app.mintMany(1, name, quantity)
+        await tx.wait()
+        currentMinted = currentMinted + quantity
+        console.log(`Currently minted ${name}`, currentMinted)
+        console.log('Wait 1 minute')
+        await wait(60000)
+      }
+    }
+  }
+
   console.log('Done')
 }

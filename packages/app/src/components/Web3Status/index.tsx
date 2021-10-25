@@ -16,6 +16,7 @@ import useENSName from '../../hooks/useENSName'
 import { useLingui } from '@lingui/react'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { useWeb3React } from '@web3-react/core'
+import { UserIcon } from '@heroicons/react/solid'
 
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
@@ -42,8 +43,12 @@ const SOCK = (
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: AbstractConnector }) {
   if (connector === injected) {
-    return <Image src="/chef.svg" alt="Injected (MetaMask etc...)" width={20} height={20} />
-    // return <Identicon />
+    // return <Image src="/chef.svg" alt="Injected (MetaMask etc...)" width={20} height={20} />
+    return (
+      <IconWrapper size={16}>
+        <UserIcon />
+      </IconWrapper>
+    )
   } else if (connector.constructor.name === 'WalletConnectConnector') {
     return (
       <IconWrapper size={16}>
