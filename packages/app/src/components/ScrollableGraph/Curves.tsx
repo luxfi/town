@@ -142,7 +142,7 @@ const Curves = ({
         range: [0, xBrushMax],
         domain: extent(allData, getX),
       }),
-    [xBrushMax]
+    [allData, xBrushMax]
   )
   const brushYScale = useMemo(
     () =>
@@ -151,7 +151,7 @@ const Curves = ({
         domain: [Math.min(...allData.map((d) => getY(d))), Math.max(...allData.map((d) => getY(d)))],
         nice: true,
       }),
-    [yBrushMax]
+    [allData, yBrushMax]
   )
 
   const initialBrushPosition = useMemo(
@@ -161,7 +161,7 @@ const Curves = ({
       },
       end: { x: brushXScale(getX(data[0][data[0].length - 1])) },
     }),
-    [brushXScale]
+    [data, brushXScale]
   )
 
   const colorScale = scaleOrdinal({

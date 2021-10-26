@@ -260,6 +260,13 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   /**
    * @notice see IMedia
    */
+  function setAskFromApp(uint256 tokenId, IMarket.Ask memory ask) public override nonReentrant onlyExistingToken(tokenId) onlyAuthorizedCaller {
+    IMarket(marketContract).setAsk(tokenId, ask);
+  }
+
+  /**
+   * @notice see IMedia
+   */
   function removeAsk(uint256 tokenId) external override nonReentrant onlyApprovedOrOwner(msg.sender, tokenId) {
     IMarket(marketContract).removeAsk(tokenId);
   }

@@ -34,6 +34,7 @@ const GET_ASSET = gql`
     media(id:$id) {
       id
       contentURI
+      metadataURI
       createdAtTimestamp
       owner {
         id
@@ -59,19 +60,21 @@ const GET_ASSET = gql`
 
 const defaultAsset = {
   contentURI: null,
+  metadataURI: null,
   currentBids: [],
 }
 
-export const getContent = (contentURI) => {
-  const match = contentURI?.match(/\/(atm|validator|cash|wallet)\./)
+export const getContent = (metadataURI) => {
+  const match = metadataURI?.match(/type=__(atm|validator|cash|wallet)__/)
   const type = match && match[1] || ''
-  const uri = contentURI ? queryString.parseUrl(contentURI) : {} as any
+  // console.log(match)
+  const uri = metadataURI ? queryString.parseUrl(metadataURI) : {} as any
 
   return{
+    ...uri.query,
     type: _.upperFirst(type),
     image: type && `/nfts/${type.toLowerCase()}.gif`,
     video: type && `/nfts/${type.toLowerCase()}.mov`,
-    ...uri.query,
   }
 }
 
@@ -122,7 +125,7 @@ export function useAsset(tokenId: number | string) {
     }
   }, [currencyBalance])
 
-  const { type, video, image } = getContent(asset?.contentURI)
+  const { type, video, image } = getContent(asset?.metadataURI)
 
   return {
     ask,
@@ -209,6 +212,7 @@ const GET_BIDS = gql`
       media {
         id
         contentURI
+        metadataURI
         owner {
           id
         }
@@ -288,7 +292,7 @@ export const useTokenTypes = () => {
     }
   }
   useEffect(() => {
-    drop.getTokenTypes().then((tokenTypes) => {
+    drop?.getTokenTypes()?.then((tokenTypes) => {
       const transformed: any[] = tokenTypes.map(transformTokenType)
       setTokenTypes(transformed)
       setTokenAggregates({

@@ -100,7 +100,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
 
     // Set default ask
     if (defaultAsk.amount > 0) {
-      media.setAsk(token.id, defaultAsk);
+      media.setAskFromApp(token.id, defaultAsk);
     }
 
     emit Mint(token.id, token);

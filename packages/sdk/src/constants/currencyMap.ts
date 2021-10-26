@@ -45,9 +45,9 @@ export const getCurrencyConstants = (contracts: any) => {
   const MAINNET_USDC = USDC_ADDRESS[ChainId.MAINNET]
   const MAINNET_USDT = USDT_ADDRESS[ChainId.MAINNET]
 
-  const RINKEBY_WETH = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.WETH?.address || UNDEPLOYED_ADDRESS
-  const RINKEBY_USDC = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.USDC?.address || UNDEPLOYED_ADDRESS
-  const RINKEBY_USDT = contracts[ChainId.RINKEBY.toString()]?.testnet?.contracts?.USDT?.address || UNDEPLOYED_ADDRESS
+  const ROPSTEN_WETH = contracts[ChainId.ROPSTEN.toString()]?.testnet?.contracts?.WETH?.address || UNDEPLOYED_ADDRESS
+  const ROPSTEN_USDC = contracts[ChainId.ROPSTEN.toString()]?.testnet?.contracts?.USDC?.address || UNDEPLOYED_ADDRESS
+  const ROPSTEN_USDT = contracts[ChainId.ROPSTEN.toString()]?.testnet?.contracts?.USDT?.address || UNDEPLOYED_ADDRESS
 
   const HARDHAT_WETH = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.WETH?.address || UNDEPLOYED_ADDRESS
   const HARDHAT_USDC = contracts[ChainId.HARDHAT.toString()]?.hardhat?.contracts?.USDC?.address || UNDEPLOYED_ADDRESS
@@ -57,9 +57,9 @@ export const getCurrencyConstants = (contracts: any) => {
     MAINNET_WETH,
     MAINNET_USDC,
     MAINNET_USDT,
-    RINKEBY_WETH,
-    RINKEBY_USDC,
-    RINKEBY_USDT,
+    ROPSTEN_WETH,
+    ROPSTEN_USDC,
+    ROPSTEN_USDT,
     HARDHAT_WETH,
     HARDHAT_USDC,
     HARDHAT_USDT,
@@ -71,9 +71,9 @@ export const getCurrencyMap = (contracts: any) => {
     MAINNET_WETH,
     MAINNET_USDC,
     MAINNET_USDT,
-    RINKEBY_WETH,
-    RINKEBY_USDC,
-    RINKEBY_USDT,
+    ROPSTEN_WETH,
+    ROPSTEN_USDC,
+    ROPSTEN_USDT,
     HARDHAT_WETH,
     HARDHAT_USDC,
     HARDHAT_USDT,
@@ -86,11 +86,11 @@ export const getCurrencyMap = (contracts: any) => {
       [MAINNET_USDT]: new Token(ChainId.MAINNET, MAINNET_USDT, 6, 'USDT', 'USDT'),
       [MAINNET_WETH]: new Token(ChainId.MAINNET, MAINNET_WETH, 18, 'WETH', 'WETH'),
     },
-    [ChainId.RINKEBY]: {
-      [ZERO_ADDRESS]: Ether.onChain(ChainId.RINKEBY),
-      [RINKEBY_USDC]: new Token(ChainId.RINKEBY, RINKEBY_USDC, 6, 'USDC', 'USDC'),
-      [RINKEBY_USDT]: new Token(ChainId.RINKEBY, RINKEBY_USDT, 6, 'USDT', 'USDT'),
-      [RINKEBY_WETH]: new Token(ChainId.RINKEBY, RINKEBY_WETH, 18, 'WETH', 'WETH'),
+    [ChainId.ROPSTEN]: {
+      [ZERO_ADDRESS]: Ether.onChain(ChainId.ROPSTEN),
+      [ROPSTEN_USDC]: new Token(ChainId.ROPSTEN, ROPSTEN_USDC, 6, 'USDC', 'USDC'),
+      [ROPSTEN_USDT]: new Token(ChainId.ROPSTEN, ROPSTEN_USDT, 6, 'USDT', 'USDT'),
+      [ROPSTEN_WETH]: new Token(ChainId.ROPSTEN, ROPSTEN_WETH, 18, 'WETH', 'WETH'),
     },
     [ChainId.HARDHAT]: {
       [ZERO_ADDRESS]: Ether.onChain(ChainId.HARDHAT),
@@ -106,9 +106,9 @@ export const getSymbolCurrencyMap = (contracts: any) => {
     MAINNET_WETH,
     MAINNET_USDC,
     MAINNET_USDT,
-    RINKEBY_WETH,
-    RINKEBY_USDC,
-    RINKEBY_USDT,
+    ROPSTEN_WETH,
+    ROPSTEN_USDC,
+    ROPSTEN_USDT,
     HARDHAT_WETH,
     HARDHAT_USDC,
     HARDHAT_USDT,
@@ -121,11 +121,11 @@ export const getSymbolCurrencyMap = (contracts: any) => {
       USDT: new Token(ChainId.MAINNET, MAINNET_USDT, 6, 'USDT', 'USDT'),
       WETH: new Token(ChainId.MAINNET, MAINNET_WETH, 18, 'WETH', 'WETH'),
     },
-    [ChainId.RINKEBY]: {
-      ETH: Ether.onChain(ChainId.RINKEBY),
-      USDC: new Token(ChainId.RINKEBY, RINKEBY_USDC, 6, 'USDC', 'USDC'),
-      USDT: new Token(ChainId.RINKEBY, RINKEBY_USDT, 6, 'USDT', 'USDT'),
-      WETH: new Token(ChainId.RINKEBY, RINKEBY_WETH, 18, 'WETH', 'WETH'),
+    [ChainId.ROPSTEN]: {
+      ETH: Ether.onChain(ChainId.ROPSTEN),
+      USDC: new Token(ChainId.ROPSTEN, ROPSTEN_USDC, 6, 'USDC', 'USDC'),
+      USDT: new Token(ChainId.ROPSTEN, ROPSTEN_USDT, 6, 'USDT', 'USDT'),
+      WETH: new Token(ChainId.ROPSTEN, ROPSTEN_WETH, 18, 'WETH', 'WETH'),
     },
     [ChainId.HARDHAT]: {
       ETH: Ether.onChain(ChainId.HARDHAT),

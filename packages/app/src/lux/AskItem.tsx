@@ -31,7 +31,7 @@ const AskItem = ({ ask, showToken, summary, onClick }: AskProps) => {
       setCurrencyToken(token)
       setFormattedAmount(formatCurrencyAmountWithCommas(token, ask.amount))
     }
-  }, [chainId])
+  }, [ask, chainId])
 
   const usdAmount = getUsdAmount && getUsdAmount(ask.currency.id, ask.amount)
 

@@ -1,6 +1,10 @@
 [build]
-  command = "npm run build"
-  publish = "out"
+  command = "yarn build:netlify"
+  publish = ".next"
+
+[build.environment]
+  NODE_OPTIONS = "--max-old-space-size=8192"
+  REACT_PUBLIC_APP_ENV = "prod"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

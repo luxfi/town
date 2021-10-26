@@ -27,6 +27,10 @@ const nextConfig = {
       },
     ]
 
+    if (process.env.NODE_ENV !== 'development') {
+      config.externals = ['critters', 'fsevents', 'next']
+    }
+
     return config
   },
   experimental: { esmExternals: true },
@@ -43,7 +47,7 @@ const nextConfig = {
     localeDetection: true,
     locales,
     defaultLocale: sourceLocale,
-  },
+  }
 }
 
 const SentryWebpackPluginOptions = {

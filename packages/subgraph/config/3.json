@@ -1,0 +1,9 @@
+{
+    "network": "ropsten",
+    "deployment": "testnet",
+    "marketAddress": "0x7037e53C7b21A4C724539d71e305E4780E2391bD",
+    "marketStartBlock": 11286947,
+    "mediaAddress": "0x651Ceda90B51De372bf2A5DF833B3107965159A0",
+    "mediaStartBlock": 11292081,
+    "wethAddress": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19"
+  }

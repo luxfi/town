@@ -14,17 +14,17 @@ import BidList from '../lux/BidList'
 import BidModal from '../lux/BidModal'
 import { GraphBid } from '../lux/types'
 import AskList from '../lux/AskList'
-import { useTokenTypes } from '../lux/state'
+import { useBids, useTokenTypes } from '../lux/state'
 
 export default function Dashboard() {
   const { account } = useActiveWeb3React()
   const [showBidModal, setShowBidModal] = useState(false)
   const [modalBid, setModalBid] = useState(null)
-  const { tokenTypes, tokenAggregates } = useTokenTypes();
+  const { tokenAggregates } = useTokenTypes()
   const { modalProps, open: openModal } = useModal({
     background: 'black',
   })
-
+  
   const onClickBid = (bid: GraphBid) => {
     setModalBid(bid)
     setShowBidModal(true)
@@ -37,7 +37,15 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      <AssetList title="My NFTs" where={{ owner: account }} perPage={6} cols={6} totalMinted={tokenAggregates.minted} />
+      <AssetList
+        title="My NFTs"
+        where={{ owner: account }}
+        perPage={6}
+        cols={6}
+        totalMinted={tokenAggregates.minted}
+        showPageNumbers={false}
+      />
+
       <div className="grid grid-cols-2 gap-16">
         <div className="">
           <div className="text-2xl text-indigo-600">My Bids</div>
@@ -48,8 +56,11 @@ export default function Dashboard() {
           <AskList where={{ owner: account }} showToken />
         </div>
       </div>
+
       <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(false)} />
+
       <AssetModal modalProps={modalProps} openModal={openModal} />
+
     </Container>
   )
 }

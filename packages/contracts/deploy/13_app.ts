@@ -16,8 +16,8 @@ export default Deploy(
     const media = await ethers.getContract('Media')
 
     // Configure contracts to talk to each other
-    await market.configure(media.address)
-    await media.configure(app.address, market.address)
-    await app.configure(media.address, market.address)
+    await (await market.configure(media.address)).wait()
+    await (await media.configure(app.address, market.address)).wait()
+    await (await app.configure(media.address, market.address)).wait()
   },
 )

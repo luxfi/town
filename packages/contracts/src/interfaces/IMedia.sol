@@ -109,6 +109,11 @@ interface IMedia is IERC721 {
   // Added for App
 
   /**
+   * @notice Set the ask on a piece of media
+   */
+  function setAskFromApp(uint256 tokenId, IMarket.Ask calldata ask) external;
+
+  /**
    * @notice Set the bid on a piece of media
    */
   function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external;
