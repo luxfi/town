@@ -37,23 +37,23 @@ export default function Dashboard() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      <AssetList
+      {account && <AssetList
         title="My NFTs"
         where={{ owner: account }}
         perPage={6}
         cols={6}
         totalMinted={tokenAggregates.minted}
         showPageNumbers={false}
-      />
+      />}
 
       <div className="grid grid-cols-2 gap-16">
         <div className="">
           <div className="text-2xl text-indigo-600">My Bids</div>
-          <BidList where={{ bidder: account }} onClick={onClickBid} showToken />
+          {account && <BidList where={{ bidder: account }} onClick={onClickBid} showToken />}
         </div>
         <div className="">
           <div className="text-2xl text-indigo-600">My Asks</div>
-          <AskList where={{ owner: account }} showToken />
+          {account && <AskList where={{ owner: account }} showToken />}
         </div>
       </div>
 
