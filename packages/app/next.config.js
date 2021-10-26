@@ -27,7 +27,9 @@ const nextConfig = {
       },
     ]
 
-    config.externals = ['critters', 'fsevents', 'next']
+    if (process.env.NODE_ENV !== 'development') {
+      config.externals = ['critters', 'fsevents', 'next']
+    }
 
     return config
   },

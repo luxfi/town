@@ -15,11 +15,11 @@
     "create": "graph create luxdefi/luxtown --node https://api.thegraph.com/deploy/",
     "create:local": "graph create luxdefi/luxtown --node http://127.0.0.1:8020",
     "test": "jest",
-    "codegen": "graph codegen --output-dir types",
-    "build": "graph build",
+    "codegen": "graph codegen --output-dir types ./subgraph.localhost.yaml",
+    "build": "graph build ./subgraph.localhost.yaml",
     "deploy": "graph deploy --product hosted-service luxdefi/luxtown --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy:testnet": "graph deploy --product hosted-service --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ luxdefi/luxtown-ropsten ./subgraph.testnet.yaml --access-token",
-    "deploy:local": "graph deploy luxdefi/luxtown --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "deploy:local": "graph deploy luxdefi/luxtown --ipfs http://localhost:5001 --node http://127.0.0.1:8020 ./subgraph.localhost.yaml",
     "runAuction": "ts-node scripts/auctionHouse.ts"
   },
   "devDependencies": {

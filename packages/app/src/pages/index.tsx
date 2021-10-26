@@ -45,6 +45,7 @@ export default function Dashboard() {
         totalMinted={tokenAggregates.minted}
         showPageNumbers={false}
       />
+
       <div className="grid grid-cols-2 gap-16">
         <div className="">
           <div className="text-2xl text-indigo-600">My Bids</div>
@@ -55,8 +56,11 @@ export default function Dashboard() {
           <AskList where={{ owner: account }} showToken />
         </div>
       </div>
+
       <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(false)} />
+
       <AssetModal modalProps={modalProps} openModal={openModal} />
+
     </Container>
   )
 }

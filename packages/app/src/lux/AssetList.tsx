@@ -81,13 +81,20 @@ const AssetList = ({
   const [assets, setAssets] = useState([])
   const [page, setPage] = useState(1)
   const [pageOffset, setPageOffset] = useState(0)
+
+  const filter = {
+    ...where,
+  }
+
+  if (filter.owner) {
+    filter.owner = where.owner.toLowerCase()
+  }
   
+  console.log('filter', filter)
+
   const { loading, error, data } = useQuery(GET_ASSETS, {
     variables: {
-      where: {
-        ...where,
-        owner: where.owner && where.owner.toLowerCase(),
-      },
+      where: filter,
       orderBy,
       skip: pageOffset,
       first: perPage || 100,

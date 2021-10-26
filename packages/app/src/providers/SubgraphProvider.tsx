@@ -17,11 +17,10 @@ const clients = {
   [ChainId.ROPSTEN]: createClient(SUBGRAPH_ROPSTEN),
 }
 
+const fallbackClient = process.env.NODE_ENV === 'development' ? clients[ChainId.HARDHAT] : clients[ChainId.ROPSTEN]
+
 export const SubgraphProvider = ({ children }) => {
   const { chainId } = useActiveWeb3React()
-  const client = clients[chainId]
-  if (!client) {
-    return children
-  }
+  const client = clients[chainId] || fallbackClient
   return <ApolloProvider client={client}>{children}</ApolloProvider>
 }

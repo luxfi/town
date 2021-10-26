@@ -11,7 +11,7 @@ export default function Market() {
     background: 'black',
   })
 
-  const { tokenTypes, tokenAggregates } = useTokenTypes();
+  const { tokenTypes } = useTokenTypes();
 
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
