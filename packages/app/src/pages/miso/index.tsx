@@ -30,13 +30,13 @@ function MISO() {
                 <div className="mx-auto" style={{ position: 'relative' }}>
                   <div className="flex flex-col" style={{ position: 'absolute', left: '0px', top: '0px' }}>
                     <div className="mb-3">
-                      <Image src="/images/miso/trident/trident_fx1.png" width={156} height={43} />
+                      <Image src="/images/miso/trident/trident_fx1.png" width={156} height={43} alt="Trident FX1" />
                     </div>
                     <div className="mb-3">
-                      <Image src="/images/miso/trident/trident_fx1.png" width={156} height={43} />
+                      <Image src="/images/miso/trident/trident_fx1.png" width={156} height={43} alt="Trident FX1" />
                     </div>
                     <div className="mb-3">
-                      <Image src="/images/miso/trident/trident_fx1.png" width={156} height={43} />
+                      <Image src="/images/miso/trident/trident_fx1.png" width={156} height={43} alt="Trident FX1" />
                     </div>
                   </div>
                 </div>
@@ -53,7 +53,7 @@ function MISO() {
                           <div className="ml-1 text-sm font-bold text-white"> Chew Stoll</div>
                           <div className="ml-1" style={{ width: 12, height: 10 }}>
                             <a href="https://twitter.com/chowzuh" target="_blank" rel="noreferrer noopener">
-                              <Image src="/images/miso/trident/trident_twitter.svg" width={12} height={10} />
+                              <Image src="/images/miso/trident/trident_twitter.svg" width={12} height={10} alt="Trident Twitter" />
                             </a>
                           </div>
                           <div className="ml-1" style={{ width: 10, height: 10 }}>
@@ -62,7 +62,7 @@ function MISO() {
                               target="_blank"
                               rel="noreferrer noopener"
                             >
-                              <Image src="/images/miso/trident/trident_instagram.svg" width={10} height={10} />
+                              <Image src="/images/miso/trident/trident_instagram.svg" width={10} height={10} alt="Trident Instagram" />
                             </a>
                           </div>
                         </div>

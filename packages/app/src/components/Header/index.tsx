@@ -42,7 +42,7 @@ function AppBar(): JSX.Element {
 
                   <NavLink href="/">
                     <div className="logo">
-                      <img src="/logo.svg" className="w-10" />
+                      <Image src="/logo.svg" className="w-10" alt="Logo" />
                     </div>
                   </NavLink>
                   <div className="hidden sm:block sm:ml-4">

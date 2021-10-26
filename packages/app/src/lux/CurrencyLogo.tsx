@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { CURRENCY_SYMBOL_LOGO, CurrencySymbol } from '@luxdefi/sdk'
 
 export type CurrencyLogoProps = {
-  symbol: CurrencySymbol
+  symbol: CurrencySymbol | string
   size?: number
   className?: string
 }

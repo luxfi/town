@@ -74,7 +74,7 @@ function MisoInfo({
     <div className="flex flex-col">
       {/* Name and Symbol */}
       <div className="flex flex-row items-end mt-6">
-        <Image src="/images/miso/trident/trident-auction-icon.png" width={85} height={85} />
+        <Image src="/images/miso/trident/trident-auction-icon.png" width={85} height={85} alt="Trident Auction Icon" />
         <div className="flex flex-col items-center flex-1 mx-6">
           <div>
             <div className="text-base font-bold sm:text-xl">{'Trident NFT'}</div>
@@ -96,7 +96,7 @@ function MisoInfo({
           <div className="text-sm sm:text-lg">{'Auction Type'}</div>
           <div className="text-base font-bold text-white md:text-xl">{auctionType}</div>
           <div>
-            <Image src="/images/miso/trident/trident_auction_type.png" width={25} height={25} />
+            <Image src="/images/miso/trident/trident_auction_type.png" width={25} height={25} alt="Trident Auction Type" />
           </div>
         </div>
         <div className="flex flex-col col-span-4">
@@ -120,7 +120,7 @@ function MisoInfo({
           <div className="text-base font-bold text-white md:text-xl">{formatDate(new Date(auctionEndDate))} GMT</div>
           {remainingTime != '' && (
             <div className="flex flex-row items-center text-base">
-              <Image src="/images/miso/trident/trident_timer.png" width={15} height={15} />
+              <Image src="/images/miso/trident/trident_timer.png" width={15} height={15} alt="Trident Timer" />
               <div className="ml-2 text-sm sm:text-lg">{remainingTime}</div>
             </div>
           )}
@@ -131,7 +131,7 @@ function MisoInfo({
             target="_blank"
             rel="noreferrer noopener"
           >
-            <Image src="/images/miso/trident/trident_view_auction.svg" width={91} height={88} />
+            <Image src="/images/miso/trident/trident_view_auction.svg" width={91} height={88} alt="Trident View Action" />
           </a>
         </div>
       </div>

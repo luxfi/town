@@ -1,12 +1,6 @@
 [build]
-  command = "npm run build"
-  publish = "out"
+  command = "yarn build:netlify"
+  publish = ".next"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-[context.deploy-preview.environment]
-  NETLIFY_USE_YARN = true
-
-[context.branch-deploy.environment]
-  NETLIFY_USE_YARN = true
