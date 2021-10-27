@@ -45,7 +45,7 @@
     "node": "yarn workspace @luxdefi/contracts chain",
     "send": "yarn workspace @luxdefi/contracts send",
     "test": "yarn workspace @luxdefi/contracts test",
-    "wallet": "cd packages/contracts && npx contracts wallet",
+    "wallet": "yarn workspace @luxdefi/contracts wallet",
     "drop": "yarn workspace @luxdefi/moralis drop",
     "functions": "yarn workspace @luxdefi/moralis functions",
     "logs": "yarn workspace @luxdefi/moralis logs",

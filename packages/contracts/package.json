@@ -46,7 +46,6 @@
     "google-spreadsheet": "^3.1.15",
     "lodash": "^4.17.21",
     "qrcode-terminal": "^0.12.0",
-    "ts-node": "^10.3.0",
     "web3": "^1.5.2"
   },
   "scripts": {
@@ -70,6 +69,7 @@
     "configure:testnet": "hardhat run --network testnet scripts/configure.ts",
     "configure:mainnet": "hardhat run --network mainnet scripts/configure.ts",
     "fundFaucet:testnet": "hardhat run --network testnet scripts/fundFaucet.ts",
+    "wallet": "hardhat run scripts/createWallet.ts",
     "export": "mkdirp deployments && hardhat deploy --network hardhat --export-all ./contracts.json && cp ./contracts.json ../app/src/contracts.json && cp ./contracts.json ../lab/src/contracts.json && yarn subgraph:abis-localhost && yarn subgraph:abis-testnet",
     "subgraph:abis-localhost": "cp -R ./deployments/localhost ../subgraph/abis",
     "subgraph:abis-testnet": "cp -R ./deployments/testnet ../subgraph/abis",
