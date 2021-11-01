@@ -163,10 +163,6 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     },
   ]
 
-
-  console.log(getAsk(chainId, 'USDT', `${MILLION}`))
-
-
   // Add tokenType
   const testTokenTypes = [
     {
@@ -176,58 +172,58 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
       supply: 100,
       queryString: {}
     },
-    // {
-    //   kind: TokenType.WALLET,
-    //   name: 'Wallet 10B Lux',
-    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
-    //   supply: 1,
-    //   queryString: {
-    //     lux: 10000000000000,
-    //   }
-    // },
-    // {
-    //   kind: TokenType.WALLET,
-    //   name: 'Wallet 1B Lux',
-    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
-    //   supply: 10,
-    //   queryString: {
-    //     lux: 1000 * MILLION,
-    //   }
-    // },
-    // {
-    //   kind: TokenType.WALLET,
-    //   name: 'Wallet 100M Lux',
-    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
-    //   supply: 100,
-    //   queryString: {
-    //     lux: 100 * MILLION,
-    //   }
-    // },
-    // {
-    //   kind: TokenType.WALLET,
-    //   name: 'Wallet 10M Lux',
-    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
-    //   supply: 1000,
-    //   queryString: {
-    //     lux: 10 * MILLION,
-    //   }
-    // },
-    // {
-    //   kind: TokenType.WALLET,
-    //   name: 'Wallet 1M Lux',
-    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
-    //   supply: 10000,
-    //   queryString: {
-    //     lux: MILLION,
-    //   }
-    // },
-    // {
-    //   kind: TokenType.ATM,
-    //   name: 'ATM',
-    //   ask: getAsk(chainId, 'USDT', `${MILLION}`),
-    //   supply: 1000,
-    //   queryString: {}
-    // },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 10B Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 1,
+      queryString: {
+        lux: 10000000000000,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 1B Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 10,
+      queryString: {
+        lux: 1000 * MILLION,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 100M Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 100,
+      queryString: {
+        lux: 100 * MILLION,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 10M Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 1000,
+      queryString: {
+        lux: 10 * MILLION,
+      }
+    },
+    {
+      kind: TokenType.WALLET,
+      name: 'Wallet 1M Lux',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 10000,
+      queryString: {
+        lux: MILLION,
+      }
+    },
+    {
+      kind: TokenType.ATM,
+      name: 'ATM',
+      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      supply: 1000,
+      queryString: {}
+    },
   ]
 
   const tokenTypes = getTokenTypes(network, mainnetTokenTypes, testTokenTypes)
@@ -255,30 +251,6 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
 
   console.log('Minting...')
 
-  // for (const configuredType of configuredTypes) {
-  //   const name = configuredType.name
-  //   const minted = configuredType.minted.toNumber()
-  //   const supply = configuredType.supply.toNumber()
-  //   const remaining = supply - minted
-
-  //   console.log(name, {
-  //     minted,
-  //     supply,
-  //     remaining,
-  //   })
-    
-  //   if (minted < 30) {
-  //     for (let i = 0; i < remaining; i++) {
-  //       console.log(`App.mint(1, ${name}) #${supply - remaining + i + 1}`)
-  //       const tx = await app.mint(1, name)
-  //       await tx.wait()
-  //       await wait(5000)
-  //     }
-  //   }
-  // }
-  
-  // const tx = await app.mint(1, 'Validator')
-  // console.log(tx)
   for (const configuredType of configuredTypes) {
 
     const name = configuredType.name
@@ -300,8 +272,10 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
         await tx.wait()
         currentMinted = currentMinted + quantity
         console.log(`Currently minted ${name}`, currentMinted)
-        console.log('Wait 1 minute')
-        await wait(60000)
+        if (network !== 'hardhat') {
+          console.log('Wait 1 minute')
+          await wait(60000)
+        }
       }
     }
   }

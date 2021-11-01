@@ -30,6 +30,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
   // Declare an Event
   event AddDrop(address indexed dropAddress, string title);
   event Mint(uint256 indexed tokenId, ILux.Token token);
+  event UpdatedTokenName(uint256 indexed tokenId, string name);
 
   // Mapping of Address to Drop ID
   mapping(uint256 => address) public drops;
@@ -106,6 +107,13 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     emit Mint(token.id, token);
 
     return token;
+  }
+
+  function setTokenName(uint256 tokenId, string memory name) public {
+    require(media.ownerOf(tokenId) == msg.sender, 'App: msg sender must be owner of token');
+    tokens[tokenId].name = name;
+    emit UpdatedTokenName(tokenId, name);
+    console.log('Updated token name:', name);
   }
 
   // Set Bid with ETH
