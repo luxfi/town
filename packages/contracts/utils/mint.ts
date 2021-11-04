@@ -251,34 +251,34 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
 
   console.log('Minting...')
 
-  for (const configuredType of configuredTypes) {
+  // for (const configuredType of configuredTypes) {
 
-    const name = configuredType.name
-    const minted = configuredType.minted.toNumber()
-    const supply = configuredType.supply.toNumber()
-    const remaining = supply - minted
-    let currentMinted = minted
+  //   const name = configuredType.name
+  //   const minted = configuredType.minted.toNumber()
+  //   const supply = configuredType.supply.toNumber()
+  //   const remaining = supply - minted
+  //   let currentMinted = minted
 
-    console.log(name, {
-      minted,
-      supply,
-      remaining,
-    })
+  //   console.log(name, {
+  //     minted,
+  //     supply,
+  //     remaining,
+  //   })
 
-    for (const quantity of chunkQuantity(remaining, 7)) {
-      if (quantity > 0 && currentMinted < 30) {
-        console.log(`App.mintMany(1, ${name}, ${quantity})`)
-        const tx = await app.mintMany(1, name, quantity)
-        await tx.wait()
-        currentMinted = currentMinted + quantity
-        console.log(`Currently minted ${name}`, currentMinted)
-        if (network !== 'hardhat') {
-          console.log('Wait 1 minute')
-          await wait(60000)
-        }
-      }
-    }
-  }
+  //   for (const quantity of chunkQuantity(remaining, 7)) {
+  //     if (quantity > 0 && currentMinted < 30) {
+  //       console.log(`App.mintMany(1, ${name}, ${quantity})`)
+  //       const tx = await app.mintMany(1, name, quantity)
+  //       await tx.wait()
+  //       currentMinted = currentMinted + quantity
+  //       console.log(`Currently minted ${name}`, currentMinted)
+  //       if (network !== 'hardhat') {
+  //         console.log('Wait 1 minute')
+  //         await wait(60000)
+  //       }
+  //     }
+  //   }
+  // }
 
   console.log('Done')
 }

@@ -10,6 +10,7 @@ import {
   Media,
   ReserveAuction,
   ReserveAuctionBid,
+  TokenType,
   Transfer,
   URIUpdate,
   User,
@@ -576,4 +577,61 @@ export function handleFinishedAuction(auction: ReserveAuction, timestamp: BigInt
 
 function isNullEthValue(value: string): boolean {
   return value == '0x0000000000000000000000000000000000000000000000000000000000000001'
+}
+
+
+const tokenKindMap = {
+  '0': 'Validator',
+  '1': 'ATM',
+  '2': 'Wallet',
+  '3': 'Cash',
+}
+
+/**
+ * Create New Ask Entity
+ * @param id
+ * @param amount
+ * @param currency
+ * @param media
+ * @param createdAtTimestamp
+ * @param createdAtBlockNumber
+ */
+ export function createTokenType(
+  id: string,
+  kindId: string,
+  ask: Ask,
+  supply: BigInt,
+  contentHash: Bytes,
+  metadataHash: Bytes,
+  contentURI: string,
+  metadataURI: string,
+  ownerBidShare: BigInt,
+  creatorBidShare: BigInt,
+  prevOwnerBidShare: BigInt,
+  createdAtTimestamp: BigInt,
+  transactionHash: string
+): TokenType {
+
+  // Create ask and assign ask id 
+  const ask = createAsk()
+
+  const kind = tokenKindMap[kindId]
+
+  let tokenType = new TokenType(id)
+  tokenType.kind = kind
+  tokenType.ask = ask
+  tokenType.supply = supply
+  tokenType.contentHash = contentHash
+  tokenType.metadataHash = metadataHash
+  tokenType.contentURI = contentURI
+  tokenType.metadataURI = metadataURI
+  tokenType.ownerBidShare = ownerBidShare
+  tokenType.creatorBidShare = creatorBidShare
+  tokenType.prevOwnerBidShare = prevOwnerBidShare
+  tokenType.createdAtTimestamp = createdAtTimestamp
+  tokenType.transactionHash = transactionHash
+
+
+  tokenType.save()
+  return tokenType
 }

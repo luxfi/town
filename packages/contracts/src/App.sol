@@ -28,7 +28,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
   Counters.Counter private dropIds;
 
   // Declare an Event
-  event AddDrop(address indexed dropAddress, string title);
+  event AddDrop(uint256 dropId, address indexed dropAddress, string title);
   event Mint(uint256 indexed tokenId, ILux.Token token);
   event UpdatedTokenName(uint256 indexed tokenId, string name);
 
@@ -40,9 +40,6 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
 
   // Mapping of ID to NFT
   mapping(uint256 => ILux.Token) public tokens;
-
-  // Price to set name of Token
-  uint256 public namePrice;
 
   // External contracts
   IMedia public media;
@@ -70,7 +67,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     uint256 dropId = dropIds.current();
     drops[dropId] = dropAddress;
     dropAddresses[dropAddress] = dropId;
-    emit AddDrop(dropAddress, drop.title());
+    emit AddDrop(dropId, dropAddress, drop.title());
     return dropId;
   }
 
@@ -126,6 +123,20 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     media.setBidFromApp(tokenId, bid, msg.sender);
   }
 
+  function setLazyBid(uint256 dropId, string memory name, IMarket.Bid memory bid) public payable nonReentrant {
+    IDrop drop = IDrop(drops[dropId]);
+    IDrop.TokenType memory tokenType = drop.getTokenType(name);
+    require(tokenType.supply > 0, 'Drop: token type does not exist');
+    media.setLazyBidFromApp(dropId, tokenType, bid, msg.sender);
+  }
+
+  function setLazyBidERC20(uint256 dropId, string memory name, IMarket.Bid memory bid) public nonReentrant {
+    IDrop drop = IDrop(drops[dropId]);
+    IDrop.TokenType memory tokenType = drop.getTokenType(name);
+    require(tokenType.supply > 0, 'Drop: token type does not exist');
+    media.setLazyBidFromApp(dropId, tokenType, bid, msg.sender);
+  }
+
   /**
    * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
    * See {_finalizeNFTTransfer}
@@ -156,6 +167,32 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
   }
 
   /**
+   * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
+   * See {_finalizeNFTTransfer}
+   * Provided bid must match a bid in storage. This is to prevent a race condition
+   * where a bid may change while the acceptBid call is in transit.
+   * A bid cannot be accepted if it cannot be split equally into its shareholders.
+   * This should only revert in rare instances (example, a low bid with a zero-decimal token),
+   * but is necessary to ensure fairness to all shareholders.
+   */
+  function acceptLazyBid(uint256 dropId, string memory name, IMarket.Bid memory bid) public nonReentrant {
+    IDrop drop = IDrop(drops[dropId]);
+
+    IDrop.TokenType memory tokenType = drop.getTokenType(name);
+
+    ILux.Token memory token = drop.newNFT(name);
+
+    require(tokenType.supply > 0, 'Drop: token type does not exist');
+
+    media.acceptLazyBidFromApp(dropId, tokenType, token, bid);
+    
+    if (!bid.offline) {
+      // Transfer the amount to the contract owner address
+      payable(owner()).sendValue(bid.amount);
+    }
+  }
+
+  /**
    * @notice Removes the bid on a particular media for a bidder. The bid amount
    * is transferred from this contract to the bidder, if they have a bid placed.
    */
@@ -165,7 +202,22 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     media.removeBidFromApp(tokenId, msg.sender);
     
     // Refund bidder if it is not an offline bid.
-    if (bid.amount > 0 && !bid.offline) {
+    if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
+      payable(bid.bidder).sendValue(bid.amount);
+    }
+  }
+
+  /**
+   * @notice Removes the bid on a particular media for a bidder. The bid amount
+   * is transferred from this contract to the bidder, if they have a bid placed.
+   */
+  function removeLazyBid(uint256 dropId, string memory name) public nonReentrant {
+    IMarket.Bid memory bid = market.lazyBidForTokenBidder(dropId, name, msg.sender); // Get the bid before it is removed
+    
+    media.removeLazyBidFromApp(dropId, name, msg.sender);
+    
+    // Refund bidder if it is not an offline bid.
+    if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       payable(bid.bidder).sendValue(bid.amount);
     }
   }

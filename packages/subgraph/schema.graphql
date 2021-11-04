@@ -67,6 +67,9 @@ type Media @entity {
 
   "The ReserveAuctions of the Media"
   reserveAuctions: [ReserveAuction!] @derivedFrom(field: "media")
+
+  "Lux: The owner is allowed to set the token name"
+  name: String
 }
 
 type User @entity {
@@ -92,6 +95,8 @@ type Ask @entity {
 
   "The Media associated with the Ask"
   media: Media!
+
+  tokenType: TokenType!
 
   "Transaction hash the ask was created at"
   transactionHash: String!
@@ -457,4 +462,53 @@ type ReserveAuction @entity {
 
   "The block number at which the auction end function was called"
   finalizedAtBlockNumber: BigInt
+}
+
+enum TokenKind {
+  ATM
+  Cash
+  Validator
+  Wallet
+}
+
+type TokenType @entity {
+  "The token type name"
+  id: ID!
+
+  "The token type kind"
+  kind: TokenKind!
+
+  "The suggested ask for the token type"
+  ask: Ask! @derivedFrom(field: "tokenType")
+
+  "The maximum number of tokens that can be minted for this type"
+  supply: BigInt!
+
+   "The sha256 hash of the media's content"
+  contentHash: Bytes!
+
+  "The sha256 hash of the media's metadata"
+  metadataHash: Bytes!
+
+  "The uri of the content"
+  contentURI: String!
+
+  "The uri of the metadata"
+  metadataURI: String! 
+
+  "The bid share for the current owner of the Media"
+  ownerBidShare: BigInt!
+
+  "The bid share for the creator of the Media"
+  creatorBidShare: BigInt!
+
+  "The bid share for the previous owner of the Media's market"
+  prevOwnerBidShare: BigInt!
+
+  "The timestamp of the block the Bid was created in"
+  createdAtTimestamp: BigInt!
+
+  "The transaction hash the media was created at"
+  transactionHash: String!
+
 }

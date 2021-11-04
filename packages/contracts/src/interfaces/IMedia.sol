@@ -7,6 +7,7 @@ pragma experimental ABIEncoderV2;
 import { IERC721 } from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import { IMarket } from './IMarket.sol';
 import { ILux } from './ILux.sol';
+import { IDrop } from './IDrop.sol';
 
 /**
  * @title Interface for Zoo Protocol's Media
@@ -123,7 +124,11 @@ interface IMedia is IERC721 {
    */
   function removeBidFromApp(uint256 tokenId, address sender) external;
 
+  function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external;
+
   function acceptBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external;
+
+  function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, IMarket.Bid memory bid) external;
 
   function mintToken(address owner, ILux.Token memory tokenID) external returns (ILux.Token memory);
 
@@ -134,4 +139,12 @@ interface IMedia is IERC721 {
   function tokenCreator(uint256 tokenID) external returns (address);
   
   function previousTokenOwner(uint256 tokenID) external returns (address);
+
+  function setLazyBidFromApp(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    IMarket.Bid memory bid,
+    address spender
+  ) external;
+
 }

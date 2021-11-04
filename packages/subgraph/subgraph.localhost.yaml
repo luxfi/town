@@ -71,3 +71,23 @@ dataSources:
         - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256),bool))
           handler: handleBidFinalized
       file: ./src/market.ts
+  - kind: ethereum/contract
+    name: Drop
+    network: 'mainnet'
+    source:
+      address: '0x792de6045d65D7ad660a8cFB7cF4eB06EEaFBcDe'
+      abi: Drop
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TokenType
+      abis:
+        - name: Drop
+          file: ./abis/localhost/Drop.json
+      eventHandlers:
+        - event: TokenTypeAdded((uint8,string,(uint256,address,bool),uint256,uint256,uint256,(string,string,bytes32,bytes32),((uint256),(uint256),(uint256))))
+          handler: handleTokenTypeAdded
+      file: ./src/drop.ts
