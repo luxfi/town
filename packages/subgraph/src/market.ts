@@ -2,6 +2,8 @@ import {
   AskCreated,
   AskRemoved,
   BidCreated,
+  LazyBidCreated,
+  LazyBidRemoved,
   BidFinalized,
   BidRemoved,
   BidShareUpdated,
@@ -11,11 +13,14 @@ import { Ask, Bid, Media, Transfer } from '../types/schema'
 import {
   createAsk,
   createBid,
+  createLazyBid,
   createInactiveAsk,
+  createInactiveLazyAsk,
   createInactiveBid,
+  createInactiveLazyBid,
   findOrCreateCurrency,
   findOrCreateUser,
-  zeroAddress,
+  AddressZero,
 } from './helpers'
 
 const REMOVED = 'Removed'
@@ -137,7 +142,7 @@ export function handleAskRemoved(event: AskRemoved): void {
       `AskRemoved Event has a 0 amount, returning early and not updating state`,
       []
     )
-    askId = zeroAddress
+    askId = AddressZero
   } else {
     let media = Media.load(tokenId)
     if (media == null) {
@@ -230,6 +235,55 @@ export function handleBidCreated(event: BidCreated): void {
 }
 
 /**
+ * Handler called `LazyBidCreated` Event is emitted on the Zora Market Contract
+ * @param event
+ */
+ export function handleLazyBidCreated(event: LazyBidCreated): void {
+  let dropId = event.params.dropId
+  let name = event.params.name
+  let bid = event.params.bid
+
+  log.info(`Starting handler for LazyBidCreated Event for dropId: {}, bid: {}`, [
+    dropId.toString(),
+    name,
+    bid.toString(),
+  ])
+
+  let bidId = dropId.toString().concat('-').concat(name).concat('-').concat(bid.bidder.toHexString())
+
+  let bidder = findOrCreateUser(bid.bidder.toHexString())
+  let recipient = findOrCreateUser(bid.recipient.toHexString())
+
+  let currency = findOrCreateCurrency(bid.currency.toHexString())
+
+  createLazyBid(
+    bidId,
+    event.params.dropId,
+    name,
+    event.transaction.hash.toHexString(),
+    bid.amount,
+    currency,
+    bid.sellOnShare.value,
+    bidder,
+    recipient,
+    event.block.timestamp,
+    event.block.number
+  )
+
+  // Update Currency Liquidity
+  if (!bid.offline) {
+    currency.liquidity = currency.liquidity.plus(bid.amount)
+    currency.save()
+  }
+
+  log.info(`Completed handler for LazyBidCreated Event for dropId: {}, bid: {}`, [
+    dropId.toString(),
+    name,
+    bid.toString(),
+  ])
+}
+
+/**
  * Handler called when the `BidRemoved` Event is emitted on the Zora Market Contract
  * @param event
  */
@@ -259,6 +313,7 @@ export function handleBidRemoved(event: BidRemoved): void {
     .concat(event.transaction.hash.toHexString())
     .concat('-')
     .concat(event.transactionLogIndex.toString())
+
   let bidder = findOrCreateUser(onChainBid.bidder.toHexString())
   let recipient = findOrCreateUser(onChainBid.recipient.toHexString())
   let currency = findOrCreateCurrency(onChainBid.currency.toHexString())
@@ -288,6 +343,74 @@ export function handleBidRemoved(event: BidRemoved): void {
   store.remove('Bid', bidId)
   log.info(`Completed handler for BidRemoved Event for tokenId: {}, bid: {}`, [
     tokenId,
+    bidId,
+  ])
+}
+
+/**
+ * Handler called when the `BidRemoved` Event is emitted on the Zora Market Contract
+ * @param event
+ */
+export function handleLazyBidRemoved(event: LazyBidRemoved): void {
+  let dropId = event.params.dropId
+  let name = event.params.name
+  let onChainBid = event.params.bid
+  let bidderHex = onChainBid.bidder.toHexString()
+
+  let bidId = dropId.toString().concat('-').concat(name).concat('-').concat(bidderHex)
+
+  log.info(`Starting handler for LazyBidRemoved Event for tokenId: {}, bid: {}`, [
+    dropId.toString(),
+    name,
+    bidderHex,
+    bidId,
+  ])
+
+  let bid = Bid.load(bidId)
+  if (bid == null) {
+    log.error('Bid is null for bidId: {}', [bidId])
+  }
+
+  let inactiveBidId = dropId
+    .toString()
+    .concat('-')
+    .concat(name)
+    .concat(event.transaction.hash.toHexString())
+    .concat('-')
+    .concat(event.transactionLogIndex.toString())
+
+  let bidder = findOrCreateUser(onChainBid.bidder.toHexString())
+  let recipient = findOrCreateUser(onChainBid.recipient.toHexString())
+  let currency = findOrCreateCurrency(onChainBid.currency.toHexString())
+
+  // Create Inactive Bid
+  createInactiveLazyBid(
+    inactiveBidId,
+    dropId,
+    name,
+    event.transaction.hash.toHexString(),
+    REMOVED,
+    onChainBid.amount,
+    currency,
+    onChainBid.sellOnShare.value,
+    bidder,
+    recipient,
+    bid.createdAtTimestamp,
+    bid.createdAtBlockNumber,
+    event.block.timestamp,
+    event.block.number
+  )
+
+  // Update Currency Liquidity
+  currency.liquidity = currency.liquidity.minus(bid.amount)
+  currency.save()
+
+  // Remove Bid
+  store.remove('Bid', bidId)
+  log.info(`Completed handler for BidRemoved Event for name: {}, bid: {}`, [
+    dropId.toString(),
+    name,
+    bidderHex,
     bidId,
   ])
 }

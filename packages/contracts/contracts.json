@@ -7011,6 +7011,42 @@
               "type": "event"
             },
             {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "offline",
+                      "type": "bool"
+                    }
+                  ],
+                  "indexed": false,
+                  "internalType": "struct IMarket.Ask",
+                  "name": "ask",
+                  "type": "tuple"
+                }
+              ],
+              "name": "TokenTypeAskUpdated",
+              "type": "event"
+            },
+            {
               "inputs": [],
               "name": "appAddress",
               "outputs": [
@@ -7636,6 +7672,41 @@
                   "type": "tuple"
                 }
               ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "offline",
+                      "type": "bool"
+                    }
+                  ],
+                  "internalType": "struct IMarket.Ask",
+                  "name": "ask",
+                  "type": "tuple"
+                }
+              ],
+              "name": "setTokenTypeAsk",
+              "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
             },
@@ -19383,6 +19454,42 @@
               "type": "event"
             },
             {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "offline",
+                      "type": "bool"
+                    }
+                  ],
+                  "indexed": false,
+                  "internalType": "struct IMarket.Ask",
+                  "name": "ask",
+                  "type": "tuple"
+                }
+              ],
+              "name": "TokenTypeAskUpdated",
+              "type": "event"
+            },
+            {
               "inputs": [],
               "name": "appAddress",
               "outputs": [
@@ -20008,6 +20115,41 @@
                   "type": "tuple"
                 }
               ],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "offline",
+                      "type": "bool"
+                    }
+                  ],
+                  "internalType": "struct IMarket.Ask",
+                  "name": "ask",
+                  "type": "tuple"
+                }
+              ],
+              "name": "setTokenTypeAsk",
+              "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
             },

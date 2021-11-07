@@ -71,11 +71,13 @@ contract Drop is IDrop, Ownable {
     tokenNames.push(name);
     console.log('Drop: Added token type:', tokenType.name);
     emit TokenTypeAdded(tokenType);
+    emit TokenTypeAskUpdated(name, ask);
     return tokenType;
   }
 
   function setTokenTypeAsk(string memory name, IMarket.Ask memory ask) public onlyOwner {
     tokenTypes[name].ask = ask;
+    emit TokenTypeAskUpdated(name, ask);
   }
 
   function getTokenTypes() public view returns(TokenType[] memory){

@@ -115,6 +115,15 @@ type Ask @entity {
 
   "The number of the block the Ask created in"
   createdAtBlockNumber: BigInt!
+
+  "Is this a sale lazy mint ask"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
 type Bid @entity {
@@ -147,6 +156,15 @@ type Bid @entity {
 
   "The number of the block the Bid was created in"
   createdAtBlockNumber: BigInt!
+
+  "Is this a sale lazy mint bid"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
 "The Types for MarketEvents (Asks, Bids)"
@@ -194,6 +212,15 @@ type InactiveBid @entity {
 
   "The number of the block the original Bid was inactivated in"
   inactivatedAtBlockNumber: BigInt!
+
+  "Is this a sale lazy mint bid"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
 type InactiveAsk @entity {
@@ -229,6 +256,15 @@ type InactiveAsk @entity {
 
   "The number of the block the original Ask was inactivated in"
   inactivatedAtBlockNumber: BigInt!
+  
+  "Is this a sale lazy mint ask"
+  lazy: Boolean!
+
+  "Drop id"
+  dropId: BigInt!
+  
+  "Token type name"
+  tokenTypeName: String!
 }
 
 type Currency @entity {
@@ -384,6 +420,7 @@ type InactiveReserveAuctionBid @entity {
   "The number of the block the Bid was created in"
   createdAtBlockNumber: BigInt!
 }
+
 enum ReserveAuctionStatus {
   Pending
   Active

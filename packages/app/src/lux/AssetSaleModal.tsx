@@ -8,9 +8,9 @@ import HowReservations from './HowReservations'
 import SetSaleBid from './SetSaleBid'
 import SetAsk from './SetAsk'
 import HowOffline from './HowOffline'
-import BidList from './BidList'
-import { Bid, GraphBid } from './types'
-import BidModal from './BidModal'
+import LazyBidList from './LazyBidList'
+import { Bid, GraphLazyBid } from './types'
+import LazyBidModal from './LazyBidModal'
 
 const defaultShow = {
   setAsk: false,
@@ -36,11 +36,11 @@ const DROP_ID = 1
 const AssetModal = (props: any) => {
   const router = useRouter()
   const assetModalRef = useRef(null)
-  const { name: routerTokenTypeName } = router.query
+  const { name: tokenTypeName } = router.query
   const { modalProps } = props
   const [tokenId, setTokenTypeName] = useState(null)
   // const { ask, highest, getUsdAmount, contentURI, formattedAmount, isOwner, symbol, usdAmount } = {} as any
-  const { ask, highest, getUsdAmount, contentURI, metadataURI, formattedAmount, isOwner, symbol, usdAmount } = useTokenType(props.dropId, routerTokenTypeName as string)
+  const { ask, highest, getUsdAmount, contentURI, metadataURI, formattedAmount, isOwner, symbol, usdAmount } = useTokenType(props.dropId, tokenTypeName as string)
   const [show, setShow] = useState(defaultShow)
   const [showBidModal, setShowBidModal] = useState(false)
   const [modalBid, setModalBid] = useState(null)
@@ -55,20 +55,20 @@ const AssetModal = (props: any) => {
   }
 
   useEffect(() => {
-    setTokenTypeName(routerTokenTypeName)
-    if (routerTokenTypeName) {
-      props.openModal && props.openModal(assetModalRef, { id: routerTokenTypeName })
+    setTokenTypeName(tokenTypeName)
+    if (tokenTypeName) {
+      props.openModal && props.openModal(assetModalRef, { id: tokenTypeName })
     }
-  }, [routerTokenTypeName])
+  }, [tokenTypeName])
 
-  const onClickBid = (bid: GraphBid) => {
+  const onClickBid = (bid: GraphLazyBid) => {
     setModalBid(bid)
     setShowBidModal(!showBidModal)
   }
 
   return (
     <>
-      <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)} />
+      <LazyBidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)} />
       <Modal {...props.modalProps} padding={0} closeButton={false}>
         <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
           <div className="">
@@ -83,7 +83,7 @@ const AssetModal = (props: any) => {
                 <AssetSale
                   ask={ask}
                   dropId={DROP_ID}
-                  name={routerTokenTypeName as string}
+                  name={tokenTypeName as string}
                   contentURI={contentURI}
                   metadataURI={metadataURI}
                   formattedAmount={formattedAmount}
@@ -116,7 +116,7 @@ const AssetModal = (props: any) => {
                         </p>
                       </SetAsk>
                       <div className="pt-8 text-indigo-500">Bids</div>
-                      <BidList where={{ media: tokenId }} onClick={onClickBid} />
+                      <LazyBidList where={{ media: tokenId }} onClick={onClickBid} />
                     </>
                   )} */}
                 </div>
@@ -126,7 +126,7 @@ const AssetModal = (props: any) => {
                     <HowReservations onClick={() => showSection('setBid')} />
                   ) : (
                     <>
-                      <SetSaleBid dropId={DROP_ID} name={routerTokenTypeName as string}>
+                      <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string}>
                         <p
                           className="pt-8 text-center text-gray-500 cursor-pointer"
                           onClick={() => showSection('howReservations')}
@@ -134,8 +134,8 @@ const AssetModal = (props: any) => {
                           How do reservations work?
                         </p>
                       </SetSaleBid>
-                      {/* <div className="pt-8 text-indigo-500">Bids</div>
-                      <BidList empty={<NoBids />} where={{ media: tokenId }} onClick={onClickBid} /> */}
+                      <div className="pt-8 text-indigo-500">Bids</div>
+                      <LazyBidList empty={<NoBids />} where={{ tokenTypeName: tokenTypeName as string}} onClick={onClickBid} />
                     </>
                   )}
                 </div>

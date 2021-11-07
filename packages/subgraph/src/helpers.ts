@@ -21,7 +21,7 @@ import { ERC20 } from '../types/Market/ERC20'
 import { ERC20NameBytes } from '../types/Market/ERC20NameBytes'
 import { ERC20SymbolBytes } from '../types/Market/ERC20SymbolBytes'
 
-export const zeroAddress = '0x0000000000000000000000000000000000000000'
+export const AddressZero = '0x0000000000000000000000000000000000000000'
 
 /**
  *  helper class to model BidShares
@@ -76,7 +76,7 @@ export function createCurrency(id: string): Currency {
   let currency = new Currency(id)
   currency.liquidity = BigInt.fromI32(0)
 
-  if (id === zeroAddress) {
+  if (id === AddressZero) {
     currency.name = 'Ethereum'
     currency.symbol = 'ETH'
     currency.decimals = 18
@@ -260,6 +260,9 @@ export function createAsk(
   ask.owner = media.owner
   ask.createdAtTimestamp = createdAtTimestamp
   ask.createdAtBlockNumber = createdAtBlockNumber
+  ask.lazy = false
+  ask.dropId = BigInt.fromI32(0)
+  ask.tokenTypeName = ''
 
   ask.save()
   return ask
@@ -301,6 +304,53 @@ export function createInactiveAsk(
   inactiveAsk.inactivatedAtTimestamp = inactivatedAtTimestamp
   inactiveAsk.inactivatedAtBlockNumber = inactivatedAtBlockNumber
   inactiveAsk.transactionHash = transactionHash
+  inactiveAsk.lazy = false
+  inactiveAsk.dropId = BigInt.fromI32(0)
+  inactiveAsk.tokenTypeName = ''
+
+  inactiveAsk.save()
+  return inactiveAsk
+}
+
+/**
+ * Create New InactiveAsk Entity
+ * @param id
+ * @param type
+ * @param amount
+ * @param currency
+ * @param owner
+ * @param createdAtTimestamp
+ * @param createdAtBlockNumber
+ */
+ export function createInactiveLazyAsk(
+  id: string,
+  dropId: BigInt,
+  tokenTypeName: string,
+  transactionHash: string,
+  type: string,
+  amount: BigInt,
+  currency: Currency,
+  owner: string,
+  createdAtTimestamp: BigInt,
+  createdAtBlockNumber: BigInt,
+  inactivatedAtTimestamp: BigInt,
+  inactivatedAtBlockNumber: BigInt
+): InactiveAsk {
+  let inactiveAsk = new InactiveAsk(id)
+
+  inactiveAsk.type = type
+  inactiveAsk.media = AddressZero
+  inactiveAsk.amount = amount
+  inactiveAsk.currency = currency.id
+  inactiveAsk.owner = owner
+  inactiveAsk.createdAtTimestamp = createdAtTimestamp
+  inactiveAsk.createdAtBlockNumber = createdAtBlockNumber
+  inactiveAsk.inactivatedAtTimestamp = inactivatedAtTimestamp
+  inactiveAsk.inactivatedAtBlockNumber = inactivatedAtBlockNumber
+  inactiveAsk.transactionHash = transactionHash
+  inactiveAsk.lazy = true
+  inactiveAsk.dropId = dropId
+  inactiveAsk.tokenTypeName = tokenTypeName
 
   inactiveAsk.save()
   return inactiveAsk
@@ -346,6 +396,57 @@ export function createInactiveBid(
   inactiveBid.createdAtBlockNumber = createdAtBlockNumber
   inactiveBid.inactivatedAtTimestamp = inactivatedAtTimestamp
   inactiveBid.inactivatedAtBlockNumber = inactivatedAtBlockNumber
+  inactiveBid.lazy = false
+  inactiveBid.dropId = BigInt.fromI32(0)
+  inactiveBid.tokenTypeName = ''
+
+  inactiveBid.save()
+  return inactiveBid
+}
+
+/**
+ * Create New InactiveBid Entity
+ * @param id
+ * @param type
+ * @param amount
+ * @param currency
+ * @param sellOnShare
+ * @param bidder
+ * @param recipient
+ * @param createdAtTimestamp
+ * @param createdAtBlockNumber
+ */
+export function createInactiveLazyBid(
+  id: string,
+  dropId: BigInt,
+  tokenTypeName: string,
+  transactionHash: string,
+  type: string,
+  amount: BigInt,
+  currency: Currency,
+  sellOnShare: BigInt,
+  bidder: User,
+  recipient: User,
+  createdAtTimestamp: BigInt,
+  createdAtBlockNumber: BigInt,
+  inactivatedAtTimestamp: BigInt,
+  inactivatedAtBlockNumber: BigInt
+): InactiveBid {
+  let inactiveBid = new InactiveBid(id)
+  inactiveBid.type = type
+  inactiveBid.transactionHash = transactionHash
+  ;(inactiveBid.media = AddressZero), (inactiveBid.amount = amount)
+  inactiveBid.currency = currency.id
+  inactiveBid.sellOnShare = sellOnShare
+  inactiveBid.bidder = bidder.id
+  inactiveBid.recipient = recipient.id
+  inactiveBid.createdAtTimestamp = createdAtTimestamp
+  inactiveBid.createdAtBlockNumber = createdAtBlockNumber
+  inactiveBid.inactivatedAtTimestamp = inactivatedAtTimestamp
+  inactiveBid.inactivatedAtBlockNumber = inactivatedAtBlockNumber
+  inactiveBid.lazy = true
+  inactiveBid.dropId = dropId
+  inactiveBid.tokenTypeName = tokenTypeName
 
   inactiveBid.save()
   return inactiveBid
@@ -385,6 +486,54 @@ export function createBid(
   bid.media = media.id
   bid.createdAtTimestamp = createdAtTimestamp
   bid.createdAtBlockNumber = createdAtBlockNumber
+  bid.lazy = false
+  bid.dropId = BigInt.fromI32(0)
+  bid.tokenTypeName = ''
+  
+  bid.save()
+  return bid
+}
+
+/**
+ * Create New Bid Entity
+ * @param id
+ * @param dropId
+ * @param tokenTypeName
+ * @param transactionHash
+ * @param amount
+ * @param currency
+ * @param sellOnShare
+ * @param bidder
+ * @param recipient
+ * @param createdAtTimestamp
+ * @param createdAtBlockNumber
+ */
+ export function createLazyBid(
+  id: string,
+  dropId: BigInt,
+  tokenTypeName: string,
+  transactionHash: string,
+  amount: BigInt,
+  currency: Currency,
+  sellOnShare: BigInt,
+  bidder: User,
+  recipient: User,
+  createdAtTimestamp: BigInt,
+  createdAtBlockNumber: BigInt
+): Bid {
+  let bid = new Bid(id)
+  bid.transactionHash = transactionHash
+  bid.amount = amount
+  bid.currency = currency.id
+  bid.sellOnShare = sellOnShare
+  bid.bidder = bidder.id
+  bid.recipient = recipient.id
+  bid.media = AddressZero
+  bid.createdAtTimestamp = createdAtTimestamp
+  bid.createdAtBlockNumber = createdAtBlockNumber
+  bid.lazy = true
+  bid.dropId = dropId
+  bid.tokenTypeName = tokenTypeName
 
   bid.save()
   return bid

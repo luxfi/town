@@ -178,8 +178,8 @@ export function useTokenType(dropId: number | string, name: string | null) {
 
   useEffect(() => {
     if (name) {
-      drop.owner().then(setOwner)
-      drop.getTokenType(name).then(setTokenType)
+      drop?.owner()?.then(setOwner)
+      drop?.getTokenType(name)?.then(setTokenType)
     }
   }, [drop, name])
 

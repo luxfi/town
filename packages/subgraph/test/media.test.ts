@@ -371,7 +371,7 @@ describe('Media', async () => {
 
       // transfersResponse = await request(gqlURL, transfersByMediaIdQuery("2"));
       // expect(transfersResponse.transfers.length).toBe(1);
-      // expect(transfersResponse.transfers[0].from.id).toBe(zeroAddress);
+      // expect(transfersResponse.transfers[0].from.id).toBe(AddressZero);
       // expect(transfersResponse.transfers[0].to.id).toBe(otherWallet.address.toLowerCase());
     })
   })
