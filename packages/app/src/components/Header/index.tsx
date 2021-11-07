@@ -56,6 +56,14 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Dashboard`)}
                         </a>
                       </NavLink>
+                      <NavLink href="/sale">
+                        <a
+                          id={`swap-nav-link`}
+                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                        >
+                          {i18n._(t`Sale`)}
+                        </a>
+                      </NavLink>
                       <NavLink href="/market">
                         <a
                           id={`swap-nav-link`}

@@ -97,7 +97,7 @@ contract Market is IMarket, Ownable {
 
   function isValidLazyBid(IDrop.TokenType memory tokenType, uint256 bidAmount) public pure returns (bool) {
     BidShares memory bidShares = tokenType.bidShares;
-    require(isValidBidShares(bidShares), 'Market: Invalid bid shares for token');
+    require(isValidBidShares(bidShares), 'Market: Invalid lazy bid shares for token');
     return bidAmount != 0 && (bidAmount == splitShare(bidShares.creator, bidAmount).add(splitShare(bidShares.prevOwner, bidAmount)).add(splitShare(bidShares.owner, bidAmount)));
   }
 
@@ -285,7 +285,7 @@ contract Market is IMarket, Ownable {
     emit LazyBidRemoved(dropId, name, bid);
     delete _lazyTokenBidders[dropTokenTypeName][bidder];
 
-    // console.log('Market.removeLazyBidFromApp', dropId, name, bidCurrency, bidOffline);
+    console.log('Market.removeLazyBidFromApp', dropTokenTypeName, bidCurrency, bidOffline);
 
     if (bidCurrency != address(0) && !bidOffline) {
       IERC20 token = IERC20(bidCurrency);

@@ -479,7 +479,7 @@ export function createReserveAuction(
   reserveAuction.tokenId = tokenId
   reserveAuction.transactionHash = transactionHash
   reserveAuction.tokenContract = tokenContract
-  reserveAuction.token = tokenContract.concat('-').concat(tokenId.toString()) 
+  reserveAuction.token = tokenContract.concat('-').concat(tokenId.toString())
   reserveAuction.media = media ? media.id : null
   reserveAuction.approved = false
   reserveAuction.duration = duration
@@ -499,13 +499,19 @@ export function createReserveAuction(
   return reserveAuction
 }
 
-export function setReserveAuctionFirstBidTime(auction: ReserveAuction, time: BigInt): void {
+export function setReserveAuctionFirstBidTime(
+  auction: ReserveAuction,
+  time: BigInt
+): void {
   auction.firstBidTime = time
   auction.expectedEndTimestamp = auction.duration.plus(time)
   auction.save()
 }
 
-export function handleReserveAuctionExtended(auction: ReserveAuction, duration: BigInt): void {
+export function handleReserveAuctionExtended(
+  auction: ReserveAuction,
+  duration: BigInt
+): void {
   auction.duration = duration
   auction.expectedEndTimestamp = auction.firstBidTime.plus(duration)
   auction.save()
@@ -541,7 +547,12 @@ export function createReserveAuctionBid(
 }
 
 // Create an inactive bid based off of the current highest bid, and delete the active bid
-export function handleBidReplaced(auction: ReserveAuction, timestamp: BigInt, blockNumber: BigInt, winningBid: boolean = false): void {
+export function handleBidReplaced(
+  auction: ReserveAuction,
+  timestamp: BigInt,
+  blockNumber: BigInt,
+  winningBid: boolean = false
+): void {
   let activeBid = ReserveAuctionBid.load(auction.currentBid) as ReserveAuctionBid
   let inactiveBid = new InactiveReserveAuctionBid(activeBid.id)
 
@@ -568,7 +579,12 @@ export function handleBidReplaced(auction: ReserveAuction, timestamp: BigInt, bl
   store.remove('ReserveAuctionBid', activeBid.id)
 }
 
-export function handleFinishedAuction(auction: ReserveAuction, timestamp: BigInt, blockNumber: BigInt, canceledAuction: boolean = false): void {
+export function handleFinishedAuction(
+  auction: ReserveAuction,
+  timestamp: BigInt,
+  blockNumber: BigInt,
+  canceledAuction: boolean = false
+): void {
   auction.finalizedAtTimestamp = timestamp
   auction.finalizedAtBlockNumber = blockNumber
   auction.status = canceledAuction ? 'Canceled' : 'Finished'
@@ -579,24 +595,14 @@ function isNullEthValue(value: string): boolean {
   return value == '0x0000000000000000000000000000000000000000000000000000000000000001'
 }
 
+// const tokenKindMap = [
+//   'Validator',
+//   'ATM',
+//   'Wallet',
+//   'Cash',
+// ]
 
-const tokenKindMap = {
-  '0': 'Validator',
-  '1': 'ATM',
-  '2': 'Wallet',
-  '3': 'Cash',
-}
-
-/**
- * Create New Ask Entity
- * @param id
- * @param amount
- * @param currency
- * @param media
- * @param createdAtTimestamp
- * @param createdAtBlockNumber
- */
- export function createTokenType(
+export function createTokenType(
   id: string,
   kindId: string,
   ask: Ask,
@@ -611,27 +617,25 @@ const tokenKindMap = {
   createdAtTimestamp: BigInt,
   transactionHash: string
 ): TokenType {
+  // Create ask and assign ask id
+  // const ask = createAsk()
 
-  // Create ask and assign ask id 
-  const ask = createAsk()
-
-  const kind = tokenKindMap[kindId]
+  // const kind = tokenKindMap[kindId]
 
   let tokenType = new TokenType(id)
-  tokenType.kind = kind
-  tokenType.ask = ask
-  tokenType.supply = supply
-  tokenType.contentHash = contentHash
-  tokenType.metadataHash = metadataHash
-  tokenType.contentURI = contentURI
-  tokenType.metadataURI = metadataURI
-  tokenType.ownerBidShare = ownerBidShare
-  tokenType.creatorBidShare = creatorBidShare
-  tokenType.prevOwnerBidShare = prevOwnerBidShare
-  tokenType.createdAtTimestamp = createdAtTimestamp
-  tokenType.transactionHash = transactionHash
+  // tokenType.kind = kind
+  // tokenType.ask = ask
+  // tokenType.supply = supply
+  // tokenType.contentHash = contentHash
+  // tokenType.metadataHash = metadataHash
+  // tokenType.contentURI = contentURI
+  // tokenType.metadataURI = metadataURI
+  // tokenType.ownerBidShare = ownerBidShare
+  // tokenType.creatorBidShare = creatorBidShare
+  // tokenType.prevOwnerBidShare = prevOwnerBidShare
+  // tokenType.createdAtTimestamp = createdAtTimestamp
+  // tokenType.transactionHash = transactionHash
 
-
-  tokenType.save()
+  // tokenType.save()
   return tokenType
 }

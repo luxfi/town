@@ -126,14 +126,16 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
   function setLazyBid(uint256 dropId, string memory name, IMarket.Bid memory bid) public payable nonReentrant {
     IDrop drop = IDrop(drops[dropId]);
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
-    require(tokenType.supply > 0, 'Drop: token type does not exist');
+    require(tokenType.supply > 0, 'App: token type does not exist');
+    require(bid.currency == address(0), 'App: currency must be payable');
     media.setLazyBidFromApp(dropId, tokenType, bid, msg.sender);
   }
 
   function setLazyBidERC20(uint256 dropId, string memory name, IMarket.Bid memory bid) public nonReentrant {
     IDrop drop = IDrop(drops[dropId]);
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
-    require(tokenType.supply > 0, 'Drop: token type does not exist');
+    require(tokenType.supply > 0, 'App: token type does not exist');
+    require(bid.currency != address(0), 'App: currency must be an ERC20 token');
     media.setLazyBidFromApp(dropId, tokenType, bid, msg.sender);
   }
 
@@ -180,11 +182,11 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
 
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
 
+    require(tokenType.supply > 0, 'App: token type does not exist');
+
     ILux.Token memory token = drop.newNFT(name);
 
-    require(tokenType.supply > 0, 'Drop: token type does not exist');
-
-    media.acceptLazyBidFromApp(dropId, tokenType, token, bid);
+    media.acceptLazyBidFromApp(dropId, tokenType, token, bid);    
     
     if (!bid.offline) {
       // Transfer the amount to the contract owner address
@@ -201,7 +203,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     
     media.removeBidFromApp(tokenId, msg.sender);
     
-    // Refund bidder if it is not an offline bid.
+    // Refund bidder if it was a payable bid and not an offline bid.
     if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       payable(bid.bidder).sendValue(bid.amount);
     }
@@ -216,7 +218,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     
     media.removeLazyBidFromApp(dropId, name, msg.sender);
     
-    // Refund bidder if it is not an offline bid.
+    // Refund bidder if it was a payable bid and not an offline bid.
     if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       payable(bid.bidder).sendValue(bid.amount);
     }

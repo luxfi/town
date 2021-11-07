@@ -27,6 +27,7 @@ contract Drop is IDrop, Ownable {
   string[] public tokenNames;
 
   event TokenTypeAdded(TokenType tokenType);
+  event TokenTypeAskUpdated(string name, IMarket.Ask ask);
 
   // Ensure only ZK can call method
   modifier onlyApp() {
@@ -71,6 +72,10 @@ contract Drop is IDrop, Ownable {
     console.log('Drop: Added token type:', tokenType.name);
     emit TokenTypeAdded(tokenType);
     return tokenType;
+  }
+
+  function setTokenTypeAsk(string memory name, IMarket.Ask memory ask) public onlyOwner {
+    tokenTypes[name].ask = ask;
   }
 
   function getTokenTypes() public view returns(TokenType[] memory){
