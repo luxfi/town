@@ -11,16 +11,42 @@ import { useRouter } from 'next/router'
 const DROP_ID = 1
 const BASE_NFT_URL = 'https://lux.town/nfts'
 
+const getTypeURIs = (type: string) => {
+  return {
+    contentURI: BASE_NFT_URL + `/${type}.mp4?type=__${type}__`,
+    metadataURI: BASE_NFT_URL + `/api/metadata/${type}.json?type=__${type}__`,
+  }
+}
+
 const tokenTypesMap = {
     VALIDATOR: {
-        name: 'Validator',
-        contentURI: BASE_NFT_URL + '/validator.mp4?type=__validator__',
-        metadataURI: BASE_NFT_URL + '/api/metadata/validator.json?type=__validator__',
-        // ask: {
-        //     currency: ,
-
-        // }
-    }
+      name: 'Validator',
+      ...getTypeURIs('validator'),
+    },
+    WALLET_10B_LUX: {
+      name: 'Wallet 10B Lux',
+      ...getTypeURIs('wallet'),
+    },
+    WALLET_1B_LUX: {
+      name: 'Wallet 1B Lux',
+      ...getTypeURIs('wallet'),
+    },
+    WALLET_100M_LUX: {
+      name: 'Wallet 100M Lux',
+      ...getTypeURIs('wallet'),
+    },
+    WALLET_10M_LUX: {
+      name: 'Wallet 10M Lux',
+      ...getTypeURIs('wallet'),
+    },
+    WALLET_1M_LUX: {
+      name: 'Wallet 1M Lux',
+      ...getTypeURIs('wallet'),
+    },
+    WALLET_ATM_LUX: {
+      name: 'ATM',
+      ...getTypeURIs('atm'),
+    },
 }
 
 export default function Sale() {
@@ -40,28 +66,15 @@ export default function Sale() {
         <meta name="description" content="Lux Town" />
       </Head>
 
-      <div>
-        {/* {tokenTypes.map((tokenType) => ( */}
-          {/* <AssetSale key={`${tokenType.dropId}-${tokenType.name}`} dropId={tokenType.dropId} tokenTypeName={tokenType.name} contentURI={tokenType.contentURI} /> */}
-        {/* ))} */}
+      <div className={`grid grid-cols-1 gap-5 md:grid-cols-4`}>
+        <AssetSale dropId={DROP_ID} {...tokenTypesMap.VALIDATOR} onClickTokenType={onClickTokenType} />
+        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_10B_LUX} onClickTokenType={onClickTokenType} />
+        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_1B_LUX} onClickTokenType={onClickTokenType} />
+        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_100M_LUX} onClickTokenType={onClickTokenType} />
+        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_10M_LUX} onClickTokenType={onClickTokenType} />
+        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_1M_LUX} onClickTokenType={onClickTokenType} />
+        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_ATM_LUX} onClickTokenType={onClickTokenType} />
       </div>
-
-      <div className={`grid grid-cols-1 gap-5 md:grid-cols-6`}>
-          <AssetSale dropId={DROP_ID} {...tokenTypesMap.VALIDATOR} onClickTokenType={onClickTokenType} />
-        </div>
-
-
-      {/* {tokenTypes.map((tokenType) => (
-        <AssetList
-          key={tokenType.name}
-          title={tokenType.name}
-          tokenType={tokenType.name}
-          tokenName={tokenType.name}
-          totalMinted={tokenType.minted}
-          where={{ metadataURI_contains: `name=__${_.snakeCase(tokenType.name)}__` }}
-          perPage={6}
-        />
-      ))} */}
 
       <AssetSaleModal modalProps={modalProps} openModal={openModal} />
     </Container>
