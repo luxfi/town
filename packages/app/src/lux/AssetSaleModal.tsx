@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTokenType } from './state'
 import HowReservations from './HowReservations'
 import SetSaleBid from './SetSaleBid'
-import SetAsk from './SetAsk'
+import LazySetAsk from './LazySetAsk'
 import HowOffline from './HowOffline'
 import LazyBidList from './LazyBidList'
 import { Bid, GraphLazyBid } from './types'
@@ -107,14 +107,14 @@ const AssetModal = (props: any) => {
                     <HowOffline onClick={() => showSection('setAsk')} />
                   ) : (
                     <>
-                      {/* <SetAsk tokenId={tokenId}>
+                      <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string}>
                         <p
                           className="pt-8 text-center text-gray-500 cursor-pointer"
                           onClick={() => showSection('howOffline')}
                         >
                           How do offline asks work?
                         </p>
-                      </SetAsk> */}
+                      </LazySetAsk>
                       <div className="pt-8 text-indigo-500">Bids</div>
                       <LazyBidList empty={<NoBids />} where={{ tokenTypeName: tokenTypeName as string}} onClick={onClickBid} />
                     </>

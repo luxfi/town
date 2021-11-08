@@ -43,7 +43,7 @@ export const SetSaleBidButton = ({
 
       const txSummary = `Placed Bid for ${name}`
 
-      if (isNativeCurrency(currencyToken.address)) {
+      if (isNativeCurrency(currencyToken.address) && !ask.offline) {
         console.log('app.setLazyBid', bid, { from: account, gasPrice, value: bid.amount })
         const tx = await app.setLazyBid(dropId, name, bid, { from: account, gasPrice, value: bid.amount })
         addTransactionPopup(tx, txSummary)
@@ -63,7 +63,7 @@ export const SetSaleBidButton = ({
       className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
       onClick={setLazyBid}
     >
-      Place Bid
+      Place {ask.offline && 'Offline'} Bid
     </button>
   )
 }
