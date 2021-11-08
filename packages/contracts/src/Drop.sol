@@ -28,6 +28,7 @@ contract Drop is IDrop, Ownable {
 
   event TokenTypeAdded(TokenType tokenType);
   event TokenTypeAskUpdated(string name, IMarket.Ask ask);
+  event TokenTypeBidSharesUpdated(string name, IMarket.BidShares bidShares);
 
   // Ensure only ZK can call method
   modifier onlyApp() {
@@ -73,6 +74,19 @@ contract Drop is IDrop, Ownable {
     emit TokenTypeAdded(tokenType);
     emit TokenTypeAskUpdated(name, ask);
     return tokenType;
+  }
+
+  /**
+   * @notice Validates that the provided bid shares sum to 100
+   */
+  function isValidBidShares(IMarket.BidShares memory bidShares) public pure returns (bool) {
+    return bidShares.creator.value.add(bidShares.owner.value).add(bidShares.prevOwner.value) == uint256(100).mul(Decimal.BASE);
+  }
+
+  function setBidShares(string memory name, IMarket.BidShares memory bidShares) public onlyOwner {
+    require(isValidBidShares(bidShares), 'Drop: Invalid bid shares, must sum to 100');
+    tokenTypes[name].bidShares = bidShares;
+    emit TokenTypeBidSharesUpdated(name, bidShares);
   }
 
   function setTokenTypeAsk(string memory name, IMarket.Ask memory ask) public onlyOwner {
@@ -128,9 +142,9 @@ contract Drop is IDrop, Ownable {
   function getBidShares() private pure returns (IMarket.BidShares memory) {
     return
       IMarket.BidShares({
-        creator: Decimal.D256(uint256(0).mul(Decimal.BASE)),
-        owner: Decimal.D256(uint256(100).mul(Decimal.BASE)),
-        prevOwner: Decimal.D256(uint256(0).mul(Decimal.BASE))
+        creator: Decimal.D256(uint256(10).mul(Decimal.BASE)),
+        owner: Decimal.D256(uint256(80).mul(Decimal.BASE)),
+        prevOwner: Decimal.D256(uint256(10).mul(Decimal.BASE))
       });
   }
 

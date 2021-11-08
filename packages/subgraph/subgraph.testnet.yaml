@@ -8,9 +8,9 @@ dataSources:
     name: Media
     network: 'ropsten'
     source:
-      address: '0x75C827Aa06B44ffeE9d94d834af347dF3D22a0E9'
+      address: '0xCFE8c0a5BEd4343239dFB74f926832fB812FC985'
       abi: Media
-      startBlock: 11387298
+      startBlock: 11388994
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -38,9 +38,9 @@ dataSources:
     name: Market
     network: 'ropsten'
     source:
-      address: '0xeC0A98b3DBf91969c7F95C180776a4489086c70B'
+      address: '0xA9b8755d446fD5CfE84aC7b1Feeb84CC3712a86C'
       abi: Market
-      startBlock: 11387040
+      startBlock: 11388993
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -81,9 +81,9 @@ dataSources:
     name: Drop
     network: 'ropsten'
     source:
-      address: '0xDA4820C5787d0177Fb3EF47d9943Ca3bdAC0673b'
+      address: '0x7f535f2f82Aa47a49F9f5ceb3433Ff706296008D'
       abi: Drop
-      startBlock: 11292342
+      startBlock: 11389002
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

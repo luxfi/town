@@ -5,7 +5,7 @@
       "chainId": "3",
       "contracts": {
         "App": {
-          "address": "0x272Be86a7e8381bcb4b8762eb31c2d1Cc08c321b",
+          "address": "0x2e82FE4a44609853A3462F49700f11722f7e5418",
           "abi": [
             {
               "anonymous": false,
@@ -1085,7 +1085,7 @@
           ]
         },
         "Drop": {
-          "address": "0x9FC1d45139216f2F0433F853d67D83A301A373a9",
+          "address": "0x7f535f2f82Aa47a49F9f5ceb3433Ff706296008D",
           "abi": [
             {
               "inputs": [
@@ -1283,6 +1283,63 @@
                 }
               ],
               "name": "TokenTypeAskUpdated",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "indexed": false,
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "TokenTypeBidSharesUpdated",
               "type": "event"
             },
             {
@@ -1584,6 +1641,63 @@
             {
               "inputs": [
                 {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "isValidBidShares",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "pure",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "string",
                   "name": "name",
                   "type": "string"
@@ -1730,6 +1844,62 @@
             {
               "inputs": [],
               "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "setBidShares",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -2202,7 +2372,7 @@
           ]
         },
         "Market": {
-          "address": "0xeC0A98b3DBf91969c7F95C180776a4489086c70B",
+          "address": "0xA9b8755d446fD5CfE84aC7b1Feeb84CC3712a86C",
           "abi": [
             {
               "anonymous": false,
@@ -4015,7 +4185,7 @@
           ]
         },
         "Media": {
-          "address": "0x75C827Aa06B44ffeE9d94d834af347dF3D22a0E9",
+          "address": "0xCFE8c0a5BEd4343239dFB74f926832fB812FC985",
           "abi": [
             {
               "inputs": [
@@ -8911,6 +9081,63 @@
               "type": "event"
             },
             {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "indexed": false,
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "TokenTypeBidSharesUpdated",
+              "type": "event"
+            },
+            {
               "inputs": [],
               "name": "appAddress",
               "outputs": [
@@ -9209,6 +9436,63 @@
             {
               "inputs": [
                 {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "isValidBidShares",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "pure",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "string",
                   "name": "name",
                   "type": "string"
@@ -9355,6 +9639,62 @@
             {
               "inputs": [],
               "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "setBidShares",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -21494,6 +21834,63 @@
               "type": "event"
             },
             {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "indexed": false,
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "TokenTypeBidSharesUpdated",
+              "type": "event"
+            },
+            {
               "inputs": [],
               "name": "appAddress",
               "outputs": [
@@ -21792,6 +22189,63 @@
             {
               "inputs": [
                 {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "isValidBidShares",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "pure",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "string",
                   "name": "name",
                   "type": "string"
@@ -21938,6 +22392,62 @@
             {
               "inputs": [],
               "name": "renounceOwnership",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "prevOwner",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "creator",
+                      "type": "tuple"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "owner",
+                      "type": "tuple"
+                    }
+                  ],
+                  "internalType": "struct IMarket.BidShares",
+                  "name": "bidShares",
+                  "type": "tuple"
+                }
+              ],
+              "name": "setBidShares",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
