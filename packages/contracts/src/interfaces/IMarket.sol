@@ -51,6 +51,7 @@ interface IMarket {
   event AskCreated(uint256 indexed tokenId, Ask ask);
   event AskRemoved(uint256 indexed tokenId, Ask ask);
   event BidShareUpdated(uint256 indexed tokenId, BidShares bidShares);
+  event LazyBidFinalized(uint256 dropId, string name, uint256 indexed tokenId, Bid bid);
   event LazyBidCreated(uint256 dropId, string name, Bid bid);
   event LazyBidRemoved(uint256 dropId, string name, Bid bid);
 

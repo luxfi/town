@@ -4,27 +4,23 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useActiveWeb3React } from '../hooks/useActiveWeb3React'
 import { getContent, usePrice } from './state'
 import { formatCurrencyAmountWithCommas, isSameAddress, shortenAddress } from '../functions'
-import { RemoveBidButton } from './RemoveBidButton'
+import { LazyRemoveBidButton } from './LazyRemoveBidButton'
 import { useContract } from '../hooks'
 import LazyBidItem from './LazyBidItem'
-import { AcceptBidButton } from './AcceptBidButton'
+import { LazyAcceptBidButton } from './LazyAcceptBidButton'
 
-export default function LazyBidModal({ bid, isOpen, onClose }): JSX.Element | null {
+export default function LazyBidModal({ dropId, name, bid, isOpen, onClose }): JSX.Element | null {
   const { account } = useActiveWeb3React()
   const [offline, setOffline] = useState(false)
-  const market = useContract('Market')
+  const [owner, setOwner] = useState(null)
+  const app = useContract('App')
 
   useEffect(() => {
-    // if (bid?.media?.id) {
-    //   market.bidForTokenBidder(bid?.media?.id, account).then((bid) => {
-    //     setOffline(bid.offline)
-    //   })
-    // }
-  }, [bid])
+    app.owner().then(setOwner)
+  }, [app])
 
   const { type, given_name } = getContent(bid?.media?.contentURI)
   const bidder = bid?.bidder?.id
-  const owner = bid?.media?.owner?.id
   const currency = bid?.currency?.id
   const tokenId = bid?.media?.id
 
@@ -36,17 +32,22 @@ export default function LazyBidModal({ bid, isOpen, onClose }): JSX.Element | nu
   }, [bidder])
 
   const isOwner = useCallback((account: string) => {
+    console.log('isOwner', account, owner)
     if (!account || !owner) {
       return false
     }
     return isSameAddress(account, owner)
   }, [owner])
 
+  useEffect(() => {
+    app.owner().then(setOwner)
+  }, [app])
+
   if (!bid) return <></>
 
   return (
     <Modal isOpen={isOpen} onDismiss={onClose} maxWidth={672}>
-      <ModalHeader onClose={onClose} title={`Bid for ${given_name || type} ${tokenId}`} />
+      <ModalHeader onClose={onClose} title={`Bid for ${given_name || name}`} />
 
       <LazyBidItem bid={bid} />
 
@@ -59,10 +60,10 @@ export default function LazyBidModal({ bid, isOpen, onClose }): JSX.Element | nu
         <div></div>
         <div>
           {isBidder(account) && (
-            <RemoveBidButton tokenId={tokenId} tokenType={type} currency={currency} onRemove={onClose} onError={onClose} />
+            <LazyRemoveBidButton dropId={dropId} name={name} currency={currency} onRemove={onClose} onError={onClose} />
           )}
           {isOwner(account) && bid && (
-            <AcceptBidButton bidder={bidder} tokenId={tokenId} tokenType={type} onAccept={onClose} onError={onClose} />
+            <LazyAcceptBidButton dropId={dropId} name={name} bidder={bidder} onAccept={onClose} onError={onClose} />
           )}
         </div>
       </div>

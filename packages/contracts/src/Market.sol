@@ -397,7 +397,7 @@ contract Market is IMarket, Ownable {
     delete _lazyTokenBidders[dropTokenTypeName][bidder];
 
     emit BidShareUpdated(token.id, bidShares);
-    emit BidFinalized(token.id, bid);
+    emit LazyBidFinalized(dropId, tokenType.name, token.id, bid);
   }
 
 }

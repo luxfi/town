@@ -539,7 +539,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
     return token;
   }
 
-  function mintToken(address owner, ILux.Token memory token) external override nonReentrant onlyAuthorizedCaller returns (ILux.Token memory) {
+  function mintToken(address owner, ILux.Token memory token) external override onlyAuthorizedCaller returns (ILux.Token memory) {
     console.log('mintToken', owner, token.name, token.data.tokenURI);
     token = _hashToken(owner, token);
     _mintForCreator(owner, token.data, token.bidShares);

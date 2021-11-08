@@ -56,12 +56,12 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Dashboard`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/sale">
+                      <NavLink href="/mint">
                         <a
                           id={`swap-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
-                          {i18n._(t`Sale`)}
+                          {i18n._(t`Mint`)}
                         </a>
                       </NavLink>
                       <NavLink href="/market">

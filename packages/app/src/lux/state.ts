@@ -219,6 +219,8 @@ export function useTokenType(dropId: number | string, name: string | null) {
     video,
     image,
     highest,
+    minted: tokenType?.minted?.toNumber() || 0,
+    supply: tokenType?.supply?.toNumber() || 0,
     getUsdAmount,
   }
 }

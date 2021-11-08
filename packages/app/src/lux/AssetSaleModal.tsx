@@ -68,7 +68,7 @@ const AssetModal = (props: any) => {
 
   return (
     <>
-      <LazyBidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)} />
+      <LazyBidModal dropId={DROP_ID} name={tokenTypeName as string} bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)} />
       <Modal {...props.modalProps} padding={0} closeButton={false}>
         <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
           <div className="">
@@ -103,22 +103,22 @@ const AssetModal = (props: any) => {
             <div className="self-center m-auto w-96">
               {isOwner ? (
                 <div>
-                  {/* {show.howOffline ? (
+                  {show.howOffline ? (
                     <HowOffline onClick={() => showSection('setAsk')} />
                   ) : (
                     <>
-                      <SetAsk tokenId={tokenId}>
+                      {/* <SetAsk tokenId={tokenId}>
                         <p
                           className="pt-8 text-center text-gray-500 cursor-pointer"
                           onClick={() => showSection('howOffline')}
                         >
                           How do offline asks work?
                         </p>
-                      </SetAsk>
+                      </SetAsk> */}
                       <div className="pt-8 text-indigo-500">Bids</div>
-                      <LazyBidList where={{ media: tokenId }} onClick={onClickBid} />
+                      <LazyBidList empty={<NoBids />} where={{ tokenTypeName: tokenTypeName as string}} onClick={onClickBid} />
                     </>
-                  )} */}
+                  )}
                 </div>
               ) : (
                 <div>

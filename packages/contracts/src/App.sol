@@ -157,8 +157,8 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     address prevOwner = media.previousTokenOwner(tokenId);
 
     media.acceptBidFromApp(tokenId, bid, msg.sender);
-    
-    if (!bid.offline) {      
+
+    if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {      
       // Transfer bid share to owner of media
       payable(owner).sendValue(market.splitShare(bidShares.owner, bid.amount));
       // Transfer bid share to creator of media
@@ -188,7 +188,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
 
     media.acceptLazyBidFromApp(dropId, tokenType, token, bid);    
     
-    if (!bid.offline) {
+    if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       // Transfer the amount to the contract owner address
       payable(owner()).sendValue(bid.amount);
     }

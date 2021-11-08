@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Player from 'react-player'
 import { BigintIsh, ZERO_ADDRESS } from '@luxdefi/sdk'
-import { getContent } from './state'
+import { getContent, useTokenType } from './state'
 import { Ask, Bid, GraphBid, HighestBid } from './types'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { EyeIcon } from '@heroicons/react/solid'
@@ -34,6 +34,8 @@ export type AssetSaleProps = {
 const AssetSale = (props: AssetSaleProps) => {
   const { account } = useActiveWeb3React()
   const { ask, highest, dropId, name, showPrice, formattedAmount, usdAmount, symbol, getUsdAmount, isOwner } = props
+  
+  const { minted, supply } = useTokenType(dropId, name)
   const [bid, setBid] = useState(null)
   const [tokenType, setTokenType] = useState(null)
   // const market = useContract('Market')
@@ -75,10 +77,10 @@ const AssetSale = (props: AssetSaleProps) => {
       )}
       <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
-          <span className="text-lg text-gray-300">{given_name || type}</span>
+          <span className="text-lg text-gray-300">{given_name || name}</span>
           <br/>
           <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetSale__token-id">
-            3 / 100 Sold
+            {minted} / {supply} Sold
           </span>
         </div>
         {showPrice && formattedAmount && symbol && (

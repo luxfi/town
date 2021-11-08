@@ -3,6 +3,7 @@ import {
   AskRemoved,
   BidCreated,
   LazyBidCreated,
+  LazyBidFinalized,
   LazyBidRemoved,
   BidFinalized,
   BidRemoved,
@@ -482,6 +483,88 @@ export function handleBidFinalized(event: BidFinalized): void {
     event.block.timestamp,
     event.block.number
   )
+
+  // Update Currency Liquidity
+  currency.liquidity = currency.liquidity.minus(bid.amount)
+  currency.save()
+
+  // Remove Bid
+  store.remove('Bid', bidId)
+  log.info(`Completed handler for BidFinalized Event for tokenId: {}, bid: {}`, [
+    tokenId,
+    bidId,
+  ])
+}
+
+/**
+ * Handler called when the `BidFinalized` Event is emitted on the Zora Market Contract
+ * @param event
+ */
+export function handleLazyBidFinalized(event: LazyBidFinalized): void {
+  let tokenId = event.params.tokenId.toString()
+  let dropId = event.params.dropId.toString()
+  let name = event.params.name.toString()
+  let media = Media.load(tokenId)
+  let onChainBid = event.params.bid
+
+  let bidId = dropId.concat('-').concat(name).concat('-').concat(onChainBid.bidder.toHexString())
+  log.info(`Starting handler for BidFinalized Event for tokenId: {}, bid: {}`, [
+    tokenId,
+    bidId,
+  ])
+
+  if (media == null) {
+    log.error('Media is null for tokenId: {}', [tokenId])
+  }
+
+  let bid = Bid.load(bidId)
+  if (bid == null) {
+    log.error('Bid is null for bidId: {}', [bidId])
+  }
+
+  let inactiveBidId = tokenId
+    .concat('-')
+    .concat(event.transaction.hash.toHexString())
+    .concat('-')
+    .concat(event.transactionLogIndex.toString())
+
+  let bidder = findOrCreateUser(onChainBid.bidder.toHexString())
+  let recipient = findOrCreateUser(onChainBid.recipient.toHexString())
+  let currency = findOrCreateCurrency(onChainBid.currency.toHexString())
+
+  // BidFinalized is always **two** events after transfer
+  // https://github.com/ourzora/core/blob/master/contracts/Market.sol#L349
+  // Find the transfer by id and set the from address as the prevOwner of the media
+  let transferId = event.params.tokenId
+    .toString()
+    .concat('-')
+    .concat(event.transaction.hash.toHexString())
+    .concat('-')
+    .concat(event.transactionLogIndex.minus(BigInt.fromI32(2)).toString())
+  let transfer = Transfer.load(transferId)
+  if (transfer == null) {
+    log.error('Transfer is null for transfer id: {}', [transferId])
+  }
+
+  media.prevOwner = transfer.from
+  // media.save()
+
+  // Create Inactive Bid
+  // createInactiveBid(
+  //   inactiveBidId,
+  //   event.transaction.hash.toHexString(),
+  //   FINALIZED,
+  //   media as Media,
+  //   onChainBid.amount,
+  //   currency,
+  //   onChainBid.sellOnShare.value,
+  //   bidder,
+  //   recipient,
+  //   bid.createdAtTimestamp,
+  //   bid.createdAtBlockNumber,
+  //   event.block.timestamp,
+  //   event.block.number
+  // )
 
   // Update Currency Liquidity
   currency.liquidity = currency.liquidity.minus(bid.amount)

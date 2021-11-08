@@ -8348,6 +8348,76 @@
                   "type": "string"
                 },
                 {
+                  "indexed": true,
+                  "internalType": "uint256",
+                  "name": "tokenId",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "bidder",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "recipient",
+                      "type": "address"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "sellOnShare",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "offline",
+                      "type": "bool"
+                    }
+                  ],
+                  "indexed": false,
+                  "internalType": "struct IMarket.Bid",
+                  "name": "bid",
+                  "type": "tuple"
+                }
+              ],
+              "name": "LazyBidFinalized",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "dropId",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
                   "components": [
                     {
                       "internalType": "uint256",
@@ -14559,6 +14629,76 @@
                 }
               ],
               "name": "LazyBidCreated",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "dropId",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "indexed": true,
+                  "internalType": "uint256",
+                  "name": "tokenId",
+                  "type": "uint256"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "amount",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "currency",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "bidder",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "address",
+                      "name": "recipient",
+                      "type": "address"
+                    },
+                    {
+                      "components": [
+                        {
+                          "internalType": "uint256",
+                          "name": "value",
+                          "type": "uint256"
+                        }
+                      ],
+                      "internalType": "struct Decimal.D256",
+                      "name": "sellOnShare",
+                      "type": "tuple"
+                    },
+                    {
+                      "internalType": "bool",
+                      "name": "offline",
+                      "type": "bool"
+                    }
+                  ],
+                  "indexed": false,
+                  "internalType": "struct IMarket.Bid",
+                  "name": "bid",
+                  "type": "tuple"
+                }
+              ],
+              "name": "LazyBidFinalized",
               "type": "event"
             },
             {

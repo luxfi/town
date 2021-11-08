@@ -49,11 +49,14 @@ const tokenTypesMap = {
     },
 }
 
-export default function Sale() {
+export default function Mint() {
   const router = useRouter()
+  const { tokenTypes } = useTokenTypes()
   const { modalProps, open: openModal } = useModal({
     background: 'black',
   })
+
+  console.log('Mint', tokenTypes)
 
   const onClickTokenType = (name: string) => {
     router.push(`${router.pathname}?name=${name}`, undefined, { shallow: true })
@@ -62,7 +65,7 @@ export default function Sale() {
   return (
     <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
       <Head>
-        <title>Sale | Lux Town</title>
+        <title>Mint | Lux Town</title>
         <meta name="description" content="Lux Town" />
       </Head>
 
