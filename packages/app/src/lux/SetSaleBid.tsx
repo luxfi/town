@@ -45,7 +45,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
       </div>
       {!currencyToken?.isNative &&
         [ApprovalState.NOT_APPROVED, ApprovalState.UNKNOWN].includes(approvalState) &&
-        formattedBalance !== '0' && (
+        formattedBalance !== '0' && !ask?.offline && (
           <button
             type="button"
             className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
@@ -73,7 +73,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
           <InfinityLoader />
         </button>
       )}
-      {(approvalState === ApprovalState.APPROVED || currencyToken?.isNative) && formattedBalance !== '0' && (
+      {(approvalState === ApprovalState.APPROVED || currencyToken?.isNative || ask?.offline) && formattedBalance !== '0' && (
         <SetSaleBidButton
           ask={ask}
           dropId={dropId}

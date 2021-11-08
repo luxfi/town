@@ -224,7 +224,7 @@ contract Market is IMarket, Ownable {
 
     uint256 bidAmount = bid.amount;
 
-    if (bid.currency != address(0)) {
+    if (bid.currency != address(0) && !tokenType.ask.offline) {
       IERC20 token = IERC20(bid.currency);
       // We must check the balance that was actually transferred to the market,
       // as some tokens impose a transfer fee and would not actually transfer the
