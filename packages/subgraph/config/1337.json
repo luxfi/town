@@ -5,5 +5,7 @@
   "marketStartBlock": 1,
   "mediaAddress": "0x351DcE5B0972f4E9b369e5Fc726295E37360ce19",
   "mediaStartBlock": 2,
-  "wethAddress": "0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60"
+  "wethAddress": "0x117FbB2f404e2F1e9FbaC0DdB372C25dD979bc60",
+  "dropAddress": "0x792de6045d65D7ad660a8cFB7cF4eB06EEaFBcDe",
+  "dropStartBlock": 1
 }

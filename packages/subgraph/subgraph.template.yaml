@@ -66,8 +66,34 @@ dataSources:
           handler: handleAskRemoved
         - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256),bool))
           handler: handleBidCreated
+        - event: LazyBidCreated(uint256,string,(uint256,address,address,address,(uint256),bool))
+          handler: handleLazyBidCreated
+        - event: LazyBidFinalized(uint256,string,indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleLazyBidFinalized
+        - event: LazyBidRemoved(uint256,string,(uint256,address,address,address,(uint256),bool))
+          handler: handleLazyBidRemoved
         - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256),bool))
           handler: handleBidRemoved
         - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256),bool))
           handler: handleBidFinalized
       file: ./src/market.ts
+  - kind: ethereum/contract
+    name: Drop
+    network: '{{network}}'
+    source:
+      address: '{{dropAddress}}'
+      abi: Drop
+      startBlock: {{dropStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TokenType
+      abis:
+        - name: Drop
+          file: ./abis/{{deployment}}/Drop.json
+      eventHandlers:
+        - event: TokenTypeAdded((uint8,string,(uint256,address,bool),uint256,uint256,uint256,(string,string,bytes32,bytes32),((uint256),(uint256),(uint256))))
+          handler: handleTokenTypeAdded
+      file: ./src/drop.ts

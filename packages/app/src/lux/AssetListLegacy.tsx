@@ -77,7 +77,7 @@ const AssetList = (props: AssetListProps) => {
 
   useEffect(() => {
     if (drop) {
-      drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
+      // drop.firstTokenId(props.tokenName).then((bn) => setFirstTokenId(bn.toNumber()))
       drop.totalMinted(props.tokenName).then((bn) => setTotalMinted(bn.toNumber()))
     }
   }, [props.tokenName])

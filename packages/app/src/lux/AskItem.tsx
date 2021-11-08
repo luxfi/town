@@ -63,7 +63,7 @@ const AskItem = ({ ask, showToken, summary, onClick }: AskProps) => {
             <div>
               {formattedAmount} {currencyToken?.symbol}
             </div>
-            {usdAmount && <small className="text-gray-500">${usdAmount}</small>}
+            {/* {usdAmount && <small className="text-gray-500">${usdAmount}</small>} */}
           </div>
           {onClick && (
             <div onClick={() => onClick(ask)}>

@@ -8,32 +8,26 @@ import { Decimal } from './Decimal.sol';
 import { IMarket } from './interfaces/IMarket.sol';
 import { IMedia } from './interfaces/IMedia.sol';
 import { ILux } from './interfaces/ILux.sol';
+import { IDrop } from './interfaces/IDrop.sol';
 
 import './console.sol';
 
-contract Drop is Ownable {
+contract Drop is IDrop, Ownable {
   using SafeMath for uint256;
 
-  struct TokenType {
-    ILux.Type kind;
-    string name;
-    IMarket.Ask ask;
-    uint256 supply;
-    uint256 timestamp; // time created
-    uint256 minted; // amount minted
-    IMedia.MediaData data;
-    IMarket.BidShares bidShares;
-  }
-
   // Title of drop
-  string public title;
+  string public override title;
 
   // Address of ZooKeeper contract
   address public appAddress;
 
   // mapping of TokenType name to TokenType
   mapping(string => TokenType) public tokenTypes;
+  
   string[] public tokenNames;
+
+  event TokenTypeAdded(TokenType tokenType);
+  event TokenTypeAskUpdated(string name, IMarket.Ask ask);
 
   // Ensure only ZK can call method
   modifier onlyApp() {
@@ -45,7 +39,7 @@ contract Drop is Ownable {
     title = _title;
   }
 
-  function totalMinted(string memory name) public view returns (uint256) {
+  function totalMinted(string memory name) public view override returns (uint256) {
     return getTokenType(name).minted;
   }
 
@@ -75,7 +69,15 @@ contract Drop is Ownable {
     tokenType.timestamp = block.timestamp;
     tokenTypes[name] = tokenType;
     tokenNames.push(name);
+    console.log('Drop: Added token type:', tokenType.name);
+    emit TokenTypeAdded(tokenType);
+    emit TokenTypeAskUpdated(name, ask);
     return tokenType;
+  }
+
+  function setTokenTypeAsk(string memory name, IMarket.Ask memory ask) public onlyOwner {
+    tokenTypes[name].ask = ask;
+    emit TokenTypeAskUpdated(name, ask);
   }
 
   function getTokenTypes() public view returns(TokenType[] memory){
@@ -88,16 +90,16 @@ contract Drop is Ownable {
   }
 
   // Return price for current EggDrop
-  function tokenTypeAsk(string memory name) public view returns (IMarket.Ask memory) {
+  function tokenTypeAsk(string memory name) public view override returns (IMarket.Ask memory) {
     return getTokenType(name).ask;
   }
 
-  function tokenSupply(string memory name) public view returns (uint256) {
+  function tokenSupply(string memory name) public view override returns (uint256) {
     return getTokenType(name).supply;
   }
 
   // Return a new TokenType Token
-  function newNFT(string memory name) external onlyApp returns (ILux.Token memory) {
+  function newNFT(string memory name) external override onlyApp returns (ILux.Token memory) {
     TokenType memory tokenType = getTokenType(name);
     require(tokenSupply(name) == 0 || tokenType.minted < tokenSupply(name), 'Out of tokens');
 
@@ -118,7 +120,7 @@ contract Drop is Ownable {
   }
 
   // Get TokenType by name
-  function getTokenType(string memory name) public view returns (TokenType memory) {
+  function getTokenType(string memory name) public view override returns (TokenType memory) {
     return tokenTypes[name];
   }
 

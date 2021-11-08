@@ -10,6 +10,7 @@ import {
   Media,
   ReserveAuction,
   ReserveAuctionBid,
+  TokenType,
   Transfer,
   URIUpdate,
   User,
@@ -20,7 +21,7 @@ import { ERC20 } from '../types/Market/ERC20'
 import { ERC20NameBytes } from '../types/Market/ERC20NameBytes'
 import { ERC20SymbolBytes } from '../types/Market/ERC20SymbolBytes'
 
-export const zeroAddress = '0x0000000000000000000000000000000000000000'
+export const AddressZero = '0x0000000000000000000000000000000000000000'
 
 /**
  *  helper class to model BidShares
@@ -75,7 +76,7 @@ export function createCurrency(id: string): Currency {
   let currency = new Currency(id)
   currency.liquidity = BigInt.fromI32(0)
 
-  if (id === zeroAddress) {
+  if (id === AddressZero) {
     currency.name = 'Ethereum'
     currency.symbol = 'ETH'
     currency.decimals = 18
@@ -259,6 +260,9 @@ export function createAsk(
   ask.owner = media.owner
   ask.createdAtTimestamp = createdAtTimestamp
   ask.createdAtBlockNumber = createdAtBlockNumber
+  ask.lazy = false
+  ask.dropId = BigInt.fromI32(0)
+  ask.tokenTypeName = ''
 
   ask.save()
   return ask
@@ -300,6 +304,53 @@ export function createInactiveAsk(
   inactiveAsk.inactivatedAtTimestamp = inactivatedAtTimestamp
   inactiveAsk.inactivatedAtBlockNumber = inactivatedAtBlockNumber
   inactiveAsk.transactionHash = transactionHash
+  inactiveAsk.lazy = false
+  inactiveAsk.dropId = BigInt.fromI32(0)
+  inactiveAsk.tokenTypeName = ''
+
+  inactiveAsk.save()
+  return inactiveAsk
+}
+
+/**
+ * Create New InactiveAsk Entity
+ * @param id
+ * @param type
+ * @param amount
+ * @param currency
+ * @param owner
+ * @param createdAtTimestamp
+ * @param createdAtBlockNumber
+ */
+ export function createInactiveLazyAsk(
+  id: string,
+  dropId: BigInt,
+  tokenTypeName: string,
+  transactionHash: string,
+  type: string,
+  amount: BigInt,
+  currency: Currency,
+  owner: string,
+  createdAtTimestamp: BigInt,
+  createdAtBlockNumber: BigInt,
+  inactivatedAtTimestamp: BigInt,
+  inactivatedAtBlockNumber: BigInt
+): InactiveAsk {
+  let inactiveAsk = new InactiveAsk(id)
+
+  inactiveAsk.type = type
+  inactiveAsk.media = AddressZero
+  inactiveAsk.amount = amount
+  inactiveAsk.currency = currency.id
+  inactiveAsk.owner = owner
+  inactiveAsk.createdAtTimestamp = createdAtTimestamp
+  inactiveAsk.createdAtBlockNumber = createdAtBlockNumber
+  inactiveAsk.inactivatedAtTimestamp = inactivatedAtTimestamp
+  inactiveAsk.inactivatedAtBlockNumber = inactivatedAtBlockNumber
+  inactiveAsk.transactionHash = transactionHash
+  inactiveAsk.lazy = true
+  inactiveAsk.dropId = dropId
+  inactiveAsk.tokenTypeName = tokenTypeName
 
   inactiveAsk.save()
   return inactiveAsk
@@ -345,6 +396,57 @@ export function createInactiveBid(
   inactiveBid.createdAtBlockNumber = createdAtBlockNumber
   inactiveBid.inactivatedAtTimestamp = inactivatedAtTimestamp
   inactiveBid.inactivatedAtBlockNumber = inactivatedAtBlockNumber
+  inactiveBid.lazy = false
+  inactiveBid.dropId = BigInt.fromI32(0)
+  inactiveBid.tokenTypeName = ''
+
+  inactiveBid.save()
+  return inactiveBid
+}
+
+/**
+ * Create New InactiveBid Entity
+ * @param id
+ * @param type
+ * @param amount
+ * @param currency
+ * @param sellOnShare
+ * @param bidder
+ * @param recipient
+ * @param createdAtTimestamp
+ * @param createdAtBlockNumber
+ */
+export function createInactiveLazyBid(
+  id: string,
+  dropId: BigInt,
+  tokenTypeName: string,
+  transactionHash: string,
+  type: string,
+  amount: BigInt,
+  currency: Currency,
+  sellOnShare: BigInt,
+  bidder: User,
+  recipient: User,
+  createdAtTimestamp: BigInt,
+  createdAtBlockNumber: BigInt,
+  inactivatedAtTimestamp: BigInt,
+  inactivatedAtBlockNumber: BigInt
+): InactiveBid {
+  let inactiveBid = new InactiveBid(id)
+  inactiveBid.type = type
+  inactiveBid.transactionHash = transactionHash
+  ;(inactiveBid.media = AddressZero), (inactiveBid.amount = amount)
+  inactiveBid.currency = currency.id
+  inactiveBid.sellOnShare = sellOnShare
+  inactiveBid.bidder = bidder.id
+  inactiveBid.recipient = recipient.id
+  inactiveBid.createdAtTimestamp = createdAtTimestamp
+  inactiveBid.createdAtBlockNumber = createdAtBlockNumber
+  inactiveBid.inactivatedAtTimestamp = inactivatedAtTimestamp
+  inactiveBid.inactivatedAtBlockNumber = inactivatedAtBlockNumber
+  inactiveBid.lazy = true
+  inactiveBid.dropId = dropId
+  inactiveBid.tokenTypeName = tokenTypeName
 
   inactiveBid.save()
   return inactiveBid
@@ -384,6 +486,54 @@ export function createBid(
   bid.media = media.id
   bid.createdAtTimestamp = createdAtTimestamp
   bid.createdAtBlockNumber = createdAtBlockNumber
+  bid.lazy = false
+  bid.dropId = BigInt.fromI32(0)
+  bid.tokenTypeName = ''
+  
+  bid.save()
+  return bid
+}
+
+/**
+ * Create New Bid Entity
+ * @param id
+ * @param dropId
+ * @param tokenTypeName
+ * @param transactionHash
+ * @param amount
+ * @param currency
+ * @param sellOnShare
+ * @param bidder
+ * @param recipient
+ * @param createdAtTimestamp
+ * @param createdAtBlockNumber
+ */
+ export function createLazyBid(
+  id: string,
+  dropId: BigInt,
+  tokenTypeName: string,
+  transactionHash: string,
+  amount: BigInt,
+  currency: Currency,
+  sellOnShare: BigInt,
+  bidder: User,
+  recipient: User,
+  createdAtTimestamp: BigInt,
+  createdAtBlockNumber: BigInt
+): Bid {
+  let bid = new Bid(id)
+  bid.transactionHash = transactionHash
+  bid.amount = amount
+  bid.currency = currency.id
+  bid.sellOnShare = sellOnShare
+  bid.bidder = bidder.id
+  bid.recipient = recipient.id
+  bid.media = AddressZero
+  bid.createdAtTimestamp = createdAtTimestamp
+  bid.createdAtBlockNumber = createdAtBlockNumber
+  bid.lazy = true
+  bid.dropId = dropId
+  bid.tokenTypeName = tokenTypeName
 
   bid.save()
   return bid
@@ -478,7 +628,7 @@ export function createReserveAuction(
   reserveAuction.tokenId = tokenId
   reserveAuction.transactionHash = transactionHash
   reserveAuction.tokenContract = tokenContract
-  reserveAuction.token = tokenContract.concat('-').concat(tokenId.toString()) 
+  reserveAuction.token = tokenContract.concat('-').concat(tokenId.toString())
   reserveAuction.media = media ? media.id : null
   reserveAuction.approved = false
   reserveAuction.duration = duration
@@ -498,13 +648,19 @@ export function createReserveAuction(
   return reserveAuction
 }
 
-export function setReserveAuctionFirstBidTime(auction: ReserveAuction, time: BigInt): void {
+export function setReserveAuctionFirstBidTime(
+  auction: ReserveAuction,
+  time: BigInt
+): void {
   auction.firstBidTime = time
   auction.expectedEndTimestamp = auction.duration.plus(time)
   auction.save()
 }
 
-export function handleReserveAuctionExtended(auction: ReserveAuction, duration: BigInt): void {
+export function handleReserveAuctionExtended(
+  auction: ReserveAuction,
+  duration: BigInt
+): void {
   auction.duration = duration
   auction.expectedEndTimestamp = auction.firstBidTime.plus(duration)
   auction.save()
@@ -540,7 +696,12 @@ export function createReserveAuctionBid(
 }
 
 // Create an inactive bid based off of the current highest bid, and delete the active bid
-export function handleBidReplaced(auction: ReserveAuction, timestamp: BigInt, blockNumber: BigInt, winningBid: boolean = false): void {
+export function handleBidReplaced(
+  auction: ReserveAuction,
+  timestamp: BigInt,
+  blockNumber: BigInt,
+  winningBid: boolean = false
+): void {
   let activeBid = ReserveAuctionBid.load(auction.currentBid) as ReserveAuctionBid
   let inactiveBid = new InactiveReserveAuctionBid(activeBid.id)
 
@@ -567,7 +728,12 @@ export function handleBidReplaced(auction: ReserveAuction, timestamp: BigInt, bl
   store.remove('ReserveAuctionBid', activeBid.id)
 }
 
-export function handleFinishedAuction(auction: ReserveAuction, timestamp: BigInt, blockNumber: BigInt, canceledAuction: boolean = false): void {
+export function handleFinishedAuction(
+  auction: ReserveAuction,
+  timestamp: BigInt,
+  blockNumber: BigInt,
+  canceledAuction: boolean = false
+): void {
   auction.finalizedAtTimestamp = timestamp
   auction.finalizedAtBlockNumber = blockNumber
   auction.status = canceledAuction ? 'Canceled' : 'Finished'
@@ -576,4 +742,49 @@ export function handleFinishedAuction(auction: ReserveAuction, timestamp: BigInt
 
 function isNullEthValue(value: string): boolean {
   return value == '0x0000000000000000000000000000000000000000000000000000000000000001'
+}
+
+// const tokenKindMap = [
+//   'Validator',
+//   'ATM',
+//   'Wallet',
+//   'Cash',
+// ]
+
+export function createTokenType(
+  id: string,
+  kindId: string,
+  ask: Ask,
+  supply: BigInt,
+  contentHash: Bytes,
+  metadataHash: Bytes,
+  contentURI: string,
+  metadataURI: string,
+  ownerBidShare: BigInt,
+  creatorBidShare: BigInt,
+  prevOwnerBidShare: BigInt,
+  createdAtTimestamp: BigInt,
+  transactionHash: string
+): TokenType {
+  // Create ask and assign ask id
+  // const ask = createAsk()
+
+  // const kind = tokenKindMap[kindId]
+
+  let tokenType = new TokenType(id)
+  // tokenType.kind = kind
+  // tokenType.ask = ask
+  // tokenType.supply = supply
+  // tokenType.contentHash = contentHash
+  // tokenType.metadataHash = metadataHash
+  // tokenType.contentURI = contentURI
+  // tokenType.metadataURI = metadataURI
+  // tokenType.ownerBidShare = ownerBidShare
+  // tokenType.creatorBidShare = creatorBidShare
+  // tokenType.prevOwnerBidShare = prevOwnerBidShare
+  // tokenType.createdAtTimestamp = createdAtTimestamp
+  // tokenType.transactionHash = transactionHash
+
+  // tokenType.save()
+  return tokenType
 }

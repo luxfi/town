@@ -14,7 +14,7 @@ import {
   createURIUpdate,
   fetchMediaBidShares,
   findOrCreateUser,
-  zeroAddress,
+  AddressZero,
 } from './helpers'
 
 const CONTENT = 'Content'
@@ -122,7 +122,7 @@ export function handleTransfer(event: Transfer): void {
   let toUser = findOrCreateUser(toAddr)
   let fromUser = findOrCreateUser(fromAddr)
 
-  if (fromUser.id == zeroAddress) {
+  if (fromUser.id == AddressZero) {
     handleMint(event)
     return
   }
@@ -132,8 +132,8 @@ export function handleTransfer(event: Transfer): void {
     log.error(`Media is null for token id: {}`, [tokenId])
   }
 
-  if (toUser.id == zeroAddress) {
-    media.prevOwner = zeroAddress
+  if (toUser.id == AddressZero) {
+    media.prevOwner = AddressZero
     media.burnedAtTimeStamp = event.block.timestamp
     media.burnedAtBlockNumber = event.block.number
   }
@@ -184,7 +184,7 @@ export function handleApproval(event: Approval): void {
     log.error('Media is null for tokenId: {}', [tokenId])
   }
 
-  if (approvedAddr == zeroAddress) {
+  if (approvedAddr == AddressZero) {
     media.approved = null
   } else {
     let approvedUser = findOrCreateUser(approvedAddr)
@@ -252,7 +252,7 @@ export function handleApprovalForAll(event: ApprovalForAll): void {
  */
 function handleMint(event: Transfer): void {
   let creator = findOrCreateUser(event.params.to.toHexString())
-  let zeroUser = findOrCreateUser(zeroAddress)
+  let zeroUser = findOrCreateUser(AddressZero)
   let tokenId = event.params.tokenId
 
   let mediaContract = MediaContract.bind(event.address)

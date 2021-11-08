@@ -14,7 +14,10 @@ import { IERC20 } from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import { ReentrancyGuard } from '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 import { Decimal } from './Decimal.sol';
+import { IMedia } from './interfaces/IMedia.sol';
 import { IMarket } from './interfaces/IMarket.sol';
+import { IDrop } from './interfaces/IDrop.sol';
+import { ILux } from './interfaces/ILux.sol';
 import './interfaces/IMedia.sol';
 
 import './console.sol';
@@ -289,6 +292,15 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   }
 
   /**
+   * Custom version of setBid where App must be onlyApprovedOrOwner
+   * @notice see IMedia
+   */
+  function setLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, IMarket.Bid memory bid, address sender) external override nonReentrant onlyAuthorizedCaller {
+    require(sender == bid.bidder, 'Market: Bidder must be msg sender');
+    IMarket(marketContract).setLazyBidFromApp(dropId, tokenType, bid, sender);
+  }
+
+  /**
    * @notice see IMedia
    */
   function removeBid(uint256 tokenId) external override nonReentrant onlyTokenCreated(tokenId) {
@@ -305,6 +317,13 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   /**
    * @notice see IMedia
    */
+  function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external override nonReentrant onlyAuthorizedCaller {
+    IMarket(marketContract).removeLazyBidFromApp(dropId, name, sender);
+  }
+
+  /**
+   * @notice see IMedia
+   */
   function acceptBid(uint256 tokenId, IMarket.Bid memory bid) public override nonReentrant onlyApprovedOrOwner(msg.sender, tokenId) {
     IMarket(marketContract).acceptBid(tokenId, bid);
   }
@@ -314,6 +333,13 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
    */
   function acceptBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external override nonReentrant onlyApprovedOrOwner(sender, tokenId) onlyAuthorizedCaller {
     IMarket(marketContract).acceptBid(tokenId, bid);
+  }
+
+  /**
+   * @notice see IMedia
+   */
+  function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, IMarket.Bid memory bid) external override nonReentrant onlyAuthorizedCaller {
+    IMarket(marketContract).acceptLazyBidFromApp(dropId, tokenType, token, bid);
   }
 
   /**
@@ -513,7 +539,7 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
     return token;
   }
 
-  function mintToken(address owner, ILux.Token memory token) external override nonReentrant onlyAuthorizedCaller returns (ILux.Token memory) {
+  function mintToken(address owner, ILux.Token memory token) external override onlyAuthorizedCaller returns (ILux.Token memory) {
     console.log('mintToken', owner, token.name, token.data.tokenURI);
     token = _hashToken(owner, token);
     _mintForCreator(owner, token.data, token.bidShares);

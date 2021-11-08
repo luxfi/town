@@ -53,6 +53,16 @@ export type GraphBid = {
   createdAtTimestamp: string
 }
 
+export type GraphLazyBid = {
+  id: string
+  amount: BigintIsh
+  currency: GraphCurrency
+  bidder: GraphUser
+  recipient: GraphUser
+  // media: GraphMedia
+  createdAtTimestamp: string
+}
+
 export type CoingeckoPrices = {
   [coinId: string]: {
     usd: number

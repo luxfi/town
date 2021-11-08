@@ -6,26 +6,27 @@ import { getCurrencyTokenLowerCase } from '../config/currencies'
 import { formatCurrencyAmountWithCommas, shortenAddress } from '../functions'
 import { useActiveWeb3React } from '../hooks'
 import { getContent, usePrice } from './state'
-import { GraphBid } from './types'
+import { GraphLazyBid } from './types'
 
-export type BidProps = {
-  bid: GraphBid
+export type LazyBidItemProps = {
+  bid: GraphLazyBid
   getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => {}
   showToken?: boolean
   label?: string
   summary?: string
-  onClick?: (bid: GraphBid) => void
+  onClick?: (bid: GraphLazyBid) => void
 }
 
-const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
+const LazyBidItem = ({ bid, showToken, summary, onClick }: LazyBidItemProps) => {
   const { chainId, account } = useActiveWeb3React()
   const [formattedAmount, setFormattedAmount] = useState(null)
   const [currencyToken, setCurrencyToken] = useState(new Token(chainId, ZERO_ADDRESS, 18) as Currency)
 
   // const [type, setType] = useState(null)
   const { getUsdAmount } = usePrice()
-  const { type, given_name } = getContent(bid.media.contentURI)
-  const tokenId = bid?.media?.id
+  // const { type, given_name } = getContent(bid?.media?.contentURI)
+  // const dropId = bid?.media?.id
+  const { type, given_name } = getContent('')
   
   useEffect(() => {
     const token = getCurrencyTokenLowerCase(bid.currency.id, chainId)
@@ -38,15 +39,12 @@ const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
   const usdAmount = getUsdAmount && getUsdAmount(bid.currency.id, bid.amount)
 
   return (
-    <div className="py-2 BidItem">
+    <div className="py-2 LazyBidItem">
       <div className="grid grid-cols-2">
         {showToken ? (
           <div>
             <div>
               Bid for {given_name || type}
-              <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font Asset__token-id">
-                {tokenId}
-              </span>
             </div>
             <small className="text-gray-500">
               By {shortenAddress(bid?.bidder?.id)} <TimeAgo date={new Date(parseInt(bid.createdAtTimestamp) * 1000)} />
@@ -76,4 +74,4 @@ const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
   )
 }
 
-export default BidItem
+export default LazyBidItem

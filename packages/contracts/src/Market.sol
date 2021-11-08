@@ -12,7 +12,9 @@ import { Ownable } from '@openzeppelin/contracts/access/Ownable.sol';
 
 import { Decimal } from './Decimal.sol';
 import { Media } from './Media.sol';
+import { IDrop } from './interfaces/IDrop.sol';
 import { IMarket } from './interfaces/IMarket.sol';
+import { ILux } from './interfaces/ILux.sol';
 
 import './console.sol';
 
@@ -37,6 +39,9 @@ contract Market is IMarket, Ownable {
 
   // Mapping from token to mapping from bidder to bid
   mapping(uint256 => mapping(address => Bid)) private _tokenBidders;
+  
+  // Mapping from token type name to mapping from bidder to bid
+  mapping(string => mapping(address => Bid)) private _lazyTokenBidders;
 
   // Mapping from token to the bid shares for the token
   mapping(uint256 => BidShares) private _bidShares;
@@ -65,6 +70,11 @@ contract Market is IMarket, Ownable {
     return _tokenBidders[tokenId][bidder];
   }
 
+  function lazyBidForTokenBidder(uint256 dropId, string memory name, address bidder) external view override returns (Bid memory) {
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, name);
+    return _lazyTokenBidders[dropTokenTypeName][bidder];
+  }
+
   function currentAskForToken(uint256 tokenId) external view override returns (Ask memory) {
     return _tokenAsks[tokenId];
   }
@@ -82,6 +92,12 @@ contract Market is IMarket, Ownable {
   function isValidBid(uint256 tokenId, uint256 bidAmount) public view override returns (bool) {
     BidShares memory bidShares = bidSharesForToken(tokenId);
     require(isValidBidShares(bidShares), 'Market: Invalid bid shares for token');
+    return bidAmount != 0 && (bidAmount == splitShare(bidShares.creator, bidAmount).add(splitShare(bidShares.prevOwner, bidAmount)).add(splitShare(bidShares.owner, bidAmount)));
+  }
+
+  function isValidLazyBid(IDrop.TokenType memory tokenType, uint256 bidAmount) public pure returns (bool) {
+    BidShares memory bidShares = tokenType.bidShares;
+    require(isValidBidShares(bidShares), 'Market: Invalid lazy bid shares for token');
     return bidAmount != 0 && (bidAmount == splitShare(bidShares.creator, bidAmount).add(splitShare(bidShares.prevOwner, bidAmount)).add(splitShare(bidShares.owner, bidAmount)));
   }
 
@@ -188,6 +204,47 @@ contract Market is IMarket, Ownable {
     //   _finalizeNFTTransfer(tokenId, bid.bidder);
     // }
   }
+  
+  /**
+   * @notice Sets the bid on a particular media for a bidder. The token being used to bid
+   * is transferred from the spender to this contract to be held until removed or accepted.
+   * If another bid already exists for the bidder, it is refunded.
+   */
+  function setLazyBidFromApp(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    Bid memory bid,
+    address spender
+  ) external override onlyMediaCaller {
+    require(tokenType.bidShares.creator.value.add(bid.sellOnShare.value) <= uint256(100).mul(Decimal.BASE), 'Market: Sell on fee invalid for share splitting');
+    require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
+    require(bid.amount != 0, 'Market: cannot bid amount of 0');
+    // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
+    require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
+
+    uint256 bidAmount = bid.amount;
+
+    if (bid.currency != address(0)) {
+      IERC20 token = IERC20(bid.currency);
+      // We must check the balance that was actually transferred to the market,
+      // as some tokens impose a transfer fee and would not actually transfer the
+      // full amount to the market, resulting in locked funds for refunds & bid acceptance
+      uint256 beforeBalance = token.balanceOf(address(this));
+      token.safeTransferFrom(spender, address(this), bid.amount);
+      uint256 afterBalance = token.balanceOf(address(this));
+      bidAmount = afterBalance.sub(beforeBalance);
+    }
+
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
+
+    _lazyTokenBidders[dropTokenTypeName][bid.bidder] = Bid(bidAmount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, bid.offline);
+
+    emit LazyBidCreated(dropId, tokenType.name, bid); 
+  }
+
+  function getDropTokenTypeName(uint256 tokenId, string memory name) internal pure returns(string memory) {
+    return string(abi.encodePacked(tokenId, '-', name));
+  }
 
   /**
    * @notice Removes the bid on a particular media for a bidder. The bid amount
@@ -213,6 +270,31 @@ contract Market is IMarket, Ownable {
   }
 
   /**
+   * @notice Removes the bid on a particular media for a bidder. The bid amount
+   * is transferred from this contract to the bidder, if they have a bid placed.
+   */
+  function removeLazyBidFromApp(uint256 dropId, string memory name, address bidder) public override onlyMediaCaller {
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, name);
+    Bid storage bid = _lazyTokenBidders[dropTokenTypeName][bidder];
+    address bidCurrency = bid.currency;
+    uint256 bidAmount = bid.amount;
+    bool bidOffline = bid.offline;
+
+    require(bid.amount > 0, 'Market: cannot remove bid amount of 0');
+
+    emit LazyBidRemoved(dropId, name, bid);
+    delete _lazyTokenBidders[dropTokenTypeName][bidder];
+
+    console.log('Market.removeLazyBidFromApp', dropTokenTypeName, bidCurrency, bidOffline);
+
+    if (bidCurrency != address(0) && !bidOffline) {
+      IERC20 token = IERC20(bidCurrency);
+      token.safeTransfer(bidder, bidAmount);
+    }
+  }
+
+
+  /**
    * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
    * See {_finalizeNFTTransfer}
    * Provided bid must match a bid in storage. This is to prevent a race condition
@@ -231,6 +313,19 @@ contract Market is IMarket, Ownable {
     require(isValidBid(tokenId, bid.amount), 'Market: Bid invalid for share splitting');
 
     _finalizeNFTTransfer(tokenId, bid.bidder);
+  }
+
+  function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, Bid calldata expectedBid) external override onlyMediaCaller {
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
+    Bid memory bid = _lazyTokenBidders[dropTokenTypeName][expectedBid.bidder];
+    require(bid.amount > 0, 'Market: cannot accept bid of 0');
+    require(
+      bid.amount == expectedBid.amount && bid.currency == expectedBid.currency && bid.sellOnShare.value == expectedBid.sellOnShare.value && bid.recipient == expectedBid.recipient,
+      'Market: Unexpected bid found.'
+    );
+    require(isValidLazyBid(tokenType, bid.amount), 'Market: Bid invalid for share splitting');
+
+    _finalizeLazyMint(dropId, tokenType, token, bid.bidder);    
   }
 
   /**
@@ -268,4 +363,41 @@ contract Market is IMarket, Ownable {
     emit BidShareUpdated(tokenId, bidShares);
     emit BidFinalized(tokenId, bid);
   }
+
+  /**
+   * @notice Given a token ID and a bidder, this method transfers the value of
+   * the bid to the shareholders. It also transfers the ownership of the media
+   * to the bid recipient. Finally, it removes the accepted bid and the current ask.
+   */
+  function _finalizeLazyMint(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, address bidder) private {
+
+    string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
+
+    Bid memory bid = _lazyTokenBidders[dropTokenTypeName][bidder];
+
+    BidShares memory bidShares = tokenType.bidShares;
+
+    if (bid.currency != address(0) && !bid.offline) {
+      IERC20 erc20Token = IERC20(bid.currency);
+
+      // Transfer bid share to owner of media
+      erc20Token.safeTransfer(owner(), bid.amount); // Transfer 100%
+    }
+
+    // Transfer media to bid recipient
+    Media(mediaContract).mintToken(bid.recipient, token);
+
+    // Calculate the bid share for the new owner,
+    // equal to 100 - creatorShare - sellOnShare
+    bidShares.owner = Decimal.D256(uint256(100).mul(Decimal.BASE).sub(bidShares.creator.value).sub(bid.sellOnShare.value));
+    // Set the previous owner share to the accepted bid's sell-on fee
+    bidShares.prevOwner = bid.sellOnShare;
+
+    // Remove the accepted bid
+    delete _lazyTokenBidders[dropTokenTypeName][bidder];
+
+    emit BidShareUpdated(token.id, bidShares);
+    emit LazyBidFinalized(dropId, tokenType.name, token.id, bid);
+  }
+
 }
