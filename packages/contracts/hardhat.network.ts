@@ -75,7 +75,7 @@ const networks: HardhatUserConfig['networks'] = {
     live: true,
     saveDeployments: true,
     tags: ["staging"],
-    gasPrice: ethers.utils.parseUnits(`${3 * 7}`, 'gwei').toNumber(),
+    gasPrice: ethers.utils.parseUnits(`50`, 'gwei').toNumber(),
     blockGasLimit: 4000000,
     gasMultiplier: 2,
   },
