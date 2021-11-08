@@ -92,8 +92,6 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
 
   console.log({ network, chainId })
 
-  const LUX_USD = 0.0021
-
   // Validator 100
   // Wallet
   // - 10B Lux x 1
@@ -114,7 +112,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 10B Lux',
-      ask: getAsk(chainId, 'USDT', `${LUX_USD * 10000000000000}`),
+      ask: getAsk(chainId, 'USDT', `21000000`),
       supply: 1,
       queryString: {
         lux: 10000000000000,
@@ -123,7 +121,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 1B Lux',
-      ask: getAsk(chainId, 'USDT', `${LUX_USD * 1000000000000}`),
+      ask: getAsk(chainId, 'USDT', `2100000`),
       supply: 10,
       queryString: {
         lux: 1000 * MILLION,
@@ -132,7 +130,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 100M Lux',
-      ask: getAsk(chainId, 'USDT', `${LUX_USD * 100000000}`),
+      ask: getAsk(chainId, 'USDT', `210000`),
       supply: 100,
       queryString: {
         lux: 100 * MILLION,
@@ -141,7 +139,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 10M Lux',
-      ask: getAsk(chainId, 'USDT', `${LUX_USD * 10000000}`),
+      ask: getAsk(chainId, 'USDT', `21000`),
       supply: 1000,
       queryString: {
         lux: 10 * MILLION,
@@ -150,7 +148,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 1M Lux',
-      ask: getAsk(chainId, 'USDT', `${LUX_USD * 1000000}`),
+      ask: getAsk(chainId, 'USDT', `2100`),
       supply: 10000,
       queryString: {
         lux: MILLION,
@@ -177,7 +175,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 10B Lux',
-      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      ask: getAsk(chainId, 'USDT', `21000000`),
       supply: 1,
       queryString: {
         lux: 10000000000000,
@@ -186,7 +184,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 1B Lux',
-      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      ask: getAsk(chainId, 'USDT', `2100000`),
       supply: 10,
       queryString: {
         lux: 1000 * MILLION,
@@ -195,7 +193,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 100M Lux',
-      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      ask: getAsk(chainId, 'USDT', `210000`),
       supply: 100,
       queryString: {
         lux: 100 * MILLION,
@@ -204,7 +202,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 10M Lux',
-      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      ask: getAsk(chainId, 'USDT', `21000`),
       supply: 1000,
       queryString: {
         lux: 10 * MILLION,
@@ -213,7 +211,7 @@ export default async function mint(app: any, drop: any, network: string = 'hardh
     {
       kind: TokenType.WALLET,
       name: 'Wallet 1M Lux',
-      ask: getAsk(chainId, 'USDT', `${MILLION}`),
+      ask: getAsk(chainId, 'ETH', `15`),
       supply: 10000,
       queryString: {
         lux: MILLION,

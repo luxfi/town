@@ -65,7 +65,7 @@ const BidItem = ({ bid, showToken, summary, onClick }: BidProps) => {
             <div>
               {formattedAmount} {currencyToken?.symbol}
             </div>
-            {usdAmount && <small className="text-gray-500">${usdAmount}</small>}
+            {/* {usdAmount && <small className="text-gray-500">${usdAmount}</small>} */}
           </div>
           {onClick && <div onClick={() => onClick(bid)}>
             <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />

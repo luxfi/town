@@ -96,7 +96,7 @@ type Ask @entity {
   "The Media associated with the Ask"
   media: Media!
 
-  tokenType: TokenType!
+  # tokenType: TokenType!
 
   "Transaction hash the ask was created at"
   transactionHash: String!
@@ -515,8 +515,8 @@ type TokenType @entity {
   "The token type kind"
   kind: TokenKind!
 
-  "The suggested ask for the token type"
-  ask: Ask! @derivedFrom(field: "tokenType")
+  # "The suggested ask for the token type"
+  # ask: Ask! @derivedFrom(field: "tokenType")
 
   "The maximum number of tokens that can be minted for this type"
   supply: BigInt!

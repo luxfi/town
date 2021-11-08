@@ -76,7 +76,7 @@ const Asset = (props: AssetProps) => {
                 <div className="text-xl font-bold text-black">
                   {formattedAmount} {symbol}
                 </div>
-                {usdAmount && <small className="text-gray-700">${usdAmount}</small>}
+                {/* {usdAmount && <small className="text-gray-700">${usdAmount}</small>} */}
               </div>
               {<div onClick={() => onClickBid(highest.bid)}>
                 <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
@@ -88,9 +88,9 @@ const Asset = (props: AssetProps) => {
               <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
                 {formattedAmount} {symbol}
               </div>
-              {usdAmount !== '0' && <div className="text-gray-400">
+              {/* {usdAmount !== '0' && <div className="text-gray-400">
                 ${usdAmount}
-              </div>}
+              </div>} */}
             </>
           )}
           {/* {highest && getUsdAmount && ask ? (

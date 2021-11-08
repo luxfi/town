@@ -111,9 +111,9 @@ const AssetSale = (props: AssetSaleProps) => {
               <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
                 {formattedAmount} {symbol}
               </div>
-              {usdAmount !== '0' && <div className="text-gray-400">
+              {/* {usdAmount !== '0' && <div className="text-gray-400">
                 ${usdAmount}
-              </div>}
+              </div>} */}
             </>
           )}
           {/* {highest && getUsdAmount && ask ? (
