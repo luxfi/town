@@ -95,4 +95,6 @@ const networks: HardhatUserConfig['networks'] = {
 // }  else {
 // }
 
+export {}
+
 export default networks

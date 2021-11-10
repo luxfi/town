@@ -97,4 +97,8 @@ interface IMarket {
   function acceptBid(uint256 tokenId, Bid calldata expectedBid) external;
 
   function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, Bid calldata expectedBid) external;
+
+  function isOfflineBidder(address bidder) external returns (bool);
+
+  function setOfflineBidder(address bidder, bool authorized) external;
 }

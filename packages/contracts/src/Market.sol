@@ -25,7 +25,6 @@ import './console.sol';
 contract Market is IMarket, Ownable {
   using SafeMath for uint256;
   using SafeERC20 for IERC20;
-  // using EnumerableSet for EnumerableSet.AddressSet;
 
   /* *******
    * Globals
@@ -48,6 +47,9 @@ contract Market is IMarket, Ownable {
 
   // Mapping from token to the current ask for the token
   mapping(uint256 => Ask) private _tokenAsks;
+
+  // Mapping of bidders that are authorized to place offline bids
+  mapping(address => bool) private _offlineBidders;
 
   /* *********
    * Modifiers
@@ -81,6 +83,14 @@ contract Market is IMarket, Ownable {
 
   function bidSharesForToken(uint256 tokenId) public view override returns (BidShares memory) {
     return _bidShares[tokenId];
+  }
+
+  function isOfflineBidder(address bidder) public view override returns (bool) {
+    return _offlineBidders[bidder];
+  }
+
+  function setOfflineBidder(address bidder, bool authorized) external override onlyOwner {
+    _offlineBidders[bidder] = authorized;
   }
 
   /**
@@ -168,6 +178,7 @@ contract Market is IMarket, Ownable {
     BidShares memory bidShares = _bidShares[tokenId];
     require(bidShares.creator.value.add(bid.sellOnShare.value) <= uint256(100).mul(Decimal.BASE), 'Market: Sell on fee invalid for share splitting');
     require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
+    require(!bid.offline || (bid.offline && isOfflineBidder(bid.bidder)), 'Market: Only whitelisted offline bidder');
     require(bid.amount != 0, 'Market: cannot bid amount of 0');
     // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
     require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
@@ -183,7 +194,7 @@ contract Market is IMarket, Ownable {
 
     uint256 bidAmount = bid.amount;
 
-    if (bid.currency != address(0) && !ask.offline) {
+    if (bid.currency != address(0) && !bid.offline) {
       IERC20 token = IERC20(bid.currency);
       // We must check the balance that was actually transferred to the market,
       // as some tokens impose a transfer fee and would not actually transfer the
@@ -194,7 +205,7 @@ contract Market is IMarket, Ownable {
       bidAmount = afterBalance.sub(beforeBalance);
     }
 
-    _tokenBidders[tokenId][bid.bidder] = Bid(bidAmount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, ask.offline);
+    _tokenBidders[tokenId][bid.bidder] = Bid(bidAmount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, bid.offline);
 
     emit BidCreated(tokenId, bid);
 
@@ -218,13 +229,14 @@ contract Market is IMarket, Ownable {
   ) external override onlyMediaCaller {
     require(tokenType.bidShares.creator.value.add(bid.sellOnShare.value) <= uint256(100).mul(Decimal.BASE), 'Market: Sell on fee invalid for share splitting');
     require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
+    require(!bid.offline || (bid.offline && isOfflineBidder(bid.bidder)), 'Market: Only whitelisted offline bidder');
     require(bid.amount != 0, 'Market: cannot bid amount of 0');
     // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
     require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
 
     uint256 bidAmount = bid.amount;
 
-    if (bid.currency != address(0) && !tokenType.ask.offline) {
+    if (bid.currency != address(0) && !bid.offline) {
       IERC20 token = IERC20(bid.currency);
       // We must check the balance that was actually transferred to the market,
       // as some tokens impose a transfer fee and would not actually transfer the
