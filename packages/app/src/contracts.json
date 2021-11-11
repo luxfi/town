@@ -11218,6 +11218,25 @@
             {
               "inputs": [
                 {
+                  "internalType": "address",
+                  "name": "bidder",
+                  "type": "address"
+                }
+              ],
+              "name": "isOfflineBidder",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "uint256",
                   "name": "tokenId",
                   "type": "uint256"
@@ -11929,6 +11948,24 @@
                 }
               ],
               "name": "setLazyBidFromApp",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "bidder",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "authorized",
+                  "type": "bool"
+                }
+              ],
+              "name": "setOfflineBidder",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
@@ -17517,6 +17554,25 @@
             {
               "inputs": [
                 {
+                  "internalType": "address",
+                  "name": "bidder",
+                  "type": "address"
+                }
+              ],
+              "name": "isOfflineBidder",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "uint256",
                   "name": "tokenId",
                   "type": "uint256"
@@ -18228,6 +18284,24 @@
                 }
               ],
               "name": "setLazyBidFromApp",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "bidder",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "authorized",
+                  "type": "bool"
+                }
+              ],
+              "name": "setOfflineBidder",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"

@@ -131,7 +131,7 @@ const AssetModal = (props: any) => {
                           className="pt-8 text-center text-gray-500 cursor-pointer"
                           onClick={() => showSection('howReservations')}
                         >
-                          How do reservations work?
+                          How do bids work?
                         </p>
                       </SetSaleBid>
                       <div className="pt-8 text-indigo-500">Bids</div>

@@ -1,27 +1,15 @@
-import { task } from 'hardhat/config'
 import { HardhatUserConfig } from 'hardhat/types'
-
 import 'hardhat-deploy'
 import '@typechain/hardhat'
 import '@nomiclabs/hardhat-web3'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
+import "@nomiclabs/hardhat-etherscan"
 import '@openzeppelin/hardhat-upgrades'
 
-import { utils } from 'ethers'
-const { isAddress, getAddress, formatUnits, parseUnits } = utils
-
-import fs from 'fs'
-import chalk from 'chalk'
-import { hdkey } from 'ethereumjs-wallet'
-import rlp from 'rlp'
-import { privateToAddress } from 'ethereumjs-util'
-import qrcode from 'qrcode-terminal'
-// import keccak from 'keccak'
+require('dotenv').config()
 
 import networks from './hardhat.network'
-
-const bip39 = require('bip39')
 
 const config: HardhatUserConfig = {
   networks,
@@ -73,6 +61,12 @@ const config: HardhatUserConfig = {
     timeout: 20000000,
     // parallel: true,
   },
+
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY
+  }
 }
+
+export {}
 
 export default config

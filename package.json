@@ -64,7 +64,8 @@
     "graphnode:start": "yarn workspace @luxdefi/graphnode start",
     "graphnode:docker": "yarn workspace @luxdefi/graphnode docker",
     "graphnode:clean": "yarn workspace @luxdefi/graphnode clean",
-    "format": "yarn workspace @luxdefi/app format && yarn workspace @luxdefi/contracts format && yarn workspace @luxdefi/moralis format"
+    "format": "yarn workspace @luxdefi/app format && yarn workspace @luxdefi/contracts format && yarn workspace @luxdefi/moralis format",
+    "verify:testnet": "yarn workspace @luxdefi/contracts verify:testnet"
   },
   "workspaces": {
     "packages": [

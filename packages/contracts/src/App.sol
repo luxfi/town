@@ -135,7 +135,6 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     IDrop drop = IDrop(drops[dropId]);
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
     require(tokenType.supply > 0, 'App: token type does not exist');
-    require(bid.currency != address(0), 'App: currency must be an ERC20 token');
     media.setLazyBidFromApp(dropId, tokenType, bid, msg.sender);
   }
 
@@ -152,17 +151,16 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     
     IMarket.BidShares memory bidShares = market.bidSharesForToken(tokenId);
     
-    address owner = media.ownerOf(tokenId);
-    address creator = media.tokenCreator(tokenId);
+    address mediaOwner = media.ownerOf(tokenId);
     address prevOwner = media.previousTokenOwner(tokenId);
 
     media.acceptBidFromApp(tokenId, bid, msg.sender);
 
     if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {      
-      // Transfer bid share to owner of media
-      payable(owner).sendValue(market.splitShare(bidShares.owner, bid.amount));
+      // Transfer bid share to mediaOwner of media
+      payable(mediaOwner).sendValue(market.splitShare(bidShares.owner, bid.amount));
       // Transfer bid share to creator of media
-      payable(creator).sendValue(market.splitShare(bidShares.creator, bid.amount));
+      payable(owner()).sendValue(market.splitShare(bidShares.creator, bid.amount));
       // Transfer bid share to previous owner of media (if applicable)
       payable(prevOwner).sendValue(market.splitShare(bidShares.prevOwner, bid.amount));
     }

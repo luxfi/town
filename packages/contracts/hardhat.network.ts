@@ -51,11 +51,15 @@ const networks: HardhatUserConfig['networks'] = {
     allowUnlimitedContractSize: true,
   },
   mainnet: {
-    url: 'https://bsc-dataseed.binance.org/',
-    chainId: 56,
+    url: 'https://mainnet.infura.io/v3/30171d2ba65445de9271453dbc6ca307',
     accounts: {
       mnemonic: mnemonic(),
     },
+    chainId: 1,
+    live: true,
+    saveDeployments: true,
+    gasPrice: ethers.utils.parseUnits(`155`, 'gwei').toNumber(),
+    blockGasLimit: 4000000,
   },
   // testnet: {
   //   url: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
@@ -94,5 +98,7 @@ const networks: HardhatUserConfig['networks'] = {
 //   }
 // }  else {
 // }
+
+export {}
 
 export default networks

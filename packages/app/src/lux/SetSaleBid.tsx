@@ -15,7 +15,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
   const { ask, currencyToken, formattedAmount, formattedBalance, symbol, type } = useTokenType(dropId, name)
   const [pendingTx, setPendingTx] = useState(null)
   const market = useContract('Market')
-  
+
   const [approvalState, approve] = useApproveCallback(
     CurrencyAmount.fromRawAmount(currencyToken, ask?.amount || 0),
     market.address
@@ -51,7 +51,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
             className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
             onClick={approve}
           >
-            Approve Bid {formattedAmount} {symbol}
+            Approve {formattedAmount} {symbol}
           </button>
         )}
       {formattedBalance === '0' && (
@@ -83,7 +83,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
         />
       )}
       <div className="pt-3">
-        {pendingTx ? (
+        {pendingTx && (
           <p className="cursor-pointer ">
             <a
               href={getExplorerLink(chainId, pendingTx, 'transaction')}
@@ -93,9 +93,8 @@ const SetSaleBid = ({ dropId, name, children }) => {
               {shortenString(pendingTx, 38)} <InfinityLoader height={22} width={30} />
             </a>
           </p>
-        ) : (
-          <p className="text-center">You cannot withdraw a reservation once submitted.</p>
         )}
+
         {children}
       </div>
     </div>
