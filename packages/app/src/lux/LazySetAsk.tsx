@@ -79,7 +79,7 @@ const LazySetAsk = ({ dropId, name, children }) => {
             currencyToken={selectedCurrencyToken}
             offline={offline}
           />
-          <div className="pt-3">
+          {/* <div className="pt-3">
             <Switch.Group>
               <div className="flex items-center justify-center">
                 <Switch.Label className="mr-3 cursor-pointer">
@@ -100,7 +100,7 @@ const LazySetAsk = ({ dropId, name, children }) => {
                 </Switch>
               </div>
             </Switch.Group>
-          </div>
+          </div> */}
           <div>{children}</div>
         </>
       )}

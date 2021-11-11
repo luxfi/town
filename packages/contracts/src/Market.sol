@@ -183,8 +183,6 @@ contract Market is IMarket, Ownable {
     // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
     require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
 
-    IMarket.Ask memory ask = _tokenAsks[tokenId];
-
     Bid storage existingBid = _tokenBidders[tokenId][bid.bidder];
 
     // If there is an existing bid, refund it before continuing
@@ -355,7 +353,7 @@ contract Market is IMarket, Ownable {
       // Transfer bid share to owner of media
       token.safeTransfer(IERC721(mediaContract).ownerOf(tokenId), splitShare(bidShares.owner, bid.amount));
       // Transfer bid share to creator of media
-      token.safeTransfer(Media(mediaContract).tokenCreators(tokenId), splitShare(bidShares.creator, bid.amount));
+      token.safeTransfer(owner(), splitShare(bidShares.creator, bid.amount));
       // Transfer bid share to previous owner of media (if applicable)
       token.safeTransfer(Media(mediaContract).previousTokenOwners(tokenId), splitShare(bidShares.prevOwner, bid.amount));
     }
@@ -392,7 +390,6 @@ contract Market is IMarket, Ownable {
     if (bid.currency != address(0) && !bid.offline) {
       IERC20 erc20Token = IERC20(bid.currency);
 
-      // Transfer bid share to owner of media
       erc20Token.safeTransfer(owner(), bid.amount); // Transfer 100%
     }
 
