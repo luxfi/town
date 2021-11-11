@@ -4,6 +4,7 @@ import { useActiveWeb3React } from '../hooks'
 
 const SUBGRAPH_LOCALHOST = 'http://127.0.0.1:8000/subgraphs/name/luxdefi/luxtown'
 const SUBGRAPH_ROPSTEN = 'https://api.thegraph.com/subgraphs/name/luxdefi/luxtown-ropsten'
+const SUBGRAPH_MAINNET = 'https://api.thegraph.com/subgraphs/name/luxdefi/luxtown-mainnet'
 
 const createClient = (uri) => {
   return new ApolloClient({
@@ -15,6 +16,7 @@ const createClient = (uri) => {
 const clients = {
   [ChainId.HARDHAT]: createClient(SUBGRAPH_LOCALHOST),
   [ChainId.ROPSTEN]: createClient(SUBGRAPH_ROPSTEN),
+  [ChainId.MAINNET]: createClient(SUBGRAPH_MAINNET),
 }
 
 const fallbackClient = process.env.NODE_ENV === 'development' ? clients[ChainId.HARDHAT] : clients[ChainId.ROPSTEN]

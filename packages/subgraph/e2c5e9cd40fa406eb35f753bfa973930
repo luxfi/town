@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Media
-    network: 'mainnet'
+    network: 'ethereum'
     source:
       address: '0x31e0F919C67ceDd2Bc3E294340Dc900735810311'
       abi: Media
@@ -36,7 +36,7 @@ dataSources:
       file: ./src/media.ts
   - kind: ethereum/contract
     name: Market
-    network: 'mainnet'
+    network: 'ethereum'
     source:
       address: '0x7A9AbAB13ad21c3D0c84484bd8dA7da7d722B4ca'
       abi: Market
@@ -79,7 +79,7 @@ dataSources:
       file: ./src/market.ts
   - kind: ethereum/contract
     name: Drop
-    network: 'mainnet'
+    network: 'ethereum'
     source:
       address: '0x941E3B4fC883B1746E52814EB8574b85E6Fa4E66'
       abi: Drop
