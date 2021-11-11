@@ -1,10 +1,11 @@
 {
   "network": "mainnet",
-  "marketAddress": "E5BFAB544ecA83849c53464F85B7164375Bdaac1",
-  "marketStartBlock": 11565017,
-  "mediaAddress": "abEFBc9fD2F806065b4f3C237d4b59D9A97Bcac7",
-  "mediaStartBlock": 11565020,
-  "wethAddress": "C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-  "auctionHouseAddress": "E468cE99444174Bd3bBBEd09209577d25D1ad673",
-  "auctionHouseStartBlock": 12372205
+  "deployment": "mainnet",
+  "marketAddress": "0x7A9AbAB13ad21c3D0c84484bd8dA7da7d722B4ca",
+  "marketStartBlock": 13596597,
+  "mediaAddress": "0x31e0F919C67ceDd2Bc3E294340Dc900735810311",
+  "mediaStartBlock": 13596646,
+  "wethAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "dropAddress": "0x941E3B4fC883B1746E52814EB8574b85E6Fa4E66",
+  "dropStartBlock": 13596767
 }
