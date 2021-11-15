@@ -48,7 +48,7 @@ function AppBar(): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/">
+                      <NavLink href="/mint">
                         <a
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"

@@ -19,34 +19,34 @@ const getTypeURIs = (type: string) => {
 }
 
 const tokenTypesMap = {
-    VALIDATOR: {
-      name: 'Validator',
-      ...getTypeURIs('validator'),
-    },
-    WALLET_10B_LUX: {
-      name: 'Wallet 10B Lux',
-      ...getTypeURIs('wallet'),
-    },
-    WALLET_1B_LUX: {
-      name: 'Wallet 1B Lux',
-      ...getTypeURIs('wallet'),
-    },
-    WALLET_100M_LUX: {
-      name: 'Wallet 100M Lux',
-      ...getTypeURIs('wallet'),
-    },
-    WALLET_10M_LUX: {
-      name: 'Wallet 10M Lux',
-      ...getTypeURIs('wallet'),
-    },
-    WALLET_1M_LUX: {
-      name: 'Wallet 1M Lux',
-      ...getTypeURIs('wallet'),
-    },
-    WALLET_ATM_LUX: {
-      name: 'ATM',
-      ...getTypeURIs('atm'),
-    },
+  VALIDATOR: {
+    name: 'Validator',
+    ...getTypeURIs('validator'),
+  },
+  WALLET_10B_LUX: {
+    name: 'Wallet 10B Lux',
+    ...getTypeURIs('wallet'),
+  },
+  WALLET_1B_LUX: {
+    name: 'Wallet 1B Lux',
+    ...getTypeURIs('wallet'),
+  },
+  WALLET_100M_LUX: {
+    name: 'Wallet 100M Lux',
+    ...getTypeURIs('wallet'),
+  },
+  WALLET_10M_LUX: {
+    name: 'Wallet 10M Lux',
+    ...getTypeURIs('wallet'),
+  },
+  WALLET_1M_LUX: {
+    name: 'Wallet 1M Lux',
+    ...getTypeURIs('wallet'),
+  },
+  WALLET_ATM_LUX: {
+    name: 'ATM',
+    ...getTypeURIs('atm'),
+  },
 }
 
 export default function Mint() {
