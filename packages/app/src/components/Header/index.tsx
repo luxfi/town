@@ -50,23 +50,23 @@ function AppBar(): JSX.Element {
                       {/* <Buy /> */}
                       <NavLink href="/">
                         <a
-                          id={`swap-nav-link`}
-                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
-                        >
-                          {i18n._(t`Dashboard`)}
-                        </a>
-                      </NavLink>
-                      <NavLink href="/mint">
-                        <a
-                          id={`swap-nav-link`}
+                          id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Mint`)}
                         </a>
                       </NavLink>
+                      <NavLink href="/dashboard">
+                        <a
+                          id={`mint-nav-link`}
+                          className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
+                        >
+                          {i18n._(t`Dashboard`)}
+                        </a>
+                      </NavLink>
                       <NavLink href="/market">
                         <a
-                          id={`swap-nav-link`}
+                          id={`market-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
                           {i18n._(t`Market`)}
@@ -298,29 +298,28 @@ function AppBar(): JSX.Element {
 
             <Popover.Panel className="sm:hidden">
               <div className="flex flex-col px-4 pt-2 pb-3 space-y-1">
-                <Link href={'/swap'}>
+                <Link href="/">
                   <a
-                    id={`swap-nav-link`}
+                    id={`mint`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   >
-                    {i18n._(t`Swap`)}
+                    {i18n._(t`Mint`)}
                   </a>
                 </Link>
-                <Link href={'/pool'}>
+                <Link href="/dasboard">
                   <a
-                    id={`pool-nav-link`}
+                    id={`dashboard`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   >
-                    {i18n._(t`Pool`)}
+                    {i18n._(t`Dashboard`)}
                   </a>
                 </Link>
-
-                <Link href={'/migrate'}>
+                <Link href="/market">
                   <a
-                    id={`migrate-nav-link`}
+                    id={`market`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   >
-                    {i18n._(t`Migrate`)}
+                    {i18n._(t`Market`)}
                   </a>
                 </Link>
 

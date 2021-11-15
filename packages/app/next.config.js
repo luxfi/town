@@ -17,6 +17,15 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const { withSentryConfig } = require('@sentry/nextjs')
 
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/mint',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
   target: 'serverless',
   webpack: (config) => {
     config.module.rules = [
@@ -47,7 +56,7 @@ const nextConfig = {
     localeDetection: true,
     locales,
     defaultLocale: sourceLocale,
-  }
+  },
 }
 
 const SentryWebpackPluginOptions = {
