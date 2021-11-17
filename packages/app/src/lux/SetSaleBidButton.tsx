@@ -56,6 +56,7 @@ export const SetSaleBidButton = ({
         const tx = await app.setLazyBid(dropId, name, bid, { from: account, gasPrice, value: bid.amount })
         addTransactionPopup(tx, txSummary)
       } else {
+        console.log(bid)
         console.log('app.setLazyBidERC20', bid, { from: account, gasPrice })
         const tx = await app.setLazyBidERC20(dropId, name, bid, { from: account, gasPrice })
         addTransactionPopup(tx, txSummary)
@@ -67,7 +68,7 @@ export const SetSaleBidButton = ({
 
   useEffect(() => {
     if (account) {
-      market.isOfflineBidder(account).then(showOfflineSwitch)
+      market.isOfflineBidder(account).then(showOfflineSwitch).catch(console.log)
     }
   }, [account])
 

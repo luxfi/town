@@ -15,10 +15,6 @@ export default function LazyBidModal({ dropId, name, bid, isOpen, onClose }): JS
   const [owner, setOwner] = useState(null)
   const app = useContract('App')
 
-  useEffect(() => {
-    app.owner().then(setOwner)
-  }, [app])
-
   const { type, given_name } = getContent(bid?.media?.contentURI)
   const bidder = bid?.bidder?.id
   const currency = bid?.currency?.id
@@ -40,7 +36,7 @@ export default function LazyBidModal({ dropId, name, bid, isOpen, onClose }): JS
   }, [owner])
 
   useEffect(() => {
-    app.owner().then(setOwner)
+    app.owner().then(setOwner).catch(console.log)
   }, [app])
 
   if (!bid) return <></>
