@@ -16,9 +16,7 @@ import AskList from '../../lux/AskList'
 import { useBids, useTokenTypes } from '../../lux/state'
 import Container from '../../components/Container'
 
-interface indexProps {}
-
-const index: React.FC<indexProps> = ({}) => {
+const Dashboard = ({}) => {
   const { account } = useActiveWeb3React()
   const [showBidModal, setShowBidModal] = useState(false)
   const [modalBid, setModalBid] = useState(null)
@@ -60,4 +58,4 @@ const index: React.FC<indexProps> = ({}) => {
   )
 }
 
-export default index
+export default Dashboard
