@@ -178,8 +178,8 @@ export function useTokenType(dropId: number | string, name: string | null) {
 
   useEffect(() => {
     if (name) {
-      drop?.owner()?.then(setOwner)
-      drop?.getTokenType(name)?.then(setTokenType)
+      drop?.owner()?.then(setOwner).catch(console.log)
+      drop?.getTokenType(name)?.then(setTokenType).catch(console.log)
     }
   }, [drop, name])
 
@@ -381,7 +381,7 @@ export const useTokenTypes = () => {
       setTokenAggregates({
         minted: _.reduce(transformed.map(({ minted }) => minted), (sum: number, minted) => sum + minted, 0),
       })
-    })
+    }).catch(console.log)
   }, [])
   return { tokenTypes, tokenAggregates }
 }

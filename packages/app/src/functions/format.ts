@@ -185,6 +185,7 @@ export function formatDateAgo(date: Date) {
 }
 
 export const formatCurrencyFromRawAmount = (token: Currency, amount: BigintIsh) => {
+  if (!token) return 0
   return CurrencyAmount.fromRawAmount(token, amount).toFixed(0)
 }
 

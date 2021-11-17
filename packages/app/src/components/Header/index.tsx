@@ -306,7 +306,7 @@ function AppBar(): JSX.Element {
                     {i18n._(t`Mint`)}
                   </a>
                 </Link>
-                <Link href="/dasboard">
+                <Link href="/dashboard">
                   <a
                     id={`dashboard`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"

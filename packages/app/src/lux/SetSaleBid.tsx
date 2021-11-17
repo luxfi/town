@@ -14,6 +14,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
   const { account, chainId } = useActiveWeb3React()
   const { ask, currencyToken, formattedAmount, formattedBalance, symbol, type } = useTokenType(dropId, name)
   const [pendingTx, setPendingTx] = useState(null)
+  const [offlineBidder, setOfflineBidder] = useState(null)
   const market = useContract('Market')
 
   const [approvalState, approve] = useApproveCallback(
@@ -25,16 +26,22 @@ const SetSaleBid = ({ dropId, name, children }) => {
     setPendingTx(null)
   }, [name, account, chainId])
 
+  useEffect(() => {
+    if (account) {
+      market.isOfflineBidder(account).then(setOfflineBidder).catch(console.log)
+    }
+  }, [account])
+
   return (
     <div className="m-auto sm:p-4 md:p-0 w-96">
       <div className="mb-10 text-right">
-        <div className={`${formattedBalance === '0' ? 'text-red' : 'text-gray-500'}`}>
+        <div className={`${formattedBalance === '0' && !offlineBidder ? 'text-red' : 'text-gray-500'}`}>
           {account && shortenAddress(account)}
         </div>
         <div className="text-xl">
           <>
             {formattedBalance ? (
-              <div className={`${formattedBalance === '0' ? 'text-red' : ''}`}>
+              <div className={`${formattedBalance === '0' && !offlineBidder ? 'text-red' : ''}`}>
                 Balance {formattedBalance} {symbol}
               </div>
             ) : (
@@ -45,7 +52,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
       </div>
       {!currencyToken?.isNative &&
         [ApprovalState.NOT_APPROVED, ApprovalState.UNKNOWN].includes(approvalState) &&
-        formattedBalance !== '0' && !ask?.offline && (
+        formattedBalance !== '0' && (
           <button
             type="button"
             className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
@@ -54,7 +61,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
             Approve {formattedAmount} {symbol}
           </button>
         )}
-      {formattedBalance === '0' && (
+      {formattedBalance === '0' && !offlineBidder && (
         <button
           type="button"
           className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in rounded-lg shadow-md w-96 bg-red focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
@@ -73,7 +80,7 @@ const SetSaleBid = ({ dropId, name, children }) => {
           <InfinityLoader />
         </button>
       )}
-      {(approvalState === ApprovalState.APPROVED || currencyToken?.isNative || ask?.offline) && formattedBalance !== '0' && (
+      {(approvalState === ApprovalState.APPROVED || currencyToken?.isNative || offlineBidder) && (formattedBalance !== '0' || offlineBidder) && (
         <SetSaleBidButton
           ask={ask}
           dropId={dropId}
