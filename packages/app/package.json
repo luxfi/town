@@ -5,6 +5,7 @@
   "scripts": {
     "analyze": "ANALYZE=true yarn build && serve .next -n",
     "dev": "next dev",
+    "export": "next export",
     "start": "next start",
     "inspect": "NODE_OPTIONS='--inspect' next dev",
     "build": "yarn lingui && next build",

@@ -26,7 +26,7 @@ const nextConfig = {
       },
     ]
   },
-  target: 'serverless',
+  target: 'server',
   webpack: (config) => {
     config.module.rules = [
       ...config.module.rules,
