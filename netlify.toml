@@ -1,6 +1,6 @@
 [build]
-  command = "yarn build:netlify"
-  publish = ".next"
+  command = "yarn build"
+  publish = "packages/app/.next"
 
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=8192"

@@ -12,7 +12,8 @@
   ],
   "private": true,
   "scripts": {
-    "build": "yarn workspace @luxdefi/sdk build && yarn workspace @luxdefi/app build",
+    "build": "yarn build:sdk && yarn build:app",
+    "build:app": "yarn workspace @luxdefi/app build",
     "build:lab": "yarn workspace @luxdefi/lab build",
     "build:sdk": "yarn workspace @luxdefi/sdk build",
     "clean": "rm -rf packages/app/build && rm -rf packages/contracts/artifacts && rm -rf packages/contracts/cache && rm -rf packages/contracts/types",
@@ -82,5 +83,8 @@
   },
   "resolutions": {
     "node-hid": "./resolutions/node-hid"
+  },
+  "dependencies": {
+    "@netlify/plugin-nextjs": "^3.9.2"
   }
 }
