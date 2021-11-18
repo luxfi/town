@@ -81,10 +81,10 @@
       "**/@luxdefi/solidity"
     ]
   },
+  "dependencies": {
+    "@netlify/plugin-nextjs": "^4.0.0-beta.7"
+  },
   "resolutions": {
     "node-hid": "./resolutions/node-hid"
-  },
-  "dependencies": {
-    "@netlify/plugin-nextjs": "^3.9.2"
   }
 }
