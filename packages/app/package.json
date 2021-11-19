@@ -171,6 +171,7 @@
   ],
   "dependencies": {
     "@apollo/client": "^3.4.16",
+    "@netlify/plugin-nextjs": "^4.0.0-beta.7",
     "@sushiswap/core": "2.0.0-canary.0",
     "@web3-react/walletlink-connector": "^6.2.7",
     "graphql": "^15.6.1",
