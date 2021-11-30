@@ -11,6 +11,7 @@ import HowOffline from './HowOffline'
 import LazyBidList from './LazyBidList'
 import { Bid, GraphLazyBid } from './types'
 import LazyBidModal from './LazyBidModal'
+import { useActiveWeb3React } from '../hooks'
 
 const defaultShow = {
   setAsk: false,
@@ -19,17 +20,9 @@ const defaultShow = {
   howOffline: false,
 }
 
-const NoBids = () => (
-  <div>
-    Be the first to place a bid.
-  </div>
-)
+const NoBids = () => <div>Be the first to place a bid.</div>
 
-const NoAsks = () => (
-  <div>
-    Be the first to place a bid.
-  </div>
-)
+const NoAsks = () => <div>Be the first to place a bid.</div>
 
 const DROP_ID = 1
 
@@ -40,10 +33,13 @@ const AssetModal = (props: any) => {
   const { modalProps } = props
   const [tokenId, setTokenTypeName] = useState(null)
   // const { ask, highest, getUsdAmount, contentURI, formattedAmount, isOwner, symbol, usdAmount } = {} as any
-  const { ask, highest, getUsdAmount, contentURI, metadataURI, formattedAmount, isOwner, symbol, usdAmount } = useTokenType(props.dropId, tokenTypeName as string)
+  const { ask, highest, getUsdAmount, contentURI, metadataURI, formattedAmount, isOwner, symbol, usdAmount } =
+    useTokenType(props.dropId, tokenTypeName as string)
   const [show, setShow] = useState(defaultShow)
   const [showBidModal, setShowBidModal] = useState(false)
   const [modalBid, setModalBid] = useState(null)
+
+  const { account } = useActiveWeb3React()
 
   const showSection = (section) => {
     setShow({ ...defaultShow, [section]: true })
@@ -68,7 +64,13 @@ const AssetModal = (props: any) => {
 
   return (
     <>
-      <LazyBidModal dropId={DROP_ID} name={tokenTypeName as string} bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(!showBidModal)} />
+      <LazyBidModal
+        dropId={DROP_ID}
+        name={tokenTypeName as string}
+        bid={modalBid}
+        isOpen={showBidModal}
+        onClose={() => setShowBidModal(!showBidModal)}
+      />
       <Modal {...props.modalProps} padding={0} closeButton={false}>
         <div ref={assetModalRef} className="grid md:grid-cols-2 gap-30 sm:grid-cols-1">
           <div className="">
@@ -115,8 +117,18 @@ const AssetModal = (props: any) => {
                           How do offline asks work?
                         </p>
                       </LazySetAsk>
-                      <div className="pt-8 text-indigo-500">Bids</div>
-                      <LazyBidList empty={<NoBids />} where={{ tokenTypeName: tokenTypeName as string}} onClick={onClickBid} />
+                      {account ? (
+                        <>
+                          <div className="pt-8 text-indigo-500">Bids</div>
+                          <LazyBidList
+                            empty={<NoBids />}
+                            where={{ tokenTypeName: tokenTypeName as string }}
+                            onClick={onClickBid}
+                          />
+                        </>
+                      ) : (
+                        <div className="pt-8 text-center text-gray-500">Connect to a Wallet</div>
+                      )}
                     </>
                   )}
                 </div>
@@ -135,7 +147,11 @@ const AssetModal = (props: any) => {
                         </p>
                       </SetSaleBid>
                       <div className="pt-8 text-indigo-500">Bids</div>
-                      <LazyBidList empty={<NoBids />} where={{ tokenTypeName: tokenTypeName as string}} onClick={onClickBid} />
+                      <LazyBidList
+                        empty={<NoBids />}
+                        where={{ tokenTypeName: tokenTypeName as string }}
+                        onClick={onClickBid}
+                      />
                     </>
                   )}
                 </div>
