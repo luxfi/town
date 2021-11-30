@@ -11,6 +11,7 @@ import HowOffline from './HowOffline'
 import LazyBidList from './LazyBidList'
 import { Bid, GraphLazyBid } from './types'
 import LazyBidModal from './LazyBidModal'
+import { useActiveWeb3React } from '../hooks'
 
 const defaultShow = {
   setAsk: false,
@@ -37,6 +38,8 @@ const AssetModal = (props: any) => {
   const [show, setShow] = useState(defaultShow)
   const [showBidModal, setShowBidModal] = useState(false)
   const [modalBid, setModalBid] = useState(null)
+
+  const { account } = useActiveWeb3React()
 
   const showSection = (section) => {
     setShow({ ...defaultShow, [section]: true })
@@ -114,12 +117,18 @@ const AssetModal = (props: any) => {
                           How do offline asks work?.....
                         </p>
                       </LazySetAsk>
-                      <div className="pt-8 text-indigo-500">Bids</div>
-                      <LazyBidList
-                        empty={<NoBids />}
-                        where={{ tokenTypeName: tokenTypeName as string }}
-                        onClick={onClickBid}
-                      />
+                      {account ? (
+                        <>
+                          <div className="pt-8 text-indigo-500">Bids</div>
+                          <LazyBidList
+                            empty={<NoBids />}
+                            where={{ tokenTypeName: tokenTypeName as string }}
+                            onClick={onClickBid}
+                          />
+                        </>
+                      ) : (
+                        <div className="pt-8 text-center text-gray-500">Connect to a Wallet</div>
+                      )}
                     </>
                   )}
                 </div>
