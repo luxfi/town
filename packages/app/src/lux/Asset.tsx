@@ -23,9 +23,9 @@ export type AssetProps = {
   isOwner?: boolean
   autoPlay?: boolean
   animate?: boolean
-  large?: boolean,
-  getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string,
-  onClickBid?: (bid: GraphBid) => void,
+  large?: boolean
+  getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string
+  onClickBid?: (bid: GraphBid) => void
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Asset = (props: AssetProps) => {
@@ -44,11 +44,8 @@ const Asset = (props: AssetProps) => {
   }
 
   return (
-    <div
-      className={`Asset ${props.className || ''} ${props.onClick ? 'cursor-pointer' : ''}`}
-      onClick={props.onClick}
-    >
-      {props.large && video? (
+    <div className={`Asset ${props.className || ''} ${props.onClick ? 'cursor-pointer' : ''}`} onClick={props.onClick}>
+      {props.large && video ? (
         <Player url={video} playing={true} loop width={'auto'} height={'auto'} style={{ height: 'auto' }} />
       ) : (
         image && <img src={image} alt={`${type} ${tokenId}`} />
@@ -62,38 +59,38 @@ const Asset = (props: AssetProps) => {
         </div>
         {showPrice && formattedAmount && symbol && (
           <>
-          {highest && getUsdAmount && ask ? (
-            <div className="grid grid-cols-2 px-3 py-2 my-3 bg-indigo-300 rounded-lg">
-            <div className="text-left">
-              <div className="text-xl text-black">Highest Bid</div>
-              {/* <div>Bidder {shortenAddress(highest?.bid?.bidder?.id)} {summary}</div> */}
-              <div className="text-gray-700">
-                By {shortenAddress(highest?.bid?.bidder?.id)}
+            {highest && getUsdAmount && ask ? (
+              <div className="grid grid-cols-2 px-3 py-2 my-3 bg-indigo-300 rounded-lg">
+                <div className="text-left">
+                  <div className="text-xl text-black">Highest Bid</div>
+                  {/* <div>Bidder {shortenAddress(highest?.bid?.bidder?.id)} {summary}</div> */}
+                  <div className="text-gray-700">By {shortenAddress(highest?.bid?.bidder?.id)}</div>
+                </div>
+                <div className="flex justify-end">
+                  <div className="text-right ">
+                    <div className="text-xl font-bold text-black">
+                      {formattedAmount} {symbol}
+                    </div>
+                    {/* {usdAmount && <small className="text-gray-700">${usdAmount}</small>} */}
+                  </div>
+                  {
+                    <div onClick={() => onClickBid(highest.bid)}>
+                      <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
+                    </div>
+                  }
+                </div>
               </div>
-            </div>
-            <div className="flex justify-end">
-              <div className="text-right ">
-                <div className="text-xl font-bold text-black">
+            ) : (
+              <>
+                <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
                   {formattedAmount} {symbol}
                 </div>
-                {/* {usdAmount && <small className="text-gray-700">${usdAmount}</small>} */}
-              </div>
-              {<div onClick={() => onClickBid(highest.bid)}>
-                <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
-              </div>}
-            </div>
-          </div>
-          ) : (
-            <>
-              <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
-                {formattedAmount} {symbol}
-              </div>
-              {/* {usdAmount !== '0' && <div className="text-gray-400">
+                {/* {usdAmount !== '0' && <div className="text-gray-400">
                 ${usdAmount}
               </div>} */}
-            </>
-          )}
-          {/* {highest && getUsdAmount && ask ? (
+              </>
+            )}
+            {/* {highest && getUsdAmount && ask ? (
             <div className="grid grid-cols-2 px-3 py-3 my-3 bg-indigo-300 rounded-lg">
               <div className="text-left">
                 <div className="text-lg text-indigo-700">
@@ -116,7 +113,7 @@ const Asset = (props: AssetProps) => {
               </div>}
             </>
           )} */}
-          </>          
+          </>
         )}
       </div>
     </div>
