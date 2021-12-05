@@ -41,13 +41,10 @@ const SetSaleBid = ({ dropId, name, children }) => {
   const currencyBalance = useCurrencyBalance(account, selectedCurrencyToken)
   const rawAmount = ask ? formatCurrencyFromRawAmount(currencyToken, ask?.amount) : ''
   const [priceSymbol, setPriceSymbol] = useState('')
+  const [isValid, setIsValid] = useState(false)
+  const [isInsufficient, setIsInsufficient] = useState(false)
   const price = prices?.[priceSymbol]?.usd
   const modRawAmount = price ? parseFloat(rawAmount) / price : parseFloat(rawAmount)
-  useEffect(() => {
-    if (currencyBalance) {
-      setBalance(numberWithCommas(currencyBalance.toFixed(0)))
-    }
-  }, [currencyBalance])
 
   useEffect(() => {
     setPendingTx(null)
@@ -64,8 +61,20 @@ const SetSaleBid = ({ dropId, name, children }) => {
     }
   }, [currencyToken, ask])
   useEffect(() => {
-    setMinimumAmount((5 / 100) * modRawAmount + modRawAmount)
-  }, [value])
+    const minAmount = (5 / 100) * modRawAmount + modRawAmount
+    setMinimumAmount(minAmount)
+    if (parseFloat(value) < minAmount || isInsufficient) {
+      setIsValid(false)
+    } else {
+      console.log('setting is valid to true')
+      setIsValid(true)
+    }
+    if (currencyBalance) {
+      setBalance(numberWithCommas(currencyBalance.toFixed(0)))
+      console.log('hitting currencyBalance', currencyBalance)
+      setIsInsufficient(parseFloat(value) > parseFloat(currencyBalance.toFixed(0)))
+    }
+  }, [value, currencyBalance])
   const onSelectCurrency = (currencyToken) => {
     setSelectedCurrencyToken(currencyToken)
     setPriceSymbol(currencyToken.symbol === 'ETH' ? 'ethereum' : currencyToken.symbol === 'WETH' ? 'weth' : '')
@@ -92,7 +101,9 @@ const SetSaleBid = ({ dropId, name, children }) => {
         </div>
       </div>
       {showSelectCurrency ? (
-        <SelectCurrency onSelect={onSelectCurrency} />
+        <div className="mb-4">
+          <SelectCurrency onSelect={onSelectCurrency} />
+        </div>
       ) : (
         <div className="relative flex items-center w-full mb-4">
           <Input.Numeric
@@ -123,50 +134,55 @@ const SetSaleBid = ({ dropId, name, children }) => {
           The minimum bid amount is {selectedCurrencyToken?.symbol} {numberWithCommas(minimumAmount.toFixed(4))}
         </div>
       )}
-
-      {!currencyToken?.isNative &&
-        [ApprovalState.NOT_APPROVED, ApprovalState.UNKNOWN].includes(approvalState) &&
-        formattedBalance !== '0' && (
-          <div>
-            <button
-              type="button"
-              className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
-              onClick={approve}
-            >
-              Approve {value} {selectedCurrencyToken?.symbol}
-            </button>
-          </div>
-        )}
-      {formattedBalance === '0' && !offlineBidder && (
+      {(formattedBalance === '0' && !offlineBidder) || isInsufficient ? (
         <button
           type="button"
           className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in rounded-lg shadow-md w-96 bg-red focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
           disabled
         >
-          Insufficient {symbol} Balance
+          Insufficient {selectedCurrencyToken?.symbol} Balance
         </button>
+      ) : (
+        <>
+          {' '}
+          {!currencyToken?.isNative &&
+            [ApprovalState.NOT_APPROVED, ApprovalState.UNKNOWN].includes(approvalState) &&
+            formattedBalance !== '0' && (
+              <div>
+                <button
+                  type="button"
+                  className="px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md w-96 hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
+                  onClick={approve}
+                >
+                  Approve {value} {selectedCurrencyToken?.symbol}
+                </button>
+              </div>
+            )}
+          {!isInsufficient && !currencyToken?.isNative && approvalState === ApprovalState.PENDING && (
+            <button
+              type="button"
+              className="flex justify-center px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-black rounded-lg shadow-md w-96 hover:bg-red focus:ring-offset-red focus:outline-none focus:ring-offset-2"
+              disabled
+            >
+              Approving
+              <InfinityLoader />
+            </button>
+          )}
+          {!isInsufficient &&
+            (approvalState === ApprovalState.APPROVED || currencyToken?.isNative || offlineBidder) &&
+            (formattedBalance !== '0' || offlineBidder) && (
+              <SetSaleBidButton
+                ask={ask}
+                dropId={dropId}
+                name={name}
+                amount={0}
+                currencyToken={currencyToken}
+                isAllowed={isValid}
+              />
+            )}
+        </>
       )}
-      {!currencyToken?.isNative && approvalState === ApprovalState.PENDING && (
-        <button
-          type="button"
-          className="flex justify-center px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-black rounded-lg shadow-md w-96 hover:bg-red focus:ring-offset-red focus:outline-none focus:ring-offset-2"
-          disabled
-        >
-          Approving
-          <InfinityLoader />
-        </button>
-      )}
-      {(approvalState === ApprovalState.APPROVED || currencyToken?.isNative || offlineBidder) &&
-        (formattedBalance !== '0' || offlineBidder) && (
-          <SetSaleBidButton
-            ask={ask}
-            dropId={dropId}
-            name={name}
-            amount={0}
-            currencyToken={currencyToken}
-            isAllowed={parseFloat(value) >= minimumAmount}
-          />
-        )}
+
       <div className="pt-3">
         {pendingTx && (
           <p className="cursor-pointer ">
