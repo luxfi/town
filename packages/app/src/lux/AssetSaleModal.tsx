@@ -11,6 +11,8 @@ import HowOffline from './HowOffline'
 import LazyBidList from './LazyBidList'
 import { Bid, GraphLazyBid } from './types'
 import LazyBidModal from './LazyBidModal'
+import { useActiveWeb3React } from '../hooks'
+import Web3Connect from '../components/Web3Connect'
 
 const defaultShow = {
   setAsk: false,
@@ -37,6 +39,8 @@ const AssetModal = (props: any) => {
   const [show, setShow] = useState(defaultShow)
   const [showBidModal, setShowBidModal] = useState(false)
   const [modalBid, setModalBid] = useState(null)
+
+  const { account } = useActiveWeb3React()
 
   const showSection = (section) => {
     setShow({ ...defaultShow, [section]: true })
@@ -100,51 +104,60 @@ const AssetModal = (props: any) => {
           </div>
           <div className="flex items-stretch bg-gray-900 md:h-screen">
             <div className="self-center m-auto w-96">
-              {isOwner ? (
-                <div>
-                  {show.howOffline ? (
-                    <HowOffline onClick={() => showSection('setAsk')} />
+              {account ? (
+                <>
+                  {isOwner ? (
+                    <div>
+                      {show.howOffline ? (
+                        <HowOffline onClick={() => showSection('setAsk')} />
+                      ) : (
+                        <>
+                          <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string}>
+                            <p
+                              className="pt-8 text-center text-gray-500 cursor-pointer"
+                              onClick={() => showSection('howOffline')}
+                            >
+                              How do offline asks work?
+                            </p>
+                          </LazySetAsk>
+
+                          <div className="pt-8 text-indigo-500">Bids</div>
+                          <LazyBidList
+                            empty={<NoBids />}
+                            where={{ tokenTypeName: tokenTypeName as string }}
+                            onClick={onClickBid}
+                          />
+                        </>
+                      )}
+                    </div>
                   ) : (
-                    <>
-                      <LazySetAsk dropId={DROP_ID} name={tokenTypeName as string}>
-                        <p
-                          className="pt-8 text-center text-gray-500 cursor-pointer"
-                          onClick={() => showSection('howOffline')}
-                        >
-                          How do offline asks work?.....
-                        </p>
-                      </LazySetAsk>
-                      <div className="pt-8 text-indigo-500">Bids</div>
-                      <LazyBidList
-                        empty={<NoBids />}
-                        where={{ tokenTypeName: tokenTypeName as string }}
-                        onClick={onClickBid}
-                      />
-                    </>
+                    <div>
+                      {show.howReservations ? (
+                        <HowReservations onClick={() => showSection('setBid')} />
+                      ) : (
+                        <>
+                          <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string}>
+                            <p
+                              className="pt-8 text-center text-gray-500 cursor-pointer"
+                              onClick={() => showSection('howReservations')}
+                            >
+                              How do bids work?
+                            </p>
+                          </SetSaleBid>
+                          <div className="pt-8 text-indigo-500">Bids</div>
+                          <LazyBidList
+                            empty={<NoBids />}
+                            where={{ tokenTypeName: tokenTypeName as string }}
+                            onClick={onClickBid}
+                          />
+                        </>
+                      )}
+                    </div>
                   )}
-                </div>
+                </>
               ) : (
-                <div>
-                  {show.howReservations ? (
-                    <HowReservations onClick={() => showSection('setBid')} />
-                  ) : (
-                    <>
-                      <SetSaleBid dropId={DROP_ID} name={tokenTypeName as string}>
-                        <p
-                          className="pt-8 text-center text-gray-500 cursor-pointer"
-                          onClick={() => showSection('howReservations')}
-                        >
-                          How do bids work?
-                        </p>
-                      </SetSaleBid>
-                      <div className="pt-8 text-indigo-500">Bids</div>
-                      <LazyBidList
-                        empty={<NoBids />}
-                        where={{ tokenTypeName: tokenTypeName as string }}
-                        onClick={onClickBid}
-                      />
-                    </>
-                  )}
+                <div className="text-center">
+                  <Web3Connect />
                 </div>
               )}
             </div>
