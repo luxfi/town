@@ -101,7 +101,7 @@ const AssetModal = (props: any) => {
                           className="pt-8 text-center text-gray-500 cursor-pointer"
                           onClick={() => showSection('howOffline')}
                         >
-                          How do offline asks work????
+                          How do offline asks work?
                         </p>
                       </SetAsk>
                       <div className="pt-8 text-indigo-500">Bids</div>
