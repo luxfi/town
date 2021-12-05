@@ -19,17 +19,9 @@ const defaultShow = {
   howOffline: false,
 }
 
-const NoBids = () => (
-  <div>
-    Be the first to place a bid.
-  </div>
-)
+const NoBids = () => <div>Be the first to place a bid.</div>
 
-const NoAsks = () => (
-  <div>
-    Be the first to place a bid.
-  </div>
-)
+const NoAsks = () => <div>Be the first to place a bid.</div>
 
 const AssetModal = (props: any) => {
   const router = useRouter()
@@ -62,6 +54,7 @@ const AssetModal = (props: any) => {
     setModalBid(bid)
     setShowBidModal(!showBidModal)
   }
+  console.log('hello')
 
   return (
     <>
@@ -108,7 +101,7 @@ const AssetModal = (props: any) => {
                           className="pt-8 text-center text-gray-500 cursor-pointer"
                           onClick={() => showSection('howOffline')}
                         >
-                          How do offline asks work?
+                          How do offline asks work????
                         </p>
                       </SetAsk>
                       <div className="pt-8 text-indigo-500">Bids</div>
