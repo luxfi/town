@@ -70,11 +70,11 @@ const AssetSale = (props: AssetSaleProps) => {
       className={`AssetSale ${props.className || ''} ${props.onClickTokenType ? 'cursor-pointer' : ''}`}
       onClick={() => props.onClickTokenType && props.onClickTokenType(props.name)}
     >
-      {/* {props.large && video ? (
+      {props.large && video ? (
         <Player url={video} playing={true} loop width={'auto'} height={'auto'} style={{ height: 'auto' }} />
       ) : (
         image && <img src={image} alt={`${type} ${dropId}-${name}`} />
-      )} */}
+      )}
       <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
           <span className="text-lg text-gray-300">{given_name || name}</span>
