@@ -47,9 +47,7 @@ const LazySetAsk = ({ dropId, name, children }) => {
         <SelectCurrency onSelect={onSelectCurrency} />
       ) : (
         <>
-          <h2 className="mb-10 text-xl text-center">
-            Set Ask for {name}
-          </h2>
+          <h2 className="mb-10 text-xl text-center">Set Ask for {name}</h2>
           <div className="relative flex items-center w-full mb-4">
             <Input.Numeric
               className="w-full p-3 text-2xl rounded bg-dark-700 focus:ring focus:ring-indigo-600"
@@ -73,12 +71,7 @@ const LazySetAsk = ({ dropId, name, children }) => {
               </Button>
             )}
           </div>
-          <LazySetAskButton
-            name={name}
-            amount={value}
-            currencyToken={selectedCurrencyToken}
-            offline={offline}
-          />
+          <LazySetAskButton name={name} amount={value} currencyToken={selectedCurrencyToken} offline={offline} />
           {/* <div className="pt-3">
             <Switch.Group>
               <div className="flex items-center justify-center">

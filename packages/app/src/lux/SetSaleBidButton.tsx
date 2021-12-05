@@ -16,15 +16,10 @@ export type SetSaleBidButtonProps = {
   name: string
   amount: number | string
   currencyToken: Currency
+  isAllowed?: boolean
 }
 
-export const SetSaleBidButton = ({
-  ask,
-  dropId,
-  name,
-  amount,
-  currencyToken,
-}: SetSaleBidButtonProps) => {
+export const SetSaleBidButton = ({ ask, dropId, name, amount, currencyToken, isAllowed }: SetSaleBidButtonProps) => {
   const { account } = useActiveWeb3React()
   const gasPrice = useGasPrice()
   const [offline, setOffline] = useState(false)
@@ -71,39 +66,43 @@ export const SetSaleBidButton = ({
       market.isOfflineBidder(account).then(showOfflineSwitch).catch(console.log)
     }
   }, [account])
-
+  console.log('isAllowed', isAllowed)
   return (
     <>
       <button
         type="button"
-        className="w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2"
-        onClick={setLazyBid}
+        className={`w-full px-4 py-3 text-xl text-center text-white transition duration-200 ease-in rounded-lg shadow-md  focus:ring-offset-indigo-200 focus:outline-none focus:ring-offset-2 ${
+          isAllowed ? 'cursor-pointer bg-indigo-600 hover:bg-indigo-700' : 'cursor-not-allowed bg-gray-500'
+        }`}
+        onClick={isAllowed ? setLazyBid : null}
       >
         Place {offline && 'Offline'} Bid
       </button>
 
-      {offlineSwitch && <div className="pt-3">
-        <Switch.Group>
-          <div className="flex items-center justify-center">
-            <Switch.Label className="mr-3 cursor-pointer">
-              <Typography>{i18n._(t`Offline`)}</Typography>
-            </Switch.Label>
-            <Switch
-              checked={offline}
-              onChange={() => setOffline(!offline)}
-              className="bg-indigo-500 bg-opacity-60 border border-indigo-600 border-opacity-80 relative inline-flex items-center h-[32px] rounded-full w-[54px] transition-colors focus:outline-none"
-            >
-              <span
-                className={`${
-                  offline ? 'translate-x-[23px] bg-gray-300' : 'translate-x-[1px] bg-indigo-400'
-                } inline-block w-7 h-7 transform  rounded-full transition-transform text-indigo-600`}
+      {offlineSwitch && (
+        <div className="pt-3">
+          <Switch.Group>
+            <div className="flex items-center justify-center">
+              <Switch.Label className="mr-3 cursor-pointer">
+                <Typography>{i18n._(t`Offline`)}</Typography>
+              </Switch.Label>
+              <Switch
+                checked={offline}
+                onChange={() => setOffline(!offline)}
+                className="bg-indigo-500 bg-opacity-60 border border-indigo-600 border-opacity-80 relative inline-flex items-center h-[32px] rounded-full w-[54px] transition-colors focus:outline-none"
               >
-                {offline ? <CheckIcon /> : ''}
-              </span>
-            </Switch>
-          </div>
-        </Switch.Group>
-      </div>}
+                <span
+                  className={`${
+                    offline ? 'translate-x-[23px] bg-gray-300' : 'translate-x-[1px] bg-indigo-400'
+                  } inline-block w-7 h-7 transform  rounded-full transition-transform text-indigo-600`}
+                >
+                  {offline ? <CheckIcon /> : ''}
+                </span>
+              </Switch>
+            </div>
+          </Switch.Group>
+        </div>
+      )}
     </>
   )
 }
