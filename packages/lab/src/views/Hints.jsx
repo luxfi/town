@@ -126,7 +126,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
           className="highlight"
           style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
         >
-          {"<AddressInput/>"}
+          {"<AddressInput/>;"}
         </span>
         component:
         <div style={{ width: 350, padding: 16, margin: "auto" }}>
