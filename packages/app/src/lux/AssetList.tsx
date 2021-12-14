@@ -41,7 +41,7 @@ const GET_ASSETS = gql`
 `
 
 const Empty = ({ empty }) => (
-  empty ? empty : <div className="py-3">Go to the <Link href="/market">Market</Link> to buy your first Lux NFT.</div>
+  empty ? empty : <div className="py-3"><Link href="/mint">Mint and list the first!</Link></div>
 )
 
 export type AssetListProps = {

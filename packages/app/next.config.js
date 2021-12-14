@@ -26,7 +26,6 @@ const nextConfig = {
       },
     ]
   },
-  target: 'server',
   webpack: (config) => {
     config.module.rules = [
       ...config.module.rules,
