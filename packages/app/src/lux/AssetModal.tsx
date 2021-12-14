@@ -19,17 +19,9 @@ const defaultShow = {
   howOffline: false,
 }
 
-const NoBids = () => (
-  <div>
-    Be the first to place a bid.
-  </div>
-)
+const NoBids = () => <div>Be the first to place a bid.</div>
 
-const NoAsks = () => (
-  <div>
-    Be the first to place a bid.
-  </div>
-)
+const NoAsks = () => <div>Be the first to place a bid.</div>
 
 const AssetModal = (props: any) => {
   const router = useRouter()
@@ -62,6 +54,7 @@ const AssetModal = (props: any) => {
     setModalBid(bid)
     setShowBidModal(!showBidModal)
   }
+  console.log('hello')
 
   return (
     <>

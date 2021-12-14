@@ -1,11 +1,25 @@
 import { useCallback, useEffect, useState } from 'react'
-import { BigintIsh, Currency, CurrencyAmount, CurrencySymbol, Ether, Token, ZERO_ADDRESS, cachedFetch } from '@luxdefi/sdk'
+import {
+  BigintIsh,
+  Currency,
+  CurrencyAmount,
+  CurrencySymbol,
+  Ether,
+  Token,
+  ZERO_ADDRESS,
+  cachedFetch,
+} from '@luxdefi/sdk'
 import { ethers } from 'ethers'
 import { useQuery, gql } from '@apollo/client'
 import queryString from 'query-string'
 import _ from 'lodash'
 import { getCurrencyToken, getCurrencyTokenLowerCase } from '../config/currencies'
-import { formatCurrencyAmountWithCommas, formatCurrencyFromRawAmount, isSameAddress, numberWithCommas } from '../functions'
+import {
+  formatCurrencyAmountWithCommas,
+  formatCurrencyFromRawAmount,
+  isSameAddress,
+  numberWithCommas,
+} from '../functions'
 import { useActiveWeb3React, useContract } from '../hooks'
 import { useCurrencyBalance } from '../state/wallet/hooks'
 import { Ask, CoingeckoPrices, HighestBid } from './types'
@@ -32,7 +46,7 @@ export type UseAssetOptions = {
 
 const GET_ASSET = gql`
   query GetAsset($id: Int!) {
-    media(id:$id) {
+    media(id: $id) {
       id
       contentURI
       metadataURI
@@ -66,13 +80,13 @@ const defaultAsset = {
 }
 
 export const getContent = (metadataURI) => {
-  console.log({ metadataURI })
+  // console.log({ metadataURI })
   const match = metadataURI?.match(/type=__(atm|validator|cash|wallet)__/)
-  const type = match && match[1] || ''
+  const type = (match && match[1]) || ''
   // console.log(match)
-  const uri = metadataURI ? queryString.parseUrl(metadataURI) : {} as any
+  const uri = metadataURI ? queryString.parseUrl(metadataURI) : ({} as any)
 
-  return{
+  return {
     ...uri.query,
     type: _.upperFirst(type),
     image: type && `/nfts/${type.toLowerCase()}.gif`,
@@ -97,8 +111,8 @@ export function useAsset(tokenId: number | string) {
     },
     onCompleted: ({ media }) => {
       setAsset(media || defaultAsset)
-    }
-  });
+    },
+  })
 
   const media = useContract('Media')
   const market = useContract('Market')
@@ -142,7 +156,7 @@ export function useAsset(tokenId: number | string) {
     symbol: currencyToken && currencyToken.symbol,
     contentURI: asset?.contentURI,
     currentBids: asset?.currentBids,
-    type, 
+    type,
     video,
     image,
     highest,
@@ -167,8 +181,8 @@ export function useTokenType(dropId: number | string, name: string | null) {
     // },
     onCompleted: ({ media }) => {
       // setAsset(media || defaultAsset)
-    }
-  });
+    },
+  })
 
   const media = useContract('Media')
   const market = useContract('Market')
@@ -215,7 +229,7 @@ export function useTokenType(dropId: number | string, name: string | null) {
     contentURI: tokenType?.data?.tokenURI,
     metadataURI: tokenType?.data?.metadataURI,
     currentBids: [],
-    type, 
+    type,
     video,
     image,
     highest,
@@ -226,10 +240,7 @@ export function useTokenType(dropId: number | string, name: string | null) {
 }
 
 export const usePrice = () => {
-  const coinIds = [
-    'ethereum',
-    'weth'
-  ]
+  const coinIds = ['ethereum', 'weth', 'usdc', 'usdt']
   const COINGECKO_API_V3 = `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds.join(',')}&vs_currencies=usd`
   const { chainId } = useActiveWeb3React()
   const [loading, setLoading] = useState<boolean>(false)
@@ -239,19 +250,23 @@ export const usePrice = () => {
     const fetchPrices = async () => {
       setLoading(true)
       try {
-        const prices = await cachedFetch(COINGECKO_API_V3, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
+        const prices = await cachedFetch(
+          COINGECKO_API_V3,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+            },
           },
-        }, 1000 * 60 * 2) // cache for 2 minutes
+          1000 * 60 * 2
+        ) // cache for 2 minutes
+        setPrices(prices)
       } catch (error) {
         console.log(error)
       }
-      setPrices(prices)
       setLoading(false)
     }
-    
+
     fetchPrices()
   }, [])
 
@@ -260,11 +275,13 @@ export const usePrice = () => {
   }
 
   const getUsdPrice = (symbol: string): number => {
+    console.log('symbol', symbol)
     return getPrices(symbol)?.usd || 0
   }
 
   const getUsdAmount = (tokenAddress: string, tokenAmount: BigintIsh): string => {
-    const currencyToken = getCurrencyTokenLowerCase(tokenAddress, chainId) || new Token(chainId, ethers.constants.AddressZero, 2)
+    const currencyToken =
+      getCurrencyTokenLowerCase(tokenAddress, chainId) || new Token(chainId, ethers.constants.AddressZero, 2)
     const usdPrice = getUsdPrice(currencyToken?.symbol)
     const amount = formatCurrencyFromRawAmount(currencyToken, tokenAmount)
     return usdPrice ? numberWithCommas((parseFloat(amount) * usdPrice).toFixed(0)) : numberWithCommas(amount)
@@ -315,19 +332,23 @@ export function useBids(tokenId: number | string, prices: CoingeckoPrices) {
     onCompleted: ({ bids }) => {
       setBids(bids)
     },
-  });
+  })
 
-  const usdBids = _.orderBy(bids.map((bid) => {
-    const currencyToken = getCurrencyTokenLowerCase(bid.currency.id, chainId)
-    const usdPrice = prices[symbolMap[currencyToken.symbol]]?.usd
-    const amount = formatCurrencyFromRawAmount(currencyToken, bid.amount)
-    const usdAmount = parseFloat(amount) * usdPrice
-    return {
-      bid,
-      usdAmount,
-      createdAtTimestamp: bid.createdAtTimestamp,
-    }
-  }), ['usdAmount', 'createdAtTimestamp'], ['asc', 'desc'])
+  const usdBids = _.orderBy(
+    bids.map((bid) => {
+      const currencyToken = getCurrencyTokenLowerCase(bid.currency.id, chainId)
+      const usdPrice = prices[symbolMap[currencyToken.symbol]]?.usd
+      const amount = formatCurrencyFromRawAmount(currencyToken, bid.amount)
+      const usdAmount = parseFloat(amount) * usdPrice
+      return {
+        bid,
+        usdAmount,
+        createdAtTimestamp: bid.createdAtTimestamp,
+      }
+    }),
+    ['usdAmount', 'createdAtTimestamp'],
+    ['asc', 'desc']
+  )
 
   const highest: HighestBid = usdBids[0]
 
@@ -339,10 +360,10 @@ export function useBids(tokenId: number | string, prices: CoingeckoPrices) {
 }
 
 export const useIsAddress = (address2: string) => {
-  return ((account: string) => {
+  return (account: string) => {
     if (!account || !address2) return false
     return isSameAddress(account, address2)
-  })
+  }
 }
 
 export type TokenType = {
@@ -375,13 +396,20 @@ export const useTokenTypes = () => {
     }
   }
   useEffect(() => {
-    drop?.getTokenTypes()?.then((tokenTypes) => {
-      const transformed: any[] = tokenTypes.map(transformTokenType)
-      setTokenTypes(transformed)
-      setTokenAggregates({
-        minted: _.reduce(transformed.map(({ minted }) => minted), (sum: number, minted) => sum + minted, 0),
+    drop
+      ?.getTokenTypes()
+      ?.then((tokenTypes) => {
+        const transformed: any[] = tokenTypes.map(transformTokenType)
+        setTokenTypes(transformed)
+        setTokenAggregates({
+          minted: _.reduce(
+            transformed.map(({ minted }) => minted),
+            (sum: number, minted) => sum + minted,
+            0
+          ),
+        })
       })
-    }).catch(console.log)
+      .catch(console.log)
   }, [])
   return { tokenTypes, tokenAggregates }
 }

@@ -21,6 +21,7 @@
     "deploy:testnet": "graph deploy --product hosted-service --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ luxdefi/luxtown-ropsten ./subgraph.testnet.yaml --access-token",
     "deploy:mainnet": "graph deploy --product hosted-service --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ luxdefi/luxtown-mainnet ./subgraph.mainnet.yaml --access-token",
     "deploy:local": "graph deploy luxdefi/luxtown --ipfs http://localhost:5001 --node http://127.0.0.1:8020 ./subgraph.localhost.yaml",
+    "start": "yarn codegen && yarn build && yarn create:local && yarn deploy:local",
     "runAuction": "ts-node scripts/auctionHouse.ts"
   },
   "devDependencies": {

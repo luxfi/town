@@ -59,6 +59,7 @@ export default function Mint() {
   console.log('Mint', tokenTypes)
 
   const onClickTokenType = (name: string) => {
+    console.log('name', name)
     router.push(`${router.pathname}?name=${name}`, undefined, { shallow: true })
   }
 

@@ -25,22 +25,22 @@ export type AssetSaleProps = {
   isOwner?: boolean
   autoPlay?: boolean
   animate?: boolean
-  large?: boolean,
-  getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string,
-  onClickBid?: (bid: GraphBid) => void,
-  onClickTokenType?: (name: string) => void,
+  large?: boolean
+  getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string
+  onClickBid?: (bid: GraphBid) => void
+  onClickTokenType?: (name: string) => void
 } & React.HTMLAttributes<HTMLDivElement>
 
 const AssetSale = (props: AssetSaleProps) => {
   const { account } = useActiveWeb3React()
   const { ask, highest, dropId, name, showPrice, formattedAmount, usdAmount, symbol, getUsdAmount, isOwner } = props
-  
+
   const { minted, supply } = useTokenType(dropId, name)
   const [bid, setBid] = useState(null)
   const [tokenType, setTokenType] = useState(null)
   // const market = useContract('Market')
   const drop = useContract('Drop')
-  console.log('AssetSaleProps', props)
+  // console.log('AssetSaleProps', props)
   const { type, image, video, given_name } = getContent(props.contentURI)
   const bidder = highest?.bid?.bidder?.id
   // const askAmount = ethers.utils.formatUnits(ask?.amount as BigNumberish, 1)
@@ -70,7 +70,7 @@ const AssetSale = (props: AssetSaleProps) => {
       className={`AssetSale ${props.className || ''} ${props.onClickTokenType ? 'cursor-pointer' : ''}`}
       onClick={() => props.onClickTokenType && props.onClickTokenType(props.name)}
     >
-      {props.large && video? (
+      {props.large && video ? (
         <Player url={video} playing={true} loop width={'auto'} height={'auto'} style={{ height: 'auto' }} />
       ) : (
         image && <img src={image} alt={`${type} ${dropId}-${name}`} />
@@ -78,45 +78,45 @@ const AssetSale = (props: AssetSaleProps) => {
       <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
           <span className="text-lg text-gray-300">{given_name || name}</span>
-          <br/>
+          <br />
           <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetSale__token-id">
             {minted} / {supply} Sold
           </span>
         </div>
         {showPrice && formattedAmount && symbol && (
           <>
-          {highest && getUsdAmount && ask ? (
-            <div className="grid grid-cols-2 px-3 py-2 my-3 bg-indigo-300 rounded-lg">
-            <div className="text-left">
-              <div className="text-xl text-black">Highest Bid</div>
-              {/* <div>Bidder {shortenAddress(highest?.bid?.bidder?.id)} {summary}</div> */}
-              <div className="text-gray-700">
-                By {shortenAddress(highest?.bid?.bidder?.id)}
+            {highest && getUsdAmount && ask ? (
+              <div className="grid grid-cols-2 px-3 py-2 my-3 bg-indigo-300 rounded-lg">
+                <div className="text-left">
+                  <div className="text-xl text-black">Highest Bid</div>
+                  {/* <div>Bidder {shortenAddress(highest?.bid?.bidder?.id)} {summary}</div> */}
+                  <div className="text-gray-700">By {shortenAddress(highest?.bid?.bidder?.id)}</div>
+                </div>
+                <div className="flex justify-end">
+                  <div className="text-right ">
+                    <div className="text-xl font-bold text-black">
+                      {formattedAmount} {symbol}
+                    </div>
+                    {usdAmount && <small className="text-gray-700">${usdAmount}</small>}
+                  </div>
+                  {
+                    <div onClick={() => onClickBid(highest.bid)}>
+                      <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
+                    </div>
+                  }
+                </div>
               </div>
-            </div>
-            <div className="flex justify-end">
-              <div className="text-right ">
-                <div className="text-xl font-bold text-black">
+            ) : (
+              <>
+                <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
                   {formattedAmount} {symbol}
                 </div>
-                {usdAmount && <small className="text-gray-700">${usdAmount}</small>}
-              </div>
-              {<div onClick={() => onClickBid(highest.bid)}>
-                <EyeIcon className="p-2 ml-3 bg-gray-700 rounded-full cursor-pointer" width={32} />
-              </div>}
-            </div>
-          </div>
-          ) : (
-            <>
-              <div className="px-2 py-1 text-2xl text-indigo-500 rounded text-bold">
-                {formattedAmount} {symbol}
-              </div>
-              {/* {usdAmount !== '0' && <div className="text-gray-400">
+                {/* {usdAmount !== '0' && <div className="text-gray-400">
                 ${usdAmount}
               </div>} */}
-            </>
-          )}
-          {/* {highest && getUsdAmount && ask ? (
+              </>
+            )}
+            {/* {highest && getUsdAmount && ask ? (
             <div className="grid grid-cols-2 px-3 py-3 my-3 bg-indigo-300 rounded-lg">
               <div className="text-left">
                 <div className="text-lg text-indigo-700">
@@ -139,7 +139,7 @@ const AssetSale = (props: AssetSaleProps) => {
               </div>}
             </>
           )} */}
-          </>          
+          </>
         )}
       </div>
     </div>
