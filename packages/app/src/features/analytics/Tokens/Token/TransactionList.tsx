@@ -1,10 +1,9 @@
 import { formatDateAgo, formatNumber, shortenAddress } from '../../../../functions'
-import React from 'react'
 import { useTable, usePagination, useSortBy } from 'react-table'
 import { classNames } from '../../../../functions'
 import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/react/outline'
 
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 interface TransactionListProps {
   transactions: {

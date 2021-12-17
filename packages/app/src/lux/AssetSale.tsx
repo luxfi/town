@@ -10,9 +10,9 @@ import TimeAgo from 'react-timeago'
 
 export type AssetSaleProps = {
   dropId: number | string
-  name: string
-  contentURI: string
-  metadataURI: string
+  name?: string
+  contentURI?: string
+  metadataURI?: string
   ask?: Ask
   formattedAmount?: string
   usdAmount?: string

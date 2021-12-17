@@ -3,7 +3,7 @@ import '../styles/index.css'
 
 import * as plurals from 'make-plural/plurals'
 
-import { Fragment, FunctionComponent } from 'react'
+import { Fragment, FunctionComponent, useEffect } from 'react'
 import { NextComponentType, NextPageContext } from 'next'
 import store, { persistor } from '../state'
 
@@ -27,7 +27,6 @@ import getLibrary from '../functions/getLibrary'
 import { i18n } from '@lingui/core'
 import { nanoid } from '@reduxjs/toolkit'
 import { remoteLoader } from '@lingui/remote-loader'
-import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {
   ApolloClient,
