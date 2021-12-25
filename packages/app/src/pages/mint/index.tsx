@@ -2,10 +2,10 @@ import _ from "lodash";
 import Head from "next/head";
 import { useModal } from "react-morphing-modal";
 import Container from "../../components/Container";
-// import AssetSaleModal from '../../lux/AssetSaleModal'
-// import AssetList from '../../lux/AssetList'
-// import { useTokenTypes } from '../../lux/state'
-// import AssetSale from '../../lux/AssetSale'
+import AssetSaleModal from "../../lux/AssetSaleModal";
+import AssetList from "../../lux/AssetList";
+import { useTokenTypes } from "../../lux/state";
+import AssetSale from "../../lux/AssetSale";
 import { useRouter } from "next/router";
 
 const DROP_ID = 1;
@@ -51,7 +51,7 @@ const tokenTypesMap = {
 
 export default function Mint() {
   const router = useRouter();
-  // const { tokenTypes } = useTokenTypes()
+  const { tokenTypes } = useTokenTypes();
   const { modalProps, open: openModal } = useModal({
     background: "black",
   });
@@ -77,16 +77,44 @@ export default function Mint() {
       </Head>
 
       <div className={`grid grid-cols-1 gap-5 md:grid-cols-4`}>
-        {/* <AssetSale dropId={DROP_ID} {...tokenTypesMap.VALIDATOR} onClickTokenType={onClickTokenType} />
-        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_10B_LUX} onClickTokenType={onClickTokenType} />
-        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_1B_LUX} onClickTokenType={onClickTokenType} />
-        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_100M_LUX} onClickTokenType={onClickTokenType} />
-        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_10M_LUX} onClickTokenType={onClickTokenType} />
-        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_1M_LUX} onClickTokenType={onClickTokenType} />
-        <AssetSale dropId={DROP_ID} {...tokenTypesMap.WALLET_ATM_LUX} onClickTokenType={onClickTokenType} /> */}
+        <AssetSale
+          dropId={DROP_ID}
+          {...tokenTypesMap.VALIDATOR}
+          onClickTokenType={onClickTokenType}
+        />
+        <AssetSale
+          dropId={DROP_ID}
+          {...tokenTypesMap.WALLET_10B_LUX}
+          onClickTokenType={onClickTokenType}
+        />
+        <AssetSale
+          dropId={DROP_ID}
+          {...tokenTypesMap.WALLET_1B_LUX}
+          onClickTokenType={onClickTokenType}
+        />
+        <AssetSale
+          dropId={DROP_ID}
+          {...tokenTypesMap.WALLET_100M_LUX}
+          onClickTokenType={onClickTokenType}
+        />
+        <AssetSale
+          dropId={DROP_ID}
+          {...tokenTypesMap.WALLET_10M_LUX}
+          onClickTokenType={onClickTokenType}
+        />
+        <AssetSale
+          dropId={DROP_ID}
+          {...tokenTypesMap.WALLET_1M_LUX}
+          onClickTokenType={onClickTokenType}
+        />
+        <AssetSale
+          dropId={DROP_ID}
+          {...tokenTypesMap.WALLET_ATM_LUX}
+          onClickTokenType={onClickTokenType}
+        />
       </div>
 
-      {/* <AssetSaleModal modalProps={modalProps} openModal={openModal} /> */}
+      <AssetSaleModal modalProps={modalProps} openModal={openModal} />
     </Container>
   );
 }
