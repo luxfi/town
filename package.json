@@ -13,6 +13,7 @@
   "private": true,
   "scripts": {
     "build": "yarn build:app",
+    "build:all":"yarn build:sdk && yarn build:app",
     "build:app": "yarn workspace @luxdefi/app build",
     "build:lab": "yarn workspace @luxdefi/lab build",
     "build:sdk": "yarn workspace @luxdefi/sdk build",
