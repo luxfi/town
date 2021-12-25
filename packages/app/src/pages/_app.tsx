@@ -92,6 +92,7 @@ function MyApp({
 
   useEffect(() => {
     async function load(locale) {
+      console.log("locale", locale);
       i18n.loadLocaleData(locale, { plurals: plurals[locale.split("_")[0]] });
 
       try {
@@ -109,7 +110,7 @@ function MyApp({
       } catch {
         // Load fallback messages
         const { messages } = await import(
-          `../../locale/${locale}.json?raw-lingui`
+          `@lingui/loader!../../locale/${locale}.json?raw-lingui`
         );
         i18n.load(locale, messages);
       }
