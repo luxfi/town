@@ -23,8 +23,6 @@ import {
     hi,
 } from 'make-plural/plurals'
 export async function loadTranslation(locale: string, sessionId: string, isProduction = true) {
-    console.log('hit me nw')
-    let data
     try {
         // Load messages from AWS, use q session param to get latest version from cache
         const resp = await fetch(
@@ -44,10 +42,8 @@ export async function loadTranslation(locale: string, sessionId: string, isProdu
 
         if (isProduction) {
             const { messages } = await import(`../../locale/${locale}.json`);
-            console.log('is production', messages)
             return messages
         } else {
-            console.log('locale', locale)
             // const newMessages = await import(`../../locale/${locale}.json`);
             // console.log("hitting newMessages", newMessages);
             const { messages } = await import(`../../locale/${locale}.json`);

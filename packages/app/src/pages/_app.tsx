@@ -89,7 +89,6 @@ function MyApp({
 
   useEffect(() => {
     if (pageProps.messages) {
-      console.log("pageProps.messages", pageProps.messages);
       i18n.load(locale, pageProps.messages);
       i18n.activate(locale);
     }

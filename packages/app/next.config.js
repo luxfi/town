@@ -14,7 +14,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-// const { withSentryConfig } = require('@sentry/nextjs')
+const { withSentryConfig } = require("@sentry/nextjs");
 
 const nextConfig = {
   async redirects() {
@@ -77,7 +77,10 @@ const SentryWebpackPluginOptions = {
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = nextConfig;
+module.exports = withSentryConfig(
+  withPWA(withBundleAnalyzer(nextConfig)),
+  SentryWebpackPluginOptions
+);
 
 // Don't delete this console log, useful to see the config in Vercel deployments
 console.log("next.config.js", JSON.stringify(module.exports, null, 2));
