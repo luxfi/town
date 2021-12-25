@@ -1,4 +1,4 @@
-import { withSentry } from '@sentry/nextjs'
+// import { withSentry } from '@sentry/nextjs'
 
 const metadata = {
   description: 'Lux NFTs give you access to the Lux network at launch.',
@@ -18,4 +18,4 @@ const handler = async (req, res) => {
   res.json(metadata)
 }
 
-export default withSentry(handler)
+export default handler

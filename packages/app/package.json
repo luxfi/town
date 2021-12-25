@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn lang && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lang:extract": "NODE_ENV=development lingui extract --clean",
+    "lang:compile": "lingui compile",
+    "lang": "yarn lang:extract && yarn lang:compile"
   },
   "next-unused": {
     "debug": true,

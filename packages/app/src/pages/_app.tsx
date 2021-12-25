@@ -1,10 +1,8 @@
 import "../bootstrap";
 import "../styles/index.css";
 
-import * as plurals from "make-plural/plurals";
-
 import { Fragment, FunctionComponent } from "react";
-import { NextComponentType, NextPageContext } from "next";
+import { GetStaticProps, NextComponentType, NextPageContext } from "next";
 import store, { persistor } from "../state";
 
 import type { AppProps } from "next/app";
@@ -38,6 +36,7 @@ import {
 } from "@apollo/client";
 import { useActiveWeb3React } from "../hooks";
 import { SubgraphProvider } from "../providers/SubgraphProvider";
+import { initTranslation, loadTranslation } from "../entities";
 
 const client = new ApolloClient({
   uri: "http://127.0.0.1:8000/subgraphs/name/luxdefi/luxtown",
@@ -51,12 +50,10 @@ const Web3ProviderNetwork = dynamic(
 
 // const Web3ReactManager = dynamic(() => import('../components/Web3ReactManager'), { ssr: false })
 
-const sessionId = nanoid();
-
 if (typeof window !== "undefined" && !!window.ethereum) {
   window.ethereum.autoRefreshOnNetworkChange = false;
 }
-
+initTranslation(i18n);
 function MyApp({
   Component,
   pageProps,
@@ -91,36 +88,12 @@ function MyApp({
   }, [pathname, query]);
 
   useEffect(() => {
-    async function load(locale) {
-      console.log("locale", locale);
-      i18n.loadLocaleData(locale, { plurals: plurals[locale.split("_")[0]] });
-
-      try {
-        // Load messages from AWS, use q session param to get latest version from cache
-        const resp = await fetch(
-          `https://d3l928w2mi7nub.cloudfront.net/${locale}.json?q=${sessionId}`
-        );
-        const remoteMessages = await resp.json();
-
-        const messages = remoteLoader({
-          messages: remoteMessages,
-          format: "minimal",
-        });
-        i18n.load(locale, messages);
-      } catch {
-        // Load fallback messages
-        const { messages } = await import(
-          `@lingui/loader!../../locale/${locale}.json?raw-lingui`
-        );
-        i18n.load(locale, messages);
-      }
-
+    if (pageProps.messages) {
+      console.log("pageProps.messages", pageProps.messages);
+      i18n.load(locale, pageProps.messages);
       i18n.activate(locale);
     }
-
-    load(locale);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locale]);
+  }, [locale, pageProps.messages]);
 
   // Allows for conditionally setting a provider to be hoisted per page
   const Provider = Component.Provider || Fragment;
