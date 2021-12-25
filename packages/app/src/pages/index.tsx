@@ -1,4 +1,5 @@
-import Head from "next/head";
+import Head from 'next/head'
+import Mint from './mint'
 
 export default function Dashboard() {
   return (
@@ -7,6 +8,7 @@ export default function Dashboard() {
         <title>Lux Town</title>
         <meta name="description" content="Lux Town" />
       </Head>
+      <Mint />
     </div>
-  );
+  )
 }
