@@ -1,0 +1,867 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x792de6045d65D7ad660a8cFB7cF4eB06EEaFBcDe",
+      "txHash": "0x5976de9b0ad67f0aa154c6f6bca7d26d1623a047803146873345e27c2ef82369",
+      "kind": "uups"
+    },
+    {
+      "address": "0xC20203717EA10c2D491B19DFcc0e2F1d1d9eaf8B",
+      "txHash": "0xdfb3b99f6cbb619dda53a887402742478031387ad2a894fa5a6815e6a786e5b9",
+      "kind": "uups"
+    },
+    {
+      "address": "0x1bE281aa99782fdc2DF8984571215f95d5682195",
+      "txHash": "0x853b3c98f8e10da189d9dcd4d34a0ee6019323da60051ae1bfeebbc7345c452f",
+      "kind": "uups"
+    },
+    {
+      "address": "0xeb03069266F101cFeDB4eB9e3D33f6965ba9CA92",
+      "txHash": "0x7463f6571d513a1f83c743d678ad041848aee7056d822d13f8f92841d2a78a02",
+      "kind": "uups"
+    },
+    {
+      "address": "0x805989Eeec7C876BDEBB4aE2841CC9B1F8c845D1",
+      "txHash": "0x22eddaf29ccada85d5e7f5a1aa733d6d8435203766329b55395bdaa066191a46",
+      "kind": "uups"
+    },
+    {
+      "address": "0x994Da7E36BE47926750E655A171da31e6938a6F8",
+      "txHash": "0x24ed32ca401f8997b88af3e71178c7586aa1c0a4696677c8522a2a0e4f0cd3d8",
+      "kind": "uups"
+    },
+    {
+      "address": "0x2b72e92131e9D6b9240F14585EdF49E73d3903EA",
+      "txHash": "0xa96d6f49adf3c5a515c4c7287dd6183d88274a3063f987da4d2bb0309206aa6c",
+      "kind": "uups"
+    },
+    {
+      "address": "0x37813e4d1CA5C3509A6dFd2CB608D5B3962Fa915",
+      "txHash": "0x08b4474a9c0a06d9dc859aa18f15e3c89607e044dc7b084d7a23ea4f91a80dc3",
+      "kind": "uups"
+    },
+    {
+      "address": "0xbCc89D7F287CF026dF88FB2d6e632Ca997741c55",
+      "txHash": "0x22e5b0dc1a42ddc4a70004bd2d7831dd00f9128a7c274b3a8e511f8c23bdc704",
+      "kind": "uups"
+    },
+    {
+      "address": "0x306c826F52c4051790b47e09c0475F6397147988",
+      "txHash": "0xfd3d55e8fdc954f4c547ad188fc8b9927d8b16e985ae4606fe5dbf5b1cd6d54d",
+      "kind": "uups"
+    },
+    {
+      "address": "0xDDC42DDae081Dcd79fDf040f8524F552fF5E674c",
+      "txHash": "0x2178cc08080875bb7a2f456eb24b773263a4105276b5ab620d709e10ada7602a",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9FCf52bAac270E1356916b28734f36B98268dCba",
+      "txHash": "0x87b0d37361612b9e0cbddbe63590f1dc62140afa04e8790a86790de74161e3c7",
+      "kind": "uups"
+    },
+    {
+      "address": "0x36bD6ff82f81D12e5955aac22f0dc21EA7dC5E04",
+      "txHash": "0x174ec4da79eeed2ef614e830c5c44fd06d02ff97aea00d6fa6690f3bece9fc2c",
+      "kind": "uups"
+    },
+    {
+      "address": "0xF5f6B884D7824267BBA95E6790803bD46b3d044c",
+      "txHash": "0x679543f7730438c9fcf68423d254f173e1d8f4141525c573e4ef1a5041d9a46a",
+      "kind": "uups"
+    },
+    {
+      "address": "0x30dfBe9c99AdaF659Ca5342Eb5Bea1B836C8D63E",
+      "txHash": "0x065da548490302b83ba1fb0acc10948d65921f893ac857dc1bf786015cd4d114",
+      "kind": "uups"
+    },
+    {
+      "address": "0xDefFaceba7C4D9ed42d29FAcBa717aF39F60238b",
+      "txHash": "0xc0eef5aaf5f74b690c8dc164ffdfafbe62e69daf1fcd52199706933e2872b283",
+      "kind": "uups"
+    },
+    {
+      "address": "0x879060AD7944390d43BE49b473cAd4340208140b",
+      "txHash": "0x567a98b2e18bcf7ecacae1134e20bde9328f0742dcbc7c47f40dfd429b7cad01",
+      "kind": "uups"
+    },
+    {
+      "address": "0x272Be86a7e8381bcb4b8762eb31c2d1Cc08c321b",
+      "txHash": "0xd07e6863a6dc5e97489c09c89a731f76d1c35ea836ec84fe0fe35d013ce68eb8",
+      "kind": "uups"
+    },
+    {
+      "address": "0x2e82FE4a44609853A3462F49700f11722f7e5418",
+      "txHash": "0x78bfcf124c7fbdd5bd6a6ce7307c7a8655a2cb2207ee67776c6fa43da3585493",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "978903bcb34f89c44ed405146c0192f514cc96074672579aec9719852fb33a45": {
+      "address": "0x247124065114a03Cf51898b21F20C6C1Cf50679A",
+      "txHash": "0x43e19ac4785cf2ef4b06694e5bb726273fb4d56c6f639bc385cd8409ad82a4ce",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "_status",
+            "type": "t_uint256",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:37"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:67"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "App",
+            "label": "dropIds",
+            "type": "t_struct(Counter)2676_storage",
+            "src": "src/App.sol:28"
+          },
+          {
+            "contract": "App",
+            "label": "drops",
+            "type": "t_mapping(t_uint256,t_address)",
+            "src": "src/App.sol:35"
+          },
+          {
+            "contract": "App",
+            "label": "dropAddresses",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "src/App.sol:38"
+          },
+          {
+            "contract": "App",
+            "label": "tokens",
+            "type": "t_mapping(t_uint256,t_struct(Token)17123_storage)",
+            "src": "src/App.sol:41"
+          },
+          {
+            "contract": "App",
+            "label": "namePrice",
+            "type": "t_uint256",
+            "src": "src/App.sol:44"
+          },
+          {
+            "contract": "App",
+            "label": "media",
+            "type": "t_contract(IMedia)17535",
+            "src": "src/App.sol:47"
+          },
+          {
+            "contract": "App",
+            "label": "market",
+            "type": "t_contract(IMarket)17308",
+            "src": "src/App.sol:48"
+          }
+        ],
+        "types": {
+          "t_struct(Counter)2676_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_uint256,t_struct(Token)17123_storage)": {
+            "label": "mapping(uint256 => struct ILux.Token)"
+          },
+          "t_struct(Token)17123_storage": {
+            "label": "struct ILux.Token",
+            "members": [
+              {
+                "label": "kind",
+                "type": "t_enum(Type)17097"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              },
+              {
+                "label": "data",
+                "type": "t_struct(MediaData)17338_storage"
+              },
+              {
+                "label": "bidShares",
+                "type": "t_struct(BidShares)17161_storage"
+              },
+              {
+                "label": "meta",
+                "type": "t_struct(Meta)17104_storage"
+              }
+            ]
+          },
+          "t_enum(Type)17097": {
+            "label": "enum ILux.Type",
+            "members": [
+              "VALIDATOR",
+              "ATM",
+              "WALLET",
+              "CASH"
+            ]
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_struct(MediaData)17338_storage": {
+            "label": "struct IMedia.MediaData",
+            "members": [
+              {
+                "label": "tokenURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "metadataURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "contentHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "metadataHash",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(BidShares)17161_storage": {
+            "label": "struct IMarket.BidShares",
+            "members": [
+              {
+                "label": "prevOwner",
+                "type": "t_struct(D256)5031_storage"
+              },
+              {
+                "label": "creator",
+                "type": "t_struct(D256)5031_storage"
+              },
+              {
+                "label": "owner",
+                "type": "t_struct(D256)5031_storage"
+              }
+            ]
+          },
+          "t_struct(Meta)17104_storage": {
+            "label": "struct ILux.Meta",
+            "members": [
+              {
+                "label": "tokenId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "dropId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "burned",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(D256)5031_storage": {
+            "label": "struct Decimal.D256",
+            "members": [
+              {
+                "label": "value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_contract(IMedia)17535": {
+            "label": "contract IMedia"
+          },
+          "t_contract(IMarket)17308": {
+            "label": "contract IMarket"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          }
+        }
+      }
+    },
+    "8df832e5a60735dadf9059fe396584197dae1ad68a374c3b5fc70953af298dd2": {
+      "address": "0x2fe21D0623a4D34684C0C504679a071129685621",
+      "txHash": "0x61e6e07ae38c43889c0cf52187849767009e69b140bfb686b14171dd2a1ccedb",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "_status",
+            "type": "t_uint256",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:37"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:67"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "App",
+            "label": "dropIds",
+            "type": "t_struct(Counter)2676_storage",
+            "src": "src/App.sol:28"
+          },
+          {
+            "contract": "App",
+            "label": "drops",
+            "type": "t_mapping(t_uint256,t_address)",
+            "src": "src/App.sol:35"
+          },
+          {
+            "contract": "App",
+            "label": "dropAddresses",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "src/App.sol:38"
+          },
+          {
+            "contract": "App",
+            "label": "tokens",
+            "type": "t_mapping(t_uint256,t_struct(Token)17149_storage)",
+            "src": "src/App.sol:41"
+          },
+          {
+            "contract": "App",
+            "label": "namePrice",
+            "type": "t_uint256",
+            "src": "src/App.sol:44"
+          },
+          {
+            "contract": "App",
+            "label": "media",
+            "type": "t_contract(IMedia)17570",
+            "src": "src/App.sol:47"
+          },
+          {
+            "contract": "App",
+            "label": "market",
+            "type": "t_contract(IMarket)17334",
+            "src": "src/App.sol:48"
+          }
+        ],
+        "types": {
+          "t_struct(Counter)2676_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_uint256,t_struct(Token)17149_storage)": {
+            "label": "mapping(uint256 => struct ILux.Token)"
+          },
+          "t_struct(Token)17149_storage": {
+            "label": "struct ILux.Token",
+            "members": [
+              {
+                "label": "kind",
+                "type": "t_enum(Type)17123"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              },
+              {
+                "label": "data",
+                "type": "t_struct(MediaData)17364_storage"
+              },
+              {
+                "label": "bidShares",
+                "type": "t_struct(BidShares)17187_storage"
+              },
+              {
+                "label": "meta",
+                "type": "t_struct(Meta)17130_storage"
+              }
+            ]
+          },
+          "t_enum(Type)17123": {
+            "label": "enum ILux.Type",
+            "members": [
+              "VALIDATOR",
+              "ATM",
+              "WALLET",
+              "CASH"
+            ]
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_struct(MediaData)17364_storage": {
+            "label": "struct IMedia.MediaData",
+            "members": [
+              {
+                "label": "tokenURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "metadataURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "contentHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "metadataHash",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(BidShares)17187_storage": {
+            "label": "struct IMarket.BidShares",
+            "members": [
+              {
+                "label": "prevOwner",
+                "type": "t_struct(D256)5031_storage"
+              },
+              {
+                "label": "creator",
+                "type": "t_struct(D256)5031_storage"
+              },
+              {
+                "label": "owner",
+                "type": "t_struct(D256)5031_storage"
+              }
+            ]
+          },
+          "t_struct(Meta)17130_storage": {
+            "label": "struct ILux.Meta",
+            "members": [
+              {
+                "label": "tokenId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "dropId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "burned",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(D256)5031_storage": {
+            "label": "struct Decimal.D256",
+            "members": [
+              {
+                "label": "value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_contract(IMedia)17570": {
+            "label": "contract IMedia"
+          },
+          "t_contract(IMarket)17334": {
+            "label": "contract IMarket"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          }
+        }
+      }
+    },
+    "437163c77862436ef12b93c247c4688cd5e27e1bcc0fcfbedf38dc5045ad0b2f": {
+      "address": "0x805FDCAc6f33c7BED14D54AC13fb46af65f6a58E",
+      "txHash": "0x6662c3ac03c5ccd45a19ea3a65d50547acd6698265fa62e97d51ca0a1cca3c32",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "_status",
+            "type": "t_uint256",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:37"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:67"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "App",
+            "label": "dropIds",
+            "type": "t_struct(Counter)2676_storage",
+            "src": "src/App.sol:28"
+          },
+          {
+            "contract": "App",
+            "label": "drops",
+            "type": "t_mapping(t_uint256,t_address)",
+            "src": "src/App.sol:36"
+          },
+          {
+            "contract": "App",
+            "label": "dropAddresses",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "src/App.sol:39"
+          },
+          {
+            "contract": "App",
+            "label": "tokens",
+            "type": "t_mapping(t_uint256,t_struct(Token)18252_storage)",
+            "src": "src/App.sol:42"
+          },
+          {
+            "contract": "App",
+            "label": "media",
+            "type": "t_contract(IMedia)18792",
+            "src": "src/App.sol:45"
+          },
+          {
+            "contract": "App",
+            "label": "market",
+            "type": "t_contract(IMarket)18518",
+            "src": "src/App.sol:46"
+          }
+        ],
+        "types": {
+          "t_struct(Counter)2676_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_uint256,t_struct(Token)18252_storage)": {
+            "label": "mapping(uint256 => struct ILux.Token)"
+          },
+          "t_struct(Token)18252_storage": {
+            "label": "struct ILux.Token",
+            "members": [
+              {
+                "label": "kind",
+                "type": "t_enum(Type)18226"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              },
+              {
+                "label": "data",
+                "type": "t_struct(MediaData)18550_storage"
+              },
+              {
+                "label": "bidShares",
+                "type": "t_struct(BidShares)18294_storage"
+              },
+              {
+                "label": "meta",
+                "type": "t_struct(Meta)18233_storage"
+              }
+            ]
+          },
+          "t_enum(Type)18226": {
+            "label": "enum ILux.Type",
+            "members": [
+              "VALIDATOR",
+              "ATM",
+              "WALLET",
+              "CASH"
+            ]
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_struct(MediaData)18550_storage": {
+            "label": "struct IMedia.MediaData",
+            "members": [
+              {
+                "label": "tokenURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "metadataURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "contentHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "metadataHash",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(BidShares)18294_storage": {
+            "label": "struct IMarket.BidShares",
+            "members": [
+              {
+                "label": "prevOwner",
+                "type": "t_struct(D256)5368_storage"
+              },
+              {
+                "label": "creator",
+                "type": "t_struct(D256)5368_storage"
+              },
+              {
+                "label": "owner",
+                "type": "t_struct(D256)5368_storage"
+              }
+            ]
+          },
+          "t_struct(Meta)18233_storage": {
+            "label": "struct ILux.Meta",
+            "members": [
+              {
+                "label": "tokenId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "dropId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "burned",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(D256)5368_storage": {
+            "label": "struct Decimal.D256",
+            "members": [
+              {
+                "label": "value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_contract(IMedia)18792": {
+            "label": "contract IMedia"
+          },
+          "t_contract(IMarket)18518": {
+            "label": "contract IMarket"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          }
+        }
+      }
+    }
+  }
+}

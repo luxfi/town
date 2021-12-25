@@ -1,0 +1,11 @@
+cache/
+*.txt
+cache/
+types/
+artifacts/
+credentials.json
+.migrations.json
+holders.csv
+deployments/localhost
+.openzeppelin/unknown-1337.json
+wallet.json

@@ -1,0 +1,211 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: full
+  THEGRAPH_STORE_POSTGRES_DIESEL_URL: "postgresql://postgres:postgres@localhost:5432/graph_node_test"
+
+jobs:
+  unit-tests:
+    name: Run unit tests
+    strategy:
+      fail-fast: false
+      matrix:
+        rust: ["stable"]
+    runs-on: ubuntu-latest
+    services:
+      ipfs:
+        image: ipfs/go-ipfs:v0.4.23
+        ports:
+          - 5001:5001
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: graph_node_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Cache cargo registry
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: test-cargo-${{ hashFiles('**/Cargo.toml') }}
+
+      - name: Install rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+
+      - name: Install lld
+        run: sudo apt-get install -y lld
+
+      - name: Run unit tests
+        uses: actions-rs/cargo@v1
+        env:
+          RUSTFLAGS: "-C link-arg=-fuse-ld=lld -D warnings"
+        with:
+          command: test
+          args: --verbose --workspace --exclude graph-tests -- --nocapture
+
+  integration-tests:
+    name: Run integration tests
+    strategy:
+      fail-fast: false
+      matrix:
+        rust: ["stable"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Cache cargo registry
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: test-cargo-${{ hashFiles('**/Cargo.toml') }}
+
+      - name: Install Node 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+
+      - name: Install lld and jq
+        run: sudo apt-get install -y lld jq
+
+      - name: Build graph-node
+        env:
+          RUSTFLAGS: "-C link-arg=-fuse-ld=lld -D warnings"
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+
+      # Integration tests are a bit flaky, running them twice increases the
+      # chances of one run succeeding
+      - name: Run integration tests (round 1)
+        id: integration-tests-1
+        uses: actions-rs/cargo@v1
+        env:
+          RUSTFLAGS: "-C link-arg=-fuse-ld=lld -D warnings"
+          N_CONCURRENT_TESTS: "1"
+          TESTS_GANACHE_HARD_WAIT_SECONDS: "30"
+        with:
+          command: test
+          args: --verbose --package graph-tests -- --nocapture
+        continue-on-error: true
+      - name: Run integration tests (round 2)
+        id: integration-tests-2
+        uses: actions-rs/cargo@v1
+        if: ${{ steps.integration-tests-1.outcome == 'failure' }}
+        env:
+          RUSTFLAGS: "-C link-arg=-fuse-ld=lld -D warnings"
+          N_CONCURRENT_TESTS: "1"
+          TESTS_GANACHE_HARD_WAIT_SECONDS: "30"
+        with:
+          command: test
+          args: --verbose --package graph-tests -- --nocapture
+
+  rustfmt:
+    name: Check rustfmt style
+    strategy:
+      matrix:
+        rust: ["stable"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          components: rustfmt
+          override: true
+      - name: Cache cargo registry
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: rustfmt-cargo-${{ hashFiles('**/Cargo.toml') }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libpq-dev
+
+      - name: Check formating
+        uses: actions-rs/cargo@v1
+        env:
+          RUSTFLAGS: "-D warnings"
+        with:
+          command: fmt
+          args: --all -- --check
+
+  release-check:
+    name: Build in release mode
+    strategy:
+      matrix:
+        rust: ["stable"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+      - name: Cache cargo registry
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: check-cargo-${{ hashFiles('**/Cargo.toml') }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libpq-dev
+
+      - name: Cargo check (debug)
+        uses: actions-rs/cargo@v1
+        env:
+          RUSTFLAGS: "-D warnings"
+        with:
+          command: check
+          args: --tests
+
+      - name: Cargo check (release)
+        env:
+          RUSTFLAGS: "-D warnings"
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --release

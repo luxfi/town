@@ -1,0 +1,263 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x44A210571E135C6a536564e9B14dc4DA63f3D398",
+      "txHash": "0x93d2a6c532c211f41c9e0cc206324aa9f75fdd028f431f6b6a7407fb3acd84d3",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "62a67b3158b952fd07b2f7820cb66b2040ad6589d08877ab131e029190bbe99d": {
+      "address": "0x92831552aDd784E0B828Fd61e775dDBc4067EE86",
+      "txHash": "0x49c389f0022659b297d51e73fc7bbe76889632607a23826dedfd0eb6f7349b08",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "_status",
+            "type": "t_uint256",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:37"
+          },
+          {
+            "contract": "ReentrancyGuardUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:67"
+          },
+          {
+            "contract": "ERC1967UpgradeUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+          },
+          {
+            "contract": "UUPSUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:80"
+          },
+          {
+            "contract": "App",
+            "label": "dropIds",
+            "type": "t_struct(Counter)2676_storage",
+            "src": "src/App.sol:28"
+          },
+          {
+            "contract": "App",
+            "label": "drops",
+            "type": "t_mapping(t_uint256,t_address)",
+            "src": "src/App.sol:36"
+          },
+          {
+            "contract": "App",
+            "label": "dropAddresses",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "src/App.sol:39"
+          },
+          {
+            "contract": "App",
+            "label": "tokens",
+            "type": "t_mapping(t_uint256,t_struct(Token)18357_storage)",
+            "src": "src/App.sol:42"
+          },
+          {
+            "contract": "App",
+            "label": "media",
+            "type": "t_contract(IMedia)18911",
+            "src": "src/App.sol:45"
+          },
+          {
+            "contract": "App",
+            "label": "market",
+            "type": "t_contract(IMarket)18637",
+            "src": "src/App.sol:46"
+          }
+        ],
+        "types": {
+          "t_struct(Counter)2676_storage": {
+            "label": "struct Counters.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_uint256,t_struct(Token)18357_storage)": {
+            "label": "mapping(uint256 => struct ILux.Token)"
+          },
+          "t_struct(Token)18357_storage": {
+            "label": "struct ILux.Token",
+            "members": [
+              {
+                "label": "kind",
+                "type": "t_enum(Type)18331"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              },
+              {
+                "label": "data",
+                "type": "t_struct(MediaData)18669_storage"
+              },
+              {
+                "label": "bidShares",
+                "type": "t_struct(BidShares)18399_storage"
+              },
+              {
+                "label": "meta",
+                "type": "t_struct(Meta)18338_storage"
+              }
+            ]
+          },
+          "t_enum(Type)18331": {
+            "label": "enum ILux.Type",
+            "members": [
+              "VALIDATOR",
+              "ATM",
+              "WALLET",
+              "CASH"
+            ]
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_struct(MediaData)18669_storage": {
+            "label": "struct IMedia.MediaData",
+            "members": [
+              {
+                "label": "tokenURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "metadataURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "contentHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "metadataHash",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(BidShares)18399_storage": {
+            "label": "struct IMarket.BidShares",
+            "members": [
+              {
+                "label": "prevOwner",
+                "type": "t_struct(D256)5351_storage"
+              },
+              {
+                "label": "creator",
+                "type": "t_struct(D256)5351_storage"
+              },
+              {
+                "label": "owner",
+                "type": "t_struct(D256)5351_storage"
+              }
+            ]
+          },
+          "t_struct(Meta)18338_storage": {
+            "label": "struct ILux.Meta",
+            "members": [
+              {
+                "label": "tokenId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "dropId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "burned",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(D256)5351_storage": {
+            "label": "struct Decimal.D256",
+            "members": [
+              {
+                "label": "value",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_contract(IMedia)18911": {
+            "label": "contract IMedia"
+          },
+          "t_contract(IMarket)18637": {
+            "label": "contract IMarket"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          }
+        }
+      }
+    }
+  }
+}

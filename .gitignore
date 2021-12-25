@@ -1,0 +1,43 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+/**/**/node_modules
+
+.DS_Store
+.env
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.idea/
+.vercel
+.next
+
+public/sw.js
+public/sw.js.map
+public/workbox*.js
+public/workbox*.js.map
+
+/locale/_build/
+/locale/**/*.js
+
+.env
+
+lokalise.yaml
+
+# Ignore data files created by running the Docker Compose setup locally
+/packages/graphnode/docker/data/
+/packages/graphnode/docker/data/
+/packages/graphnode/docker/parity/chains/
+/packages/graphnode/docker/parity/network/
+
+/packages/subgraph/abis/localhost/**
+/packages/subgraph/tests/integration-tests/**/build
+/packages/subgraph/tests/integration-tests/**/generated
+/packages/subgraph/tests/integration-tests/**/node_modules
+/packages/subgraph/tests/integration-tests/**/yarn.lock
+
+# Built solidity contracts.
+/packages/subgraph/tests/integration-tests/**/bin
+/packages/subgraph/tests/integration-tests/**/abis
+/packages/subgraph/tests/integration-tests/**/truffle_output

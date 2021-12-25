@@ -1,0 +1,99 @@
+specVersion: 0.0.2
+description: Lux Town
+repository: https://github.com/luxdefi/luxtown
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Media
+    network: 'ethereum'
+    source:
+      address: '0x31e0F919C67ceDd2Bc3E294340Dc900735810311'
+      abi: Media
+      startBlock: 13596646
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Media
+      abis:
+        - name: Media
+          file: ./abis/mainnet/Media.json
+        - name: Market
+          file: ./abis/mainnet/Market.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: TokenURIUpdated(indexed uint256,address,string)
+          handler: handleTokenURIUpdated
+        - event: TokenMetadataURIUpdated(indexed uint256,address,string)
+          handler: handleTokenMetadataURIUpdated
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+      file: ./src/media.ts
+  - kind: ethereum/contract
+    name: Market
+    network: 'ethereum'
+    source:
+      address: '0x7A9AbAB13ad21c3D0c84484bd8dA7da7d722B4ca'
+      abi: Market
+      startBlock: 13596597
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Ask
+        - Bid
+      abis:
+        - name: Market
+          file: ./abis/mainnet/Market.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: BidShareUpdated(indexed uint256,((uint256),(uint256),(uint256)))
+          handler: handleBidShareUpdated
+        - event: AskCreated(indexed uint256,(uint256,address,bool))
+          handler: handleAskCreated
+        - event: AskRemoved(indexed uint256,(uint256,address,bool))
+          handler: handleAskRemoved
+        - event: BidCreated(indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleBidCreated
+        - event: LazyBidCreated(uint256,string,(uint256,address,address,address,(uint256),bool))
+          handler: handleLazyBidCreated
+        - event: LazyBidFinalized(uint256,string,indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleLazyBidFinalized
+        - event: LazyBidRemoved(uint256,string,(uint256,address,address,address,(uint256),bool))
+          handler: handleLazyBidRemoved
+        - event: BidRemoved(indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleBidRemoved
+        - event: BidFinalized(indexed uint256,(uint256,address,address,address,(uint256),bool))
+          handler: handleBidFinalized
+      file: ./src/market.ts
+  - kind: ethereum/contract
+    name: Drop
+    network: 'ethereum'
+    source:
+      address: '0x941E3B4fC883B1746E52814EB8574b85E6Fa4E66'
+      abi: Drop
+      startBlock: 13596767
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TokenType
+      abis:
+        - name: Drop
+          file: ./abis/mainnet/Drop.json
+      eventHandlers:
+        - event: TokenTypeAdded((uint8,string,(uint256,address,bool),uint256,uint256,uint256,(string,string,bytes32,bytes32),((uint256),(uint256),(uint256))))
+          handler: handleTokenTypeAdded
+      file: ./src/drop.ts
