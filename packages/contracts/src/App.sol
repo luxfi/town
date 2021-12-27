@@ -13,6 +13,8 @@ import { AddressUpgradeable } from '@openzeppelin/contracts-upgradeable/utils/Ad
 import { ReentrancyGuardUpgradeable } from '@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol';
 
 import { Decimal } from './Decimal.sol';
+import { IApp } from './interfaces/IApp.sol';
+
 import { IDrop } from './interfaces/IDrop.sol';
 import { IMedia } from './interfaces/IMedia.sol';
 import { IMarket } from './interfaces/IMarket.sol';
@@ -20,7 +22,7 @@ import { ILux } from './interfaces/ILux.sol';
 
 import './console.sol';
 
-contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable {
+contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable {
   using SafeMath for uint256;
   using Counters for Counters.Counter;
   using AddressUpgradeable for address payable;
@@ -87,7 +89,7 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
 
     // Get NFT for drop
     ILux.Token memory token = drop.newNFT(name);
-    
+
     IMarket.Ask memory defaultAsk = drop.tokenTypeAsk(name);
 
     token = media.mintToken(msg.sender, token);
@@ -123,7 +125,11 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     media.setBidFromApp(tokenId, bid, msg.sender);
   }
 
-  function setLazyBid(uint256 dropId, string memory name, IMarket.Bid memory bid) public payable nonReentrant {
+  function setLazyBid(
+    uint256 dropId,
+    string memory name,
+    IMarket.Bid memory bid
+  ) public payable nonReentrant {
     IDrop drop = IDrop(drops[dropId]);
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
     require(tokenType.supply > 0, 'App: token type does not exist');
@@ -131,7 +137,11 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
     media.setLazyBidFromApp(dropId, tokenType, bid, msg.sender);
   }
 
-  function setLazyBidERC20(uint256 dropId, string memory name, IMarket.Bid memory bid) public nonReentrant {
+  function setLazyBidERC20(
+    uint256 dropId,
+    string memory name,
+    IMarket.Bid memory bid
+  ) public nonReentrant {
     IDrop drop = IDrop(drops[dropId]);
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
     require(tokenType.supply > 0, 'App: token type does not exist');
@@ -148,15 +158,14 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
    * but is necessary to ensure fairness to all shareholders.
    */
   function acceptBid(uint256 tokenId, IMarket.Bid memory bid) public nonReentrant {
-    
     IMarket.BidShares memory bidShares = market.bidSharesForToken(tokenId);
-    
+
     address mediaOwner = media.ownerOf(tokenId);
     address prevOwner = media.previousTokenOwner(tokenId);
 
     media.acceptBidFromApp(tokenId, bid, msg.sender);
 
-    if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {      
+    if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       // Transfer bid share to mediaOwner of media
       payable(mediaOwner).sendValue(market.splitShare(bidShares.owner, bid.amount));
       // Transfer bid share to creator of media
@@ -175,7 +184,11 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
    * This should only revert in rare instances (example, a low bid with a zero-decimal token),
    * but is necessary to ensure fairness to all shareholders.
    */
-  function acceptLazyBid(uint256 dropId, string memory name, IMarket.Bid memory bid) public nonReentrant {
+  function acceptLazyBid(
+    uint256 dropId,
+    string memory name,
+    IMarket.Bid memory bid
+  ) public nonReentrant {
     IDrop drop = IDrop(drops[dropId]);
 
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
@@ -184,8 +197,8 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
 
     ILux.Token memory token = drop.newNFT(name);
 
-    media.acceptLazyBidFromApp(dropId, tokenType, token, bid);    
-    
+    media.acceptLazyBidFromApp(dropId, tokenType, token, bid);
+
     if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       // Transfer the amount to the contract owner address
       payable(owner()).sendValue(bid.amount);
@@ -198,9 +211,9 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
    */
   function removeBid(uint256 tokenId) public nonReentrant {
     IMarket.Bid memory bid = market.bidForTokenBidder(tokenId, msg.sender); // Get the bid before it is removed
-    
+
     media.removeBidFromApp(tokenId, msg.sender);
-    
+
     // Refund bidder if it was a payable bid and not an offline bid.
     if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       payable(bid.bidder).sendValue(bid.amount);
@@ -213,9 +226,9 @@ contract App is OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable 
    */
   function removeLazyBid(uint256 dropId, string memory name) public nonReentrant {
     IMarket.Bid memory bid = market.lazyBidForTokenBidder(dropId, name, msg.sender); // Get the bid before it is removed
-    
+
     media.removeLazyBidFromApp(dropId, name, msg.sender);
-    
+
     // Refund bidder if it was a payable bid and not an offline bid.
     if (bid.currency == address(0) && bid.amount > 0 && !bid.offline) {
       payable(bid.bidder).sendValue(bid.amount);
