@@ -233,7 +233,7 @@ contract Market is IMarket, Ownable {
     require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
     require(!bid.offline || (bid.offline && isOfflineBidder(bid.bidder)), 'Market: Only whitelisted offline bidder');
     require(bid.amount != 0, 'Market: cannot bid amount of 0');
-    // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
+    require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
     require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
 
     uint256 bidAmount = bid.amount;

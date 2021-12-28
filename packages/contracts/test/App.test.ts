@@ -6,7 +6,7 @@ import { AddressZero, MaxUint256 } from '@ethersproject/constants'
 import { Drop } from '../types/Drop'
 import { generatedWallets } from '../utils/generatedWallets'
 import { Signer } from '@ethersproject/abstract-signer'
-import { App, Market, Media, IMedia, IMarket, IDrop, USDC, App__factory, USDC__factory } from '../types'
+import { App, Market, Media, IMedia, IMarket, IDrop, USDC, WETH, App__factory, USDC__factory } from '../types'
 import Decimal from '../utils/Decimal'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { Blockchain } from '../utils/Blockchain'
@@ -14,7 +14,7 @@ import { formatUnits } from '@ethersproject/units'
 
 const { expect } = requireDependencies()
 
-const setupTest = setupTestFactory(['App', 'Media', 'Market', 'USDC'])
+const setupTest = setupTestFactory(['App', 'Media', 'Market', 'USDC', 'WETH'])
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -69,6 +69,7 @@ describe('App', function () {
   let market: Market
   let drop: Drop
   let currency: USDC
+  let otherCurrency: WETH
 
   let tokenId: BigNumberish
   let tokenName: string = 'Bear'
@@ -82,6 +83,10 @@ describe('App', function () {
   let bidderAddress: string
   let nonbidder: Signer
   let nonbidderAddress: string
+  let creator: Signer
+  let creatorAddress: string
+  let nftOwner: Signer
+  let nftOwnerAddress: string
 
   const appAs = async (owner: Signer) => app.connect(owner)
 
@@ -109,10 +114,11 @@ describe('App', function () {
   const prep = async () => {
     const {
       signers,
-      tokens: { App, Media, Market, USDC },
+      tokens: { App, Media, Market, USDC, WETH },
     } = await setupTest()
 
     currency = USDC
+    otherCurrency = WETH
     app = App
     appAddress = app.address
     media = Media
@@ -129,6 +135,11 @@ describe('App', function () {
     bidderAddress = await bidder.getAddress()
     nonbidder = signers[3]
     nonbidderAddress = await nonbidder.getAddress()
+    creator = signers[4]
+    creatorAddress = await creator.getAddress()
+
+    nftOwner = signers[5]
+    nftOwnerAddress = await nftOwner.getAddress()
 
     const Drop = await ethers.getContractFactory('Drop', owner)
     drop = (await Drop.deploy('Gen1')) as Drop
@@ -254,109 +265,287 @@ describe('App', function () {
         await expect(app.getTokenName(123)).to.be.revertedWith('App: Token does not exist')
       })
     })
+  })
 
-    describe('#setBid', () => {
-      const defaultBid = {
-        amount: 100,
-        name: tokenName,
-        currency: tokenAddress,
-        bidder: bidderAddress,
-        recipient: nonbidderAddress,
-        sellOnShare: Decimal.new(10),
-        offline: false,
-      }
+  describe('#setBid', () => {
+    const defaultBid = {
+      amount: 100,
+      name: tokenName,
+      currency: tokenAddress,
+      bidder: bidderAddress,
+      recipient: nonbidderAddress,
+      sellOnShare: Decimal.new(10),
+      offline: false,
+    }
 
-      beforeEach(async () => await deploy())
-      beforeEach(async () => await addDrop('Gen2', owner))
+    beforeEach(async () => await deploy())
+    beforeEach(async () => await addDrop('Gen2', owner))
+    beforeEach(async () => {
+      tokenId = await app.dropAddresses(drop.address)
+    })
 
-      beforeEach(async () => {
-        defaultBid.currency = tokenAddress
-        defaultBid.recipient = nonbidderAddress
-        defaultBid.bidder = bidderAddress
-        await (await app.mint(tokenId, tokenName)).wait()
-      })
+    beforeEach(async () => {
+      defaultBid.currency = tokenAddress
+      defaultBid.recipient = nonbidderAddress
+      defaultBid.bidder = bidderAddress
+      await (await app.mint(tokenId, tokenName)).wait()
+    })
 
-      it('rejects if a non-owner tries to set a bid on a token that does not exist', async () => {
-        await mintCurrency(owner, defaultBid.bidder, 1000)
-        await expect(app.connect(nonowner).setBid(tokenId, defaultBid)).to.be.rejectedWith('Market: Bidder must be msg sender')
-      })
+    it('rejects if a non-owner tries to set a bid on a token that does not exist', async () => {
+      await mintCurrency(owner, defaultBid.bidder, 1000)
+      await expect(app.connect(nonowner).setBid(tokenId, defaultBid)).to.be.rejectedWith('Market: Bidder must be msg sender')
+    })
 
-      it('reverts if not called from the app contract', async () => {
-        await expect(app.connect(nonowner).setBid(tokenId, defaultBid)).rejectedWith('Market: Bidder must be msg sender')
-      })
+    it('reverts if not called from the app contract', async () => {
+      await expect(app.connect(nonowner).setBid(tokenId, defaultBid)).rejectedWith('Market: Bidder must be msg sender')
+    })
 
-      it('reverts if bidder does not have enough credits', async () => {
-        await mintCurrency(owner, defaultBid.bidder, 10)
-        await expect(app.connect(bidder).setBid(tokenId, defaultBid)).to.be.rejectedWith('ERC20: transfer amount exceeds allowance')
-      })
+    it('reverts if bidder does not have enough credits', async () => {
+      await mintCurrency(owner, defaultBid.bidder, 10)
+      await expect(app.connect(bidder).setBid(tokenId, defaultBid)).to.be.rejectedWith('ERC20: transfer amount exceeds allowance')
+    })
 
-      it('reverts if bidder does not have enough allowance to give to market', async () => {
-        await mintCurrency(owner, bidderAddress, defaultBid.amount)
-        await approveCurrency(bidder, appAddress, defaultBid.amount - 10)
-        await expect(app.connect(bidder).setBid(tokenId, defaultBid)).to.be.rejectedWith('ERC20: transfer amount exceeds allowance')
-      })
+    it('reverts if bidder does not have enough allowance to give to market', async () => {
+      await mintCurrency(owner, bidderAddress, defaultBid.amount)
+      await approveCurrency(bidder, appAddress, defaultBid.amount - 10)
+      await expect(app.connect(bidder).setBid(tokenId, defaultBid)).to.be.rejectedWith('ERC20: transfer amount exceeds allowance')
+    })
 
-      it('reverts if the bid currency is 0 address', async () => {
-        await expect(app.connect(bidder).setBid(tokenId, { ...defaultBid, currency: AddressZero })).to.be.rejectedWith('Market: bid currency cannot be 0 address')
-      })
-      it('reverts if the bid recipient is 0 address', async () => {
-        await expect(app.connect(bidder).setBid(tokenId, { ...defaultBid, recipient: AddressZero })).to.be.rejectedWith('Market: bid recipient cannot be 0 address')
-      })
-      it('reverts if the bidder bids 0 tokens', async () => {
-        await expect(app.connect(bidder).setBid(tokenId, { ...defaultBid, amount: 0 })).to.be.rejectedWith('Market: cannot bid amount of 0')
-      })
+    it('reverts if the bid currency is 0 address', async () => {
+      await expect(app.connect(bidder).setBid(tokenId, { ...defaultBid, currency: AddressZero })).to.be.rejectedWith('Market: bid currency cannot be 0 address')
+    })
+    it('reverts if the bid recipient is 0 address', async () => {
+      await expect(app.connect(bidder).setBid(tokenId, { ...defaultBid, recipient: AddressZero })).to.be.rejectedWith('Market: bid recipient cannot be 0 address')
+    })
+    it('reverts if the bidder bids 0 tokens', async () => {
+      await expect(app.connect(bidder).setBid(tokenId, { ...defaultBid, amount: 0 })).to.be.rejectedWith('Market: cannot bid amount of 0')
+    })
 
-      it('allows the owner to set a bid on a token that exists', async () => {
-        await mintCurrency(owner, bidderAddress, defaultBid.amount)
-        await approveCurrency(bidder, appAddress, defaultBid.amount)
-        await approveCurrency(bidder, marketAddress, defaultBid.amount)
+    it('reverts if trying to bid on a non-existing token', async () => {
+      await mintCurrency(owner, bidderAddress, defaultBid.amount)
+      await approveCurrency(bidder, appAddress, defaultBid.amount)
+      await approveCurrency(bidder, marketAddress, defaultBid.amount)
 
-        const beforeBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
-        const beforeBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
+      await expect(app.connect(bidder).setBid(1234, defaultBid)).to.be.rejectedWith('App: Token does not exist')
+    })
 
-        let txn = await app.connect(bidder).setBid(tokenId, defaultBid)
-        await txn.wait()
-        const bid = await market.connect(bidder).bidForTokenBidder(1, bidderAddress)
+    it('allows the owner to set a bid on a token that exists', async () => {
+      await mintCurrency(owner, bidderAddress, defaultBid.amount)
+      await approveCurrency(bidder, appAddress, defaultBid.amount)
+      await approveCurrency(bidder, marketAddress, defaultBid.amount)
 
-        expect(bid.currency).eq(defaultBid.currency)
-        const afterBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
-        expect(toNumWei(bid.amount)).to.eq(defaultBid.amount)
-        expect(bid.bidder).to.eq(defaultBid.bidder)
-        expect(beforeBalance).to.eq(afterBalance + defaultBid.amount)
+      const beforeBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
+      const beforeBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
 
-        const afterBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
+      let txn = await app.connect(bidder).setBid(tokenId, defaultBid)
+      await txn.wait()
+      const bid = await market.connect(bidder).bidForTokenBidder(1, bidderAddress)
 
-        expect(beforeBalanceOfMarket).to.eql(afterBalanceOfMarket - defaultBid.amount)
-      })
+      expect(bid.currency).eq(defaultBid.currency)
+      const afterBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
+      const afterBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
+      expect(toNumWei(bid.amount)).to.eq(defaultBid.amount)
+      expect(bid.bidder).to.eq(defaultBid.bidder)
+      expect(beforeBalance).to.eq(afterBalance + defaultBid.amount)
+      expect(beforeBalanceOfMarket).to.eql(afterBalanceOfMarket - defaultBid.amount)
     })
   })
 
-  //       describe('setBid', () => {
+  describe('#setLazyBid', () => {
+    const defaultBid = {
+      amount: 100,
+      name: tokenName,
+      currency: tokenAddress,
+      bidder: bidderAddress,
+      recipient: nonbidderAddress,
+      sellOnShare: Decimal.new(10),
+      offline: false,
+    }
 
-  //         beforeEach(async () => {
-  //           defaultBid.bidder = await owner.getAddress()
-  //           defaultBid.currency = currency.address
+    beforeEach(async () => await deploy())
+    beforeEach(async () => await addDrop('Gen3', owner))
+    beforeEach(async () => {
+      tokenId = await app.dropAddresses(drop.address)
+    })
 
-  //           await mintCurrency(currency.address, defaultBid.bidder, 100000000)
-  //         })
+    beforeEach(async () => {
+      defaultBid.currency = tokenAddress
+      defaultBid.recipient = nonbidderAddress
+      defaultBid.bidder = bidderAddress
+      await (await app.mint(tokenId, tokenName)).wait()
+    })
 
-  //         beforeEach(async () => {
-  //           drop = await mintDropTokenType('Bear', owner, { ...defaultDropAttrs, supply: 10 })
-  //           let txn = await (await app.mint(tokenId, 'Bear')).wait()
-  //           const { events } = txn
-  //           const {
-  //             args: [id, token],
-  //           } = events[events.length - 1]
-  //           tokenId = id
-  //         })
+    it('reverts if drop does not exist', async () => {
+      await expect(app.connect(bidder).setLazyBid(1234, tokenName, defaultBid)).to.be.rejectedWith('App: Drop does not exist')
+    })
 
-  //         it.only('can set a bid on a token that exists', async () => {
-  //           await currency.approve(await owner.getAddress(), MaxUint256)
-  //           await app.setBid(tokenId, defaultBid)
-  //         })
-  //       })
-  //       //
-  //     })
-  //   })
-  // })
+    it('reverts if drop has no supply left', async () => {
+      await addDrop('WeirdDrop', owner, { supply: 0 })
+      let tokenId = await app.dropAddresses(drop.address)
+      await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, defaultBid)).to.be.rejectedWith('App: token type does not exist')
+    })
+
+    it('reverts if the currency is not payable', async () => {
+      await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, { ...defaultBid, currency: AddressZero })).to.be.rejectedWith('App: currency must be payable')
+    })
+
+    it('reverts if not sent by the owner', async () => {
+      await expect(app.connect(nonbidder).setLazyBid(tokenId, tokenName, defaultBid)).to.be.rejectedWith('Market: Bidder must be msg sender')
+    })
+
+    it('reverts if sending to a 0 address', async () => {
+      await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, { ...defaultBid, recipient: AddressZero })).to.be.rejectedWith('Market: bid recipient cannot be 0 address')
+    })
+
+    it('reverts if sending 0 amount', async () => {
+      await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, { ...defaultBid, amount: 0 })).to.be.rejectedWith('Market: cannot bid amount of 0')
+    })
+
+    it('can receive a valid lazyBid', async () => {
+      await mintCurrency(owner, bidderAddress, defaultBid.amount)
+      await approveCurrency(bidder, appAddress, defaultBid.amount)
+      await approveCurrency(bidder, marketAddress, defaultBid.amount)
+
+      const beforeBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
+      const beforeBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
+
+      let txn = await app.connect(bidder).setLazyBid(tokenId, tokenName, defaultBid)
+      await txn.wait()
+
+      const afterBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
+      const afterBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
+
+      expect(beforeBalance).to.eql(afterBalance + defaultBid.amount)
+      expect(beforeBalanceOfMarket).to.eql(afterBalanceOfMarket - defaultBid.amount)
+    })
+  })
+
+  describe('#acceptBid', () => {
+    const defaultBid = {
+      amount: 100,
+      name: tokenName,
+      currency: tokenAddress,
+      bidder: bidderAddress,
+      recipient: nonbidderAddress,
+      sellOnShare: Decimal.new(10),
+      offline: false,
+    }
+
+    beforeEach(async () => await deploy())
+    beforeEach(async () => await addDrop('Gen3', creator))
+    beforeEach(async () => {
+      tokenId = await app.dropAddresses(drop.address)
+    })
+
+    beforeEach(async () => {
+      defaultBid.currency = tokenAddress
+      defaultBid.recipient = nonbidderAddress
+      defaultBid.bidder = bidderAddress
+      await (await app.mint(tokenId, tokenName)).wait()
+    })
+
+    beforeEach(async () => {
+      await mintCurrency(owner, bidderAddress, defaultBid.amount)
+      await approveCurrency(bidder, appAddress, defaultBid.amount)
+      await approveCurrency(bidder, marketAddress, defaultBid.amount)
+      await app.connect(bidder).setBid(tokenId, defaultBid)
+    })
+
+    it('reverts if the token does not exist', async () => {
+      await expect(app.connect(bidder).acceptBid(1234, defaultBid)).to.be.rejectedWith('App: Token does not exist')
+    })
+
+    it('reverts if not called by the app contract', async () => {
+      await expect(app.connect(nonbidder).acceptBid(tokenId, defaultBid)).rejectedWith('Media: Only approved or owner')
+    })
+
+    it('reverts if bid amount differs from expected amount', async () => {
+      // await app.connect(bidder).setBid(tokenId, { ...defaultBid, amount: 0 })
+      // let bid = await market.bidForTokenBidder(tokenId, bidderAddress)
+      await expect(app.acceptBid(tokenId, { ...defaultBid, amount: 90 })).rejectedWith('Market: Unexpected bid found.')
+    })
+
+    it('reverts if bid amount differs from expected currency', async () => {
+      await expect(app.acceptBid(tokenId, { ...defaultBid, currency: otherCurrency.address })).rejectedWith('Market: Unexpected bid found.')
+    })
+
+    it('reverts if the bid receipients are different', async () => {
+      await expect(app.acceptBid(tokenId, { ...defaultBid, recipient: nonownerAddress })).rejectedWith('Market: Unexpected bid found.')
+    })
+
+    describe('accepts a valid bid', () => {
+      it('and sends funds to the owner of the nft', async () => {
+        const beforeOwnerBalance = toNumWei(await currency.balanceOf(ownerAddress))
+
+        let txn = await app.acceptBid(tokenId, defaultBid)
+        await txn.wait()
+
+        const afterOwnerBalance = toNumWei(await currency.balanceOf(ownerAddress))
+        expect(beforeOwnerBalance).to.eql(afterOwnerBalance - defaultBid.amount)
+      })
+
+      it('and sends the receipient of the nft', async () => {
+        const beforeOwner = await media.ownerOf(tokenId)
+
+        let txn = await app.acceptBid(tokenId, defaultBid)
+        await txn.wait()
+
+        const afterOwner = await media.ownerOf(tokenId)
+        expect(beforeOwner).not.to.be.eql(afterOwner)
+        expect(afterOwner).to.be.eql(defaultBid.recipient)
+      })
+
+      it('and removes the bid from the app', async () => {
+        const beforeBid = await market.bidForTokenBidder(tokenId, bidderAddress)
+        expect(beforeBid.recipient).not.to.eql(AddressZero)
+        expect(beforeBid.recipient).to.eql(defaultBid.recipient)
+
+        let txn = await app.acceptBid(tokenId, defaultBid)
+        await txn.wait()
+
+        const afterBid = await market.bidForTokenBidder(tokenId, bidderAddress)
+        expect(afterBid.recipient).to.eql(AddressZero)
+      })
+    })
+
+    // it('reverts if drop has no supply left', async () => {
+    //   await addDrop('WeirdDrop', owner, { supply: 0 })
+    //   let tokenId = await app.dropAddresses(drop.address)
+    //   await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, defaultBid)).to.be.rejectedWith('App: token type does not exist')
+    // })
+
+    // it('reverts if the currency is not payable', async () => {
+    //   await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, { ...defaultBid, currency: AddressZero })).to.be.rejectedWith('App: currency must be payable')
+    // })
+
+    // it('reverts if not sent by the owner', async () => {
+    //   await expect(app.connect(nonbidder).setLazyBid(tokenId, tokenName, defaultBid)).to.be.rejectedWith('Market: Bidder must be msg sender')
+    // })
+
+    // it('reverts if sending to a 0 address', async () => {
+    //   await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, { ...defaultBid, recipient: AddressZero })).to.be.rejectedWith('Market: bid recipient cannot be 0 address')
+    // })
+
+    // it('reverts if sending 0 amount', async () => {
+    //   await expect(app.connect(bidder).setLazyBid(tokenId, tokenName, { ...defaultBid, amount: 0 })).to.be.rejectedWith('Market: cannot bid amount of 0')
+    // })
+
+    // it('can receive a valid lazyBid', async () => {
+    //   await mintCurrency(owner, bidderAddress, defaultBid.amount)
+    //   await approveCurrency(bidder, appAddress, defaultBid.amount)
+    //   await approveCurrency(bidder, marketAddress, defaultBid.amount)
+
+    //   const beforeBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
+    //   const beforeBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
+
+    //   let txn = await app.connect(bidder).setLazyBid(tokenId, tokenName, defaultBid)
+    //   await txn.wait()
+
+    //   const afterBalance = toNumWei(await currency.balanceOf(defaultBid.bidder))
+    //   const afterBalanceOfMarket = toNumWei(await currency.balanceOf(marketAddress))
+
+    //   expect(beforeBalance).to.eql(afterBalance + defaultBid.amount)
+    //   expect(beforeBalanceOfMarket).to.eql(afterBalanceOfMarket - defaultBid.amount)
+    // })
+  })
 })

@@ -95,8 +95,6 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
 
     token = media.mintToken(msg.sender, token);
 
-    // console.log('mint', msg.sender, token.name, token.id);
-
     tokens[token.id] = token;
 
     // Set default ask
@@ -128,6 +126,7 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
    * If another bid already exists for the bidder, it is refunded.
    */
   function setBid(uint256 tokenId, IMarket.Bid calldata bid) public payable nonReentrant {
+    require(tokens[tokenId].id == tokenId, 'App: Token does not exist');
     media.setBidFromApp(tokenId, bid, msg.sender);
   }
 
@@ -136,10 +135,11 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
     string memory name,
     IMarket.Bid memory bid
   ) public payable nonReentrant {
+    require(address(drops[dropId]) != address(0x0), 'App: Drop does not exist');
     IDrop drop = IDrop(drops[dropId]);
     IDrop.TokenType memory tokenType = drop.getTokenType(name);
     require(tokenType.supply > 0, 'App: token type does not exist');
-    require(bid.currency == address(0), 'App: currency must be payable');
+    require(bid.currency != address(0x0), 'App: currency must be payable');
     media.setLazyBidFromApp(dropId, tokenType, bid, msg.sender);
   }
 
@@ -164,6 +164,8 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
    * but is necessary to ensure fairness to all shareholders.
    */
   function acceptBid(uint256 tokenId, IMarket.Bid memory bid) public nonReentrant {
+    require(tokens[tokenId].id == tokenId, 'App: Token does not exist');
+
     IMarket.BidShares memory bidShares = market.bidSharesForToken(tokenId);
 
     address mediaOwner = media.ownerOf(tokenId);
