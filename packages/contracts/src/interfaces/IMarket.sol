@@ -57,7 +57,11 @@ interface IMarket {
 
   function bidForTokenBidder(uint256 tokenId, address bidder) external view returns (Bid memory);
 
-  function lazyBidForTokenBidder(uint256 dropId, string memory name, address bidder) external view returns (Bid memory);
+  function lazyBidForTokenBidder(
+    uint256 dropId,
+    string memory name,
+    address bidder
+  ) external view returns (Bid memory);
 
   function currentAskForToken(uint256 tokenId) external view returns (Ask memory);
 
@@ -92,11 +96,20 @@ interface IMarket {
 
   function removeBid(uint256 tokenId, address bidder) external;
 
-  function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external;
+  function removeLazyBidFromApp(
+    uint256 dropId,
+    string memory name,
+    address sender
+  ) external;
 
   function acceptBid(uint256 tokenId, Bid calldata expectedBid) external;
 
-  function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, Bid calldata expectedBid) external;
+  function acceptLazyBidFromApp(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    ILux.Token memory token,
+    Bid calldata expectedBid
+  ) external;
 
   function isOfflineBidder(address bidder) external returns (bool);
 

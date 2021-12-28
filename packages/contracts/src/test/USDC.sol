@@ -10,6 +10,10 @@ contract USDC is ERC20 {
     }
   }
 
+  function mint(address to, uint256 value) public {
+    super._mint(to, value);
+  }
+
   /**
    * @dev Returns the number of decimals used to get its user representation.
    * For example, if `decimals` equals `2`, a balance of `505` tokens should

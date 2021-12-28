@@ -120,8 +120,8 @@ describe('Market', () => {
   async function getBalance(currency: string, owner: string) {
     return ZOO__factory.connect(currency, deployerWallet).balanceOf(owner)
   }
-  async function setBid(maket: Market, bid: Bid, tokenId: number, spender?: string) {
-    await maket.setBid(tokenId, bid, spender || bid.bidder, { gasLimit: 3500000 })
+  async function setBid(market: Market, bid: Bid, tokenId: number, spender?: string) {
+    await market.setBid(tokenId, bid, spender || bid.bidder, { gasLimit: 3500000 })
   }
 
   beforeEach(async () => {

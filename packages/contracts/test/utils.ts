@@ -3,7 +3,7 @@ import { ethers, deployments } from 'hardhat'
 import { App } from '../types'
 import { sha256 } from 'ethers/lib/utils'
 import Decimal from '../utils/Decimal'
-import { BigNumber, BigNumberish, Contract } from 'ethers'
+import { BigNumber, BigNumberish, Contract, providers, Signer } from 'ethers'
 import { MaxUint256, AddressZero } from '@ethersproject/constants'
 import { generatedWallets } from '../utils/generatedWallets'
 import { JsonRpcProvider } from '@ethersproject/providers'
@@ -11,11 +11,8 @@ import { formatUnits } from '@ethersproject/units'
 import { Wallet } from '@ethersproject/wallet'
 import { recoverTypedMessage, recoverTypedSignature, signTypedData } from 'eth-sig-util'
 import { bufferToHex, ecrecover, fromRpcSig, pubToAddress } from 'ethereumjs-util'
-import { toUtf8Bytes } from 'ethers/lib/utils'
-import { keccak256 } from '@ethersproject/keccak256'
-
-let provider = new JsonRpcProvider()
-let [deployerWallet] = generatedWallets(provider)
+import { toUtf8Bytes, formatBytes32String } from 'ethers/lib/utils'
+import { getContractAddress } from '@ethersproject/address'
 
 export const requireDependencies = () => {
   const chai = require('chai')
@@ -34,10 +31,10 @@ export const requireDependencies = () => {
   }
 }
 
-const deployContractsAsync = async (contractArr: string[]) => {
+const deployContractsAsync = async (contractArr: string[], owner: Signer) => {
   return await contractArr.reduce(async (prev: Promise<{}>, name: string) => {
     const sum = await prev
-    const contract: any = await ethers.getContract(name)
+    const contract: any = await ethers.getContract(name, owner)
     sum[name] = contract
     return sum
   }, Promise.resolve({}))
@@ -46,9 +43,12 @@ const deployContractsAsync = async (contractArr: string[]) => {
 export const setupTestFactory = (contractArr: string[]) =>
   deployments.createFixture(async ({ deployments, getNamedAccounts, ethers }, options) => {
     requireDependencies()
-    await deployments.fixture(contractArr)
+    await deployments.fixture(contractArr, { fallbackToGlobal: true })
 
-    let tokens: { [key: string]: any } = await deployContractsAsync(contractArr)
+    const signers = await ethers.getSigners()
+    const owner = (await getNamedAccounts()).deployer
+
+    let tokens: { [key: string]: any } = await deployContractsAsync(contractArr, signers[0])
     // contractArr.reduce(async (sum: {}, name: string) => {
     //   const contract: Contract = await ethers.getContract(name)
     //   return {
@@ -56,15 +56,23 @@ export const setupTestFactory = (contractArr: string[]) =>
     //     ...sum,
     //   }
     // }, {})
-    const signers = await ethers.getSigners()
-    const owner = (await getNamedAccounts()).deployer
+
     return {
       deployments: deployments,
       owner: owner,
       signers: signers,
       tokens,
+      // wallets,
     }
   })
+
+const getContractByNonce = async (name: string, ownerAddress: string, nonce: number) => {
+  const futureAddress = await getContractAddress({
+    from: ownerAddress,
+    nonce,
+  })
+  return await ethers.getContractAt(name, futureAddress)
+}
 
 export function toNumWei(val: BigNumber) {
   return parseFloat(formatUnits(val, 'wei'))

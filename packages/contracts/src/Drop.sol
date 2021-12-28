@@ -23,7 +23,7 @@ contract Drop is IDrop, Ownable {
 
   // mapping of TokenType name to TokenType
   mapping(string => TokenType) public tokenTypes;
-  
+
   string[] public tokenNames;
 
   event TokenTypeAdded(TokenType tokenType);
@@ -70,7 +70,6 @@ contract Drop is IDrop, Ownable {
     tokenType.timestamp = block.timestamp;
     tokenTypes[name] = tokenType;
     tokenNames.push(name);
-    console.log('Drop: Added token type:', tokenType.name);
     emit TokenTypeAdded(tokenType);
     emit TokenTypeAskUpdated(name, ask);
     return tokenType;
@@ -94,7 +93,7 @@ contract Drop is IDrop, Ownable {
     emit TokenTypeAskUpdated(name, ask);
   }
 
-  function getTokenTypes() public view returns(TokenType[] memory){
+  function getTokenTypes() public view returns (TokenType[] memory) {
     TokenType[] memory _tokenTypes = new TokenType[](tokenNames.length);
     uint256 i = 0;
     for (i; i < tokenNames.length; i++) {

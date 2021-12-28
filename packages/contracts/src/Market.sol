@@ -38,7 +38,7 @@ contract Market is IMarket, Ownable {
 
   // Mapping from token to mapping from bidder to bid
   mapping(uint256 => mapping(address => Bid)) private _tokenBidders;
-  
+
   // Mapping from token type name to mapping from bidder to bid
   mapping(string => mapping(address => Bid)) private _lazyTokenBidders;
 
@@ -72,7 +72,11 @@ contract Market is IMarket, Ownable {
     return _tokenBidders[tokenId][bidder];
   }
 
-  function lazyBidForTokenBidder(uint256 dropId, string memory name, address bidder) external view override returns (Bid memory) {
+  function lazyBidForTokenBidder(
+    uint256 dropId,
+    string memory name,
+    address bidder
+  ) external view override returns (Bid memory) {
     string memory dropTokenTypeName = getDropTokenTypeName(dropId, name);
     return _lazyTokenBidders[dropTokenTypeName][bidder];
   }
@@ -180,7 +184,7 @@ contract Market is IMarket, Ownable {
     require(bid.bidder != address(0), 'Market: bidder cannot be 0 address');
     require(!bid.offline || (bid.offline && isOfflineBidder(bid.bidder)), 'Market: Only whitelisted offline bidder');
     require(bid.amount != 0, 'Market: cannot bid amount of 0');
-    // require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
+    require(bid.currency != address(0), 'Market: bid currency cannot be 0 address');
     require(bid.recipient != address(0), 'Market: bid recipient cannot be 0 address');
 
     Bid storage existingBid = _tokenBidders[tokenId][bid.bidder];
@@ -213,7 +217,7 @@ contract Market is IMarket, Ownable {
     //   _finalizeNFTTransfer(tokenId, bid.bidder);
     // }
   }
-  
+
   /**
    * @notice Sets the bid on a particular media for a bidder. The token being used to bid
    * is transferred from the spender to this contract to be held until removed or accepted.
@@ -249,10 +253,10 @@ contract Market is IMarket, Ownable {
 
     _lazyTokenBidders[dropTokenTypeName][bid.bidder] = Bid(bidAmount, bid.currency, bid.bidder, bid.recipient, bid.sellOnShare, bid.offline);
 
-    emit LazyBidCreated(dropId, tokenType.name, bid); 
+    emit LazyBidCreated(dropId, tokenType.name, bid);
   }
 
-  function getDropTokenTypeName(uint256 tokenId, string memory name) internal pure returns(string memory) {
+  function getDropTokenTypeName(uint256 tokenId, string memory name) internal pure returns (string memory) {
     return string(abi.encodePacked(tokenId, '-', name));
   }
 
@@ -283,7 +287,11 @@ contract Market is IMarket, Ownable {
    * @notice Removes the bid on a particular media for a bidder. The bid amount
    * is transferred from this contract to the bidder, if they have a bid placed.
    */
-  function removeLazyBidFromApp(uint256 dropId, string memory name, address bidder) public override onlyMediaCaller {
+  function removeLazyBidFromApp(
+    uint256 dropId,
+    string memory name,
+    address bidder
+  ) public override onlyMediaCaller {
     string memory dropTokenTypeName = getDropTokenTypeName(dropId, name);
     Bid storage bid = _lazyTokenBidders[dropTokenTypeName][bidder];
     address bidCurrency = bid.currency;
@@ -302,7 +310,6 @@ contract Market is IMarket, Ownable {
       token.safeTransfer(bidder, bidAmount);
     }
   }
-
 
   /**
    * @notice Accepts a bid from a particular bidder. Can only be called by the media contract.
@@ -325,7 +332,12 @@ contract Market is IMarket, Ownable {
     _finalizeNFTTransfer(tokenId, bid.bidder);
   }
 
-  function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, Bid calldata expectedBid) external override onlyMediaCaller {
+  function acceptLazyBidFromApp(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    ILux.Token memory token,
+    Bid calldata expectedBid
+  ) external override onlyMediaCaller {
     string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
     Bid memory bid = _lazyTokenBidders[dropTokenTypeName][expectedBid.bidder];
     require(bid.amount > 0, 'Market: cannot accept bid of 0');
@@ -335,7 +347,7 @@ contract Market is IMarket, Ownable {
     );
     require(isValidLazyBid(tokenType, bid.amount), 'Market: Bid invalid for share splitting');
 
-    _finalizeLazyMint(dropId, tokenType, token, bid.bidder);    
+    _finalizeLazyMint(dropId, tokenType, token, bid.bidder);
   }
 
   /**
@@ -379,8 +391,12 @@ contract Market is IMarket, Ownable {
    * the bid to the shareholders. It also transfers the ownership of the media
    * to the bid recipient. Finally, it removes the accepted bid and the current ask.
    */
-  function _finalizeLazyMint(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, address bidder) private {
-
+  function _finalizeLazyMint(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    ILux.Token memory token,
+    address bidder
+  ) private {
     string memory dropTokenTypeName = getDropTokenTypeName(dropId, tokenType.name);
 
     Bid memory bid = _lazyTokenBidders[dropTokenTypeName][bidder];
@@ -408,5 +424,4 @@ contract Market is IMarket, Ownable {
     emit BidShareUpdated(token.id, bidShares);
     emit LazyBidFinalized(dropId, tokenType.name, token.id, bid);
   }
-
 }

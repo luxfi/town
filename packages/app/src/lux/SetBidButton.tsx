@@ -13,13 +13,7 @@ export type SetBidButtonProps = {
   currencyToken: Currency
 }
 
-export const SetBidButton = ({
-  ask,
-  tokenId,
-  tokenType,
-  amount,
-  currencyToken,
-}: SetBidButtonProps) => {
+export const SetBidButton = ({ ask, tokenId, tokenType, amount, currencyToken }: SetBidButtonProps) => {
   const { account } = useActiveWeb3React()
   const gasPrice = useGasPrice()
   const app = useContract('App')

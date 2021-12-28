@@ -9,4 +9,8 @@ contract WETH is ERC20 {
       _mint(accounts[i], mintAmount);
     }
   }
+
+  function mint(address to, uint256 value) public {
+    super._mint(to, value);
+  }
 }

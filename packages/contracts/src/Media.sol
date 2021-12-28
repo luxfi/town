@@ -20,7 +20,7 @@ import { IDrop } from './interfaces/IDrop.sol';
 import { ILux } from './interfaces/ILux.sol';
 import './interfaces/IMedia.sol';
 
-import './console.sol';
+// import './console.sol';
 
 /**
  * @title A media value system, with perpetual equity to creators
@@ -286,7 +286,11 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
    * Custom version of setBid where App must be onlyApprovedOrOwner
    * @notice see IMedia
    */
-  function setBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external override nonReentrant onlyExistingToken(tokenId) onlyAuthorizedCaller {
+  function setBidFromApp(
+    uint256 tokenId,
+    IMarket.Bid memory bid,
+    address sender
+  ) external override nonReentrant onlyExistingToken(tokenId) onlyAuthorizedCaller {
     require(sender == bid.bidder, 'Market: Bidder must be msg sender');
     IMarket(marketContract).setBid(tokenId, bid, sender);
   }
@@ -295,7 +299,12 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
    * Custom version of setBid where App must be onlyApprovedOrOwner
    * @notice see IMedia
    */
-  function setLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, IMarket.Bid memory bid, address sender) external override nonReentrant onlyAuthorizedCaller {
+  function setLazyBidFromApp(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    IMarket.Bid memory bid,
+    address sender
+  ) external override nonReentrant onlyAuthorizedCaller {
     require(sender == bid.bidder, 'Market: Bidder must be msg sender');
     IMarket(marketContract).setLazyBidFromApp(dropId, tokenType, bid, sender);
   }
@@ -317,7 +326,11 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   /**
    * @notice see IMedia
    */
-  function removeLazyBidFromApp(uint256 dropId, string memory name, address sender) external override nonReentrant onlyAuthorizedCaller {
+  function removeLazyBidFromApp(
+    uint256 dropId,
+    string memory name,
+    address sender
+  ) external override nonReentrant onlyAuthorizedCaller {
     IMarket(marketContract).removeLazyBidFromApp(dropId, name, sender);
   }
 
@@ -327,18 +340,27 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   function acceptBid(uint256 tokenId, IMarket.Bid memory bid) public override nonReentrant onlyApprovedOrOwner(msg.sender, tokenId) {
     IMarket(marketContract).acceptBid(tokenId, bid);
   }
-  
+
   /**
    * @notice see IMedia
    */
-  function acceptBidFromApp(uint256 tokenId, IMarket.Bid memory bid, address sender) external override nonReentrant onlyApprovedOrOwner(sender, tokenId) onlyAuthorizedCaller {
+  function acceptBidFromApp(
+    uint256 tokenId,
+    IMarket.Bid memory bid,
+    address sender
+  ) external override nonReentrant onlyApprovedOrOwner(sender, tokenId) onlyAuthorizedCaller {
     IMarket(marketContract).acceptBid(tokenId, bid);
   }
 
   /**
    * @notice see IMedia
    */
-  function acceptLazyBidFromApp(uint256 dropId, IDrop.TokenType memory tokenType, ILux.Token memory token, IMarket.Bid memory bid) external override nonReentrant onlyAuthorizedCaller {
+  function acceptLazyBidFromApp(
+    uint256 dropId,
+    IDrop.TokenType memory tokenType,
+    ILux.Token memory token,
+    IMarket.Bid memory bid
+  ) external override nonReentrant onlyAuthorizedCaller {
     IMarket(marketContract).acceptLazyBidFromApp(dropId, tokenType, token, bid);
   }
 
@@ -533,14 +555,12 @@ contract Media is IMedia, ERC721Burnable, ReentrancyGuard, Ownable {
   }
 
   function _hashToken(address owner, ILux.Token memory token) private view returns (ILux.Token memory) {
-    console.log('_hashToken', token.data.tokenURI, token.data.metadataURI);
     token.data.contentHash = keccak256(abi.encodePacked(token.data.tokenURI, block.number, owner));
     token.data.metadataHash = keccak256(abi.encodePacked(token.data.metadataURI, block.number, owner));
     return token;
   }
 
   function mintToken(address owner, ILux.Token memory token) external override onlyAuthorizedCaller returns (ILux.Token memory) {
-    console.log('mintToken', owner, token.name, token.data.tokenURI);
     token = _hashToken(owner, token);
     _mintForCreator(owner, token.data, token.bidShares);
     uint256 id = getRecentToken(owner);

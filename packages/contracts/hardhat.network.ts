@@ -28,7 +28,7 @@ const networks: HardhatUserConfig['networks'] = {
     accounts: {
       mnemonic: mnemonic(),
       count: 20,
-      accountsBalance: '10000000000000000000000',
+      accountsBalance: '1000000000000000000000000',
     },
   },
   hardhat2: {
@@ -78,7 +78,7 @@ const networks: HardhatUserConfig['networks'] = {
     chainId: 3,
     live: true,
     saveDeployments: true,
-    tags: ["staging"],
+    tags: ['staging'],
     gasPrice: ethers.utils.parseUnits(`50`, 'gwei').toNumber(),
     blockGasLimit: 4000000,
     gasMultiplier: 2,

@@ -85,6 +85,7 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
 
   // Issue a new token to owner
   function mint(uint256 dropId, string memory name) public onlyOwner returns (ILux.Token memory) {
+    require(address(drops[dropId]) != address(0), 'App: Drop does not exist');
     IDrop drop = IDrop(drops[dropId]);
 
     // Get NFT for drop
@@ -94,7 +95,7 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
 
     token = media.mintToken(msg.sender, token);
 
-    console.log('mint', msg.sender, token.name, token.id);
+    // console.log('mint', msg.sender, token.name, token.id);
 
     tokens[token.id] = token;
 
@@ -109,10 +110,15 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
   }
 
   function setTokenName(uint256 tokenId, string memory name) public {
+    require(tokens[tokenId].id == tokenId, 'App: Token does not exist');
     require(media.ownerOf(tokenId) == msg.sender, 'App: msg sender must be owner of token');
     tokens[tokenId].name = name;
     emit UpdatedTokenName(tokenId, name);
-    console.log('Updated token name:', name);
+  }
+
+  function getTokenName(uint256 tokenId) public view returns (string memory) {
+    require(tokens[tokenId].id == tokenId, 'App: Token does not exist');
+    return tokens[tokenId].name;
   }
 
   // Set Bid with ETH
@@ -121,7 +127,7 @@ contract App is IApp, OwnableUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgrad
    * is transferred from the spender to this contract to be held until removed or accepted.
    * If another bid already exists for the bidder, it is refunded.
    */
-  function setBid(uint256 tokenId, IMarket.Bid memory bid) public payable nonReentrant {
+  function setBid(uint256 tokenId, IMarket.Bid calldata bid) public payable nonReentrant {
     media.setBidFromApp(tokenId, bid, msg.sender);
   }
 
