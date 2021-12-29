@@ -1,7 +1,24 @@
-import Head from 'next/head'
-import Mint from './mint'
+import { nanoid } from "@reduxjs/toolkit";
+import { GetStaticProps } from "next";
+import Head from "next/head";
+import { loadTranslation } from "../entities";
+import Mint from "./mint";
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const sessionId = nanoid();
 
-export default function Dashboard() {
+  const messages = await loadTranslation(
+    locale,
+    sessionId,
+    process.env.NODE_ENV === "production"
+  );
+
+  return {
+    props: {
+      messages: { ...messages },
+    },
+  };
+};
+export default function Dashboard(props) {
   return (
     <div>
       <Head>
@@ -10,5 +27,5 @@ export default function Dashboard() {
       </Head>
       <Mint />
     </div>
-  )
+  );
 }

@@ -27,6 +27,9 @@ export interface ArcherTradeOptions extends TradeOptions {
    * ETH tip for miners
    */
   ethTip?: CurrencyAmount<Currency>
+  ttl: any
+  recipient: any
+  allowedSlippage: any
 }
 
 export interface ArcherSwapParameters extends Omit<SwapParameters, 'args'> {
@@ -58,7 +61,7 @@ export abstract class ArcherRouter {
    * Cannot be constructed.
    */
 
-  private constructor() {}
+  private constructor() { }
   /**
    * Produces the on-chain method name to call and the hex encoded parameters to pass as arguments for a given trade.
    * @param trade to produce call parameters for
