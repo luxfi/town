@@ -2,6 +2,9 @@
   "name": "@luxdefi/app",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "14.17.3"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "yarn lang && next build",
