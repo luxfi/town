@@ -39,10 +39,10 @@ yarn graphnode:start
 ```
 
 > Successful Docker output
-> ![](success-docker.png)
+> ![](resources/success-docker.png)
 
 > Successful Graph Node output
-> ![](success-graphnode.png)
+> ![](resources/success-graphnode.png)
 
 > Start the Lux Town Subgraph
 
@@ -55,7 +55,7 @@ yarn subgraph:start
 ```
 
 > Successful Subgraph output
-> ![](success-subgraph.png)
+> ![](resources/success-subgraph.png)
 
 > Build the SDK and Configure
 

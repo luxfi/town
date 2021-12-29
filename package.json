@@ -80,8 +80,5 @@
       "**/@luxdefi/framework",
       "**/@luxdefi/solidity"
     ]
-  },
-  "resolutions": {
-    "node-hid": "./resolutions/node-hid"
   }
 }
