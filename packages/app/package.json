@@ -3,35 +3,45 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "analyze": "ANALYZE=true yarn build && serve .next -n",
     "dev": "next dev",
-    "export": "next export",
+    "build": "yarn lang && next build",
     "start": "next start",
-    "inspect": "NODE_OPTIONS='--inspect' next dev",
-    "build": "yarn lingui && next build",
-    "start": "next start",
-    "lingui": "lingui extract --clean --overwrite && lingui compile",
-    "lokalise": "lokalise2 --config lokalise.yaml file download --format po --unzip-to . --original-filenames=false",
-    "circular": "madge --circular src --extensions ts,tsx,js,jsx",
-    "unused": "next-unused",
-    "pre-commit": "lint-staged",
-    "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
     "lint": "next lint",
-    "cypress": "cypress open",
-    "cypress:headless": "cypress run",
-    "e2e": "start-server-and-test start http://localhost:3000 cypress",
-    "e2e:headless": "start-server-and-test start http://localhost:3000 cypress:headless"
+    "lang:extract": "NODE_ENV=development lingui extract --clean",
+    "lang:compile": "lingui compile",
+    "lang": "yarn lang:extract && yarn lang:compile"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write"
+  "next-unused": {
+    "debug": true,
+    "include": [
+      "src"
     ],
-    "*.{md,css}": "prettier --write"
+    "exclude": [],
+    "entrypoints": [
+      "src/pages"
+    ]
   },
-  "resolutions": {
-    "@walletconnect/web3-provider": "1.6.0"
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "@apollo/client": "^3.4.16",
+    "@netlify/plugin-nextjs": "^4.0.0-beta.7",
+    "@sushiswap/core": "2.0.0-canary.0",
+    "@web3-react/walletlink-connector": "^6.2.7",
+    "graphql": "^15.6.1",
+    "graphql-request": "^3.5.0",
+    "moralis": "^0.0.74",
+    "react-icons": "^4.3.1",
+    "react-morphing-modal": "^0.2.2",
+    "react-player": "^2.9.0",
+    "react-timeago": "^6.2.1"
   },
   "devDependencies": {
+    "@types/node": "17.0.4",
+    "@types/react": "17.0.38",
+    "eslint": "8.5.0",
+    "eslint-config-next": "12.0.7",
+    "typescript": "4.5.4",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@commitlint/cli": "^13.0.0",
     "@commitlint/config-conventional": "^13.0.0",
@@ -72,8 +82,6 @@
     "@sushiswap/sushi-data": "^1.0.24",
     "@tailwindcss/jit": "^0.1.18",
     "@transak/transak-sdk": "^1.0.28",
-    "@types/node": "^15.12.2",
-    "@types/react": "^17.0.11",
     "@uniswap/token-lists": "1.0.0-beta.24",
     "@visx/axis": "^1.17.1",
     "@visx/brush": "^1.18.1",
@@ -102,8 +110,6 @@
     "copy-to-clipboard": "^3.3.1",
     "cypress": "8.2.0",
     "eip-712": "^0.4.3",
-    "eslint": "^7.30.0",
-    "eslint-config-next": "^11.1.0",
     "eth-permit": "^0.1.10",
     "fuse.js": "^6.4.6",
     "graphql-tag": "^2.12.5",
@@ -114,7 +120,7 @@
     "lottie-react": "^2.1.0",
     "madge": "^5.0.1",
     "millify": "^4.0.0",
-    "next": "^12.0.5",
+    "next": "^12.0.4",
     "next-pwa": "^5.2.22",
     "next-unused": "^0.0.6",
     "node-vibrant": "3.1.6",
@@ -150,38 +156,6 @@
     "swr": "^1.0.0",
     "tailwindcss": "^2.2.9",
     "tailwindcss-border-gradient-radius": "^2.0.0",
-    "typescript": "^4.3.5",
     "wcag-contrast": "^3.0.0"
-  },
-  "next-unused": {
-    "debug": true,
-    "include": [
-      "src"
-    ],
-    "exclude": [],
-    "entrypoints": [
-      "src/pages"
-    ]
-  },
-  "browserslist": [
-    ">0.3%",
-    "not ie 11",
-    "not dead",
-    "not op_mini all"
-  ],
-  "dependencies": {
-    "@apollo/client": "^3.4.16",
-    "@netlify/plugin-nextjs": "^4.0.0-beta.7",
-    "@sushiswap/core": "2.0.0-canary.0",
-    "@web3-react/walletlink-connector": "^6.2.7",
-    "graphql": "^15.6.1",
-    "graphql-request": "^3.5.0",
-    "moralis": "^0.0.74",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
-    "react-morphing-modal": "^0.2.2",
-    "react-player": "^2.9.0",
-    "react-timeago": "^6.2.1"
   }
 }
