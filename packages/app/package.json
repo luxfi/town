@@ -38,11 +38,6 @@
     "react-timeago": "^6.2.1"
   },
   "devDependencies": {
-    "@types/node": "17.0.4",
-    "@types/react": "17.0.38",
-    "eslint": "8.5.0",
-    "eslint-config-next": "12.0.7",
-    "typescript": "4.5.4",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@commitlint/cli": "^13.0.0",
     "@commitlint/config-conventional": "^13.0.0",
@@ -83,6 +78,8 @@
     "@sushiswap/sushi-data": "^1.0.24",
     "@tailwindcss/jit": "^0.1.18",
     "@transak/transak-sdk": "^1.0.28",
+    "@types/node": "17.0.4",
+    "@types/react": "17.0.38",
     "@uniswap/token-lists": "1.0.0-beta.24",
     "@visx/axis": "^1.17.1",
     "@visx/brush": "^1.18.1",
@@ -111,6 +108,8 @@
     "copy-to-clipboard": "^3.3.1",
     "cypress": "8.2.0",
     "eip-712": "^0.4.3",
+    "eslint": "^8.5.0",
+    "eslint-config-next": "^12.0.7",
     "eth-permit": "^0.1.10",
     "fuse.js": "^6.4.6",
     "graphql-tag": "^2.12.5",
@@ -157,6 +156,7 @@
     "swr": "^1.0.0",
     "tailwindcss": "^2.2.9",
     "tailwindcss-border-gradient-radius": "^2.0.0",
+    "typescript": "4.5.4",
     "wcag-contrast": "^3.0.0"
   }
 }
