@@ -12,24 +12,24 @@ import Toggle from '../Toggle'
 import { useAnimationModeManager } from '../../state/user/hooks'
 
 const items = (i18n: I18n) => [
-  {
-    name: i18n._(t`About`),
-    description: i18n._(t`Documentation for users of Sushi.`),
-    href: 'https://docs.sushi.com',
-    external: true,
-  },
-  {
-    name: i18n._(t`Dev`),
-    description: i18n._(t`Documentation for developers of Sushi.`),
-    href: 'https://dev.sushi.com',
-    external: true,
-  },
-  {
-    name: i18n._(t`Open Source`),
-    description: i18n._(t`Sushi is a supporter of Open Source.`),
-    href: 'https://github.com/sushiswap',
-    external: true,
-  },
+  // {
+  //   name: i18n._(t`About`),
+  //   description: i18n._(t`Documentation for users of Sushi.`),
+  //   href: 'https://docs.sushi.com',
+  //   external: true,
+  // },
+  // {
+  //   name: i18n._(t`Dev`),
+  //   description: i18n._(t`Documentation for developers of Sushi.`),
+  //   href: 'https://dev.sushi.com',
+  //   external: true,
+  // },
+  // {
+  //   name: i18n._(t`Open Source`),
+  //   description: i18n._(t`Sushi is a supporter of Open Source.`),
+  //   href: 'https://github.com/sushiswap',
+  //   external: true,
+  // },
   {
     name: i18n._(t`Tools`),
     description: i18n._(t`Tools to optimize your workflow.`),
