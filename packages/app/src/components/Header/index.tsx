@@ -41,8 +41,9 @@ function AppBar(): JSX.Element {
                   {/* <Image src="/logo.png" alt="Sushi" width="32px" height="32px" /> */}
 
                   <NavLink href="/">
-                    <div className="pl-2 cursor-pointer logo">
-                      <Image src="/logo.svg" className="w-10" alt="Logo" width={32} height={32} />
+                    <div className="pl-2 cursor-pointer logo flex items-center">
+                      <Image src="/luxlogo.png" className="w-10" alt="Logo" width={32} height={32} />
+                      <span className='text-base ml-2'>Lux</span>
                     </div>
                   </NavLink>
                   <div className="hidden sm:block sm:ml-4">
