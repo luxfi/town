@@ -29,13 +29,13 @@ function getCurrencySymbol(currency) {
 export function getCurrencyLogoUrls(currency) {
   const urls = []
 
-  // urls.push(`https://raw.githubusercontent.com/sushiswap/icons/master/token/${getCurrencySymbol(currency)}.jpg`)
+  urls.push(`https://raw.githubusercontent.com/sushiswap/icons/master/token/${getCurrencySymbol(currency)}.jpg`)
   if (currency.chainId in BLOCKCHAIN) {
-    // urls.push(
-    //   `https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/${BLOCKCHAIN[currency.chainId]}/assets/${
-    //     currency.address
-    //   }/logo.svg`
-    // )
+    urls.push(
+      `https://raw.githubusercontent.com/sushiswap/assets/master/blockchains/${BLOCKCHAIN[currency.chainId]}/assets/${
+        currency.address
+      }/logo.svg`
+    )
     urls.push(
       `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/${BLOCKCHAIN[currency.chainId]}/assets/${
         currency.address

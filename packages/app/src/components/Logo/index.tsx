@@ -22,7 +22,7 @@ const Logo: FC<LogoProps> = ({ srcs, width, height, style, alt = '', className, 
   const src = srcs.find((src) => !BAD_SRCS[src])
   return (
     <div className="rounded" style={{ width, height, ...style }}>
-      {/* <Image
+      <Image
         src={src || 'https://raw.githubusercontent.com/sushiswap/icons/master/token/unknown.png'}
         loader={cloudinaryLoader}
         onError={() => {
@@ -35,7 +35,7 @@ const Logo: FC<LogoProps> = ({ srcs, width, height, style, alt = '', className, 
         layout="fixed"
         className={classNames('rounded', className)}
         {...rest}
-      /> */}
+      />
     </div>
   )
 }
