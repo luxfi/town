@@ -20,7 +20,7 @@ const items = (i18n: I18n) => [
   },
   {
     name: i18n._(t`Dev`),
-    description: i18n._(t`Documentation for developers of lxu.`),
+    description: i18n._(t`Documentation for developers of lux.`),
     href: 'https://dev.lux.town',
     external: true,
   },
