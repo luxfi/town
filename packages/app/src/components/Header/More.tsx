@@ -192,7 +192,7 @@ export default function Menu() {
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                     onClick={() =>
-                      window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')
+                      window.open('https://discord.gg/8qsbjdVK')
                     }
                   >
                     Discord
