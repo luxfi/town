@@ -36,7 +36,6 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     href: null,
     color: '#010101',
     primary: true,
-    mobile: true
   },
   METAMASK: {
     connector: injected,
