@@ -36,6 +36,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     href: null,
     color: '#010101',
     primary: true,
+    mobile: true
   },
   METAMASK: {
     connector: injected,
@@ -44,6 +45,8 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     description: 'Easy-to-use browser extension.',
     href: null,
     color: '#E8831D',
+    mobile: true
+
   },
   // WALLET_CONNECT: {
   //   connector: async () => {
