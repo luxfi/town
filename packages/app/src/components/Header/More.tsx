@@ -14,22 +14,22 @@ import { useAnimationModeManager } from '../../state/user/hooks'
 const items = (i18n: I18n) => [
   {
     name: i18n._(t`About`),
-    description: i18n._(t`Documentation for users of Sushi.`),
-    href: 'https://docs.sushi.com',
+    description: i18n._(t`Documentation for users of Lux.`),
+    href: '#',
     external: true,
   },
   {
     name: i18n._(t`Dev`),
-    description: i18n._(t`Documentation for developers of Sushi.`),
-    href: 'https://dev.sushi.com',
+    description: i18n._(t`Documentation for developers of lux.`),
+    href: 'https://dev.lux.town',
     external: true,
   },
-  {
-    name: i18n._(t`Open Source`),
-    description: i18n._(t`Sushi is a supporter of Open Source.`),
-    href: 'https://github.com/sushiswap',
-    external: true,
-  },
+  // {
+  //   name: i18n._(t`Open Source`),
+  //   description: i18n._(t`Sushi is a supporter of Open Source.`),
+  //   href: 'https://github.com/sushiswap',
+  //   external: true,
+  // },
   {
     name: i18n._(t`Tools`),
     description: i18n._(t`Tools to optimize your workflow.`),
@@ -192,7 +192,7 @@ export default function Menu() {
                     className="flex items-center justify-between -m-3 transition duration-150 text-gray-500 ease-in-out rounded-md hover:text-white cursor-pointer"
                     style={{}}
                     onClick={() =>
-                      window.open('https://discord.com/channels/@me/878753766248177685/880493331010945095')
+                      window.open('https://discord.gg/8qsbjdVK')
                     }
                   >
                     Discord
@@ -225,6 +225,18 @@ export default function Menu() {
                       <RiLogoutCircleLine fill='gray' />
                     </div>
                   </div> */}
+                  {/* <div className="relative grid gap-6 px-5 py-6 bg-dark-900 sm:gap-8 sm:p-8">
+                  {solutions.map((item) => (
+                    <ExternalLink
+                      key={item.name}
+                      href={item.href}
+                      className="block p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-dark-800"
+                    >
+                      <p className="text-base font-medium text-high-emphesis">{item.name}</p>
+                      <p className="mt-1 text-sm text-secondary">{item.description}</p>
+                    </ExternalLink>
+                  ))}
+                </div> */}
                 </div>
               </div>
             </Popover.Panel>
