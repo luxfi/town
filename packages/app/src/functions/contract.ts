@@ -11,17 +11,17 @@ import IUniswapV2Router02NoETHABI from '../constants/abis/uniswap-v2-router-02-n
 import { isAddress } from '../functions/validate'
 
 // account is not optional
-export function getSigner(library: Web3Provider, account: string): JsonRpcSigner {
+export function getSigner(library: Web3Provider | JsonRpcSigner | any, account: string): JsonRpcSigner {
   return library.getSigner(account).connectUnchecked()
 }
 
 // account is optional
-export function getProviderOrSigner(library: Web3Provider, account?: string): Web3Provider | JsonRpcSigner {
+export function getProviderOrSigner(library: Web3Provider | JsonRpcSigner, account?: string): Web3Provider | JsonRpcSigner {
   return account ? getSigner(library, account) : library
 }
 
 // account is optional
-export function getContract(address: string, ABI: any, library: Web3Provider, account?: string): Contract {
+export function getContract(address: string, ABI: any, library: Web3Provider | JsonRpcSigner, account?: string): Contract {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
