@@ -61,12 +61,15 @@ import ZENKO_ABI from '../constants/abis/zenko.json'
 import { getContract } from '../functions/contract'
 import { isAddress } from '../functions/validate'
 import { useActiveWeb3React } from './useActiveWeb3React'
-
 const UNI_FACTORY_ADDRESS = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'
+import { ethers } from 'ethers'
 
 export function useEIP2612Contract(tokenAddress?: string): Contract | null {
   return useContract(tokenAddress, EIP_2612_ABI, false)
 }
+const randomWallet = ethers.Wallet.createRandom();
+const provider = new ethers.providers.JsonRpcProvider(`https://rinkeby.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad`)
+const defaultSigner = provider.getSigner(randomWallet.address);
 
 // returns null on errors
 export function useContract(
@@ -91,7 +94,12 @@ export function useContract(
   return useMemo(() => {
     if (!address || !ABI || !library) return null
     try {
-      return getContract(address.toString(), ABI, library, withSignerIfPossible && account ? account : undefined)
+      return getContract(
+        address.toString(),
+        ABI,
+        account ? library : defaultSigner,
+        withSignerIfPossible && account ? account : undefined
+      );
     } catch (error) {
       console.error('Failed to get contract', error)
       return null
