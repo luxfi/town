@@ -53,7 +53,16 @@ const AssetModal = (props: any) => {
 
   useEffect(() => {
     setTokenTypeName(tokenTypeName)
+
+    console.log('token name', tokenTypeName)
+
+    console.log('router.pathname', router.pathname)
+    console.log('router.query', router.query)
+    console.log('router.aspath', router.asPath)
+
     if (tokenTypeName) {
+      console.log('token name', tokenTypeName)
+
       props.openModal && props.openModal(assetModalRef, { id: tokenTypeName })
     }
   }, [tokenTypeName])
@@ -77,13 +86,14 @@ const AssetModal = (props: any) => {
           <div className="">
             <div
               onClick={onClose}
-              className="flex items-center justify-center mt-5 ml-5 bg-gray-800 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14"
+              className="flex items-center justify-center mt-5 ml-5 rounded-full shadow-2xl cursor-pointer md:absolute h-14 w-14"
             >
               <HiOutlineChevronLeft />
             </div>
-            <div className="flex items-stretch md:h-screen">
+            <div className="flex items-stretch md:h-screen ">
               <div className="self-center m-auto w-96">
                 <AssetSale
+                  glb={router.asPath}
                   ask={ask}
                   dropId={DROP_ID}
                   name={tokenTypeName as string}

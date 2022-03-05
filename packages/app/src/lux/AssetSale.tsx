@@ -7,10 +7,14 @@ import { useActiveWeb3React, useContract } from '../hooks'
 import { EyeIcon } from '@heroicons/react/solid'
 import { shortenAddress } from '../functions'
 import TimeAgo from 'react-timeago'
-
+import dynamic from 'next/dynamic'
+const ModelViewer = dynamic(() => import('../components/ModelViewer'), {
+  ssr: false,
+})
 export type AssetSaleProps = {
   dropId: number | string
   name: string
+  glb: string
   contentURI: string
   metadataURI: string
   ask?: Ask
@@ -28,12 +32,13 @@ export type AssetSaleProps = {
   large?: boolean
   getUsdAmount?: (tokenAddress: string, tokenAmount: BigintIsh) => string
   onClickBid?: (bid: GraphBid) => void
-  onClickTokenType?: (name: string) => void
+  onClickTokenType?: (name: string, glb: string) => void
 } & React.HTMLAttributes<HTMLDivElement>
 
 const AssetSale = (props: AssetSaleProps) => {
   const { account } = useActiveWeb3React()
-  const { ask, highest, dropId, name, showPrice, formattedAmount, usdAmount, symbol, getUsdAmount, isOwner } = props
+  const { ask, highest, dropId, name, showPrice, formattedAmount, usdAmount, symbol, getUsdAmount, isOwner, glb } =
+    props
 
   const { minted, supply } = useTokenType(dropId, name)
   const [bid, setBid] = useState(null)
@@ -51,30 +56,27 @@ const AssetSale = (props: AssetSaleProps) => {
     props.onClickBid && props.onClickBid(bid as any)
   }
 
-  // useEffect(() => {
-
-  //   console.log('props.name', props.name)
-
-  //   const getTokenType = async () => {
-  //     if (props.name) {
-  //       setTokenType(await drop?.getTokenType(props.name))
-  //     } else {
-  //       setTokenType(null)
-  //     }
-  //   }
-  //   getTokenType()
-  // }, [props.name])
+  useEffect(() => {
+    // console.log('props.name', props.name)
+    // const getTokenType = async () => {
+    //   if (props.name) {
+    //     setTokenType(await drop?.getTokenType(props.name))
+    //   } else {
+    //     setTokenType(null)
+    //   }
+    // }
+    // getTokenType()
+  }, [])
 
   return (
     <div
       className={`AssetSale ${props.className || ''} ${props.onClickTokenType ? 'cursor-pointer' : ''}`}
-      onClick={() => props.onClickTokenType && props.onClickTokenType(props.name)}
+      onClick={() => props.onClickTokenType && props.onClickTokenType(props.name, props.glb)}
     >
-      {props.large && video ? (
-        <Player url={video} playing={true} loop width={'auto'} height={'auto'} style={{ height: 'auto' }} />
-      ) : (
-        image && <img src={image} alt={`${type} ${dropId}-${name}`} />
-      )}
+      <div className={props.large ? 'h-[300px] w-full' : 'h-[300px] w-[300px]'}>
+        <ModelViewer glb={glb}></ModelViewer>
+      </div>
+
       <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
           <span className="text-lg text-gray-300">{given_name || name}</span>

@@ -40,9 +40,14 @@ const GET_ASSETS = gql`
   }
 `
 
-const Empty = ({ empty }) => (
-  empty ? empty : <div className="py-3"><Link href="/mint">Mint and list the first.</Link></div>
-)
+const Empty = ({ empty }) =>
+  empty ? (
+    empty
+  ) : (
+    <div className="py-3">
+      <Link href="/mint">Mint and list the first.</Link>
+    </div>
+  )
 
 export type AssetListProps = {
   title: string
@@ -137,25 +142,31 @@ const AssetList = ({
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
       <div className="grid grid-cols-2 gap-5">
         <div className="text-2xl text-indigo-600">{title}</div>
-        {totalPages > 1 && <div className="flex justify-end">
-          <div
-            onClick={previousPage}
-            className={`p-2 mr-3 rounded-full cursor-pointer ${page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'}`}
-          >
-            <HiOutlineChevronLeft size={16} />
+        {totalPages > 1 && (
+          <div className="flex justify-end">
+            <div
+              onClick={previousPage}
+              className={`p-2 mr-3 rounded-full cursor-pointer ${
+                page > 1 ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+              }`}
+            >
+              <HiOutlineChevronLeft size={16} />
+            </div>
+            {showPageNumbers && (
+              <div className="pt-1 text-lg">
+                Page {page} of {totalPages}
+              </div>
+            )}
+            <div
+              onClick={nextPage}
+              className={`p-2 ml-3 rounded-full cursor-pointer ${
+                page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
+              }`}
+            >
+              <HiOutlineChevronRight size={16} />
+            </div>
           </div>
-          {showPageNumbers && <div className="pt-1 text-lg">
-            Page {page} of {totalPages}
-          </div>}
-          <div
-            onClick={nextPage}
-            className={`p-2 ml-3 rounded-full cursor-pointer ${
-              page < totalPages ? 'bg-gray-700' : 'bg-gray-900 text-gray-600'
-            }`}
-          >
-            <HiOutlineChevronRight size={16} />
-          </div>
-        </div>}
+        )}
       </div>
       {assets.length > 0 ? (
         <div className={`grid grid-cols-1 gap-5 md:grid-cols-${cols || 6}`}>
