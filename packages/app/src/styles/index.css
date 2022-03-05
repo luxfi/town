@@ -63,6 +63,16 @@ input:focus {
   background: repeating-linear-gradient(45deg, #161522, #161522 10px, #0d0415 10px, #0d0415 20px);
 }
 
+/* model viewer */
+model-viewer {
+  width: inherit;
+  height: inherit;
+  background-color: transparent;
+  --poster-color: transparent;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
 /* *::-webkit-scrollbar {
   width: var(--scrollbar-width);
 }
