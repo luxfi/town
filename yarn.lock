@@ -3109,10 +3109,10 @@
     vue "^3.2.38"
     vue-tsc "^0.40.10"
 
-"@luxdefi/sdk@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@luxdefi/sdk/-/sdk-1.0.0.tgz#ff9af180bb2be15a22e715c373cfaec32ceb351f"
-  integrity sha512-rrwJnKq1+Y+g1G86NBRP0vksjK5YHql0PLkPWXdeAaBoJbFKHvG1bWaWVlQFQNTU4folbYGf9XZr5KLF/dSDHg==
+"@luxdefi/sdk@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@luxdefi/sdk/-/sdk-1.0.1.tgz#72fd55c514783e82d731284d8cf2f71a7849ce0e"
+  integrity sha512-KerCLEdmycDbCQFFU7HYTcEnzorD12xdjP7AYQAJU8NjqPqL923mAvKQNQmavmUufH9NUvFY3dwh5Rl21ve9+w==
   dependencies:
     "@types/memory-cache" "^0.2.1"
     big.js "^6.1.0"
@@ -15272,9 +15272,9 @@ graceful-fs@^4.0.0, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
-"graph-results-pager@git+https://github.com/LufyCZ/graph-results-pager.git":
+"graph-results-pager@https://github.com/LufyCZ/graph-results-pager":
   version "1.0.3"
-  resolved "git+https://github.com/LufyCZ/graph-results-pager.git#9b230f05b8d79aeedc9e167ac5a1fea33e04d51f"
+  resolved "https://github.com/LufyCZ/graph-results-pager#9b230f05b8d79aeedc9e167ac5a1fea33e04d51f"
   dependencies:
     node-fetch "2.6.1"
 

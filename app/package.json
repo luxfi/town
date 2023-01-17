@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.16",
-    "@luxdefi/sdk": "^1.0.0",
+    "@luxdefi/sdk": "^1.0.2",
     "@netlify/plugin-nextjs": "^4.29.4",
     "@sushiswap/core": "2.0.0-canary.0",
     "@web3-react/walletlink-connector": "^6.2.7",
