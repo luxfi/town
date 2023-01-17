@@ -14,9 +14,9 @@ export default function Market() {
   const { tokenTypes } = useTokenTypes();
 
   return (
-    <Container id="dashboard-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
+    <Container id="market-page" className="py-4 md:py-8 lg:py-12 " maxWidth="6xl">
       <Head>
-        <title>Dashboard | Lux Town</title>
+        <title>LUX Town | Market</title>
         <meta name="description" content="Lux Town" />
       </Head>
 

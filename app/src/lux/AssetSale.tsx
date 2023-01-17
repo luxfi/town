@@ -66,7 +66,7 @@ const AssetSale = (props: AssetSaleProps) => {
   // }, [props.name])
   function modernizeName(name = ''): string {
     if (name === "ATM")
-      return "Card"
+      return "Credit Card"
 
     if (name.startsWith('Wallet'))
       return name.replace('Wallet', '').replace('Lux', 'Coin')

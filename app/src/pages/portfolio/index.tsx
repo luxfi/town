@@ -16,7 +16,7 @@ import AskList from '../../lux/AskList'
 import { useBids, useTokenTypes } from '../../lux/state'
 import Container from '../../components/Container'
 
-const Dashboard = ({}) => {
+const Portfolio = ({}) => {
   const { account } = useActiveWeb3React()
   const [showBidModal, setShowBidModal] = useState(false)
   const [modalBid, setModalBid] = useState(null)
@@ -58,4 +58,4 @@ const Dashboard = ({}) => {
   )
 }
 
-export default Dashboard
+export default Portfolio

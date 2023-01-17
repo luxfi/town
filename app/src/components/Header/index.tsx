@@ -46,7 +46,7 @@ function AppBar(): JSX.Element {
                   <div className="hidden sm:block sm:ml-4">
                     <div className="flex space-x-2">
                       {/* <Buy /> */}
-                      <NavLink href="/dashboard">
+                      <NavLink href="/portfolio">
                         <a
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
@@ -59,7 +59,7 @@ function AppBar(): JSX.Element {
                           id={`market-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
-                          {i18n._(t`Owners`)}
+                          {i18n._(t`Market`)}
                         </a>
                       </NavLink>
                       <NavLink href="/mint">
@@ -301,12 +301,12 @@ function AppBar(): JSX.Element {
                     {i18n._(t`Mint`)}
                   </a>
                 </Link>
-                <Link href="/dashboard">
+                <Link href="/portfolio">
                   <a
                     id={`dashboard`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                   >
-                    {i18n._(t`Dashboard`)}
+                    {i18n._(t`Portfolio`)}
                   </a>
                 </Link>
                 <Link href="/market">

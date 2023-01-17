@@ -67,7 +67,7 @@ export default function Mint() {
 
   return (
     <Container
-      id="dashboard-page"
+      id="mint-page"
       className="py-4 md:py-8 lg:py-12 "
       maxWidth="6xl"
     >
