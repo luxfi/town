@@ -82,7 +82,7 @@ function Button({
       )}
       {...rest}
     >
-      {children}
+      {children as any}
     </button>
   )
 }

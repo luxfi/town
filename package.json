@@ -86,7 +86,9 @@
     ]
   },
   "resolutions": {
-    "node-hid": "./resolutions/node-hid"
+    "node-hid": "./resolutions/node-hid",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
   },
   "dependencies": {}
 }

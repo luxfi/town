@@ -29,7 +29,7 @@ function Badge({
   children,
   className = '',
 }: BadgeProps & React.HTMLAttributes<HTMLDivElement>): JSX.Element {
-  return <div className={`${COLOR[color]} ${SIZE[size]} ${className}`}>{children}</div>
+  return <div className={`${COLOR[color]} ${SIZE[size]} ${className}`}>{children as any}</div>
 }
 
 export default Badge

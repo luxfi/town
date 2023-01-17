@@ -21,8 +21,10 @@ import { useLingui } from '@lingui/react'
 const WalletIcon: FC<{ size?: number; src: string; alt: string }> = ({ size, src, alt, children }) => {
   return (
     <div className="flex flex-row items-end justify-center mr-2 flex-nowrap md:items-center">
-      <Image src={src} alt={alt} width={size} height={size} />
-      {children}
+      <>
+        <Image src={src} alt={alt} width={size} height={size} />
+        {children}
+      </>
     </div>
   )
 }

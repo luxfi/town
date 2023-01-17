@@ -87,7 +87,7 @@ export default function Alert({
       <div className="flex items-center">
         {showIcon && <div className="flex-shrink-0">{icon}</div>}
         <div className={!showIcon ? 'ml-0' : 'ml-3'}>
-          <p className="text-base">{message}</p>
+          <p className="text-base">{message as any}</p>
         </div>
       </div>
       {dismissable && (

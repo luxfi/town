@@ -4,13 +4,13 @@ import { classNames } from '../../functions'
 
 export const Column: FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className, ...rest }) => (
   <div className={classNames('flex flex-col justify-center', className)} {...rest}>
-    {children}
+    {children as any}
   </div>
 )
 
 export const ColumnCenter: FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, ...rest }) => (
   <Column className="items-center w-full" {...rest}>
-    {children}
+    {children as any}
   </Column>
 )
 
@@ -36,7 +36,7 @@ export const AutoColumn: FC<React.HTMLAttributes<HTMLDivElement> & AutoColumnPro
     }}
     {...rest}
   >
-    {children}
+    {children as any}
   </div>
 )
 
