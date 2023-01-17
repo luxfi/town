@@ -1,5 +1,5 @@
 [build]
-  publish = "packages/app/.next"
+  publish = ".next"
 
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=8192"
