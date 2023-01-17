@@ -3109,10 +3109,10 @@
     vue "^3.2.38"
     vue-tsc "^0.40.10"
 
-"@luxdefi/sdk@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@luxdefi/sdk/-/sdk-1.0.2.tgz#d70dd675873830691a079faec0567daa2018db17"
-  integrity sha512-UmaWgv+IUjEvFhZ1IDFBJRhdrmo/P36ASTjuEWwgQ+zzCNeuunVAnYBz7AQY+fYzSsp8jIAvtW9ebhDjHivL5w==
+"@luxdefi/sdk@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@luxdefi/sdk/-/sdk-1.0.4.tgz#c8e02bbc00f6422385d3db34e85787c89d19e0de"
+  integrity sha512-bbtGzHYJZEGzjwjb2HcHan7kAx6LrpQ4nqT0O0Pyrz1HBP/8j3OPZ3tkiJKREg4OEQv2/uo6f5YrPnFuB4RQbQ==
   dependencies:
     "@types/memory-cache" "^0.2.1"
     big.js "^6.1.0"

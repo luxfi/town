@@ -53,6 +53,7 @@ const nextConfig = {
       "res.cloudinary.com",
       "raw.githubusercontent.com",
       "logos.covalenthq.com",
+      "ethereum-optimism.github.io",
     ],
   },
   reactStrictMode: true,
