@@ -22,8 +22,8 @@ export default function Dashboard(props) {
   return (
     <div>
       <Head>
-        <title>Lux Town</title>
-        <meta name="description" content="Lux Town" />
+        <title>LUX Town</title>
+        <meta name="description" content="LUX Town" />
       </Head>
       <Mint />
     </div>
