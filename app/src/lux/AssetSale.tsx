@@ -7,6 +7,7 @@ import { useActiveWeb3React, useContract } from '../hooks'
 import { EyeIcon } from '@heroicons/react/solid'
 import { shortenAddress } from '../functions'
 import TimeAgo from 'react-timeago'
+import { modernizeName } from './utils'
 
 export type AssetSaleProps = {
   dropId: number | string
@@ -64,15 +65,6 @@ const AssetSale = (props: AssetSaleProps) => {
   //   }
   //   getTokenType()
   // }, [props.name])
-  function modernizeName(name = ''): string {
-    if (name === "ATM")
-      return "Credit Card"
-
-    if (name.startsWith('Wallet'))
-      return name.replace('Wallet', '').replace('Lux', 'Coin')
-
-    return name
-  }
 
   return (
     <div

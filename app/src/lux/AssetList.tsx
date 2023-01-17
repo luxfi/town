@@ -11,6 +11,8 @@ import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
 import { useTokenTypes } from './state'
 
+import { modernizeName } from './utils'
+
 const getPages = (total: number, perPage: number) => {
   var chunks: number[] = Array(Math.floor(total / perPage)).fill(perPage)
   var remainder = total % perPage
@@ -136,7 +138,7 @@ const AssetList = ({
   return (
     <div className={`AssetList pb-10 mb-10 border-b-gray-900 border-b-2`}>
       <div className="grid grid-cols-2 gap-5">
-        <div className="text-2xl text-indigo-600">{title}</div>
+        <div className="text-2xl text-indigo-600">{modernizeName(title)}</div>
         {totalPages > 1 && <div className="flex justify-end">
           <div
             onClick={previousPage}
