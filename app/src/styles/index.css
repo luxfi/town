@@ -84,7 +84,7 @@ input:focus {
 
 .logo,
 .lux-font {
-  font-family: 'Open Sans', sans-serif, Arial, Helvetica;
+  font-family: 'Inter', sans-serif, Arial, Helvetica;
   font-weight: 900;
 }
 
@@ -101,7 +101,7 @@ video {
   position: relative;
   bottom: 2px;
   font-weight: bold;
-  font-family: 'Open Sans', sans-serif, Arial, Helvetica;
+  font-family: 'Inter', sans-serif, Arial, Helvetica;
 }
 
 .AssetList__heading {

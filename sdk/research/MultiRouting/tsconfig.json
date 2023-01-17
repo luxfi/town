@@ -1,8 +1,0 @@
-{ 
-    "compilerOptions": {
-        "outDir": "./build",
-        "allowJs": true,
-        "downlevelIteration": true
-    }, 
-    "include": [ "./src/**/*", "tests**/*" ] 
-}
