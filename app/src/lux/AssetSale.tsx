@@ -88,9 +88,11 @@ const AssetSale = (props: AssetSaleProps) => {
         <div>
           <span className="text-lg text-gray-300">{modernizeName(given_name || name)}</span>
           <br />
+          {(supply > 0) && (
           <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetSale__token-id">
-            {minted} / {supply} Sold
+            {minted} / {supply}
           </span>
+          )}
         </div>
         {showPrice && formattedAmount && symbol && (
           <>
