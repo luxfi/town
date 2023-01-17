@@ -51,7 +51,7 @@ function AppBar(): JSX.Element {
                           id={`mint-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
-                          {i18n._(t`Dashboard`)}
+                          {i18n._(t`Portfolio`)}
                         </a>
                       </NavLink>
                       <NavLink href="/market">
@@ -59,7 +59,7 @@ function AppBar(): JSX.Element {
                           id={`market-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
                         >
-                          {i18n._(t`Market`)}
+                          {i18n._(t`Owners`)}
                         </a>
                       </NavLink>
                       <NavLink href="/mint">
