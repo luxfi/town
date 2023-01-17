@@ -1,0 +1,11 @@
+{
+    "name": "@luxtown/graphnode",
+    "version": "1.0.0",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+      "start": "cargo run -p graph-node --release -- --postgres-url postgresql://graph-node:let-me-in@localhost:5432/graph-node --ethereum-rpc mainnet:http://127.0.0.1:8545 --ipfs 127.0.0.1:5001",
+      "docker": "yarn clean && cd ./docker && docker-compose up",
+      "clean": "cd ./docker && docker-compose down && rm -rf ./data && docker image prune -f"
+    }
+  }
