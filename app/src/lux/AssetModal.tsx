@@ -87,7 +87,7 @@ const AssetModal = (props: any) => {
               </div>
             </div>
           </div>
-          <div className="flex items-stretch bg-gray-900 md:h-screen">
+          <div className="flex items-stretch bg-gray-1000 md:h-screen">
             <div className="self-center m-auto w-96">
               {isOwner ? (
                 <div>

@@ -117,10 +117,18 @@ video {
   z-index: 10;
 }
 
+.bg-gray-1000 {
+  background-color: #111111;
+}
+
 .bg-gray-900 {
   background-color: #151515;
 }
 
 .bg-gray-800 {
   background-color: #1e1e1e;
+}
+
+.text-indigo-500 {
+  color: #999;
 }
