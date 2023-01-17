@@ -129,6 +129,14 @@ video {
   background-color: #1e1e1e;
 }
 
+.bg-gray-700 {
+  background-color: #1e1e1e;
+}
+
 .text-indigo-500 {
-  color: #999;
+  color: #954eff;
+}
+
+.text-indigo-600 {
+  color: #954eff;
 }
