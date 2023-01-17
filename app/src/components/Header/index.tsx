@@ -38,13 +38,9 @@ function AppBar(): JSX.Element {
             <div className="px-4 py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  {/* <Image src="/logo.png" alt="Sushi" width="32px" height="32px" /> */}
-
                   <NavLink href="/">
                     <div className="pl-2 cursor-pointer logo flex items-center">
-                      <Image src="/luxlogo.png" className="w-10" alt="Logo" width={32} height={32} />
-                      
-                      <span className='text-lg ml-2'>Lux</span>
+                      <Image src="/luxlogo.png" className="w-10" alt="Logo" width={115} height={25} />
                     </div>
                   </NavLink>
                   <div className="hidden sm:block sm:ml-4">
@@ -253,9 +249,6 @@ function AppBar(): JSX.Element {
                         </>
                       )}
                       <Web3Status />
-                    </div>
-                    <div className="hidden md:block">
-                      <LanguageSwitch />
                     </div>
                     <More />
                   </div>
