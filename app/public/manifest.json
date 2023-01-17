@@ -3,7 +3,7 @@
   "short_name": "Lux",
   "lang": "en",
   "description": " The future is decentralized.",
-  "background_color": "#0D0415",
+  "background_color": "#000000",
   "theme_color": "#F338C3",
   "dir": "ltr",
   "display": "fullscreen",

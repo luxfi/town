@@ -47,14 +47,14 @@ const nextConfig = {
   //   runtimeCaching,
   //   disable: process.env.NODE_ENV === "development",
   // },
-  // images: {
-  //   domains: [
-  //     "assets.sushi.com",
-  //     "res.cloudinary.com",
-  //     "raw.githubusercontent.com",
-  //     "logos.covalenthq.com",
-  //   ],
-  // },
+  images: {
+    domains: [
+      "uploads-ssl.webflow.com",
+      "res.cloudinary.com",
+      "raw.githubusercontent.com",
+      "logos.covalenthq.com",
+    ],
+  },
   reactStrictMode: true,
   i18n: {
     localeDetection: true,

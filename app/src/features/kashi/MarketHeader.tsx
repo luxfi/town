@@ -30,7 +30,7 @@ function MarketHeader({ type = 'Borrow', lists }: any) {
                 type === 'Borrow' ? 'focus:ring-pink' : 'focus:ring-blue'
               }`}
               onChange={(e) => onSearch(e.target.value)}
-              style={{ background: '#161522' }}
+              style={{ background: '#151515' }}
               value={lists[0].term}
               placeholder="Search by symbol"
             />

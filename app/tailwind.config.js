@@ -10,7 +10,7 @@ module.exports = {
   //   applyComplexClasses: true,
   // },
   purge: ['./src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false,
+  darkMode: true,
   theme: {
     extend: {
       linearBorderGradients: {
@@ -23,9 +23,9 @@ module.exports = {
           'pink-red-light-brown': ['#FE5A75', '#FEC464'],
         },
         background: {
-          'dark-1000': '#0D0415',
-          'dark-900': '#161522',
-          'dark-800': '#202231',
+          'dark-1000': '#000000',
+          'dark-900': '#151515',
+          'dark-800': '#1e1e1e',
           'dark-pink-red': '#4e3034',
         },
         border: {
@@ -51,10 +51,10 @@ module.exports = {
         'cyan-blue': '#0993EC',
         'dark-pink': '#221825',
         'dark-blue': '#0F182A',
-        'dark-1000': '#0D0415',
-        'dark-900': '#161522',
+        'dark-1000': '#000000',
+        'dark-900': '#151515',
         'dark-850': '#1d1e2c',
-        'dark-800': '#202231',
+        'dark-800': '#1e1e1e',
         'dark-700': '#2E3348',
         'dark-600': '#1C2D49',
         'dark-500': '#223D5E',

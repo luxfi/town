@@ -44,7 +44,7 @@ export const StyledSlider = styled(Slider)`
   }
 
   .rc-slider-rail {
-    background-color: #202231;
+    background-color: #1e1e1e;
   }
 
   .rc-slider-track {
