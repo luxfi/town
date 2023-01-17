@@ -28,7 +28,7 @@ const atm_metadata = {
 }
 
 const handler = async (req, res) => {
-  const type = req.query.type.replace('.json')
+  const type = req.query.type.replace('.json', '')
   switch (type) {
     case 'validator':
       return res.json(validator_metadata)
