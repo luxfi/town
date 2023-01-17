@@ -216,21 +216,7 @@ export default class MyDocument extends Document {
             media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
             rel="apple-touch-startup-image"
           />
-
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicon-32x32.png"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/favicon-16x16.png"
-          />
           <link rel="shortcut icon" href="/favicon.ico" />
-
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
