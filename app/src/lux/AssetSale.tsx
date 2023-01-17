@@ -64,6 +64,15 @@ const AssetSale = (props: AssetSaleProps) => {
   //   }
   //   getTokenType()
   // }, [props.name])
+  function modernizeName(name = ''): string {
+    if (name === "ATM")
+      return "Card"
+
+    if (name.startsWith('Wallet'))
+      return name.replace('Wallet', '').replace('Lux', 'Coin')
+
+    return name
+  }
 
   return (
     <div
@@ -77,7 +86,7 @@ const AssetSale = (props: AssetSaleProps) => {
       )}
       <div className={`w-full pb-5 text-center backdrop-filter backdrop-opacity video-overlay`}>
         <div>
-          <span className="text-lg text-gray-300">{given_name || name}</span>
+          <span className="text-lg text-gray-300">{modernizeName(given_name || name)}</span>
           <br />
           <span className="px-2 py-1 ml-2 text-xs font-bold text-black bg-gray-300 rounded-full lux-font AssetSale__token-id">
             {minted} / {supply} Sold
@@ -126,7 +135,7 @@ const AssetSale = (props: AssetSaleProps) => {
                 {formattedAmount} {symbol}
                 </div>
               </div>
-              
+
               {isOwner && <AcceptBidButton bidder={bidder} dropId=-{name}{dropId}-{name} tokenType={type} />}
             </div>
           ) : (
