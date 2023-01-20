@@ -54,7 +54,7 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Portfolio`)}
                         </a>
                       </NavLink>
-                      <NavLink href="/market">
+                      <NavLink href="https://app.lux.market">
                         <a
                           id={`market-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
