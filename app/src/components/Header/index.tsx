@@ -54,7 +54,7 @@ function AppBar(): JSX.Element {
                           {i18n._(t`Portfolio`)}
                         </a>
                       </NavLink>
-                      <NavLink href="https://app.lux.market">
+                      <NavLink href="https://app.lux.market/collections/0x31e0f919c67cedd2bc3e294340dc900735810311">
                         <a
                           id={`market-nav-link`}
                           className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
@@ -309,7 +309,8 @@ function AppBar(): JSX.Element {
                     {i18n._(t`Portfolio`)}
                   </a>
                 </Link>
-                <Link href="https://app.lux.market">
+
+                <Link href="https://app.lux.market/collections/0x31e0f919c67cedd2bc3e294340dc900735810311">
                   <a
                     id={`market`}
                     className="p-2 text-baseline text-primary hover:text-high-emphesis focus:text-high-emphesis md:p-3 whitespace-nowrap"
