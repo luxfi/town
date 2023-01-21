@@ -42,16 +42,7 @@ const Portfolio = ({}) => {
           showPageNumbers={false}
         />
       )}
-      <div className="grid grid-cols-2 gap-16">
-        <div className="">
-          <div className="text-2xl text-indigo-600">My Bids</div>
-          {account && <BidList where={{ bidder: account }} onClick={onClickBid} showToken />}
-        </div>
-        <div className="">
-          <div className="text-2xl text-indigo-600">My Asks</div>
-          {account && <AskList where={{ owner: account }} showToken />}
-        </div>
-      </div>
+      <div className="grid grid-cols-2 gap-16"></div>
       <BidModal bid={modalBid} isOpen={showBidModal} onClose={() => setShowBidModal(false)} />
       <AssetModal modalProps={modalProps} openModal={openModal} />{' '}
     </Container>
