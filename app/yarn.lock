@@ -2700,23 +2700,6 @@
   dependencies:
     "@sushiswap/default-token-list" "^11.3.0"
 
-"@sushiswap/sushi-data@^1.0.24":
-  version "1.0.26"
-  resolved "https://registry.yarnpkg.com/@sushiswap/sushi-data/-/sushi-data-1.0.26.tgz#6f9d68f0193d7bb3839262fe47dcd095478ee3e1"
-  integrity sha512-zGAL3un1K8J+mc4GyMhjOdJHYsnuwh7WiP4zlgvGyz1FJbFvnkv6NaKqh1bLAVCJDTZRFBZCzty7qp+6kX+nJw==
-  dependencies:
-    bluebird "^3.7.2"
-    commander "6.1.0"
-    csv-stringify "5.3.3"
-    date-fns "^2.17.0"
-    graph-results-pager "git+https://github.com/LufyCZ/graph-results-pager.git"
-    graphql "14.5.8"
-    graphql-request "^3.4.0"
-    isomorphic-ws "^4.0.1"
-    node-fetch "2.6.0"
-    subscriptions-transport-ws "0.9.16"
-    ws "7.2.0"
-
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -8994,13 +8977,6 @@ graceful-fs@^4.1.2:
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"
   integrity sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==
-
-"graph-results-pager@git+https://github.com/LufyCZ/graph-results-pager.git":
-  version "1.0.3"
-  uid "9b230f05b8d79aeedc9e167ac5a1fea33e04d51f"
-  resolved "git+https://github.com/LufyCZ/graph-results-pager.git#9b230f05b8d79aeedc9e167ac5a1fea33e04d51f"
-  dependencies:
-    node-fetch "2.6.1"
 
 graphql-request@^3.4.0, graphql-request@^3.5.0:
   version "3.7.0"

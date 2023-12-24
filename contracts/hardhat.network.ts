@@ -50,6 +50,17 @@ const networks: HardhatUserConfig['networks'] = {
     blockGasLimit: 200000000,
     allowUnlimitedContractSize: true,
   },
+  lux: {
+    url: 'https://api.lux.network',
+    accounts: {
+      mnemonic: mnemonic(),
+    },
+    chainId: 7777,
+    live: true,
+    saveDeployments: true,
+    //gasPrice: ethers.utils.parseUnits(`155`, 'gwei').toNumber(),
+    blockGasLimit: 4000000,
+  },
   mainnet: {
     url: 'https://mainnet.infura.io/v3/30171d2ba65445de9271453dbc6ca307',
     accounts: {
