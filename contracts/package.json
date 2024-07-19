@@ -6,8 +6,8 @@
   "devDependencies": {
     "@nomiclabs/hardhat-etherscan": "^2.1.7",
     "@tenderly/hardhat-tenderly": "^1.0.12",
-    "@typechain/hardhat": "^2.3.0",
-    "@typechain/web3-v1": "^3.1.0",
+    "@typechain/hardhat": "^9.1.0",
+    "@typechain/web3-v1": "^6.0.7",
     "@types/chai-as-promised": "^7.1.4",
     "chai-as-promised": "^7.1.1",
     "chalk": "^4.1.2",
